@@ -10,7 +10,7 @@ const App = () =>
       <Route exact path="/home" component={Login} />
  
       <Redirect to="/home" />
-    </Switch>;
+    </Switch>
   </BrowserRouter>
 
 export default App;
