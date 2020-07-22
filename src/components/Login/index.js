@@ -36,7 +36,7 @@ class Login extends React.Component{
                                 <Input className="input-password" type="password" name="password2" id="password2" placeholder="Confirm new password" />
                             </FormGroup>
                             <Row className='justify-content-center'>
-                                <Button style={{width:'80%'}} color="primary">Create Password</Button>
+                                <Button style={{width:'94%'}} color="primary">Create Password</Button>
                             </Row>
                             <FormGroup className="formGroup-idioma">
                                 <Row className="justify-content-center">
