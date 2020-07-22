@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Container, Button, FormGroup, Label, Input, Form, Row, CustomInput, Tooltip} from 'reactstrap';
 import { BsCheckCircle, BsInfoCircleFill } from "react-icons/bs";
 import "./index.css";
@@ -47,7 +47,7 @@ class Login extends React.Component{
                                 <Input className="input-password" type="password" name="password2" id="password2" placeholder="Confirm new password" />
                             </FormGroup>
                             <Row className='justify-content-center'>
-                                <Button style={{width:'94%'}} color="primary">Create Password</Button>
+                                <Button className="btn-createPass" color="primary">Create Password</Button>
                             </Row>
                             <FormGroup className="formGroup-idioma">
                                 <Row className="justify-content-center">

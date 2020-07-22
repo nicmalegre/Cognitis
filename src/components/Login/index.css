@@ -23,8 +23,11 @@ Form {
 
 }
 
-
 .formGroup-idioma{
     margin-top: 15px;
     margin-bottom: 0;
+}
+
+.btn-createPass{
+    width: 94%;
 }
