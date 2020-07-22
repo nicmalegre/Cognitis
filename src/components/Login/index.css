@@ -11,12 +11,16 @@ Form {
 
 .text-rule{
     margin-bottom: 0;
-    color: rgba(16, 150, 16, 0.842);
 }
 
 .icon-check{
     font-size: 20px;
-    color: rgba(16, 150, 16, 0.842);
+}
+
+.info-character{
+    color: rgb(36, 36, 95);
+    cursor: pointer;
+
 }
 
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import {Container, Button, FormGroup, Label, Input, Form, Card, Row, CustomInput} from 'reactstrap';
-import { BsCheckCircle } from "react-icons/bs";
+import React, {useState} from 'react';
+import {Container, Button, FormGroup, Label, Input, Form, Row, CustomInput, Tooltip} from 'reactstrap';
+import { BsCheckCircle, BsInfoCircleFill } from "react-icons/bs";
 import "./index.css";
 
 
@@ -10,10 +10,18 @@ class Login extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            
-        }
+            tooltipOpen: false
+        }   
     }
+
+    toggle = () => {
+        this.setState({
+            tooltipOpen: !this.state.tooltipOpen
+        });
+        }
+    
     render(){
+        let {tooltipOpen} = this.state
         return(
             <Container fluid className="login-container">
                 <Row className='justify-content-center Row-General'>
@@ -25,10 +33,13 @@ class Login extends React.Component{
                                 <p className="text-rule"><i className='icon-check'><BsCheckCircle/></i> 1 uppercase letter</p>
                                 <p className="text-rule"><i className='icon-check'><BsCheckCircle/></i> 1 lowercase letter</p>
                                 <p className="text-rule"><i className='icon-check'><BsCheckCircle/></i> 1 number</p>
-                                <p className="text-rule"><i className='icon-check'><BsCheckCircle/></i> 1 special character</p>
+                                <p className="text-rule"><i className='icon-check'><BsCheckCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>
+                                <Tooltip placement="right" isOpen={tooltipOpen} target="info-character" toggle={this.toggle}>
+                                    Los caracteres especiales son: !,@,#,$,%,^,&,*
+                                </Tooltip>
                             </FormGroup>
                             <FormGroup>
-                                <Label>New Password</Label>
+                                <Label><b>New Password</b></Label>
                                 <Input className="input-password" type="password" name="password1" id="password1" placeholder="New password" />
                             </FormGroup>
                             <FormGroup>
