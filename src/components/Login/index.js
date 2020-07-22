@@ -38,13 +38,22 @@ class Login extends React.Component{
     render(){
         let {tooltipOpen, newPass} = this.state
 
-        //AGREGAMOS ESTA FUNCION PARA CONTROLAR QUE DEPENDIENDO DEL TIPO DE POLITICA IMPRIMA UNA COSA O LA OTRA
+        //Function for control if the password have 8 characters length.
         let controlCharacters = (newPass.length > 7) ? (
                 <p className="text-rule correct" id="character-rule"><i className='icon-check'><AiFillCheckCircle/></i> 8 characters</p>
             ) : //If not
             (
                 <p className="text-rule" id="character-rule"><i className='icon-check'><AiFillCloseCircle/></i> 8 characters</p>       
             )
+        
+        //Function for control if the password have minimium 1 uppercase
+        const regex = /[A-Z]/
+        let controlUppercase = (regex.test(newPass)) ? (
+            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 uppercase letter</p>
+        ) : //If not
+        (
+            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 uppercase letter</p>      
+        )
 
         return(
             <Container fluid className="login-container">
@@ -54,7 +63,7 @@ class Login extends React.Component{
                                 <Label>Enter a new password for <b>'correo@correo.com'</b></Label><br/>
                                 <Label>Make sure to include at least:</Label><br/>
                                 {controlCharacters}
-                                <p className="text-rule"><i className='icon-check'><AiFillCheckCircle/></i> 1 uppercase letter</p>
+                                {controlUppercase}
                                 <p className="text-rule"><i className='icon-check'><AiFillCheckCircle/></i> 1 lowercase letter</p>
                                 <p className="text-rule"><i className='icon-check'><AiFillCheckCircle/></i> 1 number</p>
                                 <p className="text-rule"><i className='icon-check'><AiFillCheckCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>
