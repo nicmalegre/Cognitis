@@ -47,12 +47,30 @@ class Login extends React.Component{
             )
         
         //Function for control if the password have minimium 1 uppercase
-        const regex = /[A-Z]/
-        let controlUppercase = (regex.test(newPass)) ? (
+        const regexUpper = /[A-Z]/
+        let controlUppercase = (regexUpper.test(newPass)) ? (
             <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 uppercase letter</p>
         ) : //If not
         (
             <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 uppercase letter</p>      
+        )
+
+        //Function for control if the password have minimium 1 lowercase
+        const regexLower = /[a-z]/
+        let controlLowercase = (regexLower.test(newPass)) ? (
+            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 lowercase letter</p>
+        ) : //If not
+        (
+            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 lowercase letter</p>     
+        )
+
+        //Function for control if the password have minimium 1 number
+        const regexNumber = /[0-9]/
+        let controlNumber = (regexNumber.test(newPass)) ? (
+            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 number</p>
+        ) : //If not
+        (
+            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 number</p>   
         )
 
         return(
@@ -64,11 +82,13 @@ class Login extends React.Component{
                                 <Label>Make sure to include at least:</Label><br/>
                                 {controlCharacters}
                                 {controlUppercase}
-                                <p className="text-rule"><i className='icon-check'><AiFillCheckCircle/></i> 1 lowercase letter</p>
-                                <p className="text-rule"><i className='icon-check'><AiFillCheckCircle/></i> 1 number</p>
+                                {controlLowercase}
+                                {controlNumber}
+                                
+                                
                                 <p className="text-rule"><i className='icon-check'><AiFillCheckCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>
                                 <Tooltip placement="right" isOpen={tooltipOpen} target="info-character" toggle={this.toggle}>
-                                    Los caracteres especiales son: !,@,#,$,%,^,&,*
+                                    Los caracteres especiales son: ! @ # $ % ^ & * _  -
                                 </Tooltip>
                             </FormGroup>
                             <FormGroup>
