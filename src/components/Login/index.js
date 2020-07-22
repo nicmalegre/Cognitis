@@ -73,6 +73,15 @@ class Login extends React.Component{
             <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 number</p>   
         )
 
+        //Function for control if the password have minimium 1 number
+        const regexSpecial = /[!@#$%^&*_-]/
+        let controlSpecial = (regexSpecial.test(newPass)) ? (
+            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>
+        ) : //If not
+        (
+            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>  
+        )
+
         return(
             <Container fluid className="login-container">
                 <Row className='justify-content-center Row-General'>
@@ -84,9 +93,7 @@ class Login extends React.Component{
                                 {controlUppercase}
                                 {controlLowercase}
                                 {controlNumber}
-                                
-                                
-                                <p className="text-rule"><i className='icon-check'><AiFillCheckCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>
+                                {controlSpecial}
                                 <Tooltip placement="right" isOpen={tooltipOpen} target="info-character" toggle={this.toggle}>
                                     Los caracteres especiales son: ! @ # $ % ^ & * _  -
                                 </Tooltip>

@@ -21,6 +21,10 @@ Form {
     color: #28A745;
 }
 
+Input{
+    border: 5px solid red;
+}
+
 .info-character{
     color: rgb(36, 36, 95);
     cursor: pointer;
