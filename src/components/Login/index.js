@@ -100,7 +100,7 @@ class Login extends React.Component{
                             </FormGroup>
                             <FormGroup>
                                 <Label><b>New Password</b></Label>
-                                <Input type="password" name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/>
+                                <input className="input" type="password" name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="examplePassword2"><b>Confirm New Password</b></Label>
