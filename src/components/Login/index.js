@@ -36,10 +36,11 @@ class Login extends React.Component{
     }
     
     render(){
-        let {tooltipOpen, newPass} = this.state
+        let {tooltipOpen, newPass, newPassConfirm} = this.state
 
         //Function for control if the password have 8 characters length.
-        let controlCharacters = (newPass.length > 7) ? (
+        const lengthRight = (newPass.length > 7)
+        let controlCharacters = (lengthRight) ? (
                 <p className="text-rule correct" id="character-rule"><i className='icon-check'><AiFillCheckCircle/></i> 8 characters</p>
             ) : //If not
             (
@@ -48,7 +49,8 @@ class Login extends React.Component{
         
         //Function for control if the password have minimium 1 uppercase
         const regexUpper = /[A-Z]/
-        let controlUppercase = (regexUpper.test(newPass)) ? (
+        const upperRight = regexUpper.test(newPass)
+        let controlUppercase = (upperRight) ? (
             <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 uppercase letter</p>
         ) : //If not
         (
@@ -57,7 +59,8 @@ class Login extends React.Component{
 
         //Function for control if the password have minimium 1 lowercase
         const regexLower = /[a-z]/
-        let controlLowercase = (regexLower.test(newPass)) ? (
+        const lowerRight = regexLower.test(newPass)
+        let controlLowercase = (lowerRight) ? (
             <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 lowercase letter</p>
         ) : //If not
         (
@@ -66,20 +69,38 @@ class Login extends React.Component{
 
         //Function for control if the password have minimium 1 number
         const regexNumber = /[0-9]/
-        let controlNumber = (regexNumber.test(newPass)) ? (
+        const numberRight = regexNumber.test(newPass)
+        let controlNumber = (numberRight) ? (
             <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 number</p>
         ) : //If not
         (
             <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 number</p>   
         )
 
-        //Function for control if the password have minimium 1 number
+        //Function for control if the password have minimium 1 special character
         const regexSpecial = /[!@#$%^&*_-]/
-        let controlSpecial = (regexSpecial.test(newPass)) ? (
+        const specialRight = regexSpecial.test(newPass)
+        let controlSpecial = (specialRight) ? (
             <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>
         ) : //If not
         (
             <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>  
+        )
+
+        //Function for change the border color of the input if the password follows the defined criteria.
+        let controlInputPass = ((lengthRight) && (upperRight) && (lowerRight) && (numberRight) && (specialRight) ) ? (
+            <input className="input-correct" type="password" name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/>
+        ) : //If not
+        (
+            <input type="password" name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/> 
+        )
+
+        //Function for change the border color of the second input if the password match with the first input.
+        let controlInputPassConfirm = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
+            <input className="input-correct" type="password" name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>
+        ) : //If not
+        (
+            <input type="password" name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>
         )
 
         return(
@@ -100,11 +121,11 @@ class Login extends React.Component{
                             </FormGroup>
                             <FormGroup>
                                 <Label><b>New Password</b></Label>
-                                <input className="input" type="password" name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/>
+                                {controlInputPass}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="examplePassword2"><b>Confirm New Password</b></Label>
-                                <Input type="password" name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password"/>
+                                {controlInputPassConfirm}    
                             </FormGroup>
                             <Row className='justify-content-center'>
                                 <Button className="btn-createPass" color="primary">Create Password</Button>
@@ -117,6 +138,7 @@ class Login extends React.Component{
                             </FormGroup>
                             <Card>
                                 <h6>{newPass}</h6>
+                                <h6>{newPassConfirm}</h6>
                             </Card>
                         </Form>
                     

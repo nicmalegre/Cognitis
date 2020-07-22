@@ -33,6 +33,8 @@ input{
 }
 
 .input-correct{
+    border: 1px solid #28A745;
+    border-radius: 4px;
     outline-color: #28A745;
 }
 
