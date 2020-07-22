@@ -17,10 +17,13 @@ Form {
     font-size: 20px;
 }
 
+.correct{
+    color: #28A745;
+}
+
 .info-character{
     color: rgb(36, 36, 95);
     cursor: pointer;
-
 }
 
 .formGroup-idioma{
