@@ -43,7 +43,7 @@ class Login extends React.Component{
                                 <Input className="input-password" type="password" name="password1" id="password1" placeholder="New password" />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="examplePassword2">Confirm New Password</Label>
+                                <Label for="examplePassword2"><b>Confirm New Password</b></Label>
                                 <Input className="input-password" type="password" name="password2" id="password2" placeholder="Confirm new password" />
                             </FormGroup>
                             <Row className='justify-content-center'>
