@@ -7,9 +7,11 @@ import Login from "./components/Login";
 const App = () => 
   <BrowserRouter>
     <Switch>
-      <Route exact path="/home" component={Login} />
+      <Route exact path="/Login" component={Login} />
+
+
  
-      <Redirect to="/home" />
+      <Redirect to="/Login" />
     </Switch>
   </BrowserRouter>
 

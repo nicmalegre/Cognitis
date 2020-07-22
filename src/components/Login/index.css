@@ -1,0 +1,26 @@
+Form {	
+    background-color: white;
+    margin: 60px auto;
+    padding: 30px 30px;
+    width: 500px;
+    border-color:grey;
+    border-style: solid;
+    border-width: 1px;
+
+} 
+
+.text-rule{
+    margin-bottom: 0;
+    color: rgba(16, 150, 16, 0.842);
+}
+
+.icon-check{
+    font-size: 20px;
+    color: rgba(16, 150, 16, 0.842);
+}
+
+
+.formGroup-idioma{
+    margin-top: 15px;
+    margin-bottom: 0;
+}
