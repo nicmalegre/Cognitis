@@ -1,0 +1,16 @@
+Form {	
+    background-color: white;
+    margin: 60px auto;
+    padding: 30px 30px;
+    width: 900px;
+    border-color:grey;
+    border-style: solid;
+    border-width: 1px;
+    margin-top: 100px;
+    margin-right: 30%;
+} 
+
+.row-first {
+    height:300px;
+    overflow: hidden;
+  }
