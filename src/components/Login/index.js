@@ -1,5 +1,6 @@
 import React from 'react';
 import {Container, Button, FormGroup, Label, Input, Form, Row, CustomInput, Tooltip, Card} from 'reactstrap';
+import { Link } from "react-router-dom";
 import { BsInfoCircleFill} from "react-icons/bs";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import "./index.css";
@@ -128,7 +129,9 @@ class Login extends React.Component{
                                 {controlInputPassConfirm}    
                             </FormGroup>
                             <Row className='justify-content-center'>
-                                <Button className="btn-createPass" color="primary">Create Password</Button>
+                                <Link to="SelectCountry">
+                                    <Button  color="primary">Create Password</Button>
+                                </Link>
                             </Row>
                             <Card>
                                 <h6>{newPass}</h6>
