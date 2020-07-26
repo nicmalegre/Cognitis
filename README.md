@@ -1,2 +1,2 @@
 # Cognitis
-Backend for Cognitivis360 development.
+Frontend for Cognitivis360 development.
