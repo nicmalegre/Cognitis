@@ -104,7 +104,7 @@ class Login extends React.Component{
         )
 
         return(
-            <Container fluid className="login-container">
+            <Container fluid>
                 <Row className='justify-content-center Row-General'>
                         <Form>
                             <FormGroup>
@@ -130,12 +130,6 @@ class Login extends React.Component{
                             <Row className='justify-content-center'>
                                 <Button className="btn-createPass" color="primary">Create Password</Button>
                             </Row>
-                            <FormGroup className="formGroup-idioma">
-                                <Row className="justify-content-center">
-                                    <CustomInput inline type="radio" id="exampleCustomRadio" name="customRadio" label="Español" />
-                                    <CustomInput inline type="radio" id="exampleCustomRadio2" name="customRadio" label="Ingles" />
-                                </Row>
-                            </FormGroup>
                             <Card>
                                 <h6>{newPass}</h6>
                                 <h6>{newPassConfirm}</h6>
