@@ -12,15 +12,12 @@ const App = () =>
   <BrowserRouter>
     <Switch>
       <Route path='/' exact component={Welcomescreen} />
-      <Route exact path="/Login" component={Login} />
-      <Route  path="/VerificationCode" component={VerificationCode} />
-      <Route  path="/SelectCountry" component={SelectCountry} />
       <Route path='/product' component = {Product} />
       <Route path="/user" component={Registeruser} />
-
-
- 
-      <Redirect to="/Login" />
+      <Route  path="/VerificationCode" component={VerificationCode} />
+      <Route exact path="/Login" component={Login} />
+      <Route  path="/SelectCountry" component={SelectCountry} />
+      <Redirect to="/" />
     </Switch>
   </BrowserRouter>
 
