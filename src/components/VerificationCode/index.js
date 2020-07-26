@@ -9,6 +9,7 @@
 import React from 'react'; 
 import { Form,InputGroup, InputGroupAddon, Button, Input } from 'reactstrap'; 
 import "./verificationcode.css";
+import { Link } from 'react-router-dom';
 
 
 const VerificationCode = (props) => {
@@ -26,7 +27,9 @@ const VerificationCode = (props) => {
             <InputGroup className="inputgroup-verification-code">
                 <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:"/>
                 <InputGroupAddon addonType="append">
-                    <Button  class="button-verification-code" color="primary" active >Next</Button>
+                    <Link to="/Login">
+                        <Button  class="button-verification-code" color="primary" active >Next</Button>
+                    </Link>
                 </InputGroupAddon>
             </InputGroup>       
         </Form>
