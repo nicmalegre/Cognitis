@@ -28,8 +28,8 @@ const SelectCountry = (props) => {
   return (  
     <Container fluid={true}>
         <Row className="row-first mt-4 text-aling-center">
-         <Base />
-      </Row>
+            <Base />
+        </Row>
         <Form className="form-verification-code">
             <FormGroup row>
                     <Label for="exampleSelect" sm={3}>Select Country</Label>
