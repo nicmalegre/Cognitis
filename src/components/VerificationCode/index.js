@@ -8,7 +8,7 @@ import React from 'react';
 import { Form,InputGroup, InputGroupAddon, Button, Input,Row } from 'reactstrap'; 
 import "./verificationcode.css";
 import { Link } from 'react-router-dom';
-import Base from '../base/base';
+
 
 
 const VerificationCode = (props) => {
@@ -22,7 +22,7 @@ const VerificationCode = (props) => {
  
     <div className="div-verification-code">
         <Row className="mt-4 text-aling-center">
-                < Base />
+               
         </Row>
         <Form className="form-verification-code">
             <InputGroup className="inputgroup-verification-code">

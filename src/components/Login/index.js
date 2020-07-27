@@ -3,7 +3,7 @@ import {Container, Button, FormGroup, Label, Input, Form, Row, CustomInput, Tool
 import { Link } from "react-router-dom";
 import { BsInfoCircleFill} from "react-icons/bs";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
-import Base from '../base/base';
+
 import "./index.css";
 
 
@@ -107,8 +107,8 @@ class Login extends React.Component{
 
         return(
             <Container fluid className="login-container">
-                <Row className=" mt-4 text-aling-center">
-                    <Base />
+                <Row className="mt-4">
+                    
                 </Row>
                 <Row className='justify-content-center Row-General'>
                         <Form>

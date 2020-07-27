@@ -9,7 +9,7 @@ import {
   Row,
   Container,
 } from "reactstrap"; //importar elementos
-import Base from "../base/base";
+
 import "./index.css"; //importar css
 import axios from "axios";
 
@@ -38,7 +38,7 @@ const Registeruser = () => {
   return (
     <Container className="themed-container" fluid={true}>
       <Row className="row-first mt-4 text-aling-center">
-         <Base />
+    
       </Row>
       <div>
         <Form className="form" onSubmit={sendData}>

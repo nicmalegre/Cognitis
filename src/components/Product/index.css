@@ -11,74 +11,7 @@
    align-self: end;
 }
 
-Form {	
-  background-color: white;
-  width: 680px;
-  border-color:grey;
-  border-style: solid;
-  border-width: 1px;
-  position: absolute;
-  border-width: 1px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-} 
-
-.text-rule{
-  margin-bottom: 0;
-}
-
-.icon-check{
-  font-size: 20px;
-}
-
-.correct{
-  color: #28A745;
-}
-
-input{
-  border: 1px solid rgb(199, 199, 199);
-  border-radius: 4px;
-  margin: 0;
-  font-family: inherit;
-  display: block;
-  width: 100%;
-  padding: 6px;
-  outline-color: #007BFF;
-}
-
-.input-correct{
-  border: 1px solid #28A745;
-  border-radius: 4px;
-  outline-color: #28A745;
-}
-
-.input .placehoder{
-  padding-left: 5px;
-}
-
-.info-character{
-  color: rgb(36, 36, 95);
-  cursor: pointer;
-}
-
- 
-/*.item{
-  border: 1px solid rgb(252, 248, 248);
-  margin: 0px 0px 0px 0px;
-  padding: 10px 10px;
-  width: 650px;
-  height: 75px;
-}*/
-
-/*.row-first {
-  height:200px;
-  overflow: hidden;
-}*/
-
-.row-button{
-  padding-right: 0%;
-  padding-left: 100%;
-  
+.card{
+  margin-left: 20%;
+  margin-right: 20%;
 }

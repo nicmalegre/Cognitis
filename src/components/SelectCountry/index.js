@@ -8,7 +8,7 @@
 //Libraries and components imported to use in this component.
 import React from 'react'; 
 import { Form, FormGroup, Label, Col, Button, Input,Row, Container} from 'reactstrap'; 
-import Base from '../base/base';
+
 import "./selectcountry.css"; 
 
 
@@ -28,7 +28,7 @@ const SelectCountry = (props) => {
   return (  
     <Container fluid={true}>
         <Row className="row-first mt-4 text-aling-center">
-            <Base />
+            
         </Row>
         <Form className="form-verification-code">
             <FormGroup row>
