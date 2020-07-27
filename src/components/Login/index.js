@@ -106,14 +106,10 @@ class Login extends React.Component{
         )
 
         return(
-<<<<<<< HEAD
             <Container fluid className="login-container">
                 <Row className=" mt-4 text-aling-center">
                     <Base />
                 </Row>
-=======
-            <Container fluid>
->>>>>>> 3f0533bafb2e3f4167418aaadcd3bfc9bbf6aaf7
                 <Row className='justify-content-center Row-General'>
                         <Form>
                             <FormGroup>

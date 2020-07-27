@@ -3,22 +3,12 @@
  * 
  * 
  */
-<<<<<<< HEAD
 //Libraries and components imported to use in this component.
 import React from 'react'; 
 import { Form,InputGroup, InputGroupAddon, Button, Input,Row } from 'reactstrap'; 
 import "./verificationcode.css";
 import { Link } from 'react-router-dom';
 import Base from '../base/base';
-=======
-
-
-//Libraries and components imported to use in this component.
-import React from 'react'; 
-import { Form,InputGroup, InputGroupAddon, Button, Input } from 'reactstrap'; 
-import "./verificationcode.css";
-import { Link } from 'react-router-dom';
->>>>>>> 3f0533bafb2e3f4167418aaadcd3bfc9bbf6aaf7
 
 
 const VerificationCode = (props) => {
@@ -31,13 +21,9 @@ const VerificationCode = (props) => {
   return (
  
     <div className="div-verification-code">
-<<<<<<< HEAD
         <Row className="mt-4 text-aling-center">
                 < Base />
         </Row>
-=======
-
->>>>>>> 3f0533bafb2e3f4167418aaadcd3bfc9bbf6aaf7
         <Form className="form-verification-code">
             <InputGroup className="inputgroup-verification-code">
                 <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:"/>
