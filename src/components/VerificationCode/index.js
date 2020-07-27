@@ -5,9 +5,11 @@
  */
 //Libraries and components imported to use in this component.
 import React from 'react'; 
-import { Form,InputGroup, InputGroupAddon, Button, Input,Row } from 'reactstrap'; 
+import { Form,InputGroup, InputGroupAddon, Button, Input,Row, Col, Container, Card } from 'reactstrap'; 
 import "./verificationcode.css";
 import { Link } from 'react-router-dom';
+import Logo from '../base/logo';
+import Welcome from '../base/welcome';
 
 
 
@@ -20,22 +22,32 @@ const VerificationCode = (props) => {
 
   return (
  
-    <div className="div-verification-code">
-        <Row className="mt-4 text-aling-center">
-               
+    <Container fluid>
+        <Row>
+            <Col lg="6" md="3" xs="10">
+                < Logo />
+            </Col>
         </Row>
-        <Form className="form-verification-code">
-            <InputGroup className="inputgroup-verification-code">
-                <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:"/>
-                <InputGroupAddon addonType="append">
-                    <Link to="/Login">
-                        <Button  class="button-verification-code" color="primary" active >Next</Button>
-                    </Link>
-                </InputGroupAddon>
-            </InputGroup>       
-        </Form>
-
-    </div>
+        <Row className="text-center" style={{marginBottom:30}}>
+            <Col lg="12" xs="12">
+                < Welcome />
+            </Col>
+        </Row>
+        <Row>
+            <Col lg="12">
+                <Card id="card-verificationCode" body>
+                    <InputGroup className="inputgroup-verification-code">
+                        <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:"/>
+                        <InputGroupAddon addonType="append">
+                            <Link to="/Login">
+                                <Button  class="button-verification-code" color="primary" active >Next</Button>
+                            </Link>
+                        </InputGroupAddon>
+                    </InputGroup> 
+                </Card>
+            </Col>
+        </Row>
+    </Container>
   );
 }
 

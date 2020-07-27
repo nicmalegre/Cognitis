@@ -42,7 +42,7 @@ class Product extends React.Component {
               </Row>
               <Row>
                 <Col lg="12">
-                  <Card className="card" body>
+                  <Card id="card-product" body>
                       <h3>Please select the product to install</h3>
                       <div>
                         <CustomInput type="checkbox" id="exampleCustomCheckbox" label="Cognitis 360" />

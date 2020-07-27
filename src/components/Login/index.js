@@ -1,12 +1,13 @@
 import React from 'react';
-import {Container, Button, FormGroup, Label, Input, Form, Row, CustomInput, Tooltip, Card} from 'reactstrap';
+import {Container, Button, FormGroup, Label, Input, Form, Row, CustomInput, Tooltip, Card, Col} from 'reactstrap';
 import { Link } from "react-router-dom";
 import { BsInfoCircleFill} from "react-icons/bs";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 
 import "./index.css";
 
-
+import Logo from '../base/logo';
+import Welcome from '../base/welcome';
 
 
 class Login extends React.Component{
@@ -106,43 +107,49 @@ class Login extends React.Component{
         )
 
         return(
-            <Container fluid className="login-container">
-                <Row className="mt-4">
-                    
+            <Container fluid>
+                <Row>
+                    <Col lg="6" md="3" xs="10">
+                        < Logo />
+                    </Col>
                 </Row>
-                <Row className='justify-content-center Row-General'>
-                        <Form>
-                            <FormGroup>
-                                <Label>Enter a new password for <b>'correo@correo.com'</b></Label><br/>
-                                <Label>Make sure to include at least:</Label><br/>
-                                {controlCharacters}
-                                {controlUppercase}
-                                {controlLowercase}
-                                {controlNumber}
-                                {controlSpecial}
-                                <Tooltip placement="right" isOpen={tooltipOpen} target="info-character" toggle={this.toggle}>
-                                    Los caracteres especiales son: ! @ # $ % ^ & * _  -
-                                </Tooltip>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label><b>New Password</b></Label>
-                                {controlInputPass}
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="examplePassword2"><b>Confirm New Password</b></Label>
-                                {controlInputPassConfirm}    
-                            </FormGroup>
-                            <Row className='justify-content-center'>
-                                <Link to="SelectCountry">
-                                    <Button  color="primary">Create Password</Button>
-                                </Link>
-                            </Row>
-                            <Card>
-                                <h6>{newPass}</h6>
-                                <h6>{newPassConfirm}</h6>
-                            </Card>
-                        </Form>
-                    
+                <Row className="text-center" style={{marginBottom:30}}>
+                    <Col lg="12" xs="12">
+                        < Welcome />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col lg="12">
+                        <Card id="card-password">
+                            <div className="div-password">
+                                <FormGroup>
+                                    <Label>Enter a new password for <b>'correo@correo.com'</b></Label><br/>
+                                    <Label>Make sure to include at least:</Label><br/>
+                                    {controlCharacters}
+                                    {controlUppercase}
+                                    {controlLowercase}
+                                    {controlNumber}
+                                    {controlSpecial}
+                                    <Tooltip placement="right" isOpen={tooltipOpen} target="info-character" toggle={this.toggle}>
+                                        Los caracteres especiales son: ! @ # $ % ^ & * _  -
+                                    </Tooltip>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label><b>New Password</b></Label>
+                                    {controlInputPass}
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="examplePassword2"><b>Confirm New Password</b></Label>
+                                    {controlInputPassConfirm}    
+                                </FormGroup>
+                                <Row className='justify-content-center'>
+                                    <Link to="SelectCountry">
+                                        <Button  color="primary">Create Password</Button>
+                                    </Link>
+                                </Row>
+                            </div>
+                        </Card>
+                    </Col>
                 </Row>
             </Container>
         )

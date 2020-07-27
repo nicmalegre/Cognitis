@@ -8,10 +8,15 @@ import {
   Input,
   Row,
   Container,
+  Col,
+  Card
 } from "reactstrap"; //importar elementos
 
 import "./index.css"; //importar css
 import axios from "axios";
+
+import Logo from '../base/logo';
+import Welcome from '../base/welcome';
 
 const Registeruser = () => {
   //clase 'Nombre' extends React.component
@@ -36,35 +41,44 @@ const Registeruser = () => {
 
   //Funcion que renderiza el componente visual jsx
   return (
-    <Container className="themed-container" fluid={true}>
-      <Row className="row-first mt-4 text-aling-center">
-    
-      </Row>
-      <div>
-        <Form className="form" onSubmit={sendData}>
-          <InputGroup>
-            <Input
-              type="email"
-              name="email"
-              placeholder="Enter mail"
-              onChange={handleInputChange}
-              required
-            />
-            <InputGroupAddon addonType="append">
-              <Link to="/VerificationCode">
-                <Button
-                  className="button-verification-code"
-                  color="primary"
-                  active
-                >
-                  Next
-                </Button>
-              </Link>
-            </InputGroupAddon>
-          </InputGroup>
-        </Form>
-      </div>
-    </Container>
+    <Container fluid>
+              <Row>
+                <Col lg="6" md="3" xs="10">
+                  < Logo />
+                </Col>
+              </Row>
+              <Row className="text-center" style={{marginBottom:30}}>
+                <Col lg="12" xs="12">
+                  < Welcome />
+                </Col>
+              </Row>
+              <Row>
+                <Col lg="12">
+                  <Card id="card-user" body>
+                    <InputGroup>
+                      <Input
+                        type="email"
+                        name="email"
+                        placeholder="Enter mail"
+                        onChange={handleInputChange}
+                        required
+                      />
+                      <InputGroupAddon addonType="append">
+                        <Link to="/VerificationCode">
+                          <Button
+                            className="button-verification-code"
+                            color="primary"
+                            active
+                          >
+                            Next
+                          </Button>
+                        </Link>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </Card>
+                </Col>
+              </Row>
+      </Container>
   );
 };
 
