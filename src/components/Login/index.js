@@ -107,6 +107,9 @@ class Login extends React.Component{
 
         return(
             <Container fluid>
+                <Row className="row-first mt-4 text-aling-center">
+                    <Base />
+                </Row>
                 <Row className='justify-content-center Row-General'>
                         <Form>
                             <FormGroup>
