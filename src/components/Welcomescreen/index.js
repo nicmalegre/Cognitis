@@ -30,8 +30,8 @@ const Welcomescreen = () => {
                 </Col>
             </Row>
             <div>
-               <Col md={{ size: 3, offset: 5 }}>
-                <Link className="btn btn-warning btn-lg" to="/product">
+               <Col md={{ size: 8, offset: 2 }} className="d-flex justify-content-center">
+                <Link className="btn btn-warning btn-lg button" to="/product">
                     Comenzar
                 </Link>
               </Col>

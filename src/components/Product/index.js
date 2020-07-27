@@ -27,16 +27,15 @@ class Product extends React.Component {
     );
     return (
       <Container className="themed-container" fluid={true}>
-            <Row className="row-first mt-4 text-aling-center">
+             <Row className=" mt-4 text-aling-center">
               <Base />
             </Row>
             <Row className= "rowtwo">
-              <Col md={{ size: 6, offset: 3 }}>
-                <h1 className="text aling-center">
+              <Col md={{ size: 8, offset: 2 }} className="text-aling-center">
+                <h1>
                   Please select the Product to Install
                 </h1>
                 <Form className="justify-content-center">
-                  <Container>
                     <FormGroup row className="item">
                       <Label for="checkbox1" md={10} className=" text-product text-center h1">
                         Cognitis 360
@@ -67,14 +66,11 @@ class Product extends React.Component {
                         </FormGroup>
                       </Col>
                     </FormGroup>
-                  </Container>
                 </Form>
               </Col>
-              <Col md={{ size: 2, offset: 7 }} className="row-button" >
                 <Link className="btn btn-warning btn-lg" to="/user">
                     Next
                 </Link>
-            </Col>
             </Row>
       </Container>
     );

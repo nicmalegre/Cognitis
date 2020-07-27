@@ -6,7 +6,7 @@ import "./index.css";
 const Base = () => {
   return (
             <Fragment>
-                <Col xs="3" className="text-center">
+                <Col xs="2" className="text-center">
                     <img src={logo} alt="logo" className="center-block"/>
                     <p className="text-white">
                     <span className="font-weight-bold">ECOMMERCE INTEGRADO</span>
@@ -14,7 +14,7 @@ const Base = () => {
                     ERP + MARKETPLACE + CLOUD
                     </p>
                 </Col>
-                <Col xs="7" className="mt-5">
+                <Col xs="8" className="mt-5 text-center" >
                     <h1 className="text">Welcome to the registration Wizard</h1>
                 </Col>
             </Fragment>

@@ -1,10 +1,21 @@
-Form{	
+/*Form {	
+    background-color: white;
+    margin: 60px auto;
+    padding: 30px 30px;
+    width: 600px;
+    border-color:grey;
+    border-style: solid;
+    border-width: 1px;
+    margin-top: 250px;
+} 
+*/
+Form {	
     background-color: white;
     padding: 30px 30px;
     width: 800px;
     border-color:grey;
     border-style: solid;
-    position: absolute;
+    /*position: absolute;*/
     border-width: 1px;
     top: 50%;
     left: 50%;
@@ -16,3 +27,4 @@ Form{
         width: 50%;
     }
   }
+

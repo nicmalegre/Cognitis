@@ -1,6 +1,7 @@
 import React from 'react';
 import {Container, Button, FormGroup, Label, Input, Form, Row, CustomInput, Tooltip} from 'reactstrap';
 import { BsCheckCircle, BsInfoCircleFill } from "react-icons/bs";
+import Base from '../base/base';
 import "./index.css";
 
 
@@ -24,6 +25,9 @@ class Login extends React.Component{
         let {tooltipOpen} = this.state
         return(
             <Container fluid className="login-container">
+                <Row className=" mt-4 text-aling-center">
+                    <Base />
+                </Row>
                 <Row className='justify-content-center Row-General'>
                         <Form>
                             <FormGroup>

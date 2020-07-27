@@ -41,7 +41,7 @@ const Registeruser = () => {
          <Base />
       </Row>
       <div>
-        <Form onSubmit={sendData}>
+        <Form className="form" onSubmit={sendData}>
           <InputGroup>
             <Input
               type="email"
