@@ -51,13 +51,15 @@ const Registeruser = () => {
               required
             />
             <InputGroupAddon addonType="append">
-              <Button
-                className="button-verification-code"
-                color="primary"
-                active
-              >
-                Next
-              </Button>
+              <Link to="/VerificationCode">
+                <Button
+                  className="button-verification-code"
+                  color="primary"
+                  active
+                >
+                  Next
+                </Button>
+              </Link>
             </InputGroupAddon>
           </InputGroup>
         </Form>
