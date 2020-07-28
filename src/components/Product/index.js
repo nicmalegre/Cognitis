@@ -38,13 +38,12 @@ class Product extends React.Component {
   handleProduct(props) {
     console.log(this.state.c1);
     if (this.state.c1) {
-       props.changeProduct(0)
-
+       //props.changeProduct(0)
       }
      else if (this.state.c2) {
-      props.changeProduct(1)
+      //props.changeProduct(1)
     } else {
-      props.changeProduct(2)
+      //props.changeProduct(2)
     }
     console.log(props.user);
     //const product = this.state.product;
