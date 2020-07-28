@@ -13,35 +13,41 @@ import Base from "../base/base";
 import "./index.css"; //importar css
 import axios from "axios";
 
-const Registeruser = () => {
+const Registeruser = (props) => {
   //clase 'Nombre' extends React.component
 
-  const [user, setDatos] = useState({
+  
+  const [user] = useState({
     email: "",
   });
-
+  
+  
   const handleInputChange = (event) => {
-    setDatos({
-      ...user,
-      [event.target.name]: event.target.value,
-    });
+    props.changeEmail(event.target.value);
   };
 
   const sendData = (event) => {
-    event.preventDefault();
-    //console.log(user);  //for example
-    axios.post("http://localhost:4000/api/verificationcode", user);
-    //window.location.href = '/verification';  // redirect to verification path
+    //event.preventDefault();
+
+    axios.post('http://localhost:3000/api/verificationcode', {
+      mail: 
+    })
+    .then( res => { 
+      props.changeCodeTime(res.data.verificationCode, res.data.expireAt)
+          
+    } ).catch(err => console.log(err));
+    
   };
 
   //Funcion que renderiza el componente visual jsx
   return (
+    
     <Container className="themed-container" fluid={true}>
       <Row className="row-first mt-4 text-aling-center">
          <Base />
       </Row>
       <div>
-        <Form className="form" onSubmit={sendData}>
+        <Form className="form" >
           <InputGroup>
             <Input
               type="email"
@@ -56,6 +62,7 @@ const Registeruser = () => {
                   className="button-verification-code"
                   color="primary"
                   active
+                  onClick={sendData}
                 >
                   Next
                 </Button>
