@@ -20,7 +20,7 @@ import Logo from "../base/logo";
 import Welcome from "../base/welcome";
 
 class Product extends React.Component {
-
+      
       state = {
       isChecked: false,
       isChecked2: false,
@@ -70,13 +70,13 @@ class Product extends React.Component {
     handleProduct =(props)=> {
     console.log(this.props);
     if (this.state.c1) {
-       props.changeProduct(0)
+       this.props.changeProduct(0)
 
       }
     else if (this.state.c2) {
-       props.changeProduct(1)
+       this.props.changeProduct(1)
     } else {
-         props.changeProduct(2)
+         this.props.changeProduct(2)
     }
     //const product = this.state.product;
     //axios.post("http://localhost:4000/api/verificationcode", product);
@@ -165,7 +165,7 @@ class Product extends React.Component {
             style={{ marginTop: 20 }}
           >
             <Link to="/user">
-              <Button color="warning" style={{ borderColor: "black" }}>
+              <Button color="warning" onClick={this.handleProduct} style={{ borderColor: "black" }}>
                 <b>Next</b>
               </Button>
             </Link>
