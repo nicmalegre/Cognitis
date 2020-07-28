@@ -36,6 +36,14 @@ input{
     border: 1px solid #28A745;
     border-radius: 4px;
     outline-color: #28A745;
+    width: 93%;
+}
+
+.input-message{
+    color: #28A745;
+    font-weight: bolder ;
+    font-family: sans-serif;
+    
 }
 
 .input .placehoder{

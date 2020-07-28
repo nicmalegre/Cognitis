@@ -1,14 +1,18 @@
 import React from 'react';
-import {Container, Button, FormGroup, Label, Input, Form, Row, CustomInput, Tooltip, Card, Col} from 'reactstrap';
+import {Container, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, Form, Row, CustomInput, Tooltip, Card, Col} from 'reactstrap';
 import { Link } from "react-router-dom";
 import { BsInfoCircleFill} from "react-icons/bs";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
-
+import { FaEye } from 'react-icons/fa';
 import "./index.css";
 
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
 
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEye } from "@fortawesome/free-solid-svg-icons";
+
+const eye = <FaEye/>;
 
 class Login extends React.Component{
     constructor(props){
@@ -17,14 +21,23 @@ class Login extends React.Component{
             tooltipOpen: false,
             newPass: '',
             newPassConfirm:null,
+            passwordShown: false
         }   
     }
 
     handleInputChange = (event) =>{ //This function is for control the input that put the user.
         this.setState({
             [event.target.name]: event.target.value,
+            
         })
     }
+
+    togglePasswordVisiblity = () => {
+        console.log('clickeando')
+        this.setState({
+            passwordShown: !this.state.passwordShown});
+        console.log(this.state.passwordShown)
+    };
 
     toggle = () => { //This function is for control the Tooltip specials characters.
         this.setState({
@@ -92,19 +105,43 @@ class Login extends React.Component{
 
         //Function for change the border color of the input if the password follows the defined criteria.
         let controlInputPass = ((lengthRight) && (upperRight) && (lowerRight) && (numberRight) && (specialRight) ) ? (
-            <input className="input-correct" type="password" name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/>
+            
+            <input className="input-correct" type={this.state.passwordShown ? "text" : "password"} name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/>
+
+        
         ) : //If not
         (
-            <input type="password" name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/> 
+            <input  type={this.state.passwordShown ? "text" : "password"} name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/> 
         )
 
         //Function for change the border color of the second input if the password match with the first input.
         let controlInputPassConfirm = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
-            <input className="input-correct" type="password" name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>
+           
+            <input className="input-correct" type={this.state.passwordShown ? "text" : "password"} name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>  
+
+            
         ) : //If not
         (
-            <input type="password" name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>
+            <input type={this.state.passwordShown ? "text" : "password"} name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>
         )
+
+        let controlGoodMessage = ((lengthRight) && (upperRight) && (lowerRight) && (numberRight) && (specialRight) ) ? (
+           
+            <Label className="input-message">GOOD</Label>
+            
+        ) : //If not
+        (
+            <Label></Label>
+        )
+        let controlMatchMessage = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
+           
+            <Label className="input-message">MATCH</Label>
+            
+        ) : //If not
+        (
+            <Label></Label>
+        )
+
 
         return(
             <Container fluid>
@@ -136,11 +173,24 @@ class Login extends React.Component{
                                 </FormGroup>
                                 <FormGroup>
                                     <Label><b>New Password</b></Label>
-                                    {controlInputPass}
+                                    <InputGroup>
+                                        {controlInputPass}
+                                        <InputGroupAddon addonType="append">
+                                            {controlGoodMessage}
+                                        </InputGroupAddon>
+                                        <i onClick={this.togglePasswordVisiblity}>{eye}</i>{" "}
+                                    </InputGroup> 
+                                   
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="examplePassword2"><b>Confirm New Password</b></Label>
-                                    {controlInputPassConfirm}    
+                                    <InputGroup>
+                                        {controlInputPassConfirm}
+                                        <InputGroupAddon addonType="append">
+                                            {controlMatchMessage}
+                                        </InputGroupAddon>
+                                        <i onClick={this.togglePasswordVisiblity}>{eye}</i>{" "}
+                                    </InputGroup> 
                                 </FormGroup>
                                 <Row className='justify-content-center'>
                                     <Link to="SelectCountry">

@@ -1,44 +1,34 @@
-import React, { useState } from "react"; //importacion de la libreria
+import React from "react"; //importacion de la libreria
 import { Link } from "react-router-dom";
-import {
-  InputGroup,
-  InputGroupAddon,
-  Button,
-  Input,
-  Row,
-  Container,
-  Col,
-  Card
-} from "reactstrap"; //importar elementos
+import { InputGroup, InputGroupAddon, Button, Input, Row, Container, Col, Card } from "reactstrap"; //importar elementos
 import "./index.css"; //importar css
 import axios from "axios";
-
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
 
-const Registeruser = () => {
+const Registeruser = (props) => {
   //clase 'Nombre' extends React.component
 
-  const [user, setDatos] = useState({
-    email: "",
-  });
-
   const handleInputChange = (event) => {
-    setDatos({
-      ...user,
-      [event.target.name]: event.target.value,
-    });
+    props.changeEmail(event.target.value);
   };
 
   const sendData = (event) => {
-    event.preventDefault();
-    //console.log(user);  //for example
-    axios.post("http://localhost:4000/api/verificationcode", user);
-    //window.location.href = '/verification';  // redirect to verification path
+    //event.preventDefault();
+
+    axios.post('http://localhost:3000/api/verificationcode', {
+      mail: "sdf"
+    })
+    .then( res => { 
+      props.changeCodeTime(res.data.verificationCode, res.data.expireAt)
+          
+    }).catch(err => console.log(err));
+    
   };
 
   //Funcion que renderiza el componente visual jsx
   return (
+    
     <Container fluid>
               <Row>
                 <Col lg="6" md="3" xs="10">
@@ -67,6 +57,7 @@ const Registeruser = () => {
                             className="button-verification-code"
                             color="primary"
                             active
+                            onClick={sendData}
                           >
                             Next
                           </Button>

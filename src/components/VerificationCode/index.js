@@ -15,11 +15,32 @@ import Welcome from '../base/welcome';
 
 const VerificationCode = (props) => {
 
+    const { verificationCode, expireAt } = props
 
-    // const inputChange = (e) => {
-    //     console.log(e.target.value);
-    // }
+    console.log(verificationCode);
+    console.log(expireAt);
 
+    const expireCode = (event) => {
+
+        event.preventDefault();
+
+
+        
+        
+        // const expireTime =  new Date(expireAt); 
+                
+        // if (expireTime >= new Date() ) {
+            
+        //     if (verificationCode != event.target.value ) {
+
+        //         console.log('Error')
+
+        //     } else { console.log('Iguales')}
+
+        // } 
+
+    }
+    
   return (
  
     <Container fluid>
@@ -40,7 +61,7 @@ const VerificationCode = (props) => {
                         <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:"/>
                         <InputGroupAddon addonType="append">
                             <Link to="/Login">
-                                <Button  class="button-verification-code" color="primary" active >Next</Button>
+                                <Button  class="button-verification-code" color="primary" onChange={expireCode} active >Next</Button>
                             </Link>
                         </InputGroupAddon>
                     </InputGroup> 
@@ -49,6 +70,8 @@ const VerificationCode = (props) => {
         </Row>
     </Container>
   );
+
+  
 }
 
 export default VerificationCode;
