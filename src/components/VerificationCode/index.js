@@ -4,26 +4,28 @@
  * 
  */
 //Libraries and components imported to use in this component.
-import React, {useState} from 'react'; 
-import { Form,InputGroup, InputGroupAddon, Button, Input,Row } from 'reactstrap'; 
+import React from 'react'; 
+import { InputGroup, InputGroupAddon, Button, Input,Row, Col, Container, Card } from 'reactstrap'; 
 import "./verificationcode.css";
 import { Link } from 'react-router-dom';
-import Base from '../base/base';
-import axios from "axios";
+import Logo from '../base/logo';
+import Welcome from '../base/welcome';
+
 
 
 const VerificationCode = (props) => {
 
-    
+    const { verificationCode, expireAt } = props
+
+    console.log(verificationCode);
+    console.log(expireAt);
+
     const expireCode = (event) => {
 
         event.preventDefault();
 
 
-        const { verificationCode, expireAt } = props
-
-        console.log(verificationCode);
-        console.log(expireAt);
+        
         
         // const expireTime =  new Date(expireAt); 
                 
@@ -38,28 +40,35 @@ const VerificationCode = (props) => {
         // } 
 
     }
-
-
-
     
   return (
-    
-    <div className="div-verification-code">
-        <Row className="mt-4 text-aling-center">
-                < Base />
+ 
+    <Container fluid>
+        <Row>
+            <Col lg="6" md="3" xs="10">
+                < Logo />
+            </Col>
         </Row>
-        <Form className="form-verification-code">
-            <InputGroup className="inputgroup-verification-code">
-                <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:"/>
-                <InputGroupAddon addonType="append">
-                    <Link to="/Login">
-                        <Button  class="button-verification-code" color="primary" active  onClick={expireCode}>Next</Button>
-                    </Link>
-                </InputGroupAddon>
-            </InputGroup>       
-        </Form>
-        
-    </div>
+        <Row className="text-center" style={{marginBottom:30}}>
+            <Col lg="12" xs="12">
+                < Welcome />
+            </Col>
+        </Row>
+        <Row>
+            <Col lg="12">
+                <Card id="card-verificationCode" body>
+                    <InputGroup className="inputgroup-verification-code">
+                        <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:"/>
+                        <InputGroupAddon addonType="append">
+                            <Link to="/Login">
+                                <Button  class="button-verification-code" color="primary" onChange={expireCode} active >Next</Button>
+                            </Link>
+                        </InputGroupAddon>
+                    </InputGroup> 
+                </Card>
+            </Col>
+        </Row>
+    </Container>
   );
 
   

@@ -1,9 +1,12 @@
 import React from "react";
 import {Link} from 'react-router-dom';
-import Base from "../base/base";
-import { Row, Col, Form, Container, FormGroup, Input, Label } from "reactstrap";
+import { Row, Col, Form, Container, FormGroup, Input, Label, CustomInput, Button, Card, CardTitle, CardText } from "reactstrap";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import "./index.css";
+
+import Logo from '../base/logo';
+import Welcome from '../base/welcome';
+
 
 class Product extends React.Component {
   constructor(props) {
@@ -26,51 +29,35 @@ class Product extends React.Component {
       </i>
     );
     return (
-      <Container className="themed-container" fluid={true}>
-             <Row className=" mt-4 text-aling-center">
-              <Base />
-            </Row>
-            <Row className= "rowtwo">
-              <Col md={{ size: 8, offset: 2 }} className="text-aling-center">
-                <h1>
-                  Please select the Product to Install
-                </h1>
-                <Form className="justify-content-center">
-                    <FormGroup row className="item">
-                      <Label for="checkbox1" md={10} className=" text-product text-center h1">
-                        Cognitis 360
-                      </Label>
-                      <Col md={{ size: 2 }} className="text-center">
-                        <FormGroup check>
-                          <Input type="checkbox" id="checkbox1" />{" "}
-                        </FormGroup>
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row className="item">
-                      <Label for="checkbox2" md={10} className="text-center text-product h1">
-                        Cognitis Marketplace
-                      </Label>
-                      <Col md={{ size: 2 }}>
-                        <FormGroup check>
-                          <Input type="checkbox" id="checkbox2" />{" "}
-                        </FormGroup>
-                      </Col>
-                    </FormGroup>
-                    <FormGroup row className="item">
-                      <Label for="checkbox3" md={10} className="text-center text-product h1">
-                        Cognitis ERP
-                      </Label>
-                      <Col md={{ size: 2 }}>
-                        <FormGroup check>
-                          <Input type="checkbox" id="checkbox3" />{" "}
-                        </FormGroup>
-                      </Col>
-                    </FormGroup>
-                </Form>
-              </Col>
-                <Link className="btn btn-warning btn-lg" to="/user">
-                    Next
+      <Container fluid>
+              <Row>
+                <Col lg="6" md="3" xs="10">
+                  < Logo />
+                </Col>
+              </Row>
+              <Row className="text-center" style={{marginBottom:30}}>
+                <Col lg="12" xs="12">
+                  < Welcome />
+                </Col>
+              </Row>
+              <Row>
+                <Col lg="12">
+                  <Card id="card-product" body>
+                      <h3>Please select the product to install</h3>
+                      <div>
+                        <CustomInput type="checkbox" id="exampleCustomCheckbox" label="Cognitis 360" />
+                        <CustomInput type="checkbox" id="exampleCustomCheckbox2" label="Cognitis Marketplace" />
+                        <CustomInput type="checkbox" id="exampleCustomCheckbox3" label="Cognitis ERP" />
+                      </div>
+                  </Card>
+                </Col>
+              </Row>
+              <Row>
+              <Col lg="12" className="d-flex justify-content-center" style={{marginTop:10}}>
+                <Link to="/user">
+                    <Button color="warning" style={{borderColor:"black"}}><b>Next</b></Button>
                 </Link>
+              </Col>
             </Row>
       </Container>
     );

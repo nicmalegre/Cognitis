@@ -1,8 +1,17 @@
 img {
-  height: 25%;  
+  max-width: 70%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+ 
 }
 
 .text{
   color: rgb(40, 40, 168);
 }
 
+.dropdown-lenguage{
+  text-align: right;
+  margin-left: auto;
+  margin-right: 50px;
+}

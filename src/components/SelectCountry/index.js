@@ -4,12 +4,14 @@
  * 
  */
 
-
 //Libraries and components imported to use in this component.
 import React from 'react'; 
-import { Form, FormGroup, Label, Col, Button, Input,Row, Container} from 'reactstrap'; 
-import Base from '../base/base';
+import { Form, FormGroup, Label, Col, Button, Input,Row, Container, Card} from 'reactstrap'; 
+
 import "./selectcountry.css"; 
+
+import Logo from '../base/logo';
+import Welcome from '../base/welcome';
 
 
 const SelectCountry = (props) => {
@@ -26,30 +28,39 @@ const SelectCountry = (props) => {
 
 
   return (  
-    <Container fluid={true}>
-        <Row className="row-first mt-4 text-aling-center">
-            <Base />
+    <Container fluid>
+        <Row>
+            <Col lg="6" md="3" xs="10">
+                < Logo />
+            </Col>
         </Row>
-        <Form className="form-verification-code">
-            <FormGroup row>
-                    <Label for="exampleSelect" sm={3}>Select Country</Label>
-                    <Col sm={7}>
-                        <Input type="select" name="select" id="exampleSelect" onChange={inputChange}>
-                            
-                            {/* Function to insert the countries of the array like items in dropdown menu */}
-                            {countries.map( country => 
-                                    <option key={country} value={country}>
-                                        {country}
-                                    </option>
-                            )}
-                                                       
-                        </Input>
-                    </Col>
-                    <Button type="submit" color="primary" active >Next</Button>
-            </FormGroup>
-
-       
-        </Form>
+        <Row className="text-center" style={{marginBottom:30}}>
+            <Col lg="12" xs="12">
+                < Welcome />
+            </Col>
+        </Row>
+        <Row>
+            <Col lg="12" md="8" xs="12">
+                <Card id="card-selectCountry" body>
+                    <FormGroup row>
+                            <Label for="exampleSelect" sm={3}>Select Country</Label>
+                            <Col sm={7}>
+                                <Input type="select" name="select" id="exampleSelect" onChange={inputChange}>
+                                    
+                                    {/* Function to insert the countries of the array like items in dropdown menu */}
+                                    {countries.map( country => 
+                                            <option key={country} value={country}>
+                                                {country}
+                                            </option>
+                                    )}
+                                                            
+                                </Input>
+                            </Col>
+                            <Button type="submit" color="primary" active >Next</Button>
+                    </FormGroup>
+                </Card>
+            </Col>
+        </Row>
     </Container>
   );
 }

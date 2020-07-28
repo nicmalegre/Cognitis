@@ -1,15 +1,7 @@
-Form {	
-    background-color: white;
-    padding: 30px 30px;
-    width: 800px;
-    border-color:grey;
-    border-style: solid;
-    /*position: absolute;*/
-    border-width: 1px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-} 
+#card-verificationCode{
+  margin-left: 10%;
+  margin-right: 10%;
+}
 
   @media (max-with:400px){
     Form {
