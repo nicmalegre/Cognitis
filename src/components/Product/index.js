@@ -25,9 +25,10 @@ class Product extends React.Component {
       isChecked: false,
       isChecked2: false,
       isChecked3: false,
+      product: '',
     };
 
-  handleInputChange(event) {
+    handleInputChange=(event) =>{
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
@@ -37,9 +38,8 @@ class Product extends React.Component {
       isChecked2: value,
       isChecked3: value
     });
-    console.log(this.state.isChecked,this.state.isChecked2)
   }
-  handleInputChangeOne(event) {
+  handleInputChangeOne=(event) => {
     const target = event.target;
     console.log(target.name,target.checked, target.value);
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -52,7 +52,6 @@ class Product extends React.Component {
         isChecked2:value,
         isChecked3: value,
       });
-      console.log(this.state.isChecked);
     }
     else if ((name == "isChecked3") && (this.state.isChecked2)){
       this.setState({
@@ -68,6 +67,20 @@ class Product extends React.Component {
   } 
 
   }
+    handleProduct =(props)=> {
+    console.log(this.props);
+    if (this.state.c1) {
+       props.changeProduct(0)
+
+      }
+    else if (this.state.c2) {
+       props.changeProduct(1)
+    } else {
+         props.changeProduct(2)
+    }
+    //const product = this.state.product;
+    //axios.post("http://localhost:4000/api/verificationcode", product);
+ }
 
   render() {
     return (
