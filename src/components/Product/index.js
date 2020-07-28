@@ -20,18 +20,12 @@ import Logo from "../base/logo";
 import Welcome from "../base/welcome";
 
 class Product extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+
+      state = {
       isChecked: false,
       isChecked2: false,
       isChecked3: false,
     };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleInputChangeOne = this.handleInputChangeOne.bind(this);
-    
-  }
 
   handleInputChange(event) {
     const target = event.target;
