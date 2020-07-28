@@ -1,7 +1,6 @@
 import React, { useState } from "react"; //importacion de la libreria
 import { Link } from "react-router-dom";
 import {
-  Form,
   InputGroup,
   InputGroupAddon,
   Button,
@@ -11,7 +10,6 @@ import {
   Col,
   Card
 } from "reactstrap"; //importar elementos
-
 import "./index.css"; //importar css
 import axios from "axios";
 
