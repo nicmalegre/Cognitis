@@ -55,8 +55,9 @@ const App = () => {
  return(
   <BrowserRouter>
       <Route path='/' exact component={Welcomescreen} />
-      <Route path='/product' component = {Product} changeProduct={handleChangeProduct}/>
-      {/*<Route path="/user" component={Registeruser} />*/}
+      <Route path="/product"> 
+        <Product changeProduct={handleChangeProduct}/>   
+      </Route>      
       <Route path="/user"> 
         <Registeruser changeEmail={handleChangeEmail} changeCodeTime={handleChangeCodeandTime}/>   
       </Route>

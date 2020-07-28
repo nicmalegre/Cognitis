@@ -21,7 +21,7 @@ import Welcome from "../base/welcome";
 
 class Product extends React.Component {
   constructor(props) {
-    super(props);
+    //super(props);
     this.state = {
       c1: false,
       c2: false,
@@ -35,20 +35,30 @@ class Product extends React.Component {
     this.handleProduct = this.handleProduct.bind(this);
   }
 
-  handleProduct(props) {
-    console.log(this.state.c1);
-    if (this.state.c1) {
-       props.changeProduct(0)
+ // handleProduct(e) {
+  //  super(props);
+  //  console.log(this.props);
+  //  console.log(this.state.c1);
+   // if (this.state.c1) {
+       //props.changeProduct(0)
 
-      }
-     else if (this.state.c2) {
-      props.changeProduct(1)
-    } else {
-      props.changeProduct(2)
-    }
-    console.log(props.user);
+   //   }
+    // else if (this.state.c2) {
+      //props.changeProduct(1)
+  //  } else {
+      //props.changeProduct(2)
+   // }
     //const product = this.state.product;
     //axios.post("http://localhost:4000/api/verificationcode", product);
+ // }
+
+   handleProduct = (props)=> {
+    console.log(props);
+    return (
+      <div className="Comment">
+          ghfjhg 
+      </div>
+    );
   }
 
   handleInputChange(event) {
