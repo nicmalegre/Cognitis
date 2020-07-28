@@ -64,7 +64,9 @@ const App = () => {
         <VerificationCode codeVerification={code} />   
       </Route>
       {/*<Route  path="/verificationcode" component={VerificationCode} /> */}
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/login" component={Login}>
+        <Login changePassword={handleChangePassword} />
+      </Route>
       <Route  path="/selectcountry" >
          <SelectCountry changeCountry={handleChangeCountry}/>
       </Route>
