@@ -11,7 +11,10 @@ import VerificationCode from "./components/VerificationCode";
 const App = () => {
 
   const [user, setDatos] = useState({
-    email: ""
+    product: "",
+    email: "",
+    password: "",
+    country: ""
   });
 
 
@@ -33,11 +36,26 @@ const App = () => {
     })
   }
 
+  const handleChangeProduct = (dato) => {
+    setDatos({
+      product: dato
+    })
+  }
+  const handleChangePassword = (dato) => {
+    setDatos({
+      password: dato
+    })
+  }
+  const handleChangeCountry = (dato) => {
+    setDatos({
+      country: dato
+    })
+  }
 
  return(
   <BrowserRouter>
       <Route path='/' exact component={Welcomescreen} />
-      <Route path='/product' component = {Product} />
+      <Route path='/product' component = {Product} changeProduct={handleChangeProduct}/>
       {/*<Route path="/user" component={Registeruser} />*/}
       <Route path="/user"> 
         <Registeruser changeEmail={handleChangeEmail} changeCodeTime={handleChangeCodeandTime}/>   
@@ -47,7 +65,9 @@ const App = () => {
       </Route>
       {/*<Route  path="/verificationcode" component={VerificationCode} /> */}
       <Route exact path="/login" component={Login} />
-      <Route  path="/selectcountry" component={SelectCountry} />
+      <Route  path="/selectcountry" >
+         <SelectCountry changeCountry={handleChangeCountry}/>
+      </Route>
   </BrowserRouter>
  )
 }

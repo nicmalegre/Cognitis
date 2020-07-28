@@ -16,10 +16,6 @@ import Welcome from '../base/welcome';
 const VerificationCode = (props) => {
 
     const { verificationCode, expireAt } = props
-
-    console.log(verificationCode);
-    console.log(expireAt);
-
     const expireCode = (event) => {
 
         event.preventDefault();

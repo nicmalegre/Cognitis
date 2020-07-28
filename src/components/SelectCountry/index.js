@@ -21,9 +21,11 @@ const SelectCountry = (props) => {
 
     //Arrow function to capture the name of the selected country with the value property.
     const inputChange = (e) => {
-        console.log(e.target.value); //Temporaly only show the value on console 
+        console.log(e.target.value); //Temporaly only show the value on console
+        props.changeCountry(e.target.value); 
     }
 
+ 
  
 
 

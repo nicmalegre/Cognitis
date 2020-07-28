@@ -35,22 +35,19 @@ class Product extends React.Component {
     this.handleProduct = this.handleProduct.bind(this);
   }
 
-  handleProduct(e) {
+  handleProduct(props) {
     console.log(this.state.c1);
     if (this.state.c1) {
-      this.setState({
-        product: 0,
-      });
-    } else if (this.state.c2) {
-      this.setState({
-        product: 1,
-      });
+       props.changeProduct(0)
+
+      }
+     else if (this.state.c2) {
+      props.changeProduct(1)
     } else {
-      this.setState({
-        product: 2,
-      });
+      props.changeProduct(2)
     }
-    const product = this.state.product;
+    console.log(props.user);
+    //const product = this.state.product;
     //axios.post("http://localhost:4000/api/verificationcode", product);
   }
 
