@@ -62,7 +62,7 @@ const App = () => {
         console.log(user);
         axios.post('http://localhost:3000/api/users/saveuser', {
           product: user.product,
-          mail: user.mail,
+          mail: user.email,
           password: user.password,
           country: user.country
         })
