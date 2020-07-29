@@ -53,7 +53,13 @@ class Login extends React.Component{
         console.log(newPassConfirm)
     }
     
+    handleClick = () =>{
+       this.props.changePassword(this.state.newPass)
+    
+    }
     render(){
+        //const props = this.props.changePassword
+        //console.log(changePassword);
         let {tooltipOpen, newPass, newPassConfirm} = this.state
 
         //Function for control if the password have 8 characters length.
@@ -210,7 +216,7 @@ class Login extends React.Component{
                                 </FormGroup>
                                 <Row className='justify-content-center'>
                                     <Link to="SelectCountry">
-                                        {controlCreatePassButton}
+                                        <Button  color="primary" onClick={this.handleClick}>Create Password</Button>
                                     </Link>
                                 </Row>
                             </div>

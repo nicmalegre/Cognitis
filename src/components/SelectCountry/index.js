@@ -7,6 +7,7 @@
 //Libraries and components imported to use in this component.
 import React from 'react'; 
 import { FormGroup, Label, Col, Button, Input,Row, Container, Card} from 'reactstrap'; 
+import axios from 'axios';
 
 import "./selectcountry.css"; 
 
@@ -21,23 +22,16 @@ const SelectCountry = (props) => {
     var countries = ["Argentina", "Australia", "Bolivia", "Canada", "Chile", "Colombia", "Ecuador", "Guyana", "New Zealand", "Paraguay", "Peru", "Surinam", "USA", "Uruguay", "Venezuela"]
 
     //Arrow function to capture the name of the selected country with the value property.
-    const handleInputChange = (event) => {
-        props.changeCountry(event.target.value); 
+    const inputChange = (event) => {
+        props.handleChangeCountry(event.target.value)
     }
 
-    const postData = (event) => {
-        //event.preventDefault();
-        axios.post('http://localhost:3000/api/users/saveuser', {
-          product: props.product,
-          mail: props.mail,
-          password: props.password,
-          country: props.country
-        })
-        .then( res => ('Se cargo en la base de datos tu usuario'))
-        .catch(err => console.log(err));
-        console.log(props.country)
-        
-      };
+    const sendData = (event) => {
+        props.postData();    
+    
+    }
+ 
+
 
   return (  
     <Container fluid>
@@ -68,7 +62,7 @@ const SelectCountry = (props) => {
                                                             
                                 </Input>
                             </Col>
-                            <Button type="submit" color="primary" active onClick={postData}>Next</Button>
+                            <Button type="submit" onClick={sendData} color="primary" active >Next</Button>
                     </FormGroup>
                 </Card>
             </Col>
