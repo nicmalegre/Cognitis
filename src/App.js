@@ -9,6 +9,9 @@ import VerificationCode from "./components/VerificationCode";
 import LoginUsers from "./components/LoginUsers/Login";
 
 import axios from 'axios'
+import { IntlProvider } from "react-intl";
+import { messages } from './messages';
+
 
 const App = () => {
   const [user, setDatos] = useState({
@@ -17,6 +20,8 @@ const App = () => {
     password: "",
     country: "",
   });
+
+  const [ language, setLanguage ] = useState('en')
 
   const [code, setCode] = useState({
     codeVerification: null,
@@ -29,9 +34,14 @@ const App = () => {
       [dato.name]: dato.value,
     });
   };
+  const handleChangeLanguage = (lang) => {
+    setLanguage(lang)
+  }
+
   const handleChangeEmail = (dato) => {
     setDatos({
-      email: dato,
+      ...user,
+      [dato.email]: dato.value,
     });
   };
 
@@ -64,7 +74,7 @@ const App = () => {
         console.log(user);
         axios.post('http://localhost:3000/api/users/saveuser', {
           product: user.product,
-          mail: user.mail,
+          mail: user.email,
           password: user.password,
           country: user.country
         })
@@ -73,33 +83,30 @@ const App = () => {
         
       };
 
-  return (
+ return(
+  <IntlProvider locale={ language } messages={ messages[language]}>
     <BrowserRouter>
-      <Route path="/" exact component={Welcomescreen} />
-      <Route path="/product">
-        <Product handleChangeProduct={handleChangeProduct} />
+      <Route path='/' exact>
+        <Welcomescreen changeLanguage={handleChangeLanguage}/>
       </Route>
-      <Route path="/user">
-        <Registeruser
-          handlerChangeUser={handleChange}
-          changeCodeTime={handleChangeCodeandTime}
-        />
+      <Route path="/product"> 
+        <Product changeProduct={handleChangeProduct}/>   
+      </Route>
+      <Route path="/user"> 
+        <Registeruser changeEmail={handleChange} changeCodeTime={handleChangeCodeandTime}/>   
       </Route>
       <Route path="/verificationcode">
         <VerificationCode codeVerification={code} />
       </Route>
-      {/*<Route  path="/verificationcode" component={VerificationCode} /> */}
       <Route exact path="/login">
         <Login changePassword={handleChangePassword } />
       </Route>
       <Route path="/selectcountry">
         <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
       </Route>
-      <Route  path="/LoginUsers/Login" >
-         <LoginUsers/>
-      </Route>
-  </BrowserRouter>
+    </BrowserRouter>
+  </IntlProvider>
  )
-};
+}
 
 export default App;
