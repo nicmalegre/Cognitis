@@ -12,6 +12,7 @@ import "./selectcountry.css";
 
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
+import axios from "axios";
 
 
 const SelectCountry = (props) => {
@@ -20,14 +21,23 @@ const SelectCountry = (props) => {
     var countries = ["Argentina", "Australia", "Bolivia", "Canada", "Chile", "Colombia", "Ecuador", "Guyana", "New Zealand", "Paraguay", "Peru", "Surinam", "USA", "Uruguay", "Venezuela"]
 
     //Arrow function to capture the name of the selected country with the value property.
-    const inputChange = (e) => {
-        console.log(e.target.value); //Temporaly only show the value on console
-        props.changeCountry(e.target.value); 
+    const handleInputChange = (event) => {
+        props.changeCountry(event.target.value); 
     }
 
- 
- 
-
+    const postData = (event) => {
+        //event.preventDefault();
+        axios.post('http://localhost:3000/api/users/saveuser', {
+          product: props.product,
+          mail: props.mail,
+          password: props.password,
+          country: props.country
+        })
+        .then( res => ('Se cargo en la base de datos tu usuario'))
+        .catch(err => console.log(err));
+        console.log(props.country)
+        
+      };
 
   return (  
     <Container fluid>
@@ -47,7 +57,7 @@ const SelectCountry = (props) => {
                     <FormGroup row>
                             <Label for="exampleSelect" sm={3}>Select Country</Label>
                             <Col sm={7}>
-                                <Input type="select" name="select" id="exampleSelect" onChange={inputChange}>
+                                <Input type="select" name="select" id="exampleSelect" onChange={handleInputChange}>
                                     
                                     {/* Function to insert the countries of the array like items in dropdown menu */}
                                     {countries.map( country => 
@@ -58,7 +68,7 @@ const SelectCountry = (props) => {
                                                             
                                 </Input>
                             </Col>
-                            <Button type="submit" color="primary" active >Next</Button>
+                            <Button type="submit" color="primary" active onClick={postData}>Next</Button>
                     </FormGroup>
                 </Card>
             </Col>
