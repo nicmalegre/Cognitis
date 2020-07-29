@@ -8,13 +8,26 @@ import { Link } from 'react-router-dom';
 
 
 const LoginUsers = (props) => {
+    let bandera;
+    bandera = false;
+
     const [email, setEmail] = useState("");
+    //const [stateButton, setStateButton] = useState(false);
 
     const handleInputChange = (event) => {
         setEmail(event.target.value)
+        bandera=false;
     }
 
-    const controlInvalidInput = () =>{
+    const changeButtonState = () => {
+        
+        bandera = true;
+        console.log("entra aca")
+    }
+
+
+    const controlInvalidInput = (parametro) =>{
+        if (parametro){
             return(
                 <div>
                     <Card id="card-error2">
@@ -22,18 +35,20 @@ const LoginUsers = (props) => {
                             <b>Error: </b> You have entered an invalid email address or password. Please try again.
                         </p>
                     </Card>
-                    <Alert color="danger">
+                    <Label style={{color:"red"}}>
                         Maximium Login Attempts Exceeded!
-                    </Alert>
+                    </Label>
                     <Card id="card-error2">
                         <p>
-                            <b>Security is Paramount at Cognitis360</b> When you have exceeded the maximium login attempts, the user record
+                            <b>Security is Paramount at Cognitis360</b><br/>
+                            When you have exceeded the maximium login attempts, the user record
                             in the database is flagged as password expired. Please reset your password
                             via <b>"Forgot your password?"</b>.
                         </p>
                     </Card>
                 </div>
             )
+        }
     }
 
   return (  
@@ -51,31 +66,32 @@ const LoginUsers = (props) => {
                             <Col lg="8" >
                                     <Form style={{marginTop:15}}>
                                         <FormGroup>
-                                            <Input type="email" name="email" id="exampleEmail" placeholder="Email addres"/>
+                                            <Input type="email" name="email" id="exampleEmail" placeholder="Email addres" required/>
                                         </FormGroup>
                                         <FormGroup>
-                                            <Input type="password" name="password" id="examplePassword" placeholder="Password" />
+                                            <Input type="password" name="password" id="examplePassword" placeholder="Password" required/>
                                         </FormGroup>
                                         <FormGroup check style={{paddingBottom:"5px"}}>
                                             <Label check>
-                                            <Input type="checkbox" />{' '}
-                                            Remember me
+                                                <Input type="checkbox" />{' '}
+                                                Remember me
                                             </Label>
                                         </FormGroup>
                                         <FormGroup>
-                                            <Button color="primary" id="btn-Login">Login</Button>
+                                            <Button color="primary" id="btn-Login" onClick={changeButtonState()}>Login</Button>
                                         </FormGroup>
                                         <FormGroup className="text-center">
                                             <Link>Forgot your password?</Link>
                                         </FormGroup>
                                         <FormGroup className="text-left">
-                                            {controlInvalidInput()}
+                                            {console.log(bandera)}
+                                            {controlInvalidInput(bandera)}
                                         </FormGroup>
                                     </Form>
                             </Col>
                         </Row>
                 </Col>
-                <Col lg="6" md="6" xs="12">
+                <Col lg="6" md="6" xs="12" className="d-none d-sm-block">
                     <img src={imagenProductivity} alt="Cognitis" id="img-productivity"/>
                 </Col>
             </Row>

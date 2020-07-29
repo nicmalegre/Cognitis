@@ -1,5 +1,5 @@
 body{
-    /*background-image: none;*/
+    background-image: none;
 }
 
 #col-naranja{
@@ -7,6 +7,8 @@ body{
 }
 
 #img-productivity{
+    padding-left: 0;
+    margin-right: auto;
     width: 100%;
 }
 
@@ -19,7 +21,7 @@ body{
         background: linear-gradient(white, rgb(254, 227, 140));
         margin: 0;
         padding: 0;
-        height: 44vh; 
+        height: 23vh; 
 }
 
 #card-error2{
