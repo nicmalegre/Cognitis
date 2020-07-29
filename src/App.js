@@ -1,81 +1,105 @@
-import React, {useState} from "react";
-import {Route, BrowserRouter} from "react-router-dom";
+import React, { useState } from "react";
+import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
 import Login from "./components/Login";
 import Welcomescreen from "./components/Welcomescreen/index";
-import Product from './components/Product/index';
-import Registeruser from './components/Registeruser/index'
+import Product from "./components/Product/index";
+import Registeruser from "./components/Registeruser/index";
 import SelectCountry from "./components/SelectCountry";
 import VerificationCode from "./components/VerificationCode";
 import LoginUsers from "./components/LoginUsers/Login";
 
+import axios from 'axios'
 
 const App = () => {
-
   const [user, setDatos] = useState({
     product: "",
     email: "",
     password: "",
-    country: ""
+    country: "",
   });
 
-
   const [code, setCode] = useState({
-    codeVerification:null,
-    codeTime:null,
-  })
+    codeVerification: null,
+    codeTime: null,
+  });
 
+  const handleChange = (dato) => {
+    setDatos({
+      ...user,
+      [dato.name]: dato.value,
+    });
+  };
   const handleChangeEmail = (dato) => {
     setDatos({
-      email: dato
-    })
-  }
+      email: dato,
+    });
+  };
 
   const handleChangeCodeandTime = (code, time) => {
     setCode({
       codeVerification: code,
-      codeTime: time
-    })
-  }
+      codeTime: time,
+    });
+  };
 
   const handleChangeProduct = (dato) => {
     setDatos({
-      product: dato
-    })
-  }
+      ...user,
+      product: dato,
+    });
+  };
   const handleChangePassword = (dato) => {
     setDatos({
-      password: dato
-    })
-  }
+      ...user,
+      password: dato,
+    });
+  };
   const handleChangeCountry = (dato) => {
     setDatos({
-      country: dato
-    })
-  }
+      ...user,
+      country: dato,
+    });
+  };
+  const postData = () =>{
+        console.log(user);
+        axios.post('http://localhost:3000/api/users/saveuser', {
+          product: user.product,
+          mail: user.mail,
+          password: user.password,
+          country: user.country
+        })
+        .then( res => ('Se cargo en la base de datos tu usuario'))
+        .catch(err => console.log(err));
+        
+      };
 
- return(
-  <BrowserRouter>
-      <Route path='/' exact component={Welcomescreen} />
-      <Route path='/product' component = {Product} changeProduct={handleChangeProduct}/>
-      {/*<Route path="/user" component={Registeruser} />*/}
-      <Route path="/user"> 
-        <Registeruser changeEmail={handleChangeEmail} changeCodeTime={handleChangeCodeandTime}/>   
+  return (
+    <BrowserRouter>
+      <Route path="/" exact component={Welcomescreen} />
+      <Route path="/product">
+        <Product handleChangeProduct={handleChangeProduct} />
       </Route>
-      <Route path="/verificationcode"> 
-        <VerificationCode codeVerification={code} />   
+      <Route path="/user">
+        <Registeruser
+          handlerChangeUser={handleChange}
+          changeCodeTime={handleChangeCodeandTime}
+        />
+      </Route>
+      <Route path="/verificationcode">
+        <VerificationCode codeVerification={code} />
       </Route>
       {/*<Route  path="/verificationcode" component={VerificationCode} /> */}
       <Route exact path="/login">
-        <Login changePassword={handleChangePassword} />
+        <Login changePassword={handleChangePassword } />
       </Route>
-      <Route  path="/selectcountry" >
-         <SelectCountry changeCountry={handleChangeCountry}/>
+      <Route path="/selectcountry">
+        <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
       </Route>
       <Route  path="/LoginUsers/Login" >
          <LoginUsers/>
       </Route>
   </BrowserRouter>
  )
-}
+};
 
 export default App;
