@@ -18,6 +18,7 @@ import axios from "axios";
 import "./index.css";
 import Logo from "../base/logo";
 import Welcome from "../base/welcome";
+import { FormattedMessage } from 'react-intl';
 
 class Product extends React.Component {
   constructor(props) {
@@ -127,7 +128,7 @@ class Product extends React.Component {
         <Row>
           <Col lg="8" sm={{ size: 8, offset: 2 }}>
             <h3 className="text-center text">
-              Please select the product to install
+              <FormattedMessage id="app.selectProductMessage"/>
             </h3>
             <Card id="card-product" md="12" body style={{ marginTop: 50 }}>
               <FormGroup row className="item">
@@ -203,7 +204,7 @@ class Product extends React.Component {
                 color="warning"
                 style={{ borderColor: "black" }}
               >
-                <b>Next</b>
+                <b><FormattedMessage id="app.nextButton"/></b>
               </Button>
             </Link>
           </Col>

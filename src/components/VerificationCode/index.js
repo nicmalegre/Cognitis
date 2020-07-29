@@ -10,7 +10,7 @@ import "./verificationcode.css";
 import { Link } from 'react-router-dom';
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
-
+import { FormattedMessage } from 'react-intl';
 
 
 const VerificationCode = (props) => {
@@ -57,7 +57,7 @@ const VerificationCode = (props) => {
                         <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:"/>
                         <InputGroupAddon addonType="append">
                             <Link to="/Login">
-                                <Button  class="button-verification-code" color="primary" onChange={expireCode} active >Next</Button>
+                                <Button  class="button-verification-code" color="primary" onChange={expireCode} active ><FormattedMessage id="app.nextButton"/></Button>
                             </Link>
                         </InputGroupAddon>
                     </InputGroup> 

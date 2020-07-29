@@ -6,6 +6,8 @@ import Product from './components/Product/index';
 import Registeruser from './components/Registeruser/index'
 import SelectCountry from "./components/SelectCountry";
 import VerificationCode from "./components/VerificationCode";
+import { IntlProvider } from "react-intl";
+import { messages } from './messages';
 
 
 const App = () => {
@@ -14,14 +16,19 @@ const App = () => {
     product: "",
     email: "",
     password: "",
-    country: ""
+    country: "",
   });
 
+  const [ language, setLanguage ] = useState('en')
 
   const [code, setCode] = useState({
     codeVerification:null,
     codeTime:null,
   })
+
+  const handleChangeLanguage = (lang) => {
+    setLanguage(lang)
+  }
 
   const handleChangeEmail = (dato) => {
     setDatos({
@@ -53,8 +60,11 @@ const App = () => {
   }
 
  return(
-  <BrowserRouter>
-      <Route path='/' exact component={Welcomescreen} />
+  <IntlProvider locale={ language } messages={ messages[language]}>
+    <BrowserRouter>
+      <Route path='/' exact>
+        <Welcomescreen changeLanguage={handleChangeLanguage}/>
+      </Route>
       <Route path='/product' component = {Product} changeProduct={handleChangeProduct}/>
       {/*<Route path="/user" component={Registeruser} />*/}
       <Route path="/user"> 
@@ -70,7 +80,8 @@ const App = () => {
       <Route  path="/selectcountry" >
          <SelectCountry changeCountry={handleChangeCountry}/>
       </Route>
-  </BrowserRouter>
+    </BrowserRouter>
+  </IntlProvider>
  )
 }
 

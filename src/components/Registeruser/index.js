@@ -5,6 +5,7 @@ import "./index.css"; //importar css
 import axios from "axios";
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
+import { FormattedMessage } from 'react-intl';
 
 const Registeruser = (props) => {
   //clase 'Nombre' extends React.component
@@ -47,7 +48,7 @@ const Registeruser = (props) => {
                       <Input
                         type="email"
                         name="email"
-                        placeholder="Enter mail"
+                        placeholder="Enter Email"
                         onChange={handleInputChange}
                         required
                       />
@@ -59,7 +60,7 @@ const Registeruser = (props) => {
                             active
                             onClick={sendData}
                           >
-                            Next
+                           <FormattedMessage id="app.nextButton"/>
                           </Button>
                         </Link>
                       </InputGroupAddon>
