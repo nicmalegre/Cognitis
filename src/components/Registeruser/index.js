@@ -1,4 +1,4 @@
-import React from "react"; //importacion de la libreria
+import React, {useState} from "react"; //importacion de la libreria
 import { Link } from "react-router-dom";
 import { InputGroup, InputGroupAddon, Button, Input, Row, Container, Col, Card } from "reactstrap"; //importar elementos
 import "./index.css"; //importar css
@@ -9,19 +9,30 @@ import Welcome from '../base/welcome';
 const Registeruser = (props) => {
   //clase 'Nombre' extends React.component
 
+  const [mailEntered, setMailEntered] = useState({
+    adress:null,
+  })
+
+  const adressMail = (dato) => {
+    setMailEntered({
+      adress: dato
+    })
+  }
+
   const handleInputChange = (event) => {
     props.changeEmail(event.target.value);
+    adressMail(event.target.value);
   };
 
   const sendData = (event) => {
     //event.preventDefault();
-
+    console.log(event);
     axios.post('http://localhost:3000/api/verificationcode', {
-      mail: "sdf"
+      mail: mailEntered.adress
     })
     .then( res => { 
       props.changeCodeTime(res.data.verificationCode, res.data.expireAt)
-          
+      
     }).catch(err => console.log(err));
     
   };

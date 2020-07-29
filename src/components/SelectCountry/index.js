@@ -33,7 +33,7 @@ const SelectCountry = (props) => {
           password: props.password,
           country: props.country
         })
-        .then( res => ('Se cargo en la base de datos tu usuario'))
+        .then( res => ('Se cargo en la base de datos tu usuario')) 
         .catch(err => console.log(err));
         console.log(props.country)
         

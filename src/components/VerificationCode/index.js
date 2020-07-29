@@ -4,7 +4,7 @@
  * 
  */
 //Libraries and components imported to use in this component.
-import React from 'react'; 
+import React, {useState} from 'react'; 
 import { InputGroup, InputGroupAddon, Button, Input,Row, Col, Container, Card } from 'reactstrap'; 
 import "./verificationcode.css";
 import { Link } from 'react-router-dom';
@@ -15,27 +15,39 @@ import Welcome from '../base/welcome';
 
 const VerificationCode = (props) => {
 
-    const { verificationCode, expireAt } = props
+    const [band, setBand] = useState(false)
+    
+
     const expireCode = (event) => {
 
-        event.preventDefault();
-
-
-        
-        
-        // const expireTime =  new Date(expireAt); 
-                
-        // if (expireTime >= new Date() ) {
+        const expireTime =  new Date(props.codeVerification.codeTime); 
+               
+        if (expireTime >= new Date() ) {
             
-        //     if (verificationCode != event.target.value ) {
+            if (props.codeVerification.codeVerification != event.target.value ) {
 
-        //         console.log('Error')
+                console.log('Error')
+                setBand(false);
 
-        //     } else { console.log('Iguales')}
+            } else { console.log('Iguales');
+                      setBand(true);  
+                    }
 
-        // } 
+        } else {console.log('tiempo expiro');
+                    setBand(false);
+                }
 
     }
+
+    //Function for control the button create password.
+    let controlNextButton = (band) ? (
+        <Link to="Login">
+            <Button  class="button-verification-code" color="primary"  active >Next</Button>
+        </Link>
+    ):
+    (
+    <Button  class="button-verification-code" color="primary" active disabled>Next</Button>
+    )
     
   return (
  
@@ -54,11 +66,9 @@ const VerificationCode = (props) => {
             <Col lg="12">
                 <Card id="card-verificationCode" body>
                     <InputGroup className="inputgroup-verification-code">
-                        <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:"/>
+                        <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:" onChange={expireCode}/>
                         <InputGroupAddon addonType="append">
-                            <Link to="/Login">
-                                <Button  class="button-verification-code" color="primary" onChange={expireCode} active >Next</Button>
-                            </Link>
+                                    {controlNextButton}
                         </InputGroupAddon>
                     </InputGroup> 
                 </Card>
