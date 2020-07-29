@@ -55,7 +55,7 @@ import Welcome from "../base/welcome";
       });
     }
     else if ((name == "c3") && (data.c2)){
-      this.setState({
+      setState({
         isChecked: value,
         isChecked2:value,
         isChecked3: value,
@@ -68,6 +68,30 @@ import Welcome from "../base/welcome";
     })
   } 
 
+  }
+  const handleInputChangetwo=(event) =>{
+    const target = event.target;
+    const value = target.name === "c3" ? target.checked : target.value;
+    const name = target.name;
+
+    if (value && data.c2) {
+      this.setState({
+        ...data,
+        c1: value,
+        c3: value,
+      });
+    } else if (value == false && data.c2) {
+      this.setState({
+        ...data,
+        c1: value,
+        c3: value,
+      });
+    } else {
+      setState({
+        ...data,
+        [name]: value,
+      });
+    }
   }
 
   const handlerClick = ()=> {
@@ -153,7 +177,7 @@ import Welcome from "../base/welcome";
                     id="checkbox3"
                     name="isChecked3"
                     checked={data.c3}
-                    //onChange={handleInputChangetwo}
+                    onChange={handleInputChangetwo}
                   />
                 </Col>
               </FormGroup>
