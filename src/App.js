@@ -6,6 +6,7 @@ import Product from "./components/Product/index";
 import Registeruser from "./components/Registeruser/index";
 import SelectCountry from "./components/SelectCountry";
 import VerificationCode from "./components/VerificationCode";
+import axios from 'axios'
 
 const App = () => {
   const [user, setDatos] = useState({
@@ -57,6 +58,18 @@ const App = () => {
       country: dato,
     });
   };
+  const postData = () =>{
+        console.log(user);
+        axios.post('http://localhost:3000/api/users/saveuser', {
+          product: user.product,
+          mail: user.mail,
+          password: user.password,
+          country: user.country
+        })
+        .then( res => ('Se cargo en la base de datos tu usuario'))
+        .catch(err => console.log(err));
+        
+      };
 
   return (
     <BrowserRouter>
@@ -78,7 +91,7 @@ const App = () => {
         <Login changePassword={handleChangePassword } />
       </Route>
       <Route path="/selectcountry">
-        <SelectCountry handleChangeCountry={handleChangeCountry} />
+        <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
       </Route>
     </BrowserRouter>
   );

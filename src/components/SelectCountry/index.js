@@ -7,6 +7,7 @@
 //Libraries and components imported to use in this component.
 import React from 'react'; 
 import { FormGroup, Label, Col, Button, Input,Row, Container, Card} from 'reactstrap'; 
+import axios from 'axios';
 
 import "./selectcountry.css"; 
 
@@ -24,6 +25,10 @@ const SelectCountry = (props) => {
         props.handleChangeCountry(event.target.value)
     }
 
+    const sendData = (event) => {
+        props.postData();    
+    
+    }
  
 
 
@@ -56,7 +61,7 @@ const SelectCountry = (props) => {
                                                             
                                 </Input>
                             </Col>
-                            <Button type="submit" color="primary" active >Next</Button>
+                            <Button type="submit" onClick={sendData} color="primary" active >Next</Button>
                     </FormGroup>
                 </Card>
             </Col>
