@@ -24,7 +24,7 @@ const Registeruser = (props) => {
   });
 
   const handleInputChange = (event) => {
-    props.changeEmail(event.target);
+    props.handlerChangeUser(event.target)
   };
 
   /* const handleInputChange = (event) => {

@@ -30,13 +30,13 @@ import Welcome from "../base/welcome";
     
   const handlerClick = ()=> {
         if (data.c1) {
-           props.changeProduct(0);
+          props.handleChangeProduct(0);
     
           }
         else if (data.c2) {
-           props.changeProduct(1);
+          props.handleChangeProduct(1);
         } else {
-           props.changeProduct(2);
+          props.handleChangeProduct(2);
         }
         //const product = this.state.product;
         //axios.post("http://localhost:4000/api/verificationcode", product);

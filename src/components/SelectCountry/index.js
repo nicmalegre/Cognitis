@@ -20,8 +20,8 @@ const SelectCountry = (props) => {
     var countries = ["Argentina", "Australia", "Bolivia", "Canada", "Chile", "Colombia", "Ecuador", "Guyana", "New Zealand", "Paraguay", "Peru", "Surinam", "USA", "Uruguay", "Venezuela"]
 
     //Arrow function to capture the name of the selected country with the value property.
-    const inputChange = (e) => {
-        console.log(e.target.value); //Temporaly only show the value on console 
+    const inputChange = (event) => {
+        props.handleChangeCountry(event.target)
     }
 
  
