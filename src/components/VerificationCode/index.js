@@ -4,7 +4,7 @@
  * 
  */
 //Libraries and components imported to use in this component.
-import React from 'react'; 
+import React,{ useState } from 'react'; 
 import { InputGroup, InputGroupAddon, Button, Input,Row, Col, Container, Card } from 'reactstrap'; 
 import "./verificationcode.css";
 import { Link } from 'react-router-dom';

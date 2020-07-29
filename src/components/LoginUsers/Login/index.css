@@ -1,0 +1,29 @@
+body{
+    /*background-image: none;*/
+}
+
+#col-naranja{
+   background-color: rgb(247, 147, 1);
+}
+
+#img-productivity{
+    width: 100%;
+}
+
+
+#btn-Login{
+    width: 100%;
+}
+
+#underBackground{
+        background: linear-gradient(white, rgb(254, 227, 140));
+        margin: 0;
+        padding: 0;
+        height: 44vh; 
+}
+
+#card-error2{
+    background-color: #f8f9fa;
+    padding: 5px;
+
+}
