@@ -1,5 +1,5 @@
 import React from "react"; //importacion de la libreria
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import {
   InputGroup,
   InputGroupAddon,
@@ -15,6 +15,8 @@ import axios from "axios";
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
 import { FormattedMessage } from 'react-intl';
+
+
 
 const Registeruser = (props) => {
   //clase 'Nombre' extends React.component
@@ -41,7 +43,10 @@ const Registeruser = (props) => {
           
     }).catch(err => console.log(err));
 
-    
+
+    if (document.querySelector("#input-email").value != ""){
+      props.history.push('/VerificationCode')
+    }
     
   };
 
@@ -64,6 +69,7 @@ const Registeruser = (props) => {
                   <Card id="card-user" body>
                     <InputGroup>
                       <Input
+                        id="input-email"
                         type="email"
                         name="email"
                         placeholder="Enter Email"
@@ -89,4 +95,4 @@ const Registeruser = (props) => {
   );
 };
 
-export default Registeruser;
+export default withRouter(Registeruser);
