@@ -47,11 +47,13 @@ const App = () => {
   };
   const handleChangePassword = (dato) => {
     setDatos({
+      ...user,
       password: dato,
     });
   };
   const handleChangeCountry = (dato) => {
     setDatos({
+      ...user,
       country: dato,
     });
   };
@@ -73,10 +75,10 @@ const App = () => {
       </Route>
       {/*<Route  path="/verificationcode" component={VerificationCode} /> */}
       <Route exact path="/login">
-        <Login changeCountry={handleChangePassword} />
+        <Login changePassword={handleChangePassword } />
       </Route>
       <Route path="/selectcountry">
-        <SelectCountry handleChangeCountry={handleChange} />
+        <SelectCountry handleChangeCountry={handleChangeCountry} />
       </Route>
     </BrowserRouter>
   );
