@@ -20,7 +20,7 @@ const Registeruser = (props) => {
   //clase 'Nombre' extends React.component
 
   const handleInputChange = (event) => {
-    props.handlerChangeUser(event.target)
+    props.changeEmail(event.target)
   };
 
   /* const handleInputChange = (event) => {
@@ -40,6 +40,8 @@ const Registeruser = (props) => {
       props.changeCodeTime(res.data.verificationCode, res.data.expireAt)
           
     }).catch(err => console.log(err));
+
+    
     
   };
 
@@ -69,16 +71,15 @@ const Registeruser = (props) => {
                         required
                       />
                       <InputGroupAddon addonType="append">
-                        <Link to="/VerificationCode">
                           <Button
                             className="button-verification-code"
                             color="primary"
                             active
                             onClick={sendData}
+                            type="submit"
                           >
                            <FormattedMessage id="app.nextButton"/>
                           </Button>
-                        </Link>
                       </InputGroupAddon>
                     </InputGroup>
                   </Card>

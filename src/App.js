@@ -38,7 +38,8 @@ const App = () => {
 
   const handleChangeEmail = (dato) => {
     setDatos({
-      email: dato,
+      ...user,
+      [dato.email]: dato.value,
     });
   };
 
@@ -90,7 +91,7 @@ const App = () => {
         <Product changeProduct={handleChangeProduct}/>   
       </Route>
       <Route path="/user"> 
-        <Registeruser changeEmail={handleChangeEmail} changeCodeTime={handleChangeCodeandTime}/>   
+        <Registeruser changeEmail={handleChange} changeCodeTime={handleChangeCodeandTime}/>   
       </Route>
       <Route path="/verificationcode">
         <VerificationCode codeVerification={code} />
