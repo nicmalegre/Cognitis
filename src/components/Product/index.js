@@ -27,6 +27,21 @@ import Welcome from "../base/welcome";
         c3: false,
         product: '', 
       })
+    
+  const handlerClick = ()=> {
+        if (data.c1) {
+           props.changeProduct(0);
+    
+          }
+        else if (data.c2) {
+           props.changeProduct(1);
+        } else {
+           props.changeProduct(2);
+        }
+        //const product = this.state.product;
+        //axios.post("http://localhost:4000/api/verificationcode", product);
+     }
+
 
     const handleInputChange=(event) =>{
     const target = event.target;
@@ -75,13 +90,13 @@ import Welcome from "../base/welcome";
     const name = target.name;
 
     if (value && data.c2) {
-      this.setState({
+      setState({
         ...data,
         c1: value,
         c3: value,
       });
     } else if (value == false && data.c2) {
-      this.setState({
+       setState({
         ...data,
         c1: value,
         c3: value,
@@ -93,20 +108,6 @@ import Welcome from "../base/welcome";
       });
     }
   }
-
-  const handlerClick = ()=> {
-    if (data.c1) {
-       return (0)
-
-      }
-    else if (data.c2) {
-       return(1)
-    } else {
-         return(2)
-    }
-    //const product = this.state.product;
-    //axios.post("http://localhost:4000/api/verificationcode", product);
- }
 
 
     //const pg = this.props;
@@ -138,9 +139,10 @@ import Welcome from "../base/welcome";
                 </Label>
                 <Col md={{ size: 2 }} className="text-center">
                   <CustomInput
-                    type="checkbox"
+                   type="checkbox"
                     id="checkbox1"
-                    name={data.c1}
+                    name="c1"
+                    checked={data.c1}
                     onChange={handleInputChange}
                   />
                 </Col>
@@ -157,7 +159,7 @@ import Welcome from "../base/welcome";
                   <CustomInput
                     type="checkbox"
                     id="checkbox2"
-                    name="isChecked2"
+                    name="c2"
                     checked={data.c2}
                     onChange={handleInputChangeOne}             
                   />
@@ -175,7 +177,7 @@ import Welcome from "../base/welcome";
                   <CustomInput
                     type="checkbox"
                     id="checkbox3"
-                    name="isChecked3"
+                    name="c3"
                     checked={data.c3}
                     onChange={handleInputChangetwo}
                   />

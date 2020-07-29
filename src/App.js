@@ -45,6 +45,7 @@ const App = () => {
 
   const handleChangeProduct = (dato) => {
     setDatos({
+      ...user,
       product: dato
     })
   }
