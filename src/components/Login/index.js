@@ -21,7 +21,9 @@ class Login extends React.Component{
             tooltipOpen: false,
             newPass: '',
             newPassConfirm:null,
-            passwordShown: false
+            passwordShown: false,
+            goodMessage: false,
+            matchMessage: false,
         }   
     }
 
@@ -105,43 +107,38 @@ class Login extends React.Component{
 
         //Function for change the border color of the input if the password follows the defined criteria.
         let controlInputPass = ((lengthRight) && (upperRight) && (lowerRight) && (numberRight) && (specialRight) ) ? (
-            
-            <input className="input-correct" type={this.state.passwordShown ? "text" : "password"} name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/>
-
-        
-        ) : //If not
+            <input  required="" className="input-correct" type={this.state.passwordShown ? "text" : "password"} name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/> 
+        ) : //if not
         (
-            <input  type={this.state.passwordShown ? "text" : "password"} name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/> 
+            <input type={this.state.passwordShown ? "text" : "password"} name={"newPass"} id="newPass"  placeholder="Insert new password" onChange={this.handleInputChange}/> 
+        )
+        
+
+        //Function for show the good message if the password follows the defined criteria.
+        let controlGoodMessage = ((lengthRight) && (upperRight) && (lowerRight) && (numberRight) && (specialRight) ) && (
+            <p className="message-password">Good</p> 
         )
 
         //Function for change the border color of the second input if the password match with the first input.
         let controlInputPassConfirm = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
-           
             <input className="input-correct" type={this.state.passwordShown ? "text" : "password"} name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>  
-
-            
         ) : //If not
         (
             <input type={this.state.passwordShown ? "text" : "password"} name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>
         )
 
-        let controlGoodMessage = ((lengthRight) && (upperRight) && (lowerRight) && (numberRight) && (specialRight) ) ? (
-           
-            <Label className="input-message">GOOD</Label>
-            
-        ) : //If not
-        (
-            <Label></Label>
-        )
-        let controlMatchMessage = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
-           
-            <Label className="input-message">MATCH</Label>
-            
-        ) : //If not
-        (
-            <Label></Label>
+        //Function for show the good message if the password follows the defined criteria.
+        let controlMatchMessage = ((newPassConfirm == newPass) && (newPassConfirm != '') ) && (
+            <p className="message-password">Match</p> 
         )
 
+        //Function for control the button create password.
+        let controlCreatePassButton = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
+            <Button  color="primary">Create Password</Button>
+        ):
+        (
+            <Button  color="secondary" disabled>Create Password</Button>
+        )
 
         return(
             <Container fluid>
@@ -173,28 +170,47 @@ class Login extends React.Component{
                                 </FormGroup>
                                 <FormGroup>
                                     <Label><b>New Password</b></Label>
-                                    <InputGroup>
-                                        {controlInputPass}
-                                        <InputGroupAddon addonType="append">
-                                            {controlGoodMessage}
-                                        </InputGroupAddon>
-                                        <i onClick={this.togglePasswordVisiblity}>{eye}</i>{" "}
-                                    </InputGroup> 
-                                   
+                                    <div>
+                                        <Row>
+                                            <Col>
+                                                <InputGroup>
+                                                    {controlInputPass}
+                                                </InputGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row className="row-password">
+                                            <Col>
+                                                <i style={{justifyContent:"left"}} onClick={this.togglePasswordVisiblity} style={{cursor:"pointer"}}>{eye}</i> 
+                                            </Col>
+                                            <Col>
+                                                {controlGoodMessage}
+                                            </Col>
+                                        </Row>
+                                    </div>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="examplePassword2"><b>Confirm New Password</b></Label>
-                                    <InputGroup>
-                                        {controlInputPassConfirm}
-                                        <InputGroupAddon addonType="append">
-                                            {controlMatchMessage}
-                                        </InputGroupAddon>
-                                        <i onClick={this.togglePasswordVisiblity}>{eye}</i>{" "}
-                                    </InputGroup> 
+                                    <div>
+                                        <Row>
+                                            <Col>
+                                                <InputGroup>
+                                                    {controlInputPassConfirm}
+                                                </InputGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row className="row-password">
+                                            <Col>
+                                                <i style={{justifyContent:"left"}} onClick={this.togglePasswordVisiblity} style={{cursor:"pointer"}}>{eye}</i> 
+                                            </Col>
+                                            <Col>
+                                                {controlMatchMessage}
+                                            </Col>
+                                        </Row>
+                                    </div> 
                                 </FormGroup>
                                 <Row className='justify-content-center'>
                                     <Link to="SelectCountry">
-                                        <Button  color="primary">Create Password</Button>
+                                        {controlCreatePassButton}
                                     </Link>
                                 </Row>
                             </div>

@@ -36,7 +36,6 @@ input{
     border: 1px solid #28A745;
     border-radius: 4px;
     outline-color: #28A745;
-    width: 93%;
 }
 
 .input-message{
@@ -58,4 +57,17 @@ input{
 .btn-createPass{
     width: 94%;
     margin-bottom: 0;
+}
+
+.message-password{
+    color: green;
+    text-align: right;
+}
+
+i{
+    display: inline;
+}
+.row-password{
+    display: inline;
+    
 }
