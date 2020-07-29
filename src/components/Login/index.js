@@ -216,7 +216,7 @@ class Login extends React.Component{
                                 </FormGroup>
                                 <Row className='justify-content-center'>
                                     <Link to="SelectCountry">
-                                        <Button  color="primary" onClick={this.handleClick}>Create Password</Button>
+                                        {controlCreatePassButton}
                                     </Link>
                                 </Row>
                             </div>
