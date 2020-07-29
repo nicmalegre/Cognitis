@@ -38,7 +38,6 @@ class Login extends React.Component{
         console.log('clickeando')
         this.setState({
             passwordShown: !this.state.passwordShown});
-        console.log(this.state.passwordShown)
     };
 
     toggle = () => { //This function is for control the Tooltip specials characters.
@@ -49,8 +48,6 @@ class Login extends React.Component{
     
     mostrar = () =>{
         let {newPassConfirm} = this.state
-
-        console.log(newPassConfirm)
     }
     
     handleClick = () =>{
