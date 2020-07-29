@@ -22,6 +22,7 @@ class Login extends React.Component{
             newPass: '',
             newPassConfirm:null,
             passwordShown: false,
+            passwordConfirmShown: false,
             goodMessage: false,
             matchMessage: false,
         }   
@@ -35,10 +36,13 @@ class Login extends React.Component{
     }
 
     togglePasswordVisiblity = () => {
-        console.log('clickeando')
         this.setState({
             passwordShown: !this.state.passwordShown});
-        console.log(this.state.passwordShown)
+    };
+
+    togglePasswordConfirmVisiblity = () => {
+        this.setState({
+            passwordConfirmShown: !this.state.passwordConfirmShown});
     };
 
     toggle = () => { //This function is for control the Tooltip specials characters.
@@ -121,10 +125,10 @@ class Login extends React.Component{
 
         //Function for change the border color of the second input if the password match with the first input.
         let controlInputPassConfirm = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
-            <input className="input-correct" type={this.state.passwordShown ? "text" : "password"} name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>  
+            <input className="input-correct" type={this.state.passwordConfirmShown ? "text" : "password"} name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>  
         ) : //If not
         (
-            <input type={this.state.passwordShown ? "text" : "password"} name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>
+            <input type={this.state.passwordConfirmShown ? "text" : "password"} name={"newPassConfirm"} id="newPassConfirm"  placeholder="Confirm new password" onChange={this.handleInputChange}/>
         )
 
         //Function for show the good message if the password follows the defined criteria.
@@ -133,7 +137,7 @@ class Login extends React.Component{
         )
 
         //Function for control the button create password.
-        let controlCreatePassButton = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
+        let controlCreatePassButton = ((newPassConfirm == newPass) && ((lengthRight) && (upperRight) && (lowerRight) && (numberRight) && (specialRight) ) ) ? (
             <Button  color="primary">Create Password</Button>
         ):
         (
@@ -200,7 +204,7 @@ class Login extends React.Component{
                                         </Row>
                                         <Row className="row-password">
                                             <Col>
-                                                <i style={{justifyContent:"left"}} onClick={this.togglePasswordVisiblity} style={{cursor:"pointer"}}>{eye}</i> 
+                                                <i style={{justifyContent:"left"}} onClick={this.togglePasswordConfirmVisiblity} style={{cursor:"pointer"}}>{eye}</i> 
                                             </Col>
                                             <Col>
                                                 {controlMatchMessage}
