@@ -8,6 +8,7 @@ import "./index.css";
 
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
+import { FormattedMessage } from 'react-intl'
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faEye } from "@fortawesome/free-solid-svg-icons";
@@ -62,50 +63,50 @@ class Login extends React.Component{
         //Function for control if the password have 8 characters length.
         const lengthRight = (newPass.length > 7)
         let controlCharacters = (lengthRight) ? (
-                <p className="text-rule correct" id="character-rule"><i className='icon-check'><AiFillCheckCircle/></i> 8 characters</p>
+                <p className="text-rule correct" id="character-rule"><i className='icon-check'><AiFillCheckCircle/></i> <FormattedMessage id="app.8charactersMessage"/></p>
             ) : //If not
             (
-                <p className="text-rule" id="character-rule"><i className='icon-check'><AiFillCloseCircle/></i> 8 characters</p>       
+                <p className="text-rule" id="character-rule"><i className='icon-check'><AiFillCloseCircle/></i> <FormattedMessage id="app.8charactersMessage"/></p>       
             )
         
         //Function for control if the password have minimium 1 uppercase
         const regexUpper = /[A-Z]/
         const upperRight = regexUpper.test(newPass)
         let controlUppercase = (upperRight) ? (
-            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 uppercase letter</p>
+            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> <FormattedMessage id="app.uppercaseMessage"/></p>
         ) : //If not
         (
-            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 uppercase letter</p>      
+            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> <FormattedMessage id="app.uppercaseMessage"/></p>      
         )
 
         //Function for control if the password have minimium 1 lowercase
         const regexLower = /[a-z]/
         const lowerRight = regexLower.test(newPass)
         let controlLowercase = (lowerRight) ? (
-            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 lowercase letter</p>
+            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> <FormattedMessage id="app.lowercaseMessage"/></p>
         ) : //If not
         (
-            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 lowercase letter</p>     
+            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> <FormattedMessage id="app.lowercaseMessage"/></p>     
         )
 
         //Function for control if the password have minimium 1 number
         const regexNumber = /[0-9]/
         const numberRight = regexNumber.test(newPass)
         let controlNumber = (numberRight) ? (
-            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 number</p>
+            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> <FormattedMessage id="app.oneNumberMessage"/></p>
         ) : //If not
         (
-            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 number</p>   
+            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> <FormattedMessage id="app.oneNumberMessage"/></p>   
         )
 
         //Function for control if the password have minimium 1 special character
         const regexSpecial = /[!@#$%^&*_-]/
         const specialRight = regexSpecial.test(newPass)
         let controlSpecial = (specialRight) ? (
-            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>
+            <p className="text-rule correct"><i className='icon-check'><AiFillCheckCircle/></i> <FormattedMessage id="app.specialCharacterMessage"/> <BsInfoCircleFill className="info-character" id="info-character"/></p>
         ) : //If not
         (
-            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> 1 special character <BsInfoCircleFill className="info-character" id="info-character"/></p>  
+            <p className="text-rule"><i className='icon-check'><AiFillCloseCircle/></i> <FormattedMessage id="app.specialCharacterMessage"/> <BsInfoCircleFill className="info-character" id="info-character"/></p>  
         )
 
         //Function for change the border color of the input if the password follows the defined criteria.
@@ -137,10 +138,10 @@ class Login extends React.Component{
 
         //Function for control the button create password.
         let controlCreatePassButton = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
-            <Button  color="primary">Create Password</Button>
+            <Button  color="primary"><FormattedMessage id="app.btnCreatePassword"/></Button>
         ):
         (
-            <Button  color="secondary" disabled>Create Password</Button>
+            <Button  color="secondary" disabled><FormattedMessage id="app.btnCreatePassword"/></Button>
         )
 
         return(
@@ -160,8 +161,8 @@ class Login extends React.Component{
                         <Card id="card-password">
                             <div className="div-password">
                                 <FormGroup>
-                                    <Label>Enter a new password for <b>'correo@correo.com'</b></Label><br/>
-                                    <Label>Make sure to include at least:</Label><br/>
+                                    <Label><FormattedMessage id="app.enterYourNewPasswordMessage"/> <b>'correo@correo.com'</b></Label><br/>
+                                    <Label><FormattedMessage id="app.makeSureIncludeMessage"/></Label><br/>
                                     {controlCharacters}
                                     {controlUppercase}
                                     {controlLowercase}
@@ -172,7 +173,7 @@ class Login extends React.Component{
                                     </Tooltip>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label><b>New Password</b></Label>
+                                    <Label><b><FormattedMessage id="app.newPasswordMessage"/></b></Label>
                                     <div>
                                         <Row>
                                             <Col>
@@ -192,7 +193,7 @@ class Login extends React.Component{
                                     </div>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="examplePassword2"><b>Confirm New Password</b></Label>
+                                    <Label for="examplePassword2"><b><FormattedMessage id="app.confirmPasswordMessage"/></b></Label>
                                     <div>
                                         <Row>
                                             <Col>

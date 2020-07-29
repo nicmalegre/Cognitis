@@ -13,6 +13,8 @@ import "./selectcountry.css";
 
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
+import axios from "axios";
+import { FormattedMessage } from 'react-intl';
 
 
 const SelectCountry = (props) => {
@@ -48,7 +50,7 @@ const SelectCountry = (props) => {
             <Col lg="12" md="8" xs="12">
                 <Card id="card-selectCountry" body>
                     <FormGroup row>
-                            <Label for="exampleSelect" sm={3}>Select Country</Label>
+                            <Label for="exampleSelect" sm={3}><FormattedMessage id="app.selectCountryMessage"/></Label>
                             <Col sm={7}>
                                 <Input type="select" name="select" id="exampleSelect" onChange={inputChange}>
                                     
@@ -61,7 +63,7 @@ const SelectCountry = (props) => {
                                                             
                                 </Input>
                             </Col>
-                            <Button type="submit" onClick={sendData} color="primary" active >Next</Button>
+                            <Button type="submit" color="primary" active onClick={sendData}><FormattedMessage id="app.nextButton"/></Button>
                     </FormGroup>
                 </Card>
             </Col>

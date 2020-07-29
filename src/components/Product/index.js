@@ -18,6 +18,7 @@ import axios from "axios";
 import "./index.css";
 import Logo from "../base/logo";
 import Welcome from "../base/welcome";
+import { FormattedMessage } from 'react-intl';
 
  const Product = (props)=> {
       
@@ -30,13 +31,12 @@ import Welcome from "../base/welcome";
     
   const handlerClick = ()=> {
         if (data.c1) {
-          props.handleChangeProduct(0);
-    
+          props.changeProduct(0);
           }
         else if (data.c2) {
-          props.handleChangeProduct(1);
+          props.changeProduct(1);
         } else {
-          props.handleChangeProduct(2);
+          props.changeProduct(2);
         }
         //const product = this.state.product;
         //axios.post("http://localhost:4000/api/verificationcode", product);
@@ -129,7 +129,7 @@ import Welcome from "../base/welcome";
         <Row>
           <Col lg="8" sm={{ size: 8, offset: 2 }}>
             <h3 className="text-center text">
-              Please select the product to install
+              <FormattedMessage id="app.selectProductMessage"/>
             </h3>
             <Card id="card-product" md="12" body style={{ marginTop: 50 }}>
               <FormGroup row className="item">
@@ -200,8 +200,12 @@ import Welcome from "../base/welcome";
             style={{ marginTop: 20 }}
           >
             <Link to="/user">
-              <Button color="warning" onClick={handlerClick} style={{ borderColor: "black" }}>
-                <b>Next</b>
+              <Button
+                onClick={handlerClick}
+                color="warning"
+                style={{ borderColor: "black" }}
+              >
+                <b><FormattedMessage id="app.nextButton"/></b>
               </Button>
             </Link>
           </Col>
