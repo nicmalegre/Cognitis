@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Row,
@@ -19,41 +19,42 @@ import "./index.css";
 import Logo from "../base/logo";
 import Welcome from "../base/welcome";
 
-class Product extends React.Component {
+ const Product = (props)=> {
       
-      state = {
-      isChecked: false,
-      isChecked2: false,
-      isChecked3: false,
-      product: '',
-    };
+      const [data , setState] = useState({
+        c1: false,
+        c2: false,
+        c3: false,
+        product: '', 
+      })
 
-    handleInputChange=(event) =>{
+    const handleInputChange=(event) =>{
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({
-      [name]: value,
-      isChecked2: value,
-      isChecked3: value
+      setState({
+      ...[data], 
+      c1: value,
+      c2: value,
+      c3: value
     });
   }
-  handleInputChangeOne=(event) => {
+  const handleInputChangeOne=(event) => {
     const target = event.target;
-    console.log(target.name,target.checked, target.value);
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if ((name == "isChecked2") && (this.state.isChecked3)){
+    if ((name == "c2") && (data.c3)){
       console.log("inside")
-      this.setState({
-        isChecked: value,
-        isChecked2:value,
-        isChecked3: value,
+      setState({
+        ...data,
+        c1: value,
+        c2:value,
+        c3: value,
       });
     }
-    else if ((name == "isChecked3") && (this.state.isChecked2)){
+    else if ((name == "c3") && (data.c2)){
       this.setState({
         isChecked: value,
         isChecked2:value,
@@ -61,28 +62,30 @@ class Product extends React.Component {
       });    
     }
     else{
-      this.setState({
+      setState({
+        ...data,
       [name] : value,
     })
   } 
 
   }
-    handleProduct =(props)=> {
-    console.log(this.props);
-    if (this.state.c1) {
-       this.props.changeProduct(0)
+
+  const handlerClick = ()=> {
+    if (data.c1) {
+       return (0)
 
       }
-    else if (this.state.c2) {
-       this.props.changeProduct(1)
+    else if (data.c2) {
+       return(1)
     } else {
-         this.props.changeProduct(2)
+         return(2)
     }
     //const product = this.state.product;
     //axios.post("http://localhost:4000/api/verificationcode", product);
  }
 
-  render() {
+
+    //const pg = this.props;
     return (
       <Container fluid>
         <Row>
@@ -113,8 +116,8 @@ class Product extends React.Component {
                   <CustomInput
                     type="checkbox"
                     id="checkbox1"
-                    name="isChecked"
-                    onChange={this.handleInputChange}
+                    name={data.c1}
+                    onChange={handleInputChange}
                   />
                 </Col>
               </FormGroup>
@@ -131,8 +134,8 @@ class Product extends React.Component {
                     type="checkbox"
                     id="checkbox2"
                     name="isChecked2"
-                    checked={this.state.isChecked2}
-                    onChange={this.handleInputChangeOne}             
+                    checked={data.c2}
+                    onChange={handleInputChangeOne}             
                   />
                 </Col>
               </FormGroup>
@@ -149,8 +152,8 @@ class Product extends React.Component {
                     type="checkbox"
                     id="checkbox3"
                     name="isChecked3"
-                    checked={this.state.isChecked3}
-                    onChange={this.handleInputChangeOne}
+                    checked={data.c3}
+                    //onChange={handleInputChangetwo}
                   />
                 </Col>
               </FormGroup>
@@ -165,7 +168,7 @@ class Product extends React.Component {
             style={{ marginTop: 20 }}
           >
             <Link to="/user">
-              <Button color="warning" onClick={this.handleProduct} style={{ borderColor: "black" }}>
+              <Button color="warning" onClick={handlerClick} style={{ borderColor: "black" }}>
                 <b>Next</b>
               </Button>
             </Link>
@@ -173,6 +176,5 @@ class Product extends React.Component {
         </Row>
       </Container>
     );
-  }
 }
 export default Product;

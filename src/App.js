@@ -22,7 +22,14 @@ const App = () => {
     codeVerification:null,
     codeTime:null,
   })
-
+ 
+  const handleChange =(dato) =>{
+    
+    setDatos({
+      ...user,
+      [dato.name]: dato.value
+    })
+  }
   const handleChangeEmail = (dato) => {
     setDatos({
       email: dato
@@ -59,13 +66,15 @@ const App = () => {
         <Product changeProduct={handleChangeProduct}/>   
       </Route>      
       <Route path="/user"> 
-        <Registeruser changeEmail={handleChangeEmail} changeCodeTime={handleChangeCodeandTime}/>   
+        <Registeruser changeEmail={handleChange} changeCodeTime={handleChangeCodeandTime}/>   
       </Route>
       <Route path="/verificationcode"> 
         <VerificationCode codeVerification={code} />   
       </Route>
       {/*<Route  path="/verificationcode" component={VerificationCode} /> */}
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/login">
+          <Login changeCountry={handleChangePassword} />
+      </Route>
       <Route  path="/selectcountry" >
          <SelectCountry changeCountry={handleChangeCountry}/>
       </Route>
