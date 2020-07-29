@@ -36,14 +36,6 @@ const LoginUsers = (props) => {
             )
     }
 
-    const probando = () =>{
-        return(
-            <div>
-                <p>Se puede hacer esto?</p>
-            </div>
-        )
-}
-
   return (  
     <div>
         <Navbar/>
@@ -59,7 +51,7 @@ const LoginUsers = (props) => {
                             <Col lg="8" >
                                     <Form style={{marginTop:15}}>
                                         <FormGroup>
-                                            <Input type="email" name="email" id="exampleEmail" placeholder="Email addres" onChange={handleInputChange}/>
+                                            <Input type="email" name="email" id="exampleEmail" placeholder="Email addres"/>
                                         </FormGroup>
                                         <FormGroup>
                                             <Input type="password" name="password" id="examplePassword" placeholder="Password" />
@@ -71,13 +63,13 @@ const LoginUsers = (props) => {
                                             </Label>
                                         </FormGroup>
                                         <FormGroup>
-                                            <Button color="primary" id="btn-Login" onClick={console.log({email})}>Login</Button>
+                                            <Button color="primary" id="btn-Login">Login</Button>
                                         </FormGroup>
                                         <FormGroup className="text-center">
                                             <Link>Forgot your password?</Link>
                                         </FormGroup>
                                         <FormGroup className="text-left">
-                                            {controlInvalidInput}
+                                            {controlInvalidInput()}
                                         </FormGroup>
                                     </Form>
                             </Col>
