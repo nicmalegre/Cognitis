@@ -28,18 +28,17 @@ const SelectCountry = (props) => {
     const postData = (event) => {
         //event.preventDefault();
         axios.post('http://localhost:3000/api/users/saveuser', {
-          product: "frontProduct",
-          mail: "frontMail",
-          password: "frontPass",
-          country: "frontCountry"
+          product: props.product,
+          mail: props.mail,
+          password: props.password,
+          country: props.country
         })
         .then( res => ('Se cargo en la base de datos tu usuario'))
         .catch(err => console.log(err));
+        console.log(props.country)
         
       };
 
- 
- 
   return (  
     <Container fluid>
         <Row>
