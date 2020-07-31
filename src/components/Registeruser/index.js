@@ -1,10 +1,15 @@
 import React, {useState} from "react"; //importacion de la libreria
 import { Link } from "react-router-dom";
 import { InputGroup, InputGroupAddon, Button, Input, Row, Container, Col, Card } from "reactstrap"; //importar elementos
+import React from "react"; //importacion de la libreria
+import { withRouter } from "react-router-dom";
 import "./index.css"; //importar css
 import axios from "axios";
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
+import { FormattedMessage } from 'react-intl';
+
+
 
 const Registeruser = (props) => {
   //clase 'Nombre' extends React.component
@@ -20,9 +25,15 @@ const Registeruser = (props) => {
   }
 
   const handleInputChange = (event) => {
-    props.changeEmail(event.target.value);
-    adressMail(event.target.value);
+    props.changeEmail(event.target)
   };
+
+  /* const handleInputChange = (event) => {
+    setDatos({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
+  }; */
 
   const sendData = (event) => {
     //event.preventDefault();
@@ -34,6 +45,11 @@ const Registeruser = (props) => {
       props.changeCodeTime(res.data.verificationCode, res.data.expireAt)
       
     }).catch(err => console.log(err));
+
+
+    if (document.querySelector("#input-email").value != ""){
+      props.history.push('/VerificationCode')
+    }
     
   };
 
@@ -56,23 +72,23 @@ const Registeruser = (props) => {
                   <Card id="card-user" body>
                     <InputGroup>
                       <Input
+                        id="input-email"
                         type="email"
                         name="email"
-                        placeholder="Enter mail"
+                        placeholder="Enter Email"
                         onChange={handleInputChange}
                         required
                       />
                       <InputGroupAddon addonType="append">
-                        <Link to="/VerificationCode">
                           <Button
                             className="button-verification-code"
                             color="primary"
                             active
                             onClick={sendData}
+                            type="submit"
                           >
-                            Next
+                           <FormattedMessage id="app.nextButton"/>
                           </Button>
-                        </Link>
                       </InputGroupAddon>
                     </InputGroup>
                   </Card>
@@ -82,4 +98,4 @@ const Registeruser = (props) => {
   );
 };
 
-export default Registeruser;
+export default withRouter(Registeruser);

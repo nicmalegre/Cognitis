@@ -10,7 +10,7 @@ import "./verificationcode.css";
 import { Link } from 'react-router-dom';
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
-
+import { FormattedMessage } from 'react-intl';
 
 
 const VerificationCode = (props) => {
@@ -41,12 +41,12 @@ const VerificationCode = (props) => {
 
     //Function for control the button create password.
     let controlNextButton = (band) ? (
-        <Link to="Login">
-            <Button  class="button-verification-code" color="primary"  active >Next</Button>
+        <Link to="/Login">
+            <Button  class="button-verification-code" color="primary" active ><FormattedMessage id="app.nextButton"/></Button>
         </Link>
     ):
     (
-    <Button  class="button-verification-code" color="primary" active disabled>Next</Button>
+        <Button  class="button-verification-code" color="primary" active disabled><FormattedMessage id="app.nextButton"/></Button>
     )
     
   return (
