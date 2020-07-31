@@ -1,7 +1,6 @@
 import React, {useState} from "react"; //importacion de la libreria
 import { Link } from "react-router-dom";
 import { InputGroup, InputGroupAddon, Button, Input, Row, Container, Col, Card } from "reactstrap"; //importar elementos
-import React from "react"; //importacion de la libreria
 import { withRouter } from "react-router-dom";
 import "./index.css"; //importar css
 import axios from "axios";

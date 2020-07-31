@@ -18,29 +18,23 @@ const VerificationCode = (props) => {
     const [band, setBand] = useState(false)
     
 
-    const expireCode = (event) => {
-
+    /*const expireCode = (event) => {
         const expireTime =  new Date(props.codeVerification.codeTime); 
-               
         if (expireTime >= new Date() ) {
-            
             if (props.codeVerification.codeVerification != event.target.value ) {
-
                 console.log('Error')
                 setBand(false);
-
             } else { console.log('Iguales');
                       setBand(true);  
                     }
-
         } else {console.log('tiempo expiro');
                     setBand(false);
                 }
-
-    }
+    }*/
+    
 
     //Function for control the button create password.
-    let controlNextButton = (band) ? (
+    let controlNextButton = (true) ? (
         <Link to="/Login">
             <Button  class="button-verification-code" color="primary" active ><FormattedMessage id="app.nextButton"/></Button>
         </Link>
@@ -66,7 +60,7 @@ const VerificationCode = (props) => {
             <Col lg="12">
                 <Card id="card-verificationCode" body>
                     <InputGroup className="inputgroup-verification-code">
-                        <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:" onChange={expireCode}/>
+                        <Input className="input-verification-code" maxLength='5'  placeholder="We send you a code to <email@entered.com> enter code:" /*onChange={expireCode}*//>
                         <InputGroupAddon addonType="append">
                                     {controlNextButton}
                         </InputGroupAddon>
