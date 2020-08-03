@@ -91,16 +91,16 @@ const App = () => {
         <Product changeProduct={handleChangeProduct}/>   
       </Route>
       <Route path="/user"> 
-        <Registeruser changeEmail={handleChange} changeCodeTime={handleChangeCodeandTime}/>   
+        <Registeruser changeEmail={handleChange} changeCodeTime={handleChangeCodeandTime} userInfo={user}/>   
       </Route>
       <Route path="/verificationcode">
-        <VerificationCode codeVerification={code} />
+        <VerificationCode codeVerification={code} userInfo={user}/>
       </Route>
       <Route exact path="/login">
-        <Login changePassword={handleChangePassword } />
+        <Login changePassword={handleChangePassword } userInfo={user}/>
       </Route>
       <Route path="/selectcountry">
-        <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
+        <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData} userInfo={user}/>
       </Route>
     </BrowserRouter>
   </IntlProvider>

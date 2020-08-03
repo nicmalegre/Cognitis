@@ -83,7 +83,7 @@ import { FormattedMessage } from 'react-intl';
     })
   } 
 
-    this.setState({
+    setState({
       [name]: value,
     });
   }

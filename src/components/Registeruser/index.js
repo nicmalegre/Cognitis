@@ -1,5 +1,5 @@
 import React, {useState} from "react"; //importacion de la libreria
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { InputGroup, InputGroupAddon, Button, Input, Row, Container, Col, Card } from "reactstrap"; //importar elementos
 import { withRouter } from "react-router-dom";
 import "./index.css"; //importar css
@@ -45,16 +45,21 @@ const Registeruser = (props) => {
       
     }).catch(err => console.log(err));
 
-
     if (document.querySelector("#input-email").value != ""){
       props.history.push('/VerificationCode')
     }
     
   };
 
+  /* verify if a product type is selected on product screen
+  if this is not selected redirect to product screen */
+  const isProductSelected = () => {
+    return props.userInfo.product === ""
+  }
+
   //Funcion que renderiza el componente visual jsx
   return (
-    
+    isProductSelected() ? <Redirect to="/product"/> :
     <Container fluid>
               <Row>
                 <Col lg="6" md="3" xs="10">
