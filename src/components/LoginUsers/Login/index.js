@@ -61,7 +61,7 @@ const LoginUsers = (props) => {
                 </Col>
             </Row>
             <Row className="text-center">
-                <Col lg="6" md="6" xs="12"> 
+                <Col lg="4" md="6" xs="12"> 
                         <Row className="justify-content-end">
                             <Col lg="8" >
                                     <Form style={{marginTop:15}}>
@@ -91,7 +91,7 @@ const LoginUsers = (props) => {
                             </Col>
                         </Row>
                 </Col>
-                <Col lg="6" md="6" xs="12" className="d-none d-sm-block">
+                <Col lg="8" md="6" xs="12" className="d-none d-sm-block">
                     <img src={imagenProductivity} alt="Cognitis" id="img-productivity"/>
                 </Col>
             </Row>
