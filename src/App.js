@@ -28,6 +28,9 @@ const App = () => {
     codeTime: null,
   });
 
+  const [users, setUsers] = useState([])
+
+
   const handleChange = (dato) => {
     setDatos({
       ...user,
@@ -83,6 +86,18 @@ const App = () => {
         
       };
 
+    const getEmailPassword = () =>{
+    //const consulta = axios.get('http://localhost:3000/api/users/')
+    //console.log(consulta)
+    //setUsers(consulta.data)
+    //console.log(users) //Imprimo el estado de users que es un arreglo
+
+    axios.get('http://localhost:3000/api/users/').then(res => 
+    setUsers(users.push(res.data)))
+    }
+    
+  
+
  return(
   <IntlProvider locale={ language } messages={ messages[language]}>
     <BrowserRouter>
@@ -105,7 +120,7 @@ const App = () => {
         <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
       </Route>
       <Route path="/LoginUsers/Login">
-        <LoginUsers />
+        <LoginUsers getEmailPassword={getEmailPassword} changeEmail={handleChange}/>
       </Route>
     </BrowserRouter>
   </IntlProvider>

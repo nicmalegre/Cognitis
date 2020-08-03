@@ -218,7 +218,9 @@ class Login extends React.Component{
                                     </div> 
                                 </FormGroup>
                                 <Row className='justify-content-center'>
-                                    {controlCreatePassButton}
+                                    <Link to="./SelectCountry">
+                                        {controlCreatePassButton}
+                                    </Link>
                                 </Row>
                             </div>
                         </Card>
