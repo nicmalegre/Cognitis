@@ -3,14 +3,15 @@
 }
 
 #card-password{
-    margin-right: 10%;
-    margin-left: 10%;
+    margin-right: 30%;
+    margin-left: 30%;
     margin-bottom: 10px;
     padding-bottom: 0;
 }
 
 .text-rule{
     margin-bottom: 0;
+    color: rgb(85, 9, 9);
 }
 
 .icon-check{
