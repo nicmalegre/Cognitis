@@ -13,6 +13,9 @@ import { FormattedMessage } from 'react-intl';
 const Registeruser = (props) => {
   //clase 'Nombre' extends React.component
 
+  const [verifyingEmail, setVerifyingEmail] = useState(false)
+  const [showErrorMessage, setShowErrorMessage] = useState(false)
+
   const [mailEntered, setMailEntered] = useState({
     adress:null,
   })
@@ -27,16 +30,32 @@ const Registeruser = (props) => {
     props.changeEmail(event.target)
   };
 
-  /* const handleInputChange = (event) => {
-    setDatos({
-      ...user,
-      [event.target.name]: event.target.value,
-    });
-  }; */
+  /* verify if entered mail is already used for another user.
+  if the email entered is not used yet call to sendData function */
+  const verifyEmail = (email) => {
 
-  const sendData = (event) => {
-    //event.preventDefault();
-    console.log(event);
+    setVerifyingEmail(true)
+
+    axios.post('http://localhost:3000/api/users/emailverification', {
+      mail: email
+    })
+    .then( async res => {
+      const isEmailAlreadyUsed =  await res.data.alreadyUsed
+
+      if(isEmailAlreadyUsed){
+        setShowErrorMessage(true)
+        setVerifyingEmail(false)
+      }else{
+        sendData()
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    }) 
+  }
+
+  const sendData = () => {
+    
     axios.post('http://localhost:3000/api/verificationcode', {
       mail: mailEntered.adress
     })
@@ -46,7 +65,7 @@ const Registeruser = (props) => {
     }).catch(err => console.log(err));
 
     if (document.querySelector("#input-email").value != ""){
-      props.history.push('/VerificationCode')
+      props.history.push('/verificationcode')
     }
     
   };
@@ -88,13 +107,14 @@ const Registeruser = (props) => {
                             className="button-verification-code"
                             color="primary"
                             active
-                            onClick={sendData}
+                            onClick={() => verifyEmail(document.querySelector('#input-email').value)}
                             type="submit"
                           >
-                           <FormattedMessage id="app.nextButton"/>
+                           { verifyingEmail ? <span>Verifying</span> : <FormattedMessage id="app.nextButton"/> }
                           </Button>
                       </InputGroupAddon>
                     </InputGroup>
+                    { showErrorMessage && <span>Email already used for another user</span>}
                   </Card>
                 </Col>
               </Row>
