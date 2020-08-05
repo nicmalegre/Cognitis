@@ -14,7 +14,7 @@ export const messages = {
         'app.weSendCodeMessage': 'Le enviamos su un código a',
         //CODE VERIFICATION SCREEN
         'app.enterCodeMessage': 'ingrese el código:',
-        //LOGIN SCREEN
+        //LOGIN (Create Password) SCREEN
         'app.enterYourNewPasswordMessage': 'Ingrese una nueva contraseña para:',
         'app.makeSureIncludeMessage': 'Asegúrese de incluir al menos:',
         'app.8charactersMessage': '8 caracteres',
@@ -28,6 +28,15 @@ export const messages = {
         'app.btnCreatePassword': 'Crear Contraseña',
         //SELECT COUNTRY SCREEN
         'app.selectCountryMessage': 'Seleccione su País',
+        //LOGIN ALL USERS SCREEN
+        'app.rememberMeMessage': 'Recordarme',
+        'app.btnLoginMessage': 'Ingresar',
+        'app.forgotPasswordMessage': 'Olvidé mi contraseña',
+        'app.errorIncorrectCredentialMessage': 'Ha ingresado un correo y/o contraseña correcta. Por favor intente nuevamente.',
+        'app.maxiumAttemptsMessage': 'Ha excedido los intentos de inicio de sesión!',
+        'app.securityParamountMessage': 'La seguridad es primordial en Cognitis360',
+        'app.maxiumAttemptsResetPasswordMessage': 'Cuando se exceden los intentos de inicio de sesión, el registro del usuario en la base de datos es clasificado como contraseña caducada. Por favor, reestablezca su contraseña via: "Olvidé mi contraseña"',
+
     },
     'en': {
         //WELCOME SCREEN
@@ -58,5 +67,15 @@ export const messages = {
         'app.btnCreatePassword': 'Create Password',
         //SELECT COUNTRY SCREEN
         'app.selectCountryMessage': 'Select Country',
+        //LOGIN ALL USERS SCREEN
+        'app.rememberMeMessage': 'Remember me',
+        'app.btnLoginMessage': 'Login',
+        'app.forgotPasswordMessage': 'Forgot your password?',
+        'app.errorIncorrectCredentialMessage': 'You have entered an invalid email address or password. Please try again.',
+        'app.maxiumAttemptsMessage': 'Maximium Login Attempts Exceeded!',
+        'app.securityParamountMessage': 'Security is Paramount at Cognitis360',
+        'app.maxiumAttemptsResetPasswordMessage': 'When you have exceeded the maximium login attempts, the user record in the database is flagged as password expired. Please reset your password via: Forgot your password?',
+
+
     }
 }

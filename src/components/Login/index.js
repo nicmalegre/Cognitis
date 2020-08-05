@@ -166,7 +166,7 @@ class Login extends React.Component{
                         <Card id="card-password">
                             <div className="div-password">
                                 <FormGroup>
-                                    <Label><FormattedMessage id="app.enterYourNewPasswordMessage"/> <b>'correo@correo.com'</b></Label><br/>
+                                    <Label><FormattedMessage id="app.enterYourNewPasswordMessage"/> <b>{'correo@correo.com'}</b></Label><br/>
                                     <Label><FormattedMessage id="app.makeSureIncludeMessage"/></Label><br/>
                                     {controlCharacters}
                                     {controlUppercase}

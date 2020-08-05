@@ -114,7 +114,7 @@ const App = () => {
         <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
       </Route>
       <Route path="/LoginUsers/Login">
-        <LoginUsers handleChange={handleChange} changePassword={handleChangePassword } handleChangePasswordExpired={handleChangePasswordExpired} user={user}/>
+        <LoginUsers changeLanguage={handleChangeLanguage} handleChange={handleChange} changePassword={handleChangePassword } handleChangePasswordExpired={handleChangePasswordExpired} user={user} />
       </Route>
     </BrowserRouter>
   </IntlProvider>
