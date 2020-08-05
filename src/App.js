@@ -19,6 +19,7 @@ const App = () => {
     email: "",
     password: "",
     country: "",
+    passwordExpired: false,
   });
 
   const [ language, setLanguage ] = useState('en')
@@ -27,9 +28,6 @@ const App = () => {
     codeVerification: null,
     codeTime: null,
   });
-
-  const [users, setUsers] = useState([])
-
 
   const handleChange = (dato) => {
     setDatos({
@@ -67,6 +65,12 @@ const App = () => {
       password: dato,
     });
   };
+  const handleChangePasswordExpired = () => {
+    setDatos({
+      ...user,
+      passwordExpired: true,
+    });
+  };
   const handleChangeCountry = (dato) => {
     setDatos({
       ...user,
@@ -79,24 +83,14 @@ const App = () => {
           product: user.product,
           mail: user.email,
           password: user.password,
-          country: user.country
+          country: user.country,
+          passwordExpired: user.passwordExpired
+
         })
         .then( res => ('Se cargo en la base de datos tu usuario'))
         .catch(err => console.log(err));
-        
+
       };
-
-    const getEmailPassword = () =>{
-    //const consulta = axios.get('http://localhost:3000/api/users/')
-    //console.log(consulta)
-    //setUsers(consulta.data)
-    //console.log(users) //Imprimo el estado de users que es un arreglo
-
-    axios.get('http://localhost:3000/api/users/').then(res => 
-    setUsers(users.push(res.data)))
-    }
-    
-  
 
  return(
   <IntlProvider locale={ language } messages={ messages[language]}>
@@ -120,7 +114,7 @@ const App = () => {
         <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
       </Route>
       <Route path="/LoginUsers/Login">
-        <LoginUsers getEmailPassword={getEmailPassword} changeEmail={handleChange}/>
+        <LoginUsers handleChange={handleChange} changePassword={handleChangePassword } handleChangePasswordExpired={handleChangePasswordExpired} user={user}/>
       </Route>
     </BrowserRouter>
   </IntlProvider>

@@ -1,6 +1,6 @@
-body{
+/*body{
     background-image: none;
-}
+}*/
 
 #col-naranja{
    background-color: rgb(247, 147, 1);
@@ -21,7 +21,7 @@ body{
         background: linear-gradient(white, rgb(254, 227, 140));
         margin: 0;
         padding: 0;
-        height: 23vh; 
+        height: 40vh; 
 }
 
 #card-error2{
