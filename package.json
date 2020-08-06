@@ -10,7 +10,7 @@
     "bootstrap": "^4.5.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^6.1.2",
+    "react-hook-form": "^6.3.0",
     "react-icon-checkbox": "^0.2.4",
     "react-icons": "^3.10.0",
     "react-router-dom": "^5.2.0",

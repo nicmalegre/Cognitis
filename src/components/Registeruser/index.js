@@ -11,7 +11,6 @@ import {
   Card,
 } from "reactstrap"; //importar elementos
 import "./index.css"; //importar css
-import axios from "axios";
 
 import Logo from "../base/logo";
 import Welcome from "../base/welcome";
@@ -29,7 +28,7 @@ const Registeruser = (props) => {
       [event.target.name]: event.target.value,
     });
   }; */
-
+/*
   const sendData = (event) => {
     //event.preventDefault();
 
@@ -42,7 +41,7 @@ const Registeruser = (props) => {
     }).catch(err => console.log(err));
     
   };
-
+*/
   //Funcion que renderiza el componente visual jsx
   return (
     

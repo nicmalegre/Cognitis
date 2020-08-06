@@ -5,16 +5,11 @@ import {
   Col,
   Container,
   FormGroup,
-  Input,
   Label,
   CustomInput,
   Button,
   Card,
-  CardTitle,
-  CardText,
 } from "reactstrap";
-//import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
-import axios from "axios";
 import "./index.css";
 import Logo from "../base/logo";
 import Welcome from "../base/welcome";
@@ -46,7 +41,6 @@ import Welcome from "../base/welcome";
     const handleInputChange=(event) =>{
     const target = event.target;
     const value = target.name === "c1" ? target.checked : target.value;
-    const name = target.name;
 
       setState({
       ...[data], 
@@ -60,7 +54,7 @@ import Welcome from "../base/welcome";
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if ((name == "c2") && (data.c3)){
+    if ((name === "c2") && (data.c3)){
       console.log("inside")
       setState({
         ...data,
@@ -69,7 +63,7 @@ import Welcome from "../base/welcome";
         c3: value,
       });
     }
-    else if ((name == "c3") && (data.c2)){
+    else if ((name === "c3") && (data.c2)){
       setState({
         isChecked: value,
         isChecked2:value,
@@ -98,7 +92,7 @@ import Welcome from "../base/welcome";
         c1: value,
         c3: value,
       });
-    } else if (value == false && data.c2) {
+    } else if (value === false && data.c2) {
        setState({
         ...data,
         c1: value,

@@ -6,6 +6,7 @@ import Product from "./components/Product/index";
 import Registeruser from "./components/Registeruser/index";
 import SelectCountry from "./components/SelectCountry";
 import VerificationCode from "./components/VerificationCode";
+import RegisterHeadCompany from './components/RegisterHeadCompany/index'
 import axios from 'axios'
 
 const App = () => {
@@ -93,6 +94,9 @@ const App = () => {
       <Route path="/selectcountry">
         <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
       </Route>
+      <Route path="/registerheadcompany" component={RegisterHeadCompany}/>
+     
+
     </BrowserRouter>
   );
 };

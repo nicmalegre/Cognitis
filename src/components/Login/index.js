@@ -9,8 +9,6 @@ import "./index.css";
 import Logo from '../base/logo';
 import Welcome from '../base/welcome';
 
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const eye = <FaEye/>;
 
