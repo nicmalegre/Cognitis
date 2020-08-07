@@ -108,7 +108,7 @@ const App = () => {
         <VerificationCode codeVerification={code} />
       </Route>
       <Route exact path="/login">
-        <Login changePassword={handleChangePassword } />
+        <Login changePassword={handleChangePassword} />
       </Route>
       <Route path="/selectcountry">
         <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>

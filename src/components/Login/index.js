@@ -143,7 +143,7 @@ class Login extends React.Component{
 
         //Function for control the button create password.
         let controlCreatePassButton = ((newPassConfirm == newPass) && (newPassConfirm != '') ) ? (
-            <Button  color="primary"><FormattedMessage id="app.btnCreatePassword"/></Button>
+            <Button  color="primary" onClick={this.handleClick}><FormattedMessage id="app.btnCreatePassword"/></Button>
         ):
         (
             <Button  color="secondary" disabled><FormattedMessage id="app.btnCreatePassword"/></Button>
