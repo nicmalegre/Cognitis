@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, Form, Row, CustomInput, Tooltip, Card, Col} from 'reactstrap';
+import {Container, Button, FormGroup, Label,  InputGroup,  Row,  Tooltip, Card, Col} from 'reactstrap';
 import { Link } from "react-router-dom";
 import { BsInfoCircleFill} from "react-icons/bs";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
@@ -10,9 +10,7 @@ import Logo from '../base/logo';
 import Welcome from '../base/welcome';
 import { FormattedMessage } from 'react-intl'
 
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faEye } from "@fortawesome/free-solid-svg-icons";
-
+//Logo of visibility
 const eye = <FaEye/>;
 
 class Login extends React.Component{
@@ -36,12 +34,12 @@ class Login extends React.Component{
         })
     }
 
-    togglePasswordVisiblity = () => {
+    togglePasswordVisiblity = () => { //This function is for change the new password visibility property.
         this.setState({
             passwordShown: !this.state.passwordShown});
     };
 
-    togglePasswordConfirmVisiblity = () => {
+    togglePasswordConfirmVisiblity = () => { //This function is for change the confirm password visibility property.
         this.setState({
             passwordConfirmShown: !this.state.passwordConfirmShown});
     };
@@ -61,8 +59,7 @@ class Login extends React.Component{
     
     }
     render(){
-        //const props = this.props.changePassword
-        //console.log(changePassword);
+ 
         let {tooltipOpen, newPass, newPassConfirm} = this.state
 
         //Function for control if the password have 8 characters length.

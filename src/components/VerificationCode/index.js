@@ -17,7 +17,8 @@ const VerificationCode = (props) => {
 
     const [band, setBand] = useState(false)
     
-
+    //Arrow function for control of expire time and matching of the entered verification code
+     
     /*const expireCode = (event) => {
         const expireTime =  new Date(props.codeVerification.codeTime); 
         if (expireTime >= new Date() ) {
