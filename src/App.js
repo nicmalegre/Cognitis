@@ -6,8 +6,12 @@ import Product from "./components/Product/index";
 import Registeruser from "./components/Registeruser/index";
 import SelectCountry from "./components/SelectCountry";
 import VerificationCode from "./components/VerificationCode";
-import RegisterHeadCompany from './components/RegisterHeadCompany/index'
-import axios from 'axios'
+import RegisterHeadCompany from "./components/RegisterHeadCompany/index";
+import NumberCompany from "./components/NumberCompany/index";
+import axios from "axios";
+import RegisterSuc from "./components/RegisterSuc";
+import NumberSuc from "./components/NumberSuc/index";
+import RegisterCompany from "./components/RegisterCompany";
 
 const App = () => {
   const [user, setDatos] = useState({
@@ -59,18 +63,44 @@ const App = () => {
       country: dato,
     });
   };
-  const postData = () =>{
-        console.log(user);
-        axios.post('http://localhost:3000/api/users/saveuser', {
-          product: user.product,
-          mail: user.mail,
-          password: user.password,
-          country: user.country
-        })
-        .then( res => ('Se cargo en la base de datos tu usuario'))
-        .catch(err => console.log(err));
-        
-      };
+  const postData = () => {
+    console.log(user);
+    axios
+      .post("http://localhost:3000/api/users/saveuser", {
+        product: user.product,
+        mail: user.mail,
+        password: user.password,
+        country: user.country,
+      })
+      .then((res) => "Se cargo en la base de datos tu usuario")
+      .catch((err) => console.log(err));
+  };
+
+  //Dotos de la compañia matriz, compañia y sucursal
+  const [companyHead, setCompanyHead] = useState([]);
+
+  const dataCompanyHead = (data) => {
+    setCompanyHead([...companyHead, data]);
+  };
+  const [company, setCompany] = useState([]);
+
+  const dataCompany = (data) => {
+    setCompany([...company, data]);
+  };
+  const [sucur, setSucur] = useState([]);
+  const dataSucur = (data) => {
+    setSucur([...sucur, data]);
+  };
+  const [cantsuc, setCantSuc] = useState(0);
+
+  const setcantSuc = (cant) => {
+    setCantSuc(cant);
+  };
+  const [cantCompanies, setCantComp] = useState(0);
+
+  const setcantCompanies = (cant) => {
+    setCantComp(cant);
+  };
 
   return (
     <BrowserRouter>
@@ -89,14 +119,29 @@ const App = () => {
       </Route>
       {/*<Route  path="/verificationcode" component={VerificationCode} /> */}
       <Route exact path="/login">
-        <Login changePassword={handleChangePassword } />
+        <Login changePassword={handleChangePassword} />
       </Route>
       <Route path="/selectcountry">
-        <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
+        <SelectCountry
+          handleChangeCountry={handleChangeCountry}
+          postData={postData}
+        />
       </Route>
-      <Route path="/registerheadcompany" component={RegisterHeadCompany}/>
-     
-
+      <Route path="/registerheadcompany">
+        <RegisterHeadCompany dataCompanyHead={dataCompanyHead} />
+      </Route>
+      <Route path="/numbercompanies">
+        <NumberCompany cantCompanies={setcantCompanies} />
+      </Route>
+      <Route path="/registercompany">
+        <RegisterCompany dataCompany={dataCompany} />
+      </Route>
+      <Route path="/registersucursal">
+        <RegisterSuc dataSuc={dataSucur} cantSuc={cantsuc} />
+      </Route>
+      <Route path="/numbersucursales">
+        <NumberSuc cantSuc={setcantSuc} />
+      </Route>
     </BrowserRouter>
   );
 };

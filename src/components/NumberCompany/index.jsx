@@ -1,26 +1,40 @@
-import React, { useState } from "react"; //importacion de la libreria
+import React, { useState, Link, Fragment } from "react"; //importacion de la libreria
 //import { Link } from "react-router-dom";
 import {
-  FormGroup,
-  Button,
-  Input,
   Row,
-  Container,
   Col,
-  Label,
-  Card,
-  Form,
+  Button,
+  Container
 } from "reactstrap"; //importar elementos
 import "../RegisterHeadCompany/index.css"; //importar css
-import { useForm } from "react-hook-form";
-
+import FormCant from '../formulario/formCant'
 import Logo from "../base/logo";
+import { useHistory } from "react-router-dom";
+
 
 const NumberCompany = (props) => {
+  const [cond, setCond] = useState(null)
+  const[cantCompanies, setCantCompanies] = useState(0)
 
+  const select=(condicion)=>{
+    setCond(condicion)
+  }
 
+  const cantComp = (cant) => {
+    setCantCompanies(cant);
+  }
+  
+  let history = useHistory();
+  const sendCant =(cant)=>{
+    props.cantCompanies(cantCompanies)
+    if (cantCompanies > 0) {
+      history.push("/registercompany");
+    }else{
+      history.push("/numbersucursales");
+    }
+  }
 
-    //Funcion que renderiza el componente visual jsx
+  //Funcion que renderiza el componente visual jsx
   return (
     <Container fluid>
       <Row>
@@ -28,14 +42,15 @@ const NumberCompany = (props) => {
           <Logo />
         </Col>
       </Row>
-      <Row>
-      <Col lg="8" xs="10">
-          <h3 className="mt-5 text" style={{ marginBottom: 30 }}>
-            Ingrese datos de la Compañia Matriz
-          </h3>
+        <FormCant cantCompanies={cantComp} name="compañia" /*sendCant={sendCant}*/ select={select}/>
+      <Row className="row justify-content-end" style={{ marginTop: 10 }}>
+        <Col md={3}>
+          <Button color="primary" type="Submit" onClick={sendCant} active>
+              Continuar
+          </Button>
         </Col>
-    </Row>
-      </Container>
-
-
-}
+      </Row>
+    </Container>
+  );
+};
+export default NumberCompany;
