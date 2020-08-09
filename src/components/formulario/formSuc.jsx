@@ -13,6 +13,7 @@ import {
 } from "reactstrap"; //importar elementos
 import "../RegisterHeadCompany/index.css"; //importar css
 import { useForm } from "react-hook-form";
+import axios from 'axios'
 import Logo from "../base/logo";
 
 const Formsuc = (props) => {
@@ -24,19 +25,12 @@ const Formsuc = (props) => {
   
   const onSubmit = (data,e) => {
     e.preventDefault();
-    descontar();
-    props.dataSucur(data);
-    e.target.reset();
-    setInput({
-      });
+    axios.post("http://localhost:3000/api/headcompany/company/sucursal/savesucursal", data)
+    .then((res) => "Se cargo en la base de datos una nueva compañia")
+    .catch((err) => console.log(err));
+    window.location.href = '/registersucursal';
   };
-  
-  const descontar = async () => {
-    const formvalid = await trigger();
-    if (formvalid) {
-      props.contador();
-    }
-  };
+
   
   const [input, setInput] = useState({
     company:'',
@@ -71,7 +65,7 @@ const Formsuc = (props) => {
           <Logo />
         </Col>
         <Col lg="8" xs="10">
-          <h3 className="mt-5 text" style={{ marginBottom: 30 }}>
+          <h3 className="mt-5 text" style={{ marginBottom: 30,color: "rgb(0, 55, 100)"}}>
             Ingrese datos de la Sucursal {props.cantSuc}{" "}
           </h3>
         </Col>

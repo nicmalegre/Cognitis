@@ -9,9 +9,11 @@ import VerificationCode from "./components/VerificationCode";
 import RegisterHeadCompany from "./components/RegisterHeadCompany/index";
 import NumberCompany from "./components/NumberCompany/index";
 import axios from "axios";
-import RegisterSuc from "./components/RegisterSuc";
+import RegisterSucursalContainer from "./views/RegisterSucursalContanier";
 import NumberSuc from "./components/NumberSuc/index";
-import RegisterCompany from "./components/RegisterCompany";
+import CreateSucursalContainer from "./views/CreateSucursalContainer";
+import RegisterCompanyContainer from "./views/RegisterCompanyContainer";
+import CreateCompanyContainer from "./views/CreateCompanyContaniener";
 
 
 const App = () => {
@@ -133,18 +135,19 @@ const App = () => {
       <Route path="/registerheadcompany">
         <RegisterHeadCompany dataCompanyHead={dataCompanyHead} />
       </Route>
-      <Route path="/numbercompanies">
+      {/*<Route path="/numbercompanies">
         <NumberCompany cantCompanies={setcantCompanies} />
-      </Route>
+  </Route>
       <Route path="/registercompany">
         <RegisterCompany dataCompany={dataCompany} cantCompanies={cantCompanies} />
-      </Route>
-      <Route path="/registersucursal">
-        <RegisterSuc dataSuc={dataSucur} cantSuc={cantsuc} cantCompanies={cantCompanies}/>
-      </Route>
+  </Route>*/}
+      <Route path="/registersucursal" component={RegisterSucursalContainer}/>
+      <Route path="/createsucursal" component={CreateSucursalContainer} />
       <Route path="/numbersucursales">
         <NumberSuc cantSuc={setcantSuc} />
       </Route>
+      <Route path="/registercompany" component={RegisterCompanyContainer} />
+      <Route path="/createcompany" component={CreateCompanyContainer} />
     </BrowserRouter>
   );
 };
