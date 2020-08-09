@@ -14,6 +14,7 @@ import NumberSuc from "./components/NumberSuc/index";
 import CreateSucursalContainer from "./views/CreateSucursalContainer";
 import RegisterCompanyContainer from "./views/RegisterCompanyContainer";
 import CreateCompanyContainer from "./views/CreateCompanyContaniener";
+import Catalogo from './views/Catalogo/index'
 
 
 const App = () => {
@@ -148,6 +149,7 @@ const App = () => {
       </Route>
       <Route path="/registercompany" component={RegisterCompanyContainer} />
       <Route path="/createcompany" component={CreateCompanyContainer} />
+      <Route path="/catalogo" component={Catalogo} />
     </BrowserRouter>
   );
 };

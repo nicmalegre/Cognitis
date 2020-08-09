@@ -1,0 +1,22 @@
+.secondary{
+    background-color: rgb(236, 136, 16);
+}
+
+.text{
+    color:white;
+}
+
+.espacio{
+    margin-left: 30px;
+}
+
+.width{
+    width: 600px;
+}
+
+img {
+    height: 50px;
+    margin: 0;
+    padding: 0;
+   
+  }
