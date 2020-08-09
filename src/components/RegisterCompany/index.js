@@ -1,14 +1,14 @@
 import React, { useState } from "react"; //importacion de la libreria
 import { Row, Container} from "reactstrap"; //importar elementos
 import Formulario from "../formulario/formulario";
-import Formsuc from "../formulario/formSuc";
 import { useHistory } from "react-router-dom";
+
 
 
 const RegisterCompany = (props) => {
   
   //Se almacena la cantidad de compañias
-  const [company, setCompany] = useState(4);
+  const [company, setCompany] = useState(props.cantCompanies);
  //contador para mostrar dinamicamente el numero de compañia
   const [cont, setContador] = useState(1)
   // state donde se almacena los datos de la compañia
@@ -21,17 +21,16 @@ const RegisterCompany = (props) => {
  // ]);
 //}
 
+
 //send Data to component phader and redirect a sucursales
 let history = useHistory();
 const setData=(data)=>{
   props.dataCompany(data);
   if(company > 0){
-    console.log("dentro")
     history.push("/numbersucursales");
   }
   
 }
-
 
 const Contador = () => {  
   setCompany(
@@ -40,6 +39,11 @@ const Contador = () => {
     setContador(
       cont + 1,
     )
+}
+
+//function that redirect to end
+const nextpage=()=>{
+  history.push("/numbersucursales")
 }
 
   //Funcion que renderiza el componente visual jsx
@@ -52,9 +56,9 @@ const Contador = () => {
           </Row>
           ):()        
         </div>
-      ) : (
-        <h3>siguiente</h3>
-      )}
+      ) : (nextpage())
+        
+      }
     </Container>
   );
 };

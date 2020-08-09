@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
 import Login from "./components/Login";
 import Welcomescreen from "./components/Welcomescreen/index";
@@ -12,6 +12,7 @@ import axios from "axios";
 import RegisterSuc from "./components/RegisterSuc";
 import NumberSuc from "./components/NumberSuc/index";
 import RegisterCompany from "./components/RegisterCompany";
+
 
 const App = () => {
   const [user, setDatos] = useState({
@@ -92,11 +93,13 @@ const App = () => {
     setSucur([...sucur, data]);
   };
   const [cantsuc, setCantSuc] = useState(0);
+  
 
   const setcantSuc = (cant) => {
     setCantSuc(cant);
   };
   const [cantCompanies, setCantComp] = useState(0);
+ 
 
   const setcantCompanies = (cant) => {
     setCantComp(cant);
@@ -134,10 +137,10 @@ const App = () => {
         <NumberCompany cantCompanies={setcantCompanies} />
       </Route>
       <Route path="/registercompany">
-        <RegisterCompany dataCompany={dataCompany} />
+        <RegisterCompany dataCompany={dataCompany} cantCompanies={cantCompanies} />
       </Route>
       <Route path="/registersucursal">
-        <RegisterSuc dataSuc={dataSucur} cantSuc={cantsuc} />
+        <RegisterSuc dataSuc={dataSucur} cantSuc={cantsuc} cantCompanies={cantCompanies}/>
       </Route>
       <Route path="/numbersucursales">
         <NumberSuc cantSuc={setcantSuc} />

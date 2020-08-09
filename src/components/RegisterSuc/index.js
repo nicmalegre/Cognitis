@@ -18,6 +18,8 @@ const setData=(data)=>{
 }
 
 
+
+
 const contador = () => {  
   setSuc(
         suc - 1,
@@ -26,10 +28,17 @@ const contador = () => {
       cont + 1,
     )
 }
+
+//function that redirect to end
   let history = useHistory();
   const nextpage=()=>{
-    console.log("fin")
+    console.log(props.cantCompanies)
+    if (props.cantCompanies > 0){
+      history.push("/registercompany")
+    }
+    else{
     history.push("/fin")
+    }
   }
 
   //Funcion que renderiza el componente visual jsx
@@ -42,9 +51,8 @@ const contador = () => {
           </Row>
         
         </div>
-      ) : (
-      <h3>{nextpage}</h3>
-      )}
+      ) : (nextpage())
+      }
     </Container>
   );
 };

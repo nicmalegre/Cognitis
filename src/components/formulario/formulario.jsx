@@ -23,6 +23,7 @@ const Formulario = (props) => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     props.dataCompanies(data);
+    descontar();
     e.target.reset();
     setInput({
     });
