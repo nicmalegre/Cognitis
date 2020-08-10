@@ -84,7 +84,7 @@ import WizardLayout from '../../Layouts/WizardLayout/index'
     })
   } 
 
-    this.setState({
+    setState({
       [name]: value,
     });
   }
