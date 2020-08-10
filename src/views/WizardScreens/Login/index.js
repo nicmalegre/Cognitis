@@ -4,17 +4,13 @@ import {
   Button,
   FormGroup,
   Label,
-  Input,
   InputGroup,
-  InputGroupAddon,
-  Form,
   Row,
-  CustomInput,
   Tooltip,
   Card,
   Col,
 } from "reactstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
@@ -23,6 +19,7 @@ import "./index.css";
 import Logo from "../../../components/WizardComponents/base/logo";
 import Welcome from "../../../components/WizardComponents/base/welcome";
 import { FormattedMessage } from "react-intl";
+import WizardLayout from '../../Layouts/WizardLayout/index'
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faEye } from "@fortawesome/free-solid-svg-icons";
@@ -259,105 +256,107 @@ class Login extends React.Component {
 
     return (
         this.isEmailEmpty() ? <Redirect to="/user" /> :
-      <Container fluid>
-        <Row>
-          <Col lg="6" md="3" xs="10">
-            <Logo />
-          </Col>
-        </Row>
-        <Row className="text-center" style={{ marginBottom: 30 }}>
-          <Col lg="12" xs="12">
-            <Welcome />
-          </Col>
-        </Row>
-        <Row>
-          <Col lg="12">
-            <Card id="card-password">
-              <div className="div-password">
-                <FormGroup>
-                  <Label>
-                    <FormattedMessage id="app.enterYourNewPasswordMessage" />{" "}
-                    <b>'correo@correo.com'</b>
-                  </Label>
-                  <br />
-                  <Label>
-                    <FormattedMessage id="app.makeSureIncludeMessage" />
-                  </Label>
-                  <br />
-                  {controlCharacters}
-                  {controlUppercase}
-                  {controlLowercase}
-                  {controlNumber}
-                  {controlSpecial}
-                  <Tooltip
-                    placement="right"
-                    isOpen={tooltipOpen}
-                    target="info-character"
-                    toggle={this.toggle}
-                  >
-                    Los caracteres especiales son: ! @ # $ % ^ & * _ -
-                  </Tooltip>
-                </FormGroup>
-                <FormGroup>
-                  <Label>
-                    <b>
-                      <FormattedMessage id="app.newPasswordMessage" />
-                    </b>
-                  </Label>
-                  <div>
-                    <Row>
-                      <Col>
-                        <InputGroup>{controlInputPass}</InputGroup>
-                      </Col>
-                    </Row>
-                    <Row className="row-password">
-                      <Col>
-                        <i
-                          style={{ justifyContent: "left" }}
-                          onClick={this.togglePasswordVisiblity}
-                          style={{ cursor: "pointer" }}
-                        >
-                          {eye}
-                        </i>
-                      </Col>
-                      <Col>{controlGoodMessage}</Col>
-                    </Row>
-                  </div>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="examplePassword2">
-                    <b>
-                      <FormattedMessage id="app.confirmPasswordMessage" />
-                    </b>
-                  </Label>
-                  <div>
-                    <Row>
-                      <Col>
-                        <InputGroup>{controlInputPassConfirm}</InputGroup>
-                      </Col>
-                    </Row>
-                    <Row className="row-password">
-                      <Col>
-                        <i
-                          style={{ justifyContent: "left" }}
-                          onClick={this.togglePasswordConfirmVisiblity}
-                          style={{ cursor: "pointer" }}
-                        >
-                          {eye}
-                        </i>
-                      </Col>
-                      <Col>{controlMatchMessage}</Col>
-                    </Row>
-                  </div>
-                </FormGroup>
-                <Row className="justify-content-center">
-                  {controlCreatePassButton}
-                </Row>
-              </div>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      <WizardLayout>
+        <Container fluid>
+          <Row>
+            <Col lg="6" md="3" xs="10">
+              <Logo />
+            </Col>
+          </Row>
+          <Row className="text-center" style={{ marginBottom: 30 }}>
+            <Col lg="12" xs="12">
+              <Welcome />
+            </Col>
+          </Row>
+          <Row>
+            <Col lg="12">
+              <Card id="card-password">
+                <div className="div-password">
+                  <FormGroup>
+                    <Label>
+                      <FormattedMessage id="app.enterYourNewPasswordMessage" />{" "}
+                      <b>'correo@correo.com'</b>
+                    </Label>
+                    <br />
+                    <Label>
+                      <FormattedMessage id="app.makeSureIncludeMessage" />
+                    </Label>
+                    <br />
+                    {controlCharacters}
+                    {controlUppercase}
+                    {controlLowercase}
+                    {controlNumber}
+                    {controlSpecial}
+                    <Tooltip
+                      placement="right"
+                      isOpen={tooltipOpen}
+                      target="info-character"
+                      toggle={this.toggle}
+                    >
+                      Los caracteres especiales son: ! @ # $ % ^ & * _ -
+                    </Tooltip>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label>
+                      <b>
+                        <FormattedMessage id="app.newPasswordMessage" />
+                      </b>
+                    </Label>
+                    <div>
+                      <Row>
+                        <Col>
+                          <InputGroup>{controlInputPass}</InputGroup>
+                        </Col>
+                      </Row>
+                      <Row className="row-password">
+                        <Col>
+                          <i
+                            style={{ justifyContent: "left" }}
+                            onClick={this.togglePasswordVisiblity}
+                            style={{ cursor: "pointer" }}
+                          >
+                            {eye}
+                          </i>
+                        </Col>
+                        <Col>{controlGoodMessage}</Col>
+                      </Row>
+                    </div>
+                  </FormGroup>
+                  <FormGroup>
+                    <Label for="examplePassword2">
+                      <b>
+                        <FormattedMessage id="app.confirmPasswordMessage" />
+                      </b>
+                    </Label>
+                    <div>
+                      <Row>
+                        <Col>
+                          <InputGroup>{controlInputPassConfirm}</InputGroup>
+                        </Col>
+                      </Row>
+                      <Row className="row-password">
+                        <Col>
+                          <i
+                            style={{ justifyContent: "left" }}
+                            onClick={this.togglePasswordConfirmVisiblity}
+                            style={{ cursor: "pointer" }}
+                          >
+                            {eye}
+                          </i>
+                        </Col>
+                        <Col>{controlMatchMessage}</Col>
+                      </Row>
+                    </div>
+                  </FormGroup>
+                  <Row className="justify-content-center">
+                    {controlCreatePassButton}
+                  </Row>
+                </div>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </WizardLayout>
     );
   }
 }

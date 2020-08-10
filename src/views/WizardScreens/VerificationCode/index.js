@@ -20,6 +20,7 @@ import { Link, Redirect } from "react-router-dom";
 import Logo from "../../../components/WizardComponents/base/logo";
 import Welcome from "../../../components/WizardComponents/base/welcome";
 import { FormattedMessage } from "react-intl";
+import WizardLayout from '../../Layouts/WizardLayout/index'
 
 const VerificationCode = (props) => {
   const [band, setBand] = useState(false);
@@ -60,34 +61,36 @@ const VerificationCode = (props) => {
   return (
     
   isEmailEmpty() ? <Redirect to="/user" /> :
-    <Container fluid>
-      <Row>
-        <Col lg="6" md="3" xs="10">
-          <Logo />
-        </Col>
-      </Row>
-      <Row className="text-center" style={{ marginBottom: 30 }}>
-        <Col lg="12" xs="12">
-          <Welcome />
-        </Col>
-      </Row>
-      <Row>
-        <Col lg="12">
-          <Card id="card-verificationCode" body>
-            <InputGroup className="inputgroup-verification-code">
-              <Input
-                className="input-verification-code"
-                maxLength="5"
-                placeholder="We send you a code to <email@entered.com> enter code:" /*onChange={expireCode}*/
-              />
-              <InputGroupAddon addonType="append">
-                {controlNextButton}
-              </InputGroupAddon>
-            </InputGroup>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <WizardLayout>
+      <Container fluid>
+        <Row>
+          <Col lg="6" md="3" xs="10">
+            <Logo />
+          </Col>
+        </Row>
+        <Row className="text-center" style={{ marginBottom: 30 }}>
+          <Col lg="12" xs="12">
+            <Welcome />
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="12">
+            <Card id="card-verificationCode" body>
+              <InputGroup className="inputgroup-verification-code">
+                <Input
+                  className="input-verification-code"
+                  maxLength="5"
+                  placeholder="We send you a code to <email@entered.com> enter code:" /*onChange={expireCode}*/
+                />
+                <InputGroupAddon addonType="append">
+                  {controlNextButton}
+                </InputGroupAddon>
+              </InputGroup>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </WizardLayout>
   );
 };
 

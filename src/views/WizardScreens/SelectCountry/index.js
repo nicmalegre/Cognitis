@@ -3,7 +3,6 @@
  *
  *
  */
-
 //Libraries and components imported to use in this component.
 import React from "react";
 import {
@@ -16,14 +15,12 @@ import {
   Container,
   Card,
 } from "reactstrap";
-
 import "./selectcountry.css";
-
 import Logo from "../../../components/WizardComponents/base/logo";
 import Welcome from "../../../components/WizardComponents/base/welcome";
-import axios from "axios";
 import { FormattedMessage } from "react-intl";
 import { Redirect } from "react-router-dom";
+import WizardLayout from '../../Layouts/WizardLayout/index'
 
 const SelectCountry = (props) => {
   //Array of countries. This shows on the dropdown list of countries.
@@ -62,47 +59,49 @@ const SelectCountry = (props) => {
 
   return (
       isPasswordEmpty() ? <Redirect to="/login" /> :
-    <Container fluid>
-      <Row>
-        <Col lg="6" md="3" xs="10">
-          <Logo />
-        </Col>
-      </Row>
-      <Row className="text-center" style={{ marginBottom: 30 }}>
-        <Col lg="12" xs="12">
-          <Welcome />
-        </Col>
-      </Row>
-      <Row>
-        <Col lg="12" md="8" xs="12">
-          <Card id="card-selectCountry" body>
-            <FormGroup row>
-              <Label for="exampleSelect" sm={3}>
-                <FormattedMessage id="app.selectCountryMessage" />
-              </Label>
-              <Col sm={7}>
-                <Input
-                  type="select"
-                  name="select"
-                  id="exampleSelect"
-                  onChange={inputChange}
-                >
-                  {/* Function to insert the countries of the array like items in dropdown menu */}
-                  {countries.map((country) => (
-                    <option key={country} value={country}>
-                      {country}
-                    </option>
-                  ))}
-                </Input>
-              </Col>
-              <Button type="submit" color="primary" active onClick={sendData}>
-                <FormattedMessage id="app.nextButton" />
-              </Button>
-            </FormGroup>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <WizardLayout>
+      <Container fluid>
+        <Row>
+          <Col lg="6" md="3" xs="10">
+            <Logo />
+          </Col>
+        </Row>
+        <Row className="text-center" style={{ marginBottom: 30 }}>
+          <Col lg="12" xs="12">
+            <Welcome />
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="12" md="8" xs="12">
+            <Card id="card-selectCountry" body>
+              <FormGroup row>
+                <Label for="exampleSelect" sm={3}>
+                  <FormattedMessage id="app.selectCountryMessage" />
+                </Label>
+                <Col sm={7}>
+                  <Input
+                    type="select"
+                    name="select"
+                    id="exampleSelect"
+                    onChange={inputChange}
+                  >
+                    {/* Function to insert the countries of the array like items in dropdown menu */}
+                    {countries.map((country) => (
+                      <option key={country} value={country}>
+                        {country}
+                      </option>
+                    ))}
+                  </Input>
+                </Col>
+                <Button type="submit" color="primary" active onClick={sendData}>
+                  <FormattedMessage id="app.nextButton" />
+                </Button>
+              </FormGroup>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </WizardLayout>
   );
 };
 
