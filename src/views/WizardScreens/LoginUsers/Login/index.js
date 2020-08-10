@@ -1,25 +1,21 @@
-import React, { useState, useEffect } from 'react'; 
-import { FormGroup, Label, Col, Button, Input,Row, Container, Card, Form, Alert} from 'reactstrap'; 
+import React, { useState} from 'react'; 
+import { FormGroup, Label, Col, Button, Input,Row, Card, Form} from 'reactstrap'; 
 import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap'; 
 import "./index.css";
 import imagenProductivity from "./imageProductivity.jpeg";
 import Navbar from '../Base/navbar';
 import axios from "axios";  
 import { Link } from 'react-router-dom';
-import { get } from 'react-hook-form';
-import { FaUserSecret } from 'react-icons/fa';
-import { unstable_renderSubtreeIntoContainer } from 'react-dom';
+
 import { FormattedMessage } from 'react-intl';
 
 
 
 const LoginUsers = (props) => {
-    const [email, setEmail] = useState("");
     const [stateButton, setStateButton] = useState(false); // State for control if the login buttin was clicked
     const [incorrectCredential, setIncorrectCredential] = useState(false); // State for control if the email and password are right
     const [failedAttempts, setFailedAttempts] = useState(0); //IN THIS STATE WE'RE GOING TO SAVE THE FAILED ATTEMPTS IN EMAIL AND PASSWORD
     const [maximiumAttemptsExceeded, setMaximiumAttemptsExceeded] = useState(false);
-    const [isRender, setIsRender] = useState(false);
     const [btnLogin, setBtnLogin] = useState(false) //State for control if both input aren't null the button activate
 
     //State for control the lenguage dropdown

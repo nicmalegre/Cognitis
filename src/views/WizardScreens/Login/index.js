@@ -66,10 +66,6 @@ class Login extends React.Component {
     });
   };
 
-  mostrar = () => {
-    let { newPassConfirm } = this.state;
-  };
-
   handleClick = () => {
     this.props.changePassword(this.state.newPass);
   };

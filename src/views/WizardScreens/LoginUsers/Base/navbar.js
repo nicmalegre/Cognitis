@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import {Collapse,Navbar,NavbarToggler,NavbarBrand,Nav,NavItem,NavLink,UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem,NavbarText} from 'reactstrap';
-import {Col} from 'reactstrap';
-
+import React from 'react';
+import {Collapse,Navbar,NavbarBrand,Nav,NavbarText} from 'reactstrap';
 import imagen from "./cognitis-logo_2020.png";
-
 import "./navbar.css";
 
 

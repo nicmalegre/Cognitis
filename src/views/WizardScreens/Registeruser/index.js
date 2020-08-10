@@ -1,6 +1,6 @@
 import React, {useState} from "react"; //importacion de la libreria
-import { Link, Redirect } from "react-router-dom";
-import { InputGroup, InputGroupAddon, Button, Input, Row, Container, Col, Card } from "reactstrap"; //importar elementos
+import { Redirect } from "react-router-dom";
+import { InputGroup, InputGroupAddon, Button, Input, Row, Col, Card } from "reactstrap"; //importar elementos
 import { withRouter } from "react-router-dom";
 import "./index.css"; //importar css
 import axios from "axios";
@@ -21,11 +21,11 @@ const Registeruser = (props) => {
     adress:null,
   })
 
-  const adressMail = (dato) => {
+  /*const adressMail = (dato) => {
     setMailEntered({
       adress: dato
     })
-  }
+  }*/
 
   const handleInputChange = (event) => {
     props.changeEmail(event.target)

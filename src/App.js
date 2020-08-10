@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
+import { Route, BrowserRouter} from "react-router-dom";
 import Login from "./views/WizardScreens/Login";
 import Welcomescreen from "./views/WizardScreens/Welcomescreen/index";
 import Product from "./views/WizardScreens/Product/index";
@@ -39,12 +39,6 @@ const App = () => {
     setLanguage(lang)
   }
 
-  const handleChangeEmail = (dato) => {
-    setDatos({
-      ...user,
-      [dato.email]: dato.value,
-    });
-  };
 
   const handleChangeCodeandTime = (code, time) => {
     setCode({

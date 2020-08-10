@@ -3,18 +3,13 @@ import { Link } from "react-router-dom";
 import {
   Row,
   Col,
-  Container,
   FormGroup,
-  Input,
   Label,
   CustomInput,
   Button,
-  Card,
-  CardTitle,
-  CardText,
+  Card
 } from "reactstrap";
 //import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
-import axios from "axios";
 import "./index.css";
 import Logo from "../../../components/WizardComponents/base/logo";
 import Welcome from "../../../components/WizardComponents/base/welcome";
@@ -47,7 +42,6 @@ import WizardLayout from '../../Layouts/WizardLayout/index'
     const handleInputChange=(event) =>{
     const target = event.target;
     const value = target.name === "c1" ? target.checked : target.value;
-    const name = target.name;
 
       setState({
       ...[data], 
