@@ -31,20 +31,20 @@ const CNavbars = () => {
             </Col>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ml-auto">
-              <Form inline>
+            <Nav className="d-flex justify-contex-center">
+              <Form inline className="width d-flex justify-contex-center" style={{width: "500px"}}>
                 <FormControl
                   type="text"
                   placeholder="Search"
                   size="sm"
-                  className="mr-sm-1"
-                  //className="mx-sm-12"
+                  className="mr-sm-1 width"
+                  style={{width: "400px"}}
                 />
                 <Button variant="outline-success" size="sm">
                   Search
                 </Button>
               </Form>
-              <Navbar.Text className="espacio">
+              <Navbar.Text className="espacio textblue">
                 ERP + MARKETPLACE + CLOUD
               </Navbar.Text>
             </Nav>

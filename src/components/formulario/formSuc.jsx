@@ -85,7 +85,7 @@ const Formsuc = (props) => {
                     name="sucursal"
                     id="sucursal"
                     placeholder="ingrese el nombre de la sucursal"
-                    valid={input.company}
+                    valid={input.sucursal}
                     onChange={inputChange}
                     innerRef={register({
                       required: {
@@ -109,7 +109,7 @@ const Formsuc = (props) => {
                       onChange={inputChange}
                       innerRef={register({
                         required: {
-                          //value: true,
+                          value: true,
                           message: "Razon Social es requerido",
                         },
                       })}
@@ -133,7 +133,7 @@ const Formsuc = (props) => {
                       onChange={inputChange}
                       innerRef={register({
                         required: {
-                          //value: true,
+                          value: true,
                           message: "Cuil o Cuit es requerido",
                         },
                         minLength: {
@@ -164,7 +164,7 @@ const Formsuc = (props) => {
                       onChange={inputChange}
                       placeholder="Ingrese su email"
                       innerRef={register({
-                        //required: "Email es requerido",
+                        required: "Email es requerido",
                         pattern: {
                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                           message: "invalid email address",
@@ -192,7 +192,7 @@ const Formsuc = (props) => {
                           onChange={inputChange}
                           innerRef={register({
                             required: {
-                             // value: true,
+                             value: true,
                               message: "Codigo de Pais es requerido",
                             },
                             maxLength: {
@@ -221,7 +221,7 @@ const Formsuc = (props) => {
                           onChange={inputChange}
                           innerRef={register({
                             required: {
-                             // value: true,
+                             value: true,
                               message: "Codigo de Area es requerido",
                             },
                             maxLength: {
@@ -250,7 +250,7 @@ const Formsuc = (props) => {
                           onChange={inputChange}
                           innerRef={register({
                             required: {
-                             // value: true,
+                             value: true,
                               message: "Numero de Telefono es requerido",
                             },
                             maxLength: {
@@ -303,7 +303,7 @@ const Formsuc = (props) => {
                       placeholder="Ingrese el nombre del banco"
                       innerRef={register({
                         required: {
-                          //value: true,
+                          value: true,
                           message: "Nombre del banco es requerido",
                         },
                         maxLength: {
@@ -337,7 +337,7 @@ const Formsuc = (props) => {
                       placeholder="Ingrese su nro de cuenta bancaria"
                       innerRef={register({
                         required: {
-                        //  value: true,
+                          value: true,
                           message: "Numero de cuenta bancaria es requerido",
                         },
                         maxLength: {
@@ -369,7 +369,7 @@ const Formsuc = (props) => {
                       placeholder="Ingrese el nro de CBU"
                       innerRef={register({
                         required: {
-                         // value: true,
+                          value: true,
                           message: "Numero de CBU es requerido",
                         },
                         maxLength: {

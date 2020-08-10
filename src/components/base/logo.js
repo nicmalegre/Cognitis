@@ -5,9 +5,8 @@ import "./index.css";
 
 const Logo = () => {
   return (
-        <Col lg="6">
             <img src={logo} alt="logo" className="center-block"/>
-        </Col>
+
   );
 };
 

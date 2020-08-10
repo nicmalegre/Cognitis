@@ -10,57 +10,61 @@ import {
   CardHeader,
   Modal,
   ModalBody,
-  ModalFooter
+  ModalFooter,
 } from "reactstrap"; //importar elementos
 //import Formulario from "../formulario/formulario";
-import { useHistory,Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+import Logo from "../../components/base/logo";
 import "./index.css";
 
 const RegisterSucursalContainer = (props) => {
-    const sucursal = [
-        { id: 1, name: "sucursal 1", cuil: "122555555" },
-        { id: 2, name: "sucursal 2", cuil: "23370432896"},
-        { id: 3, name: "sucursal 3", cuil: "1212313213212"},
-        { id: 4, name: "sucursal 4", cuil: "55556568778"},
-      ];
+  const sucursal = [
+    { id: 1, name: "sucursal 1", cuil: "122555555" },
+    { id: 2, name: "sucursal 2", cuil: "23370432896" },
+    { id: 3, name: "sucursal 3", cuil: "1212313213212" },
+    { id: 4, name: "sucursal 4", cuil: "55556568778" },
+  ];
 
-    //Se almacena la cantidad de compañias
- //const [company, setCompany] = useState(props.cantCompanies);
+  //Se almacena la cantidad de compañias
+  //const [company, setCompany] = useState(props.cantCompanies);
   //contador para mostrar dinamicamente el numero de compañia
   //const [cont, setContador] = useState(1);
   // state donde se almacena los datos de la compañia
   const [data, setData] = useState(sucursal);
   const [modalEliminar, setModalEliminar] = useState(false);
-  const [selectsuc, setSucSelect]= useState({
-    id:'',
-    name:'',
-    cuil:''
-  })
+  const [selectsuc, setSucSelect] = useState({
+    id: "",
+    name: "",
+    cuil: "",
+  });
 
-  const selectSucursal=(elemento)=>{
+  const selectSucursal = (elemento) => {
     setSucSelect(elemento);
-    setModalEliminar(true)
-      }
+    setModalEliminar(true);
+  };
 
-  const eliminar =()=>{
-    setData(data.filter((elemento)=>elemento.id!==selectsuc.id));
+  const eliminar = () => {
+    setData(data.filter((elemento) => elemento.id !== selectsuc.id));
     setModalEliminar(false);
-  }
-
+  };
 
   //Funcion que renderiza el componente visual jsx
   return (
     <Container>
+      <Row>
+        <Col lg="6" md="3" xs="10">
+            <Logo />
+        </Col>
+      </Row>
       <Card id="card" body style={{ marginTop: 100 }}>
-        <CardHeader className="bg">
+        <CardHeader className="bg-dark">
           <Row card>
-            <h5 className="text">Manage Sucursales</h5>
+            <h5 className="text ml-2">Manage Sucursales</h5>
             <Col className="row justify-content-end">
               <Link to="/createsucursal">
-              <Button color="primary"
-                      size="md">
-                Add New Sucursal
-              </Button>
+                <Button color="secondary" size="md">
+                  Add New Sucursal
+                </Button>
               </Link>
             </Col>
           </Row>
@@ -81,8 +85,18 @@ const RegisterSucursalContainer = (props) => {
                 <td className="text-center">{elemento.name}</td>
                 <td className="text-center">{elemento.cuil}</td>
                 <td className="text-center">
-                  <Button color="primary" size="sm" >Editar</Button> {"   "}
-                  <Button color="danger" size="sm" onClick={()=>selectSucursal(elemento)}>Eliminar</Button> {"   "}
+                  <Button color="primary" size="sm">
+                    Editar
+                  </Button>{" "}
+                  {"   "}
+                  <Button
+                    color="danger"
+                    size="sm"
+                    onClick={() => selectSucursal(elemento)}
+                  >
+                    Eliminar
+                  </Button>{" "}
+                  {"   "}
                 </td>
               </tr>
             ))}
@@ -91,25 +105,26 @@ const RegisterSucursalContainer = (props) => {
       </Card>
       <Row className="row justify-content-end" style={{ marginTop: 10 }}>
         <Col md={3}>
-          <Link to="/NumberCompanies">*/}
-          <Button color="primary" type="submit" active>
-            Continuar
-          </Button>
+          <Link to="/dashboard">
+            <Button color="primary" type="submit" active>
+              Finalizar
+            </Button>
           </Link>
         </Col>
       </Row>
-      
+
       <Modal isOpen={modalEliminar}>
         <ModalBody>
-          Estás Seguro que deseas eliminar la sucursal {selectsuc && selectsuc.name}
+          Estás Seguro que deseas eliminar la sucursal{" "}
+          {selectsuc && selectsuc.name}
         </ModalBody>
         <ModalFooter>
-          <button className="btn btn-danger" onClick={()=>eliminar()}>
+          <button className="btn btn-danger" onClick={() => eliminar()}>
             Yes
           </button>
           <button
             className="btn btn-secondary"
-            onClick={()=>setModalEliminar(false)}
+            onClick={() => setModalEliminar(false)}
           >
             No
           </button>

@@ -6,15 +6,14 @@ import Product from "./components/Product/index";
 import Registeruser from "./components/Registeruser/index";
 import SelectCountry from "./components/SelectCountry";
 import VerificationCode from "./components/VerificationCode";
-import RegisterHeadCompany from "./components/RegisterHeadCompany/index";
-import NumberCompany from "./components/NumberCompany/index";
 import axios from "axios";
-import RegisterSucursalContainer from "./views/RegisterSucursalContanier";
-import NumberSuc from "./components/NumberSuc/index";
+import RegisterSucursalContainer from "./views/RegisterSucursalContainer/RegisterSucursalContanier";
 import CreateSucursalContainer from "./views/CreateSucursalContainer";
-import RegisterCompanyContainer from "./views/RegisterCompanyContainer";
+import RegisterCompanyContainer from "./views/RegisterCompanyContainer/RegisterCompanyContainer";
 import CreateCompanyContainer from "./views/CreateCompanyContaniener";
+import RegisterHeadCompany from "./views/RegisterHeadCompanyContainer/RegisterHeadCompany";
 import Catalogo from './views/Catalogo/index'
+import DashboardContainer from "./views/DashboardContainer";
 
 
 const App = () => {
@@ -133,23 +132,13 @@ const App = () => {
           postData={postData}
         />
       </Route>
-      <Route path="/registerheadcompany">
-        <RegisterHeadCompany dataCompanyHead={dataCompanyHead} />
-      </Route>
-      {/*<Route path="/numbercompanies">
-        <NumberCompany cantCompanies={setcantCompanies} />
-  </Route>
-      <Route path="/registercompany">
-        <RegisterCompany dataCompany={dataCompany} cantCompanies={cantCompanies} />
-  </Route>*/}
+      <Route path="/registerheadcompany" component={RegisterHeadCompany} />
       <Route path="/registersucursal" component={RegisterSucursalContainer}/>
       <Route path="/createsucursal" component={CreateSucursalContainer} />
-      <Route path="/numbersucursales">
-        <NumberSuc cantSuc={setcantSuc} />
-      </Route>
       <Route path="/registercompany" component={RegisterCompanyContainer} />
       <Route path="/createcompany" component={CreateCompanyContainer} />
       <Route path="/catalogo" component={Catalogo} />
+      <Route path="/dashboard" component={DashboardContainer} />
     </BrowserRouter>
   );
 };

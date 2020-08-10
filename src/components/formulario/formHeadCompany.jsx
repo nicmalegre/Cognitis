@@ -1,7 +1,9 @@
-import React, { useState } from "react"; //importacion de la libreria
-import { Redirect } from "react-router-dom";
+import React, { Component, useState } from 'react'
+//importacion de la libreria
+//import { Link } from "react-router-dom";
 import {
   FormGroup,
+  Button,
   Input,
   Row,
   Container,
@@ -9,27 +11,29 @@ import {
   Label,
   Card,
   Form,
-  Button,
 } from "reactstrap"; //importar elementos
 import "../RegisterHeadCompany/index.css"; //importar css
 import { useForm } from "react-hook-form";
 import axios from 'axios'
 import Logo from "../base/logo";
 
-const Formulario = (props) => {
+const FormHeadCompany = (props) => {
   //clase 'Nombre' extends React.component
-  const { register, trigger, handleSubmit, errors } = useForm();
+  
+
+  const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/api/headcompany/company/savecompany", data)
-    .then((res) => "Se cargo en la base de datos una nueva compañia")
+    axios.post("http://localhost:3000/api/headcompany", data)
+    .then((res) => "Se cargo en la base de datos una nueva compañia matriz")
     .catch((err) => console.log(err));
     window.location.href = '/registercompany';
-    
-    }
+  };
 
-  
+  const [input, setInput] = useState({
+    value: false,
+  });
 
   // const of countries
   const countries = [
@@ -50,27 +54,18 @@ const Formulario = (props) => {
     "Venezuela",
   ];
 
-  const [input, setInput] = useState({
-    company: "",
-    razonsocial: "",
-    cuil: "",
-  });
-
-  const inputChange = async (event) => {
+  const inputChange = (event) => {
     let value = "";
     let inputvalue = event.target.value;
     let length = inputvalue.length;
-    let name = event.target.name;
-    let noerror = await trigger(name);
-    console.log(noerror);
-    if (length > 0 && noerror) {
-      value = errors?.name ? false : true;
+    if (length > 0) {
+      value = errors?.nameHeadCompany ? false : true;
     } else {
       value = false;
     }
     setInput({
       ...input,
-      [name]: value,
+      value: value,
     });
   };
 
@@ -82,39 +77,38 @@ const Formulario = (props) => {
           <Logo />
         </Col>
         <Col lg="8" xs="10">
-          <h3 className="mt-5 text" style={{ marginBottom: 30, color: "rgb(0, 55, 100)"}}>
-            Ingrese datos de la Compañia {props.cantCompanies}{" "}
+          <h3 className="mt-5 text" style={{ marginBottom: 30,color: "rgb(0, 55, 100)"}}>
+            Ingrese datos de la Compañia Matriz
           </h3>
         </Col>
       </Row>
       <Row>
         <Col lg="12">
-          <Card id="card-password">
-            <Form onSubmit={handleSubmit(onSubmit)} id="card-user" /*body*/>
-              <h6 className="text">
-                Datos de la Compañia {props.cantCompanies}{" "}
-              </h6>
+        <Card id="card-password">
+          <Form onSubmit={handleSubmit(onSubmit)} id="card-user" /*body*/>
+ 
+              <h6 className="text">Datos de la Compañia Matriz</h6>
               <Row form>
                 <Col md={6}>
-                  <Label for="company">
-                    Nombre de la Compañia {props.cantCompanies}{" "}
+                  <Label for="nameHeadCompany">
+                    Nombre de la Compañia Matriz
                   </Label>
                   <Input
                     type="text"
-                    name="company"
-                    id="company"
-                    placeholder="ingrese el nombre de la compañia"
-                    valid={input.company}
+                    name="nameHeadCompany"
+                    id="nameHeadCompany"
+                    placeholder="ingrese el nombre de la compañia matriz"
+                    //valid={input.value}
                     onChange={inputChange}
                     innerRef={register({
                       required: {
                         value: true,
-                        message: "Nombre de sucursal es requerido",
+                        message: "Compañia Matriz es requerido",
                       },
                     })}
                   />
                   <span className="text-danger span d-block mb-2">
-                    {errors?.company?.message}
+                    {errors?.nameHeadCompany?.message}
                   </span>
                 </Col>
                 <Col md={6}>
@@ -124,8 +118,6 @@ const Formulario = (props) => {
                       type="text"
                       name="razonsocial"
                       id="razosocial"
-                      valid={input.razonsocial}
-                      onChange={inputChange}
                       innerRef={register({
                         required: {
                           value: true,
@@ -144,24 +136,23 @@ const Formulario = (props) => {
                   <FormGroup>
                     <Label for="Cuil">CUIL o CUIT</Label>
                     <Input
-                      type="text"
+                      type="number"
                       name="cuil"
                       id="Cuil"
                       placeholder="Ejemplo XX12345678X"
-                      valid={input.cuil}
-                      onChange={inputChange}
+                      //max='99'
                       innerRef={register({
                         required: {
                           value: true,
                           message: "Cuil o Cuit es requerido",
                         },
+                        maxLength: {
+                          value: 11,
+                          message: "No más de 11 carácteres!",
+                        },
                         minLength: {
                           value: 11,
                           message: "No menos de 11 carácteres!",
-                        },
-                        pattern: {
-                          value: /^[0-9]{11}$/,
-                          message: "invalid cuil o cuit",
                         },
                       })}
                     />
@@ -202,43 +193,17 @@ const Formulario = (props) => {
                       type="email"
                       name="email"
                       id="email"
-                      valid={input.email}
-                      onChange={inputChange}
                       placeholder="Ingrese su email"
                       innerRef={register({
                         required: "Email es requerido",
                         pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "invalid email address",
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: "invalid email address",
                         },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.email?.message}
-                    </span>
-                  </FormGroup>
-                </Col>
-                <Col md={6}>
-                  <FormGroup>
-                    <Label for="Tipo de Industria">Tipo de Industria</Label>
-                    <Input
-                      type="select"
-                      name="industria"
-                      id="inductria"
-                      placeholder="seleccione su industria"
-                      innerRef={register({
-                        required: "Tipo de industria requerido",
-                      })}
-                    >
-                      <option key="Retail" value="Retail">
-                        Retail{" "}
-                      </option>
-                      <option key="Indumentaria" value="Indumentaria">
-                        Indumentaria
-                      </option>
-                    </Input>
-                    <span className="text-danger span d-block mb-2">
-                      {errors?.inductria?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -254,8 +219,6 @@ const Formulario = (props) => {
                           name="codPais"
                           id="codPais"
                           placeholder="+54"
-                          valid={input.codPais}
-                          onChange={inputChange}
                           innerRef={register({
                             required: {
                               value: true,
@@ -283,8 +246,6 @@ const Formulario = (props) => {
                           type="number"
                           name="codArea"
                           id="codArea"
-                          valid={input.codArea}
-                          onChange={inputChange}
                           innerRef={register({
                             required: {
                               value: true,
@@ -312,8 +273,6 @@ const Formulario = (props) => {
                           type="number"
                           name="nrotel"
                           id="nrotel"
-                          valid={input.nrotel}
-                          onChange={inputChange}
                           innerRef={register({
                             required: {
                               value: true,
@@ -343,8 +302,6 @@ const Formulario = (props) => {
                       type="number"
                       name="fax"
                       id="nroFax"
-                      valid={input.fax}
-                      onChange={inputChange}
                       placeholder="Ingrese el nro de fax de la compañia"
                       innerRef={register({
                         required: {
@@ -364,8 +321,6 @@ const Formulario = (props) => {
                       type="text"
                       name="nameBank"
                       id="nameBank"
-                      valid={input.nameBank}
-                      onChange={inputChange}
                       placeholder="Ingrese el nombre del banco"
                       innerRef={register({
                         required: {
@@ -398,8 +353,6 @@ const Formulario = (props) => {
                       type="number"
                       name="cuentaBancaria"
                       id="cuentaBancaria"
-                      valid={input.cuentaBancaria}
-                      onChange={inputChange}
                       placeholder="Ingrese su nro de cuenta bancaria"
                       innerRef={register({
                         required: {
@@ -430,8 +383,6 @@ const Formulario = (props) => {
                       type="number"
                       name="cbu"
                       id="cbu"
-                      valid={input.cbu}
-                      onChange={inputChange}
                       placeholder="Ingrese el nro de CBU"
                       innerRef={register({
                         required: {
@@ -460,8 +411,6 @@ const Formulario = (props) => {
                       type="text"
                       name="alias"
                       id="alias"
-                      valid={input.alias}
-                      onChange={inputChange}
                       placeholder="Ingrese su alias"
                       innerRef={register({
                         required: {
@@ -489,11 +438,7 @@ const Formulario = (props) => {
               >
                 <Col md={3}>
                   {/*<Link to="/NumberCompanies">*/}
-                  <Button
-                    color="primary"
-                    type="submit"
-                    active
-                  >
+                  <Button color="primary" type="Submit" active>
                     Continuar
                   </Button>
                   {/*</Link>*/}
@@ -506,4 +451,6 @@ const Formulario = (props) => {
     </Container>
   );
 };
-export default Formulario;
+
+export default FormHeadCompany;
+

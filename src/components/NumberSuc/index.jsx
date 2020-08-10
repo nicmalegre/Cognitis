@@ -2,7 +2,6 @@ import React, { useState, Link } from "react"; //importacion de la libreria
 //import { Link } from "react-router-dom";
 import { Row, Col, Button, Container } from "reactstrap"; //importar elementos
 import "../RegisterHeadCompany/index.css"; //importar css
-import FormCant from "../formulario/formCant";
 import Logo from "../base/logo";
 import { useHistory } from "react-router-dom";
 
@@ -34,7 +33,6 @@ const NumberSuc = (props) => {
           <Logo />
         </Col>
       </Row>
-      <FormCant cantSuc={cantSucursales} name="sucursales" /*sendCant={sendCant}*/ />
       <Row className="row justify-content-end" style={{ marginTop: 10 }}>
         <Col md={3}>
           <Button color="primary" onClick={sendCant} active>

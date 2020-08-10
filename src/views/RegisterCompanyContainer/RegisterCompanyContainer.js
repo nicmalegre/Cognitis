@@ -10,10 +10,11 @@ import {
   CardHeader,
   ModalFooter,
   ModalBody,
-  Modal
+  Modal,
 } from "reactstrap"; //importar elementos
 //import Formulario from "../formulario/formulario";
 import { useHistory, Link } from "react-router-dom";
+import Logo from '../../components/base/logo';
 import "./index.css";
 
 const RegisterCompanyContainer = (props) => {
@@ -30,24 +31,22 @@ const RegisterCompanyContainer = (props) => {
   // state donde se almacena los datos de la compañia
   const [data, setData] = useState(companies);
   const [modalEliminar, setModalEliminar] = useState(false);
-  const [selectcompany, setCompSelect]= useState({
-    id:'',
-    name:'',
-    cuil:'',
-    pais:''
-  })
-  
-  const selectComp=(elemento)=>{
+  const [selectcompany, setCompSelect] = useState({
+    id: "",
+    name: "",
+    cuil: "",
+    pais: "",
+  });
+
+  const selectComp = (elemento) => {
     setCompSelect(elemento);
-    setModalEliminar(true)
-      }
+    setModalEliminar(true);
+  };
 
-  const eliminar =()=>{
-    setData(data.filter((elemento)=>elemento.id!==selectcompany.id));
+  const eliminar = () => {
+    setData(data.filter((elemento) => elemento.id !== selectcompany.id));
     setModalEliminar(false);
-  }
-
-
+  };
 
   //send Data to component phader and redirect a sucursales
   let history = useHistory();
@@ -60,13 +59,18 @@ const RegisterCompanyContainer = (props) => {
   //Funcion que renderiza el componente visual jsx
   return (
     <Container>
+      <Row>
+        <Col lg="6" md="3" xs="10">
+          <Logo />
+        </Col>
+      </Row>
       <Card id="card" body style={{ marginTop: 100 }}>
-        <CardHeader className="bg">
+        <CardHeader className="bg-dark">
           <Row card>
-            <h5 className="text">Manage Companies</h5>
+            <h5 className="text ml-2">Manage Companies</h5>
             <Col className="row justify-content-end">
               <Link to="/createcompany">
-                <Button color="info" size="md">
+                <Button color="secondary" size="md">
                   Add New Company
                 </Button>
               </Link>
@@ -95,7 +99,11 @@ const RegisterCompanyContainer = (props) => {
                     Editar
                   </Button>{" "}
                   {"   "}
-                  <Button color="danger" size="sm" onClick={()=>selectComp(elemento)}>
+                  <Button
+                    color="danger"
+                    size="sm"
+                    onClick={() => selectComp(elemento)}
+                  >
                     Eliminar
                   </Button>{" "}
                   {"   "}
@@ -113,23 +121,25 @@ const RegisterCompanyContainer = (props) => {
       </Card>
       <Row className="row justify-content-end" style={{ marginTop: 10 }}>
         <Col md={3}>
-          {/*<Link to="/NumberCompanies">*/}
-          <Button color="primary" type="submit" active>
-            Continuar
-          </Button>
+          <Link to="/registersucursal">
+            <Button color="primary" type="submit" active>
+              Continuar
+            </Button>
+          </Link>
         </Col>
       </Row>
       <Modal isOpen={modalEliminar}>
         <ModalBody>
-          Estás Seguro que deseas eliminar la compañia {selectcompany && selectcompany.name}
+          Estás Seguro que deseas eliminar la compañia{" "}
+          {selectcompany && selectcompany.name}
         </ModalBody>
         <ModalFooter>
-          <button className="btn btn-danger" onClick={()=>eliminar()}>
+          <button className="btn btn-danger" onClick={() => eliminar()}>
             Yes
           </button>
           <button
             className="btn btn-secondary"
-            onClick={()=>setModalEliminar(false)}
+            onClick={() => setModalEliminar(false)}
           >
             No
           </button>

@@ -7,7 +7,6 @@ import {
   Container
 } from "reactstrap"; //importar elementos
 import "../RegisterHeadCompany/index.css"; //importar css
-import FormCant from '../formulario/formCant'
 import Logo from "../base/logo";
 import { useHistory } from "react-router-dom";
 

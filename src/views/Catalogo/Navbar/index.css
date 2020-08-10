@@ -7,7 +7,7 @@
 }
 
 .espacio{
-    margin-left: 30px;
+    margin-left: 5px;
 }
 
 .width{
@@ -20,3 +20,6 @@ img {
     padding: 0;
    
   }
+.textblue {
+    color: "rgb(0, 55, 100)";
+}
