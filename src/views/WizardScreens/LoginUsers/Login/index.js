@@ -10,6 +10,7 @@ import { get } from 'react-hook-form';
 import { FaUserSecret } from 'react-icons/fa';
 import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 import { FormattedMessage } from 'react-intl';
+import WizardLayout from '../../../Layouts/WizardLayout/index'
 
 
 const LoginUsers = (props) => {
@@ -112,7 +113,7 @@ const LoginUsers = (props) => {
   return (  
     <div>
         <Navbar/>
-        <Container fluid>
+        <WizardLayout>
             <Row>
                 <Col lg="12" md="12" xs="12" id="col-naranja" style={{margin:0, padding:0}}>
                    <p></p>
@@ -190,7 +191,7 @@ const LoginUsers = (props) => {
                     <img src={imagenProductivity} alt="Cognitis" id="img-productivity"/>
                 </Col>
             </Row>
-        </Container>
+        </WizardLayout>
         <div id="underBackground">
         </div>
     </div>

@@ -1,13 +1,14 @@
 import React from 'react';
-import {Container, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, Form, Row, CustomInput, Tooltip, Card, Col} from 'reactstrap';
+import {Container, Button, FormGroup, Label, InputGroup, InputGroupAddon, Form, Row, CustomInput, Tooltip, Card, Col} from 'reactstrap';
 import { Link } from "react-router-dom";
 import { BsInfoCircleFill} from "react-icons/bs";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
+import WizardLayout from '../../Layouts/WizardLayout/index'
 import { FaEye } from 'react-icons/fa';
 import "./index.css";
 
-import Logo from '../base/logo';
-import Welcome from '../base/welcome';
+import Logo from '../../../components/WizardComponents/base/logo';
+import Welcome from '../../../components/WizardComponents/base/welcome';
 import { FormattedMessage } from 'react-intl'
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -150,7 +151,7 @@ class Login extends React.Component{
         )
 
         return(
-            <Container fluid>
+            <WizardLayout >
                 <Row>
                     <Col lg="6" md="3" xs="10">
                         < Logo />
@@ -226,7 +227,7 @@ class Login extends React.Component{
                         </Card>
                     </Col>
                 </Row>
-            </Container>
+            </WizardLayout>
         )
     }
 }

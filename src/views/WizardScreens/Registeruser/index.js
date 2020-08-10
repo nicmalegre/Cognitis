@@ -4,9 +4,10 @@ import { InputGroup, InputGroupAddon, Button, Input, Row, Container, Col, Card }
 import { withRouter } from "react-router-dom";
 import "./index.css"; //importar css
 import axios from "axios";
-import Logo from '../base/logo';
-import Welcome from '../base/welcome';
+import Logo from '../../../components/WizardComponents/base/logo';
+import Welcome from '../../../components/WizardComponents/base/welcome';
 import { FormattedMessage } from 'react-intl';
+import WizardLayout from '../../Layouts/WizardLayout/index'
 
 
 
@@ -55,7 +56,7 @@ const Registeruser = (props) => {
   //Funcion que renderiza el componente visual jsx
   return (
     
-    <Container fluid>
+    <WizardLayout>
               <Row>
                 <Col lg="6" md="3" xs="10">
                   < Logo />
@@ -93,7 +94,7 @@ const Registeruser = (props) => {
                   </Card>
                 </Col>
               </Row>
-      </Container>
+      </WizardLayout>
   );
 };
 

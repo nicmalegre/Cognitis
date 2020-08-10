@@ -8,9 +8,10 @@ import React, {useState} from 'react';
 import { InputGroup, InputGroupAddon, Button, Input,Row, Col, Container, Card } from 'reactstrap'; 
 import "./verificationcode.css";
 import { Link } from 'react-router-dom';
-import Logo from '../base/logo';
-import Welcome from '../base/welcome';
+import Logo from '../../../components/WizardComponents/base/logo';
+import Welcome from '../../../components/WizardComponents/base/welcome';
 import { FormattedMessage } from 'react-intl';
+import WizardLayout from '../../Layouts/WizardLayout/index'
 
 
 const VerificationCode = (props) => {
@@ -45,7 +46,7 @@ const VerificationCode = (props) => {
     
   return (
  
-    <Container fluid>
+    <WizardLayout>
         <Row>
             <Col lg="6" md="3" xs="10">
                 < Logo />
@@ -68,7 +69,7 @@ const VerificationCode = (props) => {
                 </Card>
             </Col>
         </Row>
-    </Container>
+    </WizardLayout>
   );
 
   

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
-import Login from "./components/Login";
-import Welcomescreen from "./components/Welcomescreen/index";
-import Product from "./components/Product/index";
-import Registeruser from "./components/Registeruser/index";
-import SelectCountry from "./components/SelectCountry";
-import VerificationCode from "./components/VerificationCode";
-import LoginUsers from "./components/LoginUsers/Login";
+import Login from "./views/WizardScreens/Login";
+import Welcomescreen from "./views/WizardScreens/Welcomescreen/index";
+import Product from "./views/WizardScreens/Product/index";
+import Registeruser from "./views/WizardScreens/Registeruser/index";
+import SelectCountry from "./views/WizardScreens/SelectCountry";
+import VerificationCode from "./views/WizardScreens/VerificationCode";
+import LoginUsers from "./views/WizardScreens/LoginUsers/Login";
 
 import axios from 'axios'
 import { IntlProvider } from "react-intl";

@@ -11,8 +11,8 @@ import { FormGroup, Label, Col, Button, Input,Row, Container, Card} from 'reacts
 
 import "./selectcountry.css"; 
 
-import Logo from '../base/logo';
-import Welcome from '../base/welcome';
+import Logo from '../../../components/WizardComponents/base/logo';
+import Welcome from '../../../components/WizardComponents/base/welcome';
 import axios from "axios";
 import { FormattedMessage } from 'react-intl';
 

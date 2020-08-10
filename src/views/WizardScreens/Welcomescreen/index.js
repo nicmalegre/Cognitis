@@ -7,16 +7,17 @@ import {
   DropdownItem,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import Logo from '../base/logo';
-import Welcome from '../base/welcome';
+import Logo from '../../../components/WizardComponents/base/logo';
+import Welcome from '../../../components/WizardComponents/base/welcome';
 import { FormattedMessage } from 'react-intl';
+import  WizardLayout   from '../../Layouts/WizardLayout/index'
 
 const Welcomescreen = ({ changeLanguage }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
   return (
-    <Container fluid>
+    <WizardLayout>
             <Row>
               <Col lg="6" xs="8">
                 < Logo />
@@ -45,7 +46,7 @@ const Welcomescreen = ({ changeLanguage }) => {
                 </Link>
               </Col>
             </Row>
-    </Container>
+    </WizardLayout>
   );
 };
 

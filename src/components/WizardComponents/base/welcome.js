@@ -1,9 +1,9 @@
-import React, {Fragment } from "react";
-import { Col, Container, Row } from "reactstrap";
+import React from "react";
+import { Col } from "reactstrap";
 import { FormattedMessage } from 'react-intl';
-import logo from "./cognitisLogo-Texto.png";
 import "./index.css";
 
+// component to show Welcome message
 const Welcome = () => {
   return (
         <Col lg="12">

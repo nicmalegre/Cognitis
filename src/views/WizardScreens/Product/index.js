@@ -16,9 +16,10 @@ import {
 //import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import axios from "axios";
 import "./index.css";
-import Logo from "../base/logo";
-import Welcome from "../base/welcome";
+import Logo from "../../../components/WizardComponents/base/logo";
+import Welcome from "../../../components/WizardComponents/base/welcome";
 import { FormattedMessage } from 'react-intl';
+import WizardLayout from '../../Layouts/WizardLayout/index'
 
  const Product = (props)=> {
       
@@ -115,7 +116,7 @@ import { FormattedMessage } from 'react-intl';
 
     //const pg = this.props;
     return (
-      <Container fluid>
+      <WizardLayout>
         <Row>
           <Col lg="6" md="3" xs="10">
             <Logo />
@@ -210,7 +211,7 @@ import { FormattedMessage } from 'react-intl';
             </Link>
           </Col>
         </Row>
-      </Container>
+      </WizardLayout>
     );
 }
 

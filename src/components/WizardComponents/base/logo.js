@@ -1,8 +1,9 @@
-import React, {Fragment } from "react";
-import { Col, Container, Row } from "reactstrap";
+import React from "react";
+import { Col } from "reactstrap";
 import logo from "./cognitisLogo-Texto.png";
 import "./index.css";
 
+// comoponent to show Cognitis logo
 const Logo = () => {
   return (
         <Col lg="6">
