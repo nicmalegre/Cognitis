@@ -14,6 +14,8 @@ import {
 } from "react-bootstrap";
 import { AiFillHome } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
+import { GiHelp } from "react-icons/gi";
+import { FaRegUser } from "react-icons/fa";
 import "./index.css";
 import logo from "../Navbar/cognitis-logo_2020.png";
 import companylogo from "../Navbar/companylogo.png";
@@ -38,37 +40,34 @@ const CNavbars = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-5 ml-auto">
             <Form
               inline
-              className="width"
+              className="ml-auto"
               //style={{ width: "500px" }}
             >
-              <InputGroup>
+              <InputGroup >
                 <FormControl
-                  type="text"
                   placeholder="Search"
                   size="sm"
-                  className="mr-sm-1 width"
-                  style={{ width: "400px" }}
+                  style={{ width: "350px" }}
                 />
                 <InputGroup.Append>
-                  {/*<Button variant="outline-success" size="sm">*/}
-                  <i>
-                    <FiSearch />
-                  </i>
-                  {/*</Button>*/}
+                  <Button variant="outline-secondary" size="sm">
+                  <i> <FiSearch /></i>
+                  </Button>
                 </InputGroup.Append>
               </InputGroup>
             </Form>
-
-            <Navbar.Text className="ml-3 textblue">
+            <Navbar.Text className="font-weight-bold text-primary ml-5">
               ERP + MARKETPLACE + CLOUD
             </Navbar.Text>
-          </Nav>
           <Nav className="ml-auto">
-            <Nav.Link href="#help">Help</Nav.Link>
-            <NavDropdown title="User Menu" id="collasible-nav-dropdown">
+            <Nav.Link href="#help" >
+              <i className="mt-1"><GiHelp/></i>
+              Help
+            </Nav.Link>
+            <i className="mt-1"><FaRegUser /></i>
+            <NavDropdown id="collasible-nav-dropdown" >
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action
