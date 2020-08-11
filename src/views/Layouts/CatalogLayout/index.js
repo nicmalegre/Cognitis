@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../../../components/CatologComponents/Navbar'
-import Sidebar from '../../../components/CatologComponents/Sidebar'
+import Sidebar from '../../../components/CatologComponents/Sidebar/Sidebar'
 
 const wrapperLayoutStyles = {
     backgroundImage: "url('../../../../Background.png')",
@@ -25,7 +25,7 @@ const contentContainerStyles = {
 
 const CatalogLayout = (props) => {
     return(
-        <div style={wrapperLayoutStyles}>
+        <div>
             <Navbar />
             <div style={pageContentStyles}>
                 <Sidebar />
