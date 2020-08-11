@@ -15,6 +15,9 @@ import {
 //import Formulario from "../formulario/formulario";
 import { useHistory, Link } from "react-router-dom";
 import Logo from "../../components/base/logo";
+import { BsPlusCircle } from "react-icons/bs";
+import { AiTwotoneDelete } from "react-icons/ai";
+import { MdModeEdit } from "react-icons/md";
 import "./index.css";
 
 const RegisterSucursalContainer = (props) => {
@@ -63,6 +66,7 @@ const RegisterSucursalContainer = (props) => {
             <Col className="row justify-content-end">
               <Link to="/createsucursal">
                 <Button color="secondary" size="md">
+                <i className="mr-1 mt-1"><BsPlusCircle/></i>
                   Add New Sucursal
                 </Button>
               </Link>
@@ -86,6 +90,7 @@ const RegisterSucursalContainer = (props) => {
                 <td className="text-center">{elemento.cuil}</td>
                 <td className="text-center">
                   <Button color="primary" size="sm">
+                  <i className="mr-1 mt-1">< MdModeEdit/></i>
                     Editar
                   </Button>{" "}
                   {"   "}
@@ -94,6 +99,7 @@ const RegisterSucursalContainer = (props) => {
                     size="sm"
                     onClick={() => selectSucursal(elemento)}
                   >
+                  <i className="mr-1 mt-1"><AiTwotoneDelete /></i>
                     Eliminar
                   </Button>{" "}
                   {"   "}
