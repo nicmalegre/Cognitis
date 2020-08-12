@@ -17,7 +17,7 @@ const Registeruser = (props) => {
   const [verifyingEmail, setVerifyingEmail] = useState(false)
   const [showErrorMessage, setShowErrorMessage] = useState(false)
 
-  const [mailEntered, setMailEntered] = useState({
+  const [mailEntered] = useState({
     adress:null,
   })
 
@@ -65,7 +65,7 @@ const Registeruser = (props) => {
       
     }).catch(err => console.log(err));
 
-    if (document.querySelector("#input-email").value != ""){
+    if (document.querySelector("#input-email").value !== ""){
       props.history.push('/verificationcode')
     }
     
