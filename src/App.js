@@ -6,7 +6,7 @@ import Product from "./views/WizardScreens/Product/index";
 import Registeruser from "./views/WizardScreens/Registeruser/index";
 import SelectCountry from "./views/WizardScreens/SelectCountry";
 import VerificationCode from "./views/WizardScreens/VerificationCode";
-import LoginUsers from "./views/WizardScreens/LoginUsers/Login";
+import LoginUsers from "./views/LoginUsers/Login";
 import TestCatalogo from './views/CatalogScreens/TestCatalogo'
 
 import axios from 'axios'
