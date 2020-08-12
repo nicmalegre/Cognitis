@@ -30,7 +30,7 @@ const CatalogLayout = (props) => {
             <div style={pageContentStyles}>
                 <Sidebar />
                 <div style={contentContainerStyles}>
-                    { props.children }
+                    {/*{ props.children }*/}
                 </div>
             </div>
         </div>
