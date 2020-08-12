@@ -1,7 +1,9 @@
 #sidebar-container {
-    min-height: 100px;
-    min-height: 100vh;
-    background-color:#243075;
+    /*min-height: 100%;
+    min-height: 100%;   descomento*/
+    background-color:rgba(0, 55, 100, 0.75);
+    height: 815px;
+   /* position: absolute;*/
 
 }
 

@@ -2,13 +2,7 @@ import React from 'react'
 import Navbar from '../../../components/CatologComponents/Navbar'
 import Sidebar from '../../../components/CatologComponents/Sidebar/Sidebar'
 
-const wrapperLayoutStyles = {
-    backgroundImage: "url('../../../../Background.png')",
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    width: '100vw',
-    minHeight: '100vh'
-}
+
 
 const pageContentStyles = {
     width: '100%',
@@ -20,17 +14,19 @@ const pageContentStyles = {
 const contentContainerStyles = {
     width: '100%',
     height: '100vh',
-    textAling: 'center'
+    textAling: 'center',
+    overflow: 'auto',
 }
 
+//components layout in charge of providing the basic structure of the catalog for example (Navbar, Sidebar, body)
 const CatalogLayout = (props) => {
     return(
         <div>
             <Navbar />
             <div style={pageContentStyles}>
                 <Sidebar />
-                <div style={contentContainerStyles}>
-                    {/*{ props.children }*/}
+                <div style={contentContainerStyles} className="ml-4 mt-4 mr-4">
+                    { props.children }
                 </div>
             </div>
         </div>

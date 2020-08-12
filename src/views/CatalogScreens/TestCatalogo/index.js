@@ -1,10 +1,11 @@
 import React from 'react'
 import CatalogLayout from '../../Layouts/CatalogLayout'
-
+import Form from '../../../components/CatologComponents/Form';
 const TestCatalogo = () => {
     return(
         <CatalogLayout>
-            <h2>This is a Test</h2>
+            {/*Desde aca de deberia llamar al form por ejemplo New Product*/}
+            <Form />
         </CatalogLayout>
     )
 }
