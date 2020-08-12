@@ -8,10 +8,12 @@ import SelectCountry from "./views/WizardScreens/SelectCountry";
 import VerificationCode from "./views/WizardScreens/VerificationCode";
 import LoginUsers from "./views/WizardScreens/LoginUsers/Login";
 import TestCatalogo from './views/CatalogScreens/TestCatalogo'
+import SearchProducts from './views/CatalogScreens/SearchProducts'
 
 import axios from 'axios'
 import { IntlProvider } from "react-intl";
 import { messages } from './messages';
+
 
 
 const App = () => {
@@ -113,6 +115,9 @@ const App = () => {
       </Route>
       <Route path="/catalog/test">
         <TestCatalogo/>
+      </Route>
+      <Route path="/catalog/searchproducts">
+        <SearchProducts/>
       </Route>
     </BrowserRouter>
   </IntlProvider>

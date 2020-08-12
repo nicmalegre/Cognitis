@@ -3,9 +3,6 @@ import Navbar from '../../../components/CatologComponents/Navbar'
 import Sidebar from '../../../components/CatologComponents/Sidebar'
 
 const wrapperLayoutStyles = {
-    backgroundImage: "url('../../../../Background.png')",
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
     width: '100vw',
     minHeight: '100vh'
 }
