@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Navbar,
   Nav,
@@ -6,10 +6,6 @@ import {
   Form,
   Button,
   FormControl,
-  Col,
-  FormGroup,
-  Row,
-  NavbarBrand,
   InputGroup,
 } from "react-bootstrap";
 import { AiFillHome } from "react-icons/ai";
@@ -19,7 +15,7 @@ import { FaRegUser } from "react-icons/fa";
 import "./index.css";
 import logo from "../Navbar/cognitis-logo_2020.png";
 import companylogo from "../Navbar/companylogo.png";
-import { Input } from "reactstrap";
+
 
 const CNavbars = () => {
   return (
@@ -33,10 +29,10 @@ const CNavbars = () => {
       >
         {/*<Col sm={1} md="1" xs="1"className="d-flex justify-content-center">*/}
         <Navbar.Brand href="#home" md={1}>
-          <img src={logo} alt="logo" className="center-block" />
+          <img id="image-catalog" src={logo} alt="logo" className="center-block" />
         </Navbar.Brand>
         <Navbar.Brand href="#home" className="mr-auto">
-          <img src={companylogo} alt="logo" className="center-block" />
+          <img id="image-catalog" src={companylogo} alt="logo" className="center-block" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

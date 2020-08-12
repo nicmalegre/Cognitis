@@ -24,18 +24,17 @@ const LoginUsers = (props) => {
 
     
     
-    const changeButtonState = (mail) => {
-        setStateButton(true)
-        let usuario = getData(mail)
-        console.log(usuario)
-
-    }
+    // const changeButtonState = (mail) => {
+    //     setStateButton(true)
+    //     let usuario = getData(mail)
+    //     console.log(usuario)
+    // }
 
     //Function to control the Login button. If the inputs are empty the button is disabled.
     const controlButtonLogin = () =>{
         const inputEmail = document.getElementById("inputEmail").value;
         const inputPassword = document.getElementById("inputPassword").value;
-        if ((inputEmail != '') && (inputPassword !='')){
+        if ((inputEmail !== '') && (inputPassword !=='')){
             setBtnLogin(true)
         }else{
             setBtnLogin(false)
@@ -52,7 +51,7 @@ const LoginUsers = (props) => {
     const incorrectCredentialActions = () => {
         setFailedAttempts(failedAttempts+1) //Add one faile attempts
         setIncorrectCredential(true) //Show the message to the user that the credential are incorrect
-        if (failedAttempts == 3){ //The user try to login more than 3 times with an incorrect credential
+        if (failedAttempts === 3){ //The user try to login more than 3 times with an incorrect credential
             setMaximiumAttemptsExceeded(true) //Show the message than the maximium attempts exceeded
 
             //Set the passwordExpired field true in the database. So the user have to restart his password
@@ -67,7 +66,7 @@ const LoginUsers = (props) => {
     const controlInput = (userFound) =>{
         if (userFound) { //If found an user that matched with the email from the input
             //Here we put the things when the email is right
-            if ((props.user.password==userFound.password) && (!userFound.passwordExpired) ){
+            if ((props.user.password === userFound.password) && (!userFound.passwordExpired) ){
                 //Here we put the things when the email match with the password and everything is right in the login
                 //Start Session
                 //Go to the next page
