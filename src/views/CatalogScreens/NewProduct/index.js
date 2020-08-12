@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Container, Form, Label, Input, FormGroup, CustomInput, ButtonToggle, InputGroup, InputGroupText, InputGroupAddon } from "reactstrap";
+import { Row, Col, Container, Form, Label, Input, FormGroup, CustomInput, ButtonToggle, Button } from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
 
 
@@ -178,22 +178,63 @@ const NewProduct = (props) => {
                     <Col lg="12" xs="12" style={{marginTop:20}}>
                         <h4>Costos y Precios</h4>
                     </Col>
-                    <FormGroup row>
-                        <Label for="examplePassword" sm={2}>Costo Neto/Reposicion</Label>
-                        <Col sm={10}>
-                            <Input type="number" name="" id="" placeholder="Ingresar el costo neto" />
-                        </Col>
-                    </FormGroup>
                     <Row form>
                         <Col md={3}>
-                            
-                        </Col>
-                        <Col md={6}>
                             <FormGroup>
-                                <Label for="exampleEmail">Margen Minimo</Label>
+                                <Label for="exampleEmail">Costo Neto/Reposicion</Label>
                                 <Input type="number" name="" id=""/>
                             </FormGroup>
                         </Col>
+                    </Row>
+                    <Row form>
+                        <Col md={4}>
+                            <FormGroup>
+                                <Label for="exampleEmail">Bonificaciones</Label>
+                                <Input type="number" name="" id=""/>
+                            </FormGroup>
+                        </Col>
+                        <Col md={4}>
+                            <FormGroup>
+                                <Label for="exampleEmail">Costo con Bonificacion</Label>
+                                <Input type="number" name="" id="" disabled/>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row form>
+                        <Col md={3}>
+                            <FormGroup>
+                                <Label for="exampleEmail">Costo Flete %</Label>
+                                <Input type="number" name="" id=""/>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row form>
+                        <Col md={3}>
+                            <FormGroup>
+                                <Label for="exampleEmail">Tasa Pais %</Label>
+                                <Input type="number" name="" id="" disabled/>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row form>
+                        <Col md={4}>
+                            <FormGroup>
+                                <Label for="exampleEmail">Costo actual con impuestos</Label>
+                                <Input type="number" name="" id="" disabled/>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row form>
+                        <Col md={4}>
+                            <FormGroup>
+                                <Label for="exampleEmail">Precio de Lista</Label>
+                                <Input type="number" name="" id=""/>
+                            </FormGroup>
+                        </Col>
+                        <Col md={6}>
+                            <Button style={{marginTop:32, backgroundColor:"rgb(247, 147, 1)"}}>Agregar Lista al Producto</Button>{' '}
+                            <Button style={{marginTop:32, backgroundColor:"rgb(247, 147, 1)"}}>Otras Bonificaciones</Button>{' '}
+                        </Col>  
                     </Row>
 
 
@@ -203,7 +244,35 @@ const NewProduct = (props) => {
                         <h4>Contables</h4>
                     </Col>
 
+                    <Row form>
+                        <Col md={6}>
+                            <FormGroup>
+                                <Label for="">Tipo</Label>
+                                <Input type="select" name="">
+                                    <option>Bienes de cambio</option>
+                                    <option>Tipo 2</option>
+                                    <option>Tipo 3</option>
+                                </Input>
+                            </FormGroup>
+                        </Col>
+                        <Col md={6}>
+                            <FormGroup>
+                                <Label for="">Cuenta</Label>
+                                <Input type="select" name="">
+                                    <option>Venta de Mercaderia</option>
+                                    <option>Cuenta 2</option>
+                                    <option>Cuenta 3</option>
+                                </Input>
+                            </FormGroup>
+                        </Col>  
+                    </Row>
                 </Form>
+                <Row form className="content-align-end text-center">
+                        <Col md={12}>
+                            <Button color="danger" style={{margin:20}}>Cancelar</Button>{' '}
+                            <Button color="primary" style={{margin:20}}>Guardar Producto</Button>{' '}
+                        </Col>
+                    </Row>
             </Col>
         </Row>
         </Container>
