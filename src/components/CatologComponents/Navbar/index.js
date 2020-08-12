@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Navbar,
   Nav,
@@ -6,10 +6,6 @@ import {
   Form,
   Button,
   FormControl,
-  Col,
-  FormGroup,
-  Row,
-  NavbarBrand,
   InputGroup,
 } from "react-bootstrap";
 import { FiSearch } from "react-icons/fi";
@@ -18,7 +14,6 @@ import { FaRegUser } from "react-icons/fa";
 import "./index.css";
 import logo from "../Navbar/cognitis-logo_2020.png";
 import companylogo from "../Navbar/companylogo.png";
-import Subnavbar from "./Subnavbar";
 
 // Main Navbar component of the catalog page
 const CNavbars = () => {

@@ -2,7 +2,10 @@ import React from 'react'
 import Navbar from '../../../components/CatologComponents/Navbar'
 import Sidebar from '../../../components/CatologComponents/Sidebar/Sidebar'
 
-
+const wrapperLayoutStyles = {
+    width: '100vw',
+    minHeight: '100vh'
+}
 
 const pageContentStyles = {
     width: '100%',
@@ -25,7 +28,7 @@ const CatalogLayout = (props) => {
             <Navbar />
             <div style={pageContentStyles}>
                 <Sidebar />
-                <div style={contentContainerStyles} className="ml-4 mt-4 mr-4">
+                <div style={contentContainerStyles}>
                     { props.children }
                 </div>
             </div>

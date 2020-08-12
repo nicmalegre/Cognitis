@@ -214,7 +214,7 @@ class Login extends React.Component {
 
     //Function for change the border color of the second input if the password match with the first input.
     let controlInputPassConfirm =
-      newPassConfirm == newPass && newPassConfirm != "" ? (
+      newPassConfirm === newPass && newPassConfirm !== "" ? (
         <input
           className="input-correct"
           type={this.state.passwordConfirmShown ? "text" : "password"}
@@ -235,12 +235,12 @@ class Login extends React.Component {
       );
 
     //Function for show the good message if the password follows the defined criteria.
-    let controlMatchMessage = newPassConfirm == newPass &&
-      newPassConfirm != "" && <p className="message-password">Match</p>;
+    let controlMatchMessage = newPassConfirm === newPass &&
+      newPassConfirm !== "" && <p className="message-password">Match</p>;
 
     //Function for control the button create password.
     let controlCreatePassButton =
-      newPassConfirm == newPass && newPassConfirm != "" ? (
+      newPassConfirm === newPass && newPassConfirm !== "" ? (
         <Button color="primary">
           <FormattedMessage id="app.btnCreatePassword" />
         </Button>
@@ -307,9 +307,9 @@ class Login extends React.Component {
                       <Row className="row-password">
                         <Col>
                           <i
-                            style={{ justifyContent: "left" }}
+                            style={{ justifyContent: "left" , cursor: "pointer"  }}
                             onClick={this.togglePasswordVisiblity}
-                            style={{ cursor: "pointer" }}
+                            // style={{ cursor: "pointer" }}
                           >
                             {eye}
                           </i>
@@ -333,9 +333,9 @@ class Login extends React.Component {
                       <Row className="row-password">
                         <Col>
                           <i
-                            style={{ justifyContent: "left" }}
+                            style={{ justifyContent: "left" , cursor: "pointer" }}
                             onClick={this.togglePasswordConfirmVisiblity}
-                            style={{ cursor: "pointer" }}
+                            // style={{ cursor: "pointer" }}
                           >
                             {eye}
                           </i>
