@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
+// este es un componente form de PRUEBA de igual manera, que este form de PRUEBA se deberian mostrar los demas componentes de vistas como Editar producto y buscar productos
 const Example = (props) => {
   return (
     <Form>
