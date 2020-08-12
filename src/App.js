@@ -8,6 +8,7 @@ import SelectCountry from "./views/WizardScreens/SelectCountry";
 import VerificationCode from "./views/WizardScreens/VerificationCode";
 import LoginUsers from "./views/LoginUsers/Login";
 import TestCatalogo from './views/CatalogScreens/TestCatalogo'
+import ProductView from './views/CatalogScreens/ProductView'
 
 import axios from 'axios'
 import { IntlProvider } from "react-intl";
@@ -110,6 +111,9 @@ const App = () => {
       </Route>
       <Route path="/LoginUsers/Login">
         <LoginUsers changeLanguage={handleChangeLanguage} handleChange={handleChange} changePassword={handleChangePassword } handleChangePasswordExpired={handleChangePasswordExpired} user={user} />
+      </Route>
+      <Route path="/catalog/productview">
+        <ProductView/>
       </Route>
       <Route path="/catalog/test">
         <TestCatalogo/>
