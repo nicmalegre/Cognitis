@@ -18,7 +18,9 @@
     "react-pro-sidebar": "^0.4.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
-    "reactstrap": "^8.5.1"
+    "react-slick": "^0.27.7",
+    "reactstrap": "^8.5.1",
+    "slick-carousel": "^1.8.1"
   },
   "scripts": {
     "start": "react-scripts start",

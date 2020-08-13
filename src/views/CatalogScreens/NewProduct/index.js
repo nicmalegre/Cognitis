@@ -2,8 +2,20 @@ import React, { useState } from "react";
 import { Row, Col, Container, Form, Label, Input, FormGroup, CustomInput, ButtonToggle, Button } from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
 
+import CarouselComponent from './carousel'
+
+
+
+
+//IMPORT THE THINGS FOR THE CAROUSEL
+import {Carousel,CarouselItem,CarouselControl,CarouselIndicators,CarouselCaption, FormText} from 'reactstrap';
+
+
+
 
 const NewProduct = (props) => {
+
+    
 
   return (
     <CatalogLayout>
@@ -16,20 +28,20 @@ const NewProduct = (props) => {
             <Col lg="12" xs="12" style={{marginTop:25}}>
                 <Form>
                     <FormGroup row>
-                        <Label for="" sm={2}>Código de Producto</Label>
-                        <Col sm={10}>
+                        <Label for="" sm={3}>Código de Producto</Label>
+                        <Col sm={9}>
                             <Input type="number" name="" id="" disabled/>
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label for="examplePassword" sm={2}>Nombre de Producto</Label>
-                        <Col sm={10}>
+                        <Label for="examplePassword" sm={3}>Nombre de Producto</Label>
+                        <Col sm={9}>
                             <Input type="text" name="" id="" placeholder="Ingresar el nombre de producto" />
                         </Col>
                     </FormGroup>
                     <FormGroup row>
-                        <Label for="" sm={2}>Descripción</Label>
-                        <Col sm={10}>
+                        <Label for="" sm={3}>Descripción</Label>
+                        <Col sm={9}>
                             <Input type="textarea" name="" id="" />
                         </Col>
                     </FormGroup>
@@ -113,10 +125,10 @@ const NewProduct = (props) => {
                         </div>
                     </FormGroup>
                     <Row>
-                        <Col md={6}>
-                            <img alt="Cognitis" id=""/>
+                        <Col md={8}>    
+                            <CarouselComponent></CarouselComponent>
                         </Col>
-                        <Col md={6}>
+                        <Col md={4}>
                             <ButtonToggle type='file' color="primary" style={{marginTop:10}}>Añadir Imagen</ButtonToggle>{' '}<br/>
                             <ButtonToggle color="danger" style={{marginTop:10}}>Remover Imagen</ButtonToggle>{' '}<br/>
                             <ButtonToggle color="danger" style={{marginTop:10}}>Remover Todo</ButtonToggle>{' '}<br/>
