@@ -8,15 +8,15 @@ import {
   FormControl,
   InputGroup,
 } from "react-bootstrap";
-import { AiFillHome } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { GiHelp } from "react-icons/gi";
 import { FaRegUser } from "react-icons/fa";
 import "./index.css";
 import logo from "../Navbar/cognitis-logo_2020.png";
 import companylogo from "../Navbar/companylogo.png";
+import Subnavbar from './Subnavbar';
 
-
+// Main Navbar component of the catalog page
 const CNavbars = () => {
   return (
     <>
@@ -81,37 +81,8 @@ const CNavbars = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-
-      <Navbar expand="lg" variant="dark" className="secondary">
-        <Nav className="mr-auto">
-          <Nav.Link className="text">
-            <i>
-              <AiFillHome />
-            </i>
-          </Nav.Link>
-          <Nav.Link href="#home" className="text">
-            Menu usuario
-          </Nav.Link>
-          <Nav.Link href="#home" className="text">
-            Inicio
-          </Nav.Link>
-          <Nav.Link href="#link" className="text">
-            Productos y Servicios
-          </Nav.Link>
-          <Nav.Link href="#link" className="text">
-            Fondos
-          </Nav.Link>
-          <Nav.Link href="#link" className="text">
-            Proveedor
-          </Nav.Link>
-          <Nav.Link href="#link" className="text">
-            Administracion
-          </Nav.Link>
-          <Nav.Link href="#link" className="text">
-            Configuracion
-          </Nav.Link>
-        </Nav>
-      </Navbar>
+        {/*Components Subnavbar */}
+          <Subnavbar />
     </>
   );
 };
