@@ -4,7 +4,7 @@ import CatalogLayout from '../../Layouts/CatalogLayout'
 
 
 const NewProduct = (props) => {
-
+    
   return (
     <CatalogLayout>
         <Container>
@@ -47,7 +47,7 @@ const NewProduct = (props) => {
                         <Col md={3}>
                             <FormGroup>
                                 <Label for="">Dolarizado</Label>
-                                <Input type="select" name="">
+                                <Input type="select" value='Si' name="">
                                 <option>No</option>
                                 <option>Si</option>
                                 </Input>
