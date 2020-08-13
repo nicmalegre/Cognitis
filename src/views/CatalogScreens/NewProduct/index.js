@@ -125,7 +125,7 @@ const NewProduct = (props) => {
                         </div>
                     </FormGroup>
                     <Row>
-                        <Col md={8}>    
+                        <Col md={7} className="text-center">    
                             <CarouselComponent></CarouselComponent>
                         </Col>
                         <Col md={4}>
