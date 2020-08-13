@@ -1,19 +1,35 @@
 import React, { useState } from "react";
 import { Row, Col, Container, Form, Label, Input, FormGroup, CustomInput, ButtonToggle, Button } from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
-
+import './index.css'
 import CarouselComponent from './carousel'
 
 
 
-
-//IMPORT THE THINGS FOR THE CAROUSEL
-import {Carousel,CarouselItem,CarouselControl,CarouselIndicators,CarouselCaption, FormText} from 'reactstrap';
-
-
-
-
 const NewProduct = (props) => {
+
+    //This a function we use when te user click on "Add Image" button
+    const buttonAddImageClick = () => {
+        Array.prototype.forEach.call(document.querySelectorAll('.file-upload-button'), function(button){
+            const hiddenInput = button.parentElement.querySelector('.file-upload-input');
+            hiddenInput.click()
+        })
+    }
+
+    const hiddenInputChange = () =>{
+        Array.prototype.forEach.call(document.querySelectorAll('.file-upload-button'), function(button){
+            const hiddenInput = button.parentElement.querySelector('.file-upload-input');
+            const label = button.parentElement.querySelector('.file-upload-label');
+            const filenameList = Array.prototype.map.call(hiddenInput.files, function (file){
+                return file.name
+            })
+
+            label.textContent = filenameList.join(', ') || 'No file';
+            label.title = label.textContent;
+
+        })
+        
+    }
 
     
 
@@ -129,7 +145,14 @@ const NewProduct = (props) => {
                             <CarouselComponent></CarouselComponent>
                         </Col>
                         <Col md={4}>
-                            <ButtonToggle type='file' color="primary" style={{marginTop:10}}>Añadir Imagen</ButtonToggle>{' '}<br/>
+                            <div className="file-upload">
+                                <input className="file-upload-input" type="file" name="fileAddImage" id="fileAddImage" multiple onChange={hiddenInputChange}/>
+                                <Button className="file-upload-button" onClick={buttonAddImageClick}>
+                                    Agregar imagenes
+                                </Button>
+                                <br/>
+                                <span className="file-upload-label">No file selected</span>
+                            </div>
                             <ButtonToggle color="danger" style={{marginTop:10}}>Remover Imagen</ButtonToggle>{' '}<br/>
                             <ButtonToggle color="danger" style={{marginTop:10}}>Remover Todo</ButtonToggle>{' '}<br/>
                         </Col>
