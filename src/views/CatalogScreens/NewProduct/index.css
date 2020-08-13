@@ -1,0 +1,21 @@
+.file-upload{
+    align-items: center;
+    font-size: 15px;
+}
+
+.file-upload-input{
+    display: none;
+}
+
+.file-upload-button{
+    -webkit-appearance: none;
+    background-color: #007bff;
+    outline: none;
+    padding: 0.5em 0.8em;
+    margin-right: 10px;
+}
+
+.file-upload-label{
+    max-width: 250px;
+    
+}
