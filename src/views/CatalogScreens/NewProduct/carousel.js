@@ -1,62 +1,95 @@
 import React, { useState } from "react";
 import {Container, Row} from 'reactstrap'
-import iphone from "./1.jpg";
+import iphone from "./iphone.jpg";
 import iphone2 from "./iphone2.jpg";
 import iphone3 from "./iphone3.jpg";
 
-//Import React Slick
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+//Import things for the Carousel
+import {
+    Carousel,
+    CarouselItem,
+    CarouselControl,
+    CarouselIndicators,
+    CarouselCaption
+  } from 'reactstrap';
 
 
-
-const photos = [
+//The items for the Carousel
+const items = [
     {
-        name: 'Photo 1',
-        url: iphone
+      src: iphone,
+      altText: 'Slide 1',
+      caption: 'Slide 1'
     },
     {
-        name: 'Photo 2',
-        url: iphone2
+      src: iphone2,
+      altText: 'Slide 2',
+      caption: 'Slide 2'
     },
     {
-        name: 'Photo 3',
-        url: iphone3
-    },
-]
-
-
-
-const Carousel = (props) => {
-
-    const settings = {
-        dots: true,
-        fade:true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        arrows: true,
-        slidesToScroll: 1,
-        className: "slides",
+      src: iphone3,
+      altText: 'Slide 3',
+      caption: 'Slide 3'
     }
+  ]; 
 
-    const functionRecorrer = () => {
-        {photos.map((photo) => {
-            return(
-                <img width="100%" src={photo.url}/>
-            )
-        })};
-    }
+
+
+
+
+const CarouselComponent = (props) => {
+
+    //States and function for the Carousel
+    const [activeIndex, setActiveIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  const next = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+    setActiveIndex(nextIndex);
+  }
+
+  const previous = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+    setActiveIndex(nextIndex);
+  }
+
+  const goToIndex = (newIndex) => {
+    if (animating) return;
+    setActiveIndex(newIndex);
+  }
+
+  const slides = items.map((item) => {
+    return (
+      <CarouselItem
+        onExiting={() => setAnimating(true)}
+        onExited={() => setAnimating(false)}
+        key={item.src}
+      >
+        <img src={item.src} alt={item.altText} />
+        <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+      </CarouselItem>
+    );
+    });
+
 
   return (
     <Container>
-        <Slider>
-            {/*<h1>hola</h1>*/}
-            
-        </Slider>
+        <Carousel
+            activeIndex={activeIndex}
+            next={next}
+            previous={previous}
+            >
+            <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
+            {slides}
+            <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
+            <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+        </Carousel>
+        
+        
     </Container>
   )
 };
 
-export default Carousel;
+export default CarouselComponent;
