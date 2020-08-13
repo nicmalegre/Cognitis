@@ -1,6 +1,7 @@
 import React from 'react'
-import { Row, Col, Container, Form, Label, Input, FormGroup, CustomInput, ButtonToggle, InputGroup, InputGroupText, InputGroupAddon } from "reactstrap";
+import { Row, Col, Container, Form, Label,  Button, Input, FormGroup, UncontrolledCollapse, CustomInput, ButtonToggle, InputGroup, InputGroupText, InputGroupAddon } from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
+import { FaHandPointer } from 'react-icons/fa';
 
 
 const ProductView = () => {
@@ -149,11 +150,22 @@ const ProductView = () => {
 
                             <Label/>
 
+                            {/* Campos no comunes */}
+                            <hr style={{color: 'gray', border:'1px solid'}}/>
+                            <Col id="togglerCampos" lg="12" xs="12"  style={{marginTop:20, cursor:"pointer"}}>
+                                <h4>Otros Campos</h4>
+                            </Col><br/>
+                            <UncontrolledCollapse toggler="#togglerCampos">
+                                Campos de Acuerdo a la industria
+                            </UncontrolledCollapse>
+
+
                             {/* Caracteristicas de Stock */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
-                            <Col lg="12" xs="12" style={{marginTop:20}}>
+                            <Col id="togglerStock" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
                                 <h4>Caracteristicas de Stock</h4>
                             </Col><br/>
+                            <UncontrolledCollapse toggler="#togglerStock">
                             <Row form>
                                 <Col md={4}>
                                     <FormGroup>
@@ -194,12 +206,14 @@ const ProductView = () => {
                                     </FormGroup>   
                                 </Col>
                             </Row>
+                            </UncontrolledCollapse>
 
                             {/* Costos y Precios */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
-                            <Col lg="12" xs="12" style={{marginTop:20}}>
+                            <Col id="togglerCostAndPrices" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
                                 <h4>Costos y Precios</h4>
                             </Col><br/>
+                            <UncontrolledCollapse toggler="#togglerCostAndPrices">
                             <Row form>
                                 <Col md={4}>
                                     <FormGroup>
@@ -240,12 +254,14 @@ const ProductView = () => {
                                     </FormGroup>   
                                 </Col>
                             </Row><br/>
+                            </UncontrolledCollapse>
 
                             {/* Contables */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
-                            <Col lg="12" xs="12" style={{marginTop:20}}>
+                            <Col id="togglerContables" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
                                 <h4>Contables</h4>
                             </Col><br/>
+                            <UncontrolledCollapse toggler="#togglerContables">
                             <Row form>
                                 <Col md={4}>
                                     <FormGroup>
@@ -261,10 +277,19 @@ const ProductView = () => {
                                 </Col>
                                 
                             </Row>
-
-                                                                             
+                            <Label/>
+                            </UncontrolledCollapse>
 
                         </Form>
+
+                        <hr style={{color: 'gray', border:'1px solid'}}/>
+                        <Label/>
+                        <Row form className="content-align-end text-center">
+                            <Col md={12}>
+                                <Button color="danger" style={{margin:20}}>Volver</Button>{' '}
+                                <Button color="primary" style={{margin:20}}>Editar Producto</Button>{' '}
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
              </Container>

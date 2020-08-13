@@ -18,7 +18,7 @@ const SearchProducts = () => {
         <Row>
           <Col md={9}>
             <Row className="pt-3 pl-3">
-              <h2>Search Productos</h2>
+              <h2>Buscar Productos</h2>
             </Row>
             <Row className="p-3">
               <Card style={{ width: "100%" }}>
