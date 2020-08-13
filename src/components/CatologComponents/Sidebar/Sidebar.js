@@ -6,6 +6,7 @@ import {
   SidebarHeader,
   SidebarContent,
   SidebarFooter,
+  
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 import { FaProductHunt } from "react-icons/fa";
@@ -32,6 +33,7 @@ const Sidebar = () => {
           <MenuItem className="ml-5 text-white">Nuevo Producto</MenuItem>
           <MenuItem className="ml-5 text-white">Buscar Producto</MenuItem>
           <MenuItem className="ml-5 text-white">Costos y Precios</MenuItem>
+          <br/><br/>
           <MenuItem className="font-weight-bold text-white">
             <i className="mr-1">
               <FiMoreVertical />

@@ -1,8 +1,7 @@
 import React from 'react'
 import { Row, Col, Container, Form, Label,  Button, Input, FormGroup, UncontrolledCollapse, CustomInput, ButtonToggle, InputGroup, InputGroupText, InputGroupAddon } from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
-import { FaHandPointer } from 'react-icons/fa';
-
+import CarouselComponent from './carousel'
 
 const ProductView = () => {
 
@@ -35,8 +34,8 @@ const ProductView = () => {
             unit: '1'
         },
         product_contables: {
-            type: 'ssdad',
-            cuenta: 'asdfasdf'
+            type: 'tipodecuenta',
+            cuenta: 'cuenta'
         }
     }
 
@@ -51,14 +50,18 @@ const ProductView = () => {
             
             <Container>
                 <Row>
+                    {/*Titulo de la vista */}
                     <Col lg="12" xs="12" style={{marginTop:20}}>
                     <h3>Vista Producto</h3>
                     </Col>
 
+                    {/*Cuerpo de la vista */}
                     <Col lg="12" xs="12" style={{marginTop:25}}>
                         <Form>
+
+                            {/*Campos comunes para todas las industrias */}
                             <FormGroup row>
-                                <Label for="" sm={2}>Código del Producto:</Label>
+                                <Label for="" sm={4}>Código del Producto:</Label>
                                 <Label for="" sm={8}>{producto.product_code}</Label>
                             </FormGroup>
                             <FormGroup row>
@@ -148,19 +151,28 @@ const ProductView = () => {
                                 <Label for="" sm={3}>{producto.ecommerce_published}</Label>
                             </FormGroup>
 
+                            <Row>
+                                <Col md={7} className="text-center">    
+                                    <CarouselComponent></CarouselComponent>
+                                </Col>
+                                <Col md={4}>
+                                    <ButtonToggle color="warning" style={{marginTop:10}}>Ver Propiedades</ButtonToggle>{' '}<br/>
+                                </Col>
+                            </Row>
+
                             <Label/>
 
-                            {/* Campos no comunes */}
+                            {/* Campos no comunes, cada industria tendra sus campos adicionales */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
                             <Col id="togglerCampos" lg="12" xs="12"  style={{marginTop:20, cursor:"pointer"}}>
-                                <h4>Otros Campos</h4>
+                                <h4>Ver mas caracteristicas</h4>
                             </Col><br/>
                             <UncontrolledCollapse toggler="#togglerCampos">
                                 Campos de Acuerdo a la industria
                             </UncontrolledCollapse>
 
 
-                            {/* Caracteristicas de Stock */}
+                            {/* Caracteristicas del Stock del producto */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
                             <Col id="togglerStock" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
                                 <h4>Caracteristicas de Stock</h4>
@@ -208,7 +220,7 @@ const ProductView = () => {
                             </Row>
                             </UncontrolledCollapse>
 
-                            {/* Costos y Precios */}
+                            {/* Costos y Precios del producto */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
                             <Col id="togglerCostAndPrices" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
                                 <h4>Costos y Precios</h4>
@@ -256,7 +268,7 @@ const ProductView = () => {
                             </Row><br/>
                             </UncontrolledCollapse>
 
-                            {/* Contables */}
+                            {/* Contables del producto */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
                             <Col id="togglerContables" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
                                 <h4>Contables</h4>
@@ -286,8 +298,8 @@ const ProductView = () => {
                         <Label/>
                         <Row form className="content-align-end text-center">
                             <Col md={12}>
-                                <Button color="danger" style={{margin:20}}>Volver</Button>{' '}
-                                <Button color="primary" style={{margin:20}}>Editar Producto</Button>{' '}
+                                <Button color="danger" href="/catalog/searchproducts" style={{margin:20}}>Volver</Button>{' '}
+                                <Button color="primary" href="#" style={{margin:20}}>Editar Producto</Button>{' '}
                             </Col>
                         </Row>
                     </Col>
