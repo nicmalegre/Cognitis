@@ -28,7 +28,7 @@ const CatalogLayout = (props) => {
             <Navbar />
             <div style={pageContentStyles}>
                 <Sidebar />
-                <div style={contentContainerStyles}>
+                <div style={contentContainerStyles} className="ml-5 mt-5 mr-5">
                     { props.children }
                 </div>
             </div>

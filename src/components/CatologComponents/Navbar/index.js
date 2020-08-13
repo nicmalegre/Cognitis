@@ -14,6 +14,7 @@ import { FaRegUser } from "react-icons/fa";
 import "./index.css";
 import logo from "../Navbar/cognitis-logo_2020.png";
 import companylogo from "../Navbar/companylogo.png";
+import Subnavbar from './Subnavbar';
 
 // Main Navbar component of the catalog page
 const CNavbars = () => {
