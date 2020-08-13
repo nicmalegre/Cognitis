@@ -38,7 +38,7 @@ const NewProduct = (props) => {
       <Container>
         <Row>
           <Col lg="12" xs="12" style={{ marginTop: 20 }}>
-            <h3>Editar Producto</h3>
+            <h3>Nuevo Producto</h3>
           </Col>
 
           <Col lg="12" xs="12" style={{ marginTop: 25 }}>
