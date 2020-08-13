@@ -11,7 +11,7 @@ import TestCatalogo from './views/CatalogScreens/TestCatalogo'
 import SearchProducts from './views/CatalogScreens/SearchProducts'
 import ProductView from './views/CatalogScreens/ProductView'
 import NewProduct from './views/CatalogScreens/NewProduct'
-
+import EditProduct from './views/CatalogScreens/EditProduct/index'
 import axios from 'axios'
 import { IntlProvider } from "react-intl";
 import { messages } from './messages';
@@ -126,6 +126,9 @@ const App = () => {
       </Route>
       <Route path="/catalog/newproduct">
         <NewProduct/>
+      </Route>
+      <Route path="/catalog/editproduct">
+        <EditProduct/>
       </Route>
     </BrowserRouter>
   </IntlProvider>
