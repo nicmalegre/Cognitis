@@ -1,19 +1,37 @@
 import React, { useState } from "react";
-import { Row, Col, Container, Form, Label, Input, FormGroup, CustomInput, ButtonToggle, Button } from "reactstrap";
+import { Row, Col, Container, Form, Label, Input, FormGroup, CustomInput, ButtonToggle, Button, UncontrolledCollapse } from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
 
 import CarouselComponent from './carousel'
 
-
-
-
-//IMPORT THE THINGS FOR THE CAROUSEL
-import {Carousel,CarouselItem,CarouselControl,CarouselIndicators,CarouselCaption, FormText} from 'reactstrap';
-
-
+import axios from "axios"; 
 
 
 const NewProduct = (props) => {
+
+   const product = '';
+   const camposextraretail = '';
+   const camposextraindustria = '';
+
+   const url = '';
+
+   const onsubmit = () => {
+        if (props.typeindustry === 'retail') {
+            url = 'nuevoretail'
+        } else {
+            url = 'nuevoindustria'
+        }
+   } 
+
+    //Haremos una peticion a la API para traer el objeto a partir de la id que nos llega  
+     axios.post('localhost/api/newproduct/'+{url}, {
+        
+        
+     })
+     .then( res => { 
+       //setDataProduct{res};
+       
+     }).catch(err => console.log(err)); //mostrar error
 
     
 
@@ -21,12 +39,16 @@ const NewProduct = (props) => {
     <CatalogLayout>
         <Container>
         <Row>
+             {/*Titulo de la vista */}
             <Col lg="12" xs="12" style={{marginTop:20}}>
             <h3>Nuevo Producto</h3>
             </Col>
 
+            {/*Cuerpo de la vista */}
             <Col lg="12" xs="12" style={{marginTop:25}}>
-                <Form>
+                <Form onSubmit={onsubmit}>
+
+                    {/*Campos comunes para todas las industrias */}
                     <FormGroup row>
                         <Label for="" sm={3}>Código de Producto</Label>
                         <Col sm={9}>
@@ -135,11 +157,25 @@ const NewProduct = (props) => {
                         </Col>
                     </Row>
 
+                    <Label/>
+
+                    {/* Campos no comunes, cada industria tendra sus campos adicionales */}
+                    <hr style={{color: 'gray', border:'1px solid'}}/>
+                    <Col id="togglerCampos" lg="12" xs="12"  style={{marginTop:20, cursor:"pointer"}}>
+                        <h4>Agregar mas caracteristicas</h4>
+                    </Col>
+                    <UncontrolledCollapse toggler="#togglerCampos">
+                        Campos de Acuerdo a la industria
+                    </UncontrolledCollapse>
+
+
                     {/* Caracteristicas de Stock */}
                     <hr style={{color: 'gray', border:'1px solid'}}/>
-                    <Col lg="12" xs="12" style={{marginTop:20}}>
-                        <h4>Caracteristicas de Stock</h4>
+                    <Col id="togglerStock" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
+                        <h4>Agregar caracteristicas de Stock</h4>
                     </Col>
+                    <UncontrolledCollapse toggler="#togglerStock">
+                    <br/>
                     <Row form>
                         <Col md={4}>
                             <FormGroup>
@@ -184,12 +220,15 @@ const NewProduct = (props) => {
                             </FormGroup>   
                         </Col>
                     </Row>
+                    </UncontrolledCollapse>
 
                     {/* Costos y Precios */}
                     <hr style={{color: 'gray', border:'1px solid'}}/>
-                    <Col lg="12" xs="12" style={{marginTop:20}}>
+                    <Col id="togglerCostAndPrices" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
                         <h4>Costos y Precios</h4>
                     </Col>
+                    <UncontrolledCollapse toggler="#togglerCostAndPrices">
+                    <br/>
                     <Row form>
                         <Col md={3}>
                             <FormGroup>
@@ -248,14 +287,16 @@ const NewProduct = (props) => {
                             <Button style={{marginTop:32, backgroundColor:"rgb(247, 147, 1)"}}>Otras Bonificaciones</Button>{' '}
                         </Col>  
                     </Row>
+                    </UncontrolledCollapse>
 
 
                     {/* Contables */}
                     <hr style={{color: 'gray', border:'1px solid'}}/>
-                    <Col lg="12" xs="12" style={{marginTop:20}}>
+                    <Col id="togglerContables" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
                         <h4>Contables</h4>
                     </Col>
-
+                    <UncontrolledCollapse toggler="#togglerContables">
+                    <br/>
                     <Row form>
                         <Col md={6}>
                             <FormGroup>
@@ -278,13 +319,18 @@ const NewProduct = (props) => {
                             </FormGroup>
                         </Col>  
                     </Row>
+                    <Label/>
+                    </UncontrolledCollapse>
                 </Form>
+                
+                <hr style={{color: 'gray', border:'1px solid'}}/>
+                <Label/>
                 <Row form className="content-align-end text-center">
-                        <Col md={12}>
-                            <Button color="danger" style={{margin:20}}>Cancelar</Button>{' '}
-                            <Button color="primary" style={{margin:20}}>Guardar Producto</Button>{' '}
-                        </Col>
-                    </Row>
+                    <Col md={12}>
+                        <Button color="danger" href="/catalog/searchproducts" style={{margin:20}}>Cancelar</Button>{' '}
+                        <Button color="primary" type="submit" style={{margin:20}}>Guardar Producto</Button>{' '}
+                    </Col>
+                </Row>
             </Col>
         </Row>
         </Container>
