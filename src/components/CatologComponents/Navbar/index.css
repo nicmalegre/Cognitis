@@ -1,0 +1,25 @@
+.secondary{
+    background-color: rgb(236, 136, 16);
+}
+
+#text-white{
+    color:white;
+}
+
+.espacio{
+    margin-left: 5px;
+}
+
+/*.width{
+    width: 600px;
+}
+*/
+#image-catalog {
+    width: 80px;
+    margin: 0;
+    padding: 0;
+   
+  }
+.textblue {
+    color: "rgb(0, 55, 100)";
+}

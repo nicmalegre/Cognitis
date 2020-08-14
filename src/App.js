@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
-import Login from "./components/Login";
-import Welcomescreen from "./components/Welcomescreen/index";
-import Product from "./components/Product/index";
-import Registeruser from "./components/Registeruser/index";
-import SelectCountry from "./components/SelectCountry";
-import VerificationCode from "./components/VerificationCode";
-import LoginUsers from "./components/LoginUsers/Login";
-
+import { Route, BrowserRouter} from "react-router-dom";
+import Login from "./views/WizardScreens/Login";
+import Welcomescreen from "./views/WizardScreens/Welcomescreen/index";
+import Product from "./views/WizardScreens/Product/index";
+import Registeruser from "./views/WizardScreens/Registeruser/index";
+import SelectCountry from "./views/WizardScreens/SelectCountry";
+import VerificationCode from "./views/WizardScreens/VerificationCode";
+import LoginUsers from "./views/LoginUsers/Login";
+import TestCatalogo from './views/CatalogScreens/TestCatalogo'
+import SearchProducts from './views/CatalogScreens/SearchProducts'
+import ProductView from './views/CatalogScreens/ProductView'
+import NewProduct from './views/CatalogScreens/NewProduct'
+import EditProduct from './views/CatalogScreens/EditProduct/index'
 import axios from 'axios'
 import { IntlProvider } from "react-intl";
 import { messages } from './messages';
+
 
 
 const App = () => {
@@ -39,12 +44,6 @@ const App = () => {
     setLanguage(lang)
   }
 
-  const handleChangeEmail = (dato) => {
-    setDatos({
-      ...user,
-      [dato.email]: dato.value,
-    });
-  };
 
   const handleChangeCodeandTime = (code, time) => {
     setCode({
@@ -102,19 +101,34 @@ const App = () => {
         <Product changeProduct={handleChangeProduct}/>   
       </Route>
       <Route path="/user"> 
-        <Registeruser changeEmail={handleChange} changeCodeTime={handleChangeCodeandTime}/>   
+        <Registeruser changeEmail={handleChange} changeCodeTime={handleChangeCodeandTime} userInfo={user}/>   
       </Route>
       <Route path="/verificationcode">
-        <VerificationCode codeVerification={code} />
+        <VerificationCode codeVerification={code} userInfo={user}/>
       </Route>
       <Route exact path="/login">
-        <Login changePassword={handleChangePassword } />
+        <Login changePassword={handleChangePassword } userInfo={user}/>
       </Route>
       <Route path="/selectcountry">
-        <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData}/>
+        <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData} userInfo={user}/>
       </Route>
       <Route path="/LoginUsers/Login">
         <LoginUsers changeLanguage={handleChangeLanguage} handleChange={handleChange} changePassword={handleChangePassword } handleChangePasswordExpired={handleChangePasswordExpired} user={user} />
+      </Route>
+      <Route path="/catalog/productview">
+        <ProductView/>
+      </Route>
+      <Route path="/catalog/test">
+        <TestCatalogo/>
+      </Route>
+      <Route path="/catalog/searchproducts">
+        <SearchProducts/>
+      </Route>
+      <Route path="/catalog/newproduct">
+        <NewProduct/>
+      </Route>
+      <Route path="/catalog/editproduct">
+        <EditProduct/>
       </Route>
     </BrowserRouter>
   </IntlProvider>
