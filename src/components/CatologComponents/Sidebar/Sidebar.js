@@ -13,7 +13,6 @@ import { FaProductHunt } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import { FiMoreVertical } from "react-icons/fi";
 import "../Sidebar/Sidebar.css";
-import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -31,32 +30,9 @@ const Sidebar = () => {
             Productos
           </MenuItem>
           <hr />
-          
-          
-            <MenuItem className="ml-5 text-white">Nuevo Producto
-            <Link to="/catalog/newproduct" />
-            </MenuItem>
-          
-          
-          
-            <MenuItem className="ml-5 text-white">Buscar Producto
-            <Link to="/catalog/searchproducts" />
-            </MenuItem>
-                   
-          
-          
-            <MenuItem className="ml-5 text-white">Vista Producto
-            <Link to="/catalog/productview" />
-            </MenuItem>
-          
-
-          
-            <MenuItem className="ml-5 text-white">Costos y Precios
-            <Link to="#"/>
-            </MenuItem>
-          
-
-
+          <MenuItem className="ml-5 text-white">Nuevo Producto</MenuItem>
+          <MenuItem className="ml-5 text-white">Buscar Producto</MenuItem>
+          <MenuItem className="ml-5 text-white">Costos y Precios</MenuItem>
           <br/><br/>
           <MenuItem className="font-weight-bold text-white">
             <i className="mr-1">

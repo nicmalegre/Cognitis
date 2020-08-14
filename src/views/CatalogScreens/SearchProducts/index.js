@@ -8,9 +8,7 @@ import {
   Form,
   Button,
   Pagination,
-  
 } from "react-bootstrap";
-import {Label} from "reactstrap"
 import CatalogLayout from "../../Layouts/CatalogLayout";
 
 const SearchProducts = () => {
@@ -20,7 +18,7 @@ const SearchProducts = () => {
         <Row>
           <Col md={9}>
             <Row className="pt-3 pl-3">
-              <h3>Buscar Producto</h3>
+              <h2>Buscar Productos</h2>
             </Row>
             <Row className="p-3">
               <Card style={{ width: "100%" }}>
@@ -29,7 +27,7 @@ const SearchProducts = () => {
                   <Form className="ml-3 w-75">
                     <Row>
                       <Col className="d-flex">
-                        <Label>Product Name</Label>
+                        <label>Product Name</label>
                         <Form.Control />
                       </Col>
                       <Col className="d-flex">
