@@ -2,10 +2,10 @@ import React from 'react'
 import Navbar from '../../../components/CatologComponents/Navbar'
 import Sidebar from '../../../components/CatologComponents/Sidebar/Sidebar'
 
-/*const wrapperLayoutStyles = {
+const wrapperLayoutStyles = {
     width: '100vw',
     minHeight: '100vh'
-}*/
+}
 
 const pageContentStyles = {
     width: '100%',

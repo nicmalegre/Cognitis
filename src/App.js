@@ -7,14 +7,6 @@ import Registeruser from "./views/WizardScreens/Registeruser/index";
 import SelectCountry from "./views/WizardScreens/SelectCountry";
 import VerificationCode from "./views/WizardScreens/VerificationCode";
 import LoginUsers from "./views/LoginUsers/Login";
-//import de las vistas de register companies
-import RegisterHeadCompany from './views/RegisterCompaniesScreens/RegisterHeadCompanyContainer/RegisterHeadCompany';
-import RegisterSucursalContainer from './views/RegisterCompaniesScreens/RegisterSucursalContainer/RegisterSucursalContanier';
-import CreateSucursalContainer from './views/RegisterCompaniesScreens/CreateSucursalContainer';
-import RegisterCompanyContainer from './views/RegisterCompaniesScreens/RegisterCompanyContainer/RegisterCompanyContainer';
-import CreateCompanyContainer from './views/RegisterCompaniesScreens/CreateCompanyContaniener';
-import DashboardContainer from './views/RegisterCompaniesScreens/DashboardContainer';
-
 import TestCatalogo from './views/CatalogScreens/TestCatalogo'
 import SearchProducts from './views/CatalogScreens/SearchProducts'
 import ProductView from './views/CatalogScreens/ProductView'
@@ -123,15 +115,6 @@ const App = () => {
       <Route path="/LoginUsers/Login">
         <LoginUsers changeLanguage={handleChangeLanguage} handleChange={handleChange} changePassword={handleChangePassword } handleChangePasswordExpired={handleChangePasswordExpired} user={user} />
       </Route>
-      {/*Routes of register companies*/}
-      <Route path="/registerheadcompany" component={RegisterHeadCompany} />
-      <Route path="/registersucursal" component={RegisterSucursalContainer}/>
-      <Route path="/createsucursal" component={CreateSucursalContainer} />
-      <Route path="/registercompany" component={RegisterCompanyContainer} />
-      <Route path="/createcompany" component={CreateCompanyContainer} />
-      <Route path="/dashboard" component={DashboardContainer} />
-     
-         {/*Routes of catalog*/}
       <Route path="/catalog/productview">
         <ProductView/>
       </Route>
