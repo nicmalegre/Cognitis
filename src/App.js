@@ -15,6 +15,13 @@ import EditProduct from './views/CatalogScreens/EditProduct/index'
 import axios from 'axios'
 import { IntlProvider } from "react-intl";
 import { messages } from './messages';
+// import de Register companies
+import Dashboard from './views/RegisterCompanyScreen/DashboardContainer'; //this components works
+import CreateCompanyContainer from './views/RegisterCompanyScreen/CreateCompanyContaniener'; //this components works
+import CreateSucursalContainer from './views/RegisterCompanyScreen/CreateSucursalContainer'; //this components works
+import RegisterSucursalContanier from './views/RegisterCompanyScreen/RegisterSucursalContainer/RegisterSucursalContanier'; //this components works
+import RegisterHeadCompany from './views/RegisterCompanyScreen/RegisterHeadCompanyContainer/RegisterHeadCompany'; //this components works
+import RegisterCompanyContainer from './views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer';
 
 
 
@@ -115,6 +122,16 @@ const App = () => {
       <Route path="/LoginUsers/Login">
         <LoginUsers changeLanguage={handleChangeLanguage} handleChange={handleChange} changePassword={handleChangePassword } handleChangePasswordExpired={handleChangePasswordExpired} user={user} />
       </Route>
+      {/*Routes of Register Companies*/}
+      <Route path="/dashboard" component={Dashboard} /> 
+      <Route path="/createcompany" component={CreateCompanyContainer} /> 
+      <Route path="/createsucursal" component={CreateSucursalContainer} />   
+      <Route path="/registersucursal" component={RegisterSucursalContanier}/>
+      <Route path="/registerheadcompany" component={RegisterHeadCompany} />
+      <Route path="/registercompany" component={RegisterCompanyContainer} />
+
+      
+      
       <Route path="/catalog/productview">
         <ProductView/>
       </Route>

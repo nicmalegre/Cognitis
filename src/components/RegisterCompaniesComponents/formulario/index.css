@@ -1,0 +1,14 @@
+#card-user{
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+@media (max-with: 400px) {
+  Form {
+    width: 50%;
+  }
+}
+
+#text {
+  color: rgb(40, 40, 168);
+}
