@@ -25,6 +25,7 @@ import RegisterCompanyContainer from './views/RegisterCompanyScreen/RegisterComp
 
 
 
+
 const App = () => {
   const [user, setDatos] = useState({
     product: "",
@@ -129,9 +130,10 @@ const App = () => {
       <Route path="/registersucursal" component={RegisterSucursalContanier}/>
       <Route path="/registerheadcompany" component={RegisterHeadCompany} />
       <Route path="/registercompany" component={RegisterCompanyContainer} />
+      <Route path="/registersucursal" component={RegisterSucursalContanier} />
 
       
-      
+      {/*Routes of Catlog*/}
       <Route path="/catalog/productview">
         <ProductView/>
       </Route>
@@ -147,13 +149,6 @@ const App = () => {
       <Route path="/catalog/editproduct">
         <EditProduct/>
       </Route>
-      <Route path="/registerheadcompany" component={RegisterHeadCompany} />
-      <Route path="/registersucursal" component={RegisterSucursalContainer}/>
-      <Route path="/createsucursal" component={CreateSucursalContainer} />
-      <Route path="/registercompany" component={RegisterCompanyContainer} />
-      <Route path="/createcompany" component={CreateCompanyContainer} />
-      <Route path="/catalogo" component={Catalogo} />
-      <Route path="/dashboard" component={DashboardContainer} />
     </BrowserRouter>
   </IntlProvider>
  )
