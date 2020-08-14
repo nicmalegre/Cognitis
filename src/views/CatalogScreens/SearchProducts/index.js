@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   Container,
   Row,
@@ -14,6 +14,28 @@ import {Label} from "reactstrap"
 import CatalogLayout from "../../Layouts/CatalogLayout";
 
 const SearchProducts = () => {
+
+  //Ejemplo de arreglo de productos que vendran como respuesta luego de una busqueda.
+  const [objetos, setObjeto] = useState ({
+    id:'',
+    code:'',
+    name:'',
+    dolarize:'',
+    state:'',
+    mark:'',
+    category:'',
+    type:''
+
+  })
+
+  setObjeto ({ 
+
+  })
+  
+
+
+
+
   return (
     <CatalogLayout>
       <Container fluid>
@@ -40,7 +62,7 @@ const SearchProducts = () => {
                   </Form>
                 </Row>
                 <Row className="d-flex justify-content-start pl-3 pb-3">
-                  <Button variant="primary ml-3">Buscar</Button>
+                  <Button variant="primary ml-3" onclick={setObjeto}>Buscar</Button>
                 </Row>
               </Card>
             </Row>
@@ -71,128 +93,40 @@ const SearchProducts = () => {
               <Table bordered striped hover className="ml-3 mr-3">
                 <thead>
                   <tr>
-                    <th>Product</th>
-                    <th>Stock Id</th>
-                    <th>In Stock</th>
-                    <th>MAC</th>
-                    <th>Retail Price</th>
-                    <th>In Value</th>
-                    <th>Retail Value</th>
-                    <th>Profit Value</th>
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Dolarize</th>
+                    <th>State</th>
+                    <th>Mark</th>
+                    <th>Category</th>
+                    <th>Type</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
+                  
+                    {objetos.forEach((objeto) => (
+                          <tr>
+                            <td>{objeto.id}</td>
+                            {/* <td>{objeto.code}</td>
+                            <td>{objeto.name}</td>
+                            <td>{objeto.dolarize}</td>
+                            <td>{objeto.state}</td>
+                            <td>{objeto.mark}</td>
+                            <td>{objeto.category}</td>
+                            <td>{objeto.type}</td> */}
+                            <td>
+                              <Button color="primary" href="#" style={{margin:1}}>view</Button>{' '}
+                              <Button color="primary" href="#" style={{margin:1}}>edit</Button>{' '}
+                              <Button color="danger" href="#" style={{margin:1}}>delete</Button>{' '}
+                            </td>
+                            
+                          </tr>    
+                      ))
+                    }
+                  
+                  
                 </tbody>
               </Table>
             </Row>
@@ -200,8 +134,8 @@ const SearchProducts = () => {
               <Pagination className="mr-3">
                 <Pagination.Prev disabled />
                 <Pagination.Item active>{1}</Pagination.Item>
-                <Pagination.Item>{10}</Pagination.Item>
-                <Pagination.Item>{11}</Pagination.Item>
+                <Pagination.Item>{2}</Pagination.Item>
+                <Pagination.Item>{3}</Pagination.Item>
                 <Pagination.Next />
               </Pagination>
             </Row>
