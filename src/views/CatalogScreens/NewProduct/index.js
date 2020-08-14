@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Row, Col, Container, Form, Label, Input, FormGroup, CustomInput, ButtonToggle, Button } from "reactstrap";
+import { Row, Col, Container, Form, Label, Input, FormGroup, CustomInput, ButtonToggle, Button, UncontrolledCollapse } from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
 import './index.css'
 import CarouselComponent from './carousel'
 
+import axios from "axios"; 
 
 
 const NewProduct = (props) => {
