@@ -30,8 +30,15 @@ const NewProduct = (props) => {
         })
         
     }
+    const [product, setProduct] = useState({})
+ 
+    const handlerChange=(e)=>{
+      setProduct({
+       ...product,
+       //[name] : e.target.name       
+      })
 
-    
+    }
 
   return (
     <CatalogLayout>
@@ -42,7 +49,7 @@ const NewProduct = (props) => {
           </Col>
 
           <Col lg="12" xs="12" style={{ marginTop: 25 }}>
-            <Form>
+            <Form >
               <FormGroup row>
                 <Label for="" sm={3}>
                   Código de Producto
@@ -344,7 +351,7 @@ const NewProduct = (props) => {
                 <Button color="danger" style={{ margin: 20 }}>
                   Cancelar
                 </Button>{" "}
-                <Button color="primary" style={{ margin: 20 }}>
+                <Button color="primary" type="submit" style={{ margin: 20 }}>
                   Guardar Producto
                 </Button>{" "}
               </Col>
