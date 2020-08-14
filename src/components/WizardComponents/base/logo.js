@@ -6,9 +6,8 @@ import "./index.css";
 // comoponent to show Cognitis logo
 const Logo = () => {
   return (
-        <Col lg="6">
             <img src={logo} alt="logo" className="center-block"/>
-        </Col>
+
   );
 };
 
