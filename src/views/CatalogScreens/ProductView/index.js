@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Row, Col, Container, Form, Label,  Button, Input, FormGroup, UncontrolledCollapse, CustomInput, ButtonToggle, InputGroup, InputGroupText, InputGroupAddon } from "reactstrap";
+import { Row, Col, Container, Form, Label,  Button,FormGroup, UncontrolledCollapse, ButtonToggle} from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
 import CarouselComponent from './carousel'
-import axios from "axios";  
+//import axios from "axios";  
 
 const ProductView = (props) => {
 
@@ -46,19 +46,19 @@ const ProductView = (props) => {
     })
 
     //Variable que indica la industria en este momento
-    const industry = 'retail'; //se va setear con una propiedad que se pase en props 
+    //const industry = 'retail'; //se va setear con una propiedad que se pase en props 
     
     //Id del producto que se selecciono para ver 
-    const id_product = '1'; //se va setear con una propiedad que se pase en props
+    //const id_product = '1'; //se va setear con una propiedad que se pase en props
     
     // //Haremos una peticion a la API para traer el objeto producto a partir de la id que nos llega  
-    const traerProducto = ()=>{
+    /*const traerProducto = ()=>{
         axios.get('url api', id_product)
         .then( res => { 
           setDataProduct(res); //le tenemos que pasar res para setear el objeto local
           
         }).catch(err => console.log(err)); //mostrar error
-    }
+    }*/
 
 
 

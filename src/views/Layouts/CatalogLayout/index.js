@@ -24,7 +24,7 @@ const contentContainerStyles = {
 //components layout in charge of providing the basic structure of the catalog for example (Navbar, Sidebar, body)
 const CatalogLayout = (props) => {
     return(
-        <div>
+        <div style={wrapperLayoutStyles}>
             <Navbar />
             <div style={pageContentStyles}>
                 <Sidebar />

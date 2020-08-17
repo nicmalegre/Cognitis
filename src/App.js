@@ -21,7 +21,7 @@ import CreateSucursalContainer from './views/RegisterCompanyScreen/CreateSucursa
 import RegisterSucursalContanier from './views/RegisterCompanyScreen/RegisterSucursalContainer/RegisterSucursalContanier'; //this components works
 import RegisterHeadCompany from './views/RegisterCompanyScreen/RegisterHeadCompanyContainer/RegisterHeadCompany'; //this components works
 import RegisterCompanyContainer from './views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer';
-
+import FormTest from './components/CatologComponents/test/formtest';
 
 
 
@@ -145,6 +145,7 @@ const App = () => {
       <Route path="/catalog/editproduct">
         <EditProduct/>
       </Route>
+      <Route path="/test" component={FormTest} />
     </BrowserRouter>
   </IntlProvider>
  )

@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, {useState} from 'react'
 //importacion de la libreria
 //import { Link } from "react-router-dom";
 import {

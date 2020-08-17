@@ -17,7 +17,7 @@ import companylogo from "../Navbar/companylogo.png";
 import Subnavbar from './Subnavbar';
 
 // Main Navbar component of the catalog page
-const CNavbars = () => {
+const CNavbars = (props) => {
   return (
     <>
       <Navbar
@@ -63,7 +63,7 @@ const CNavbars = () => {
               Help
             </Nav.Link>
             <i className="mt-1"><FaRegUser /></i>
-            <NavDropdown id="collasible-nav-dropdown" >
+            <NavDropdown title="user" id="collasible-nav-dropdown" >
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Another action

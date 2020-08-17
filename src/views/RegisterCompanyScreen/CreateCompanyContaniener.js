@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Form from "../../components/RegisterCompaniesComponents/formulario/formulario";
 import RegisterCompanyLayout from '../Layouts/RegisterCompanyLayout/index';
 const CreateCompanyContainer = () => {

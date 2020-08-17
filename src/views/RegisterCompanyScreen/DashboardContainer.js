@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Logo from "../../components/WizardComponents/base/logo";
 import { Container, Row, Col } from "react-bootstrap";
 import LayoutSucursal from "../Layouts/RegisterCompanyLayout/layoutsucursal";
