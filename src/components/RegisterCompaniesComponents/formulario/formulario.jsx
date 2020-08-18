@@ -499,7 +499,7 @@ const Formulario = (props) => {
                 className="row justify-content-end"
                 style={{ marginTop: 10 }}
               >
-                <Col md={3}>
+                <Col md={2}>
                   {/*<Link to="/NumberCompanies">*/}
                   <Button
                     color="primary"

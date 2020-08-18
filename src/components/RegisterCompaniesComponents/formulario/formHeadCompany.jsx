@@ -25,7 +25,7 @@ const FormHeadCompany = (props) => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     
-    axios.post("http://localhost:3000/api/headcompany", data)
+    axios.post("http://localhost:3000/api/registerheadhouse", data)
     .then((res) => "Se cargo en la base de datos una nueva compañia matriz")
     .catch((err) => console.log(err));
     window.location.href = '/registercompany';
@@ -481,7 +481,7 @@ const FormHeadCompany = (props) => {
                 className="row justify-content-end"
                 style={{ marginTop: 10 }}
               >
-                <Col md={3}>
+                <Col md={2}>
                   {/*<Link to="/NumberCompanies">*/}
                   <Button color="primary" type="Submit" active>
                     Continuar
