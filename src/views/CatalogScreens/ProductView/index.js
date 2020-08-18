@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import { Row, Col, Container, Form, Label,  Button,FormGroup, UncontrolledCollapse, ButtonToggle} from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
 import CarouselComponent from './carousel'
+import IndumentaryProduct from './indumentaryProduct'
+import RetailProduct from './retailProduct'
 //import axios from "axios";  
+
 
 const ProductView = (props) => {
 
@@ -46,7 +49,8 @@ const ProductView = (props) => {
 
     //Variable que indica la industria en este momento
     //const industry = 'retail'; //se va setear con una propiedad que se pase en props 
-    
+    const industry = 'indumentary';
+
     //Id del producto que se selecciono para ver 
     //const id_product = '1'; //se va setear con una propiedad que se pase en props
     
@@ -96,12 +100,14 @@ const ProductView = (props) => {
         
         console.log(producto);
 
-
-
       };
       
-  
-  
+      //Funcion que controla el dinamismo de los campos de acuerdo a la industria
+      let industryMannage = industry === 'retail' ? (
+        <RetailProduct />
+      ) : (
+        <IndumentaryProduct />
+      );
 
 
 
@@ -231,7 +237,47 @@ const ProductView = (props) => {
                             </Col>
                             <UncontrolledCollapse toggler="#togglerCampos">
                             <br/>
-                                Campos de Acuerdo a la industria
+                                {industryMannage}
+                                <Row form >
+                                    <Col md={4}>
+                                        <FormGroup row>
+                                            <Label for="" sm={4}>Material:</Label>
+                                            <Label for="" sm={4}>{}</Label>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup row>
+                                            <Label for="" sm={4}>Origen:</Label>
+                                            <Label for="" sm={4}>{}</Label>            
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup row>
+                                            <Label for="" sm={4}>Fabricante:</Label>
+                                            <Label for="" sm={4}>{}</Label>            
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                                <Row form >
+                                    <Col md={4}>
+                                        <FormGroup row>
+                                            <Label for="" sm={4}>Envio:</Label>
+                                            <Label for="" sm={4}>{}</Label>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup row>
+                                            <Label for="" sm={4}>Garantia:</Label>
+                                            <Label for="" sm={4}>{}</Label>            
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup row>
+                                            <Label for="" sm={4}>Cod. de Barra:</Label>
+                                            <Label for="" sm={4}>{}</Label>            
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
                             </UncontrolledCollapse>
 
 
