@@ -20,10 +20,11 @@ import "./index.css"
 
 const FormHeadCompany = (props) => {
   //clase 'Nombre' extends React.component
-  const { register, handleSubmit, errors } = useForm();
+  const { register, trigger, handleSubmit, errors } = useForm();
 
   const onSubmit = (data, e) => {
     e.preventDefault();
+    
     axios.post("http://localhost:3000/api/headcompany", data)
     .then((res) => "Se cargo en la base de datos una nueva compañia matriz")
     .catch((err) => console.log(err));
@@ -53,18 +54,21 @@ const FormHeadCompany = (props) => {
     "Venezuela",
   ];
 
-  const inputChange = (event) => {
+  const inputChange = async (event) => {
     let value = "";
     let inputvalue = event.target.value;
     let length = inputvalue.length;
-    if (length > 0) {
-      value = errors?.nameHeadCompany ? false : true;
+    let name = event.target.name;
+    let noerror = await trigger(name);
+    
+    if (length > 0 && noerror) {
+      value = errors?.name ? false : true;
     } else {
       value = false;
     }
     setInput({
       ...input,
-      value: value,
+      [name]: value,
     });
   };
 
@@ -76,7 +80,7 @@ const FormHeadCompany = (props) => {
           <Logo />
         </Col>
         <Col lg="8" xs="10">
-          <h3 className="mt-5 text" style={{ marginBottom: 30,color: "rgb(0, 55, 100)"}}>
+          <h3 className="mt-5 text" style={{ marginBottom: 30}}>
             Ingrese datos de la Compañia Matriz
           </h3>
         </Col>
@@ -85,9 +89,11 @@ const FormHeadCompany = (props) => {
         <Col lg="12">
         <Card id="card-user">
           <Form onSubmit={handleSubmit(onSubmit)} id="card-user" /*body*/>
-              <h6 className="text">Datos de la Compañia Matriz</h6>
+              <br/>
+              <h6 className="text"  >Datos de la Compañia Matriz</h6>
               <Row form>
                 <Col md={6}>
+                <span className="text-danger font-weight-bold">*</span>{' '}
                   <Label for="nameHeadCompany">
                     Nombre de la Compañia Matriz
                   </Label>
@@ -96,7 +102,7 @@ const FormHeadCompany = (props) => {
                     name="nameHeadCompany"
                     id="nameHeadCompany"
                     placeholder="ingrese el nombre de la compañia matriz"
-                    //valid={input.value}
+                    valid={input.nameHeadCompany}
                     onChange={inputChange}
                     innerRef={register({
                       required: {
@@ -111,11 +117,14 @@ const FormHeadCompany = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="razonsocial">Razon Social</Label>
                     <Input
                       type="text"
                       name="razonsocial"
-                      id="razosocial"
+                      id="razonsocial"
+                      valid={input.razonsocial}
+                      onChange={inputChange}
                       innerRef={register({
                         required: {
                           value: true,
@@ -132,13 +141,16 @@ const FormHeadCompany = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                    <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="Cuil">CUIL o CUIT</Label>
                     <Input
-                      type="number"
-                      name="cuil"
+                      //type="number"
+                      name="Cuil"
                       id="Cuil"
+                      valid={input.Cuil}
+                      onChange={inputChange}
                       placeholder="Ejemplo XX12345678X"
-                      //max='99'
+                      maxLength="11"
                       innerRef={register({
                         required: {
                           value: true,
@@ -152,6 +164,10 @@ const FormHeadCompany = (props) => {
                           value: 11,
                           message: "No menos de 11 carácteres!",
                         },
+                        pattern: {
+                          value: /^[0-9]{11}$/i,
+                          message: "Solo caracteres numéricos",
+                        }
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
@@ -161,11 +177,14 @@ const FormHeadCompany = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="pais">Pais</Label>
                     <Input
                       type="select"
                       name="pais"
                       id="pais"
+                      valid={input.pais}
+                      onChange={inputChange}
                       innerRef={register({
                         required: {
                           value: false,
@@ -186,11 +205,14 @@ const FormHeadCompany = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="email">Email</Label>
                     <Input
                       type="email"
                       name="email"
                       id="email"
+                      valid={input.email}
+                      onChange={inputChange}
                       placeholder="Ingrese su email"
                       innerRef={register({
                         required: "Email es requerido",
@@ -211,11 +233,14 @@ const FormHeadCompany = (props) => {
                   <Row form>
                     <Col md={3}>
                       <FormGroup>
+                      <span className="text-danger font-weight-bold">*</span>{' '}
                         <Label for="codPais">Cod Pais</Label>
                         <Input
                           type="text"
                           name="codPais"
                           id="codPais"
+                          valid={input.codPais}
+                          onChange={inputChange}
                           placeholder="+54"
                           innerRef={register({
                             required: {
@@ -239,11 +264,14 @@ const FormHeadCompany = (props) => {
                     </Col>
                     <Col md={3}>
                       <FormGroup>
+                      <span className="text-danger font-weight-bold">*</span>{' '}
                         <Label for="codArea">Cod Area</Label>
                         <Input
                           type="number"
                           name="codArea"
                           id="codArea"
+                          valid={input.codArea}
+                          onChange={inputChange}
                           innerRef={register({
                             required: {
                               value: true,
@@ -254,8 +282,8 @@ const FormHeadCompany = (props) => {
                               message: "No más de 6 numeros!",
                             },
                             minLength: {
-                              value: 4,
-                              message: "No menos de 4 numeros!",
+                              value: 2,
+                              message: "No menos de 2 numeros!",
                             },
                           })}
                         />
@@ -266,11 +294,14 @@ const FormHeadCompany = (props) => {
                     </Col>
                     <Col md={6}>
                       <FormGroup>
+                      <span className="text-danger font-weight-bold">*</span>{' '}
                         <Label for="nrotel">Nro. Telefono</Label>
                         <Input
                           type="number"
                           name="nrotel"
                           id="nrotel"
+                          valid={input.nrotel}
+                          onChange={inputChange}
                           innerRef={register({
                             required: {
                               value: true,
@@ -295,11 +326,14 @@ const FormHeadCompany = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
+                  
                     <Label for="nroFax">Fax</Label>
                     <Input
                       type="number"
-                      name="fax"
+                      name="nroFax"
                       id="nroFax"
+                      valid={input.nroFax}
+                      onChange={inputChange}
                       placeholder="Ingrese el nro de fax de la compañia"
                       innerRef={register({
                         required: {
@@ -310,15 +344,19 @@ const FormHeadCompany = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
+              <br/>
               <h6 className="text">Datos Bancarios</h6>
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="nameBank">Nombre del Banco</Label>
                     <Input
                       type="text"
                       name="nameBank"
                       id="nameBank"
+                      valid={input.nameBank}
+                      onChange={inputChange}
                       placeholder="Ingrese el nombre del banco"
                       innerRef={register({
                         required: {
@@ -344,6 +382,7 @@ const FormHeadCompany = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="cuentaBancaria">
                       Numero de Cuenta Bancaria
                     </Label>
@@ -351,6 +390,8 @@ const FormHeadCompany = (props) => {
                       type="number"
                       name="cuentaBancaria"
                       id="cuentaBancaria"
+                      valid={input.cuentaBancaria}
+                      onChange={inputChange}
                       placeholder="Ingrese su nro de cuenta bancaria"
                       innerRef={register({
                         required: {
@@ -359,11 +400,11 @@ const FormHeadCompany = (props) => {
                         },
                         maxLength: {
                           value: 15,
-                          message: "No más de 6 numeros!",
+                          message: "No más de 15 numeros!",
                         },
                         minLength: {
                           value: 12,
-                          message: "No menos de 4 numeros!",
+                          message: "No menos de 12 numeros!",
                         },
                       })}
                     />
@@ -376,11 +417,14 @@ const FormHeadCompany = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="cbu">CBU</Label>
                     <Input
                       type="number"
                       name="cbu"
                       id="cbu"
+                      valid={input.cbu}
+                      onChange={inputChange}
                       placeholder="Ingrese el nro de CBU"
                       innerRef={register({
                         required: {
@@ -409,6 +453,8 @@ const FormHeadCompany = (props) => {
                       type="text"
                       name="alias"
                       id="alias"
+                      valid={input.alias}
+                      onChange={inputChange}
                       placeholder="Ingrese su alias"
                       innerRef={register({
                         required: {
@@ -430,6 +476,7 @@ const FormHeadCompany = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
+              <br/>
               <Row
                 className="row justify-content-end"
                 style={{ marginTop: 10 }}
@@ -442,8 +489,10 @@ const FormHeadCompany = (props) => {
                   {/*</Link>*/}
                 </Col>
               </Row>
+            <br/>
             </Form>
           </Card>
+          <br/>
         </Col>
       </Row>
     </Container>
