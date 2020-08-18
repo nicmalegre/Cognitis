@@ -7,7 +7,6 @@ import Registeruser from "./views/WizardScreens/Registeruser/index";
 import SelectCountry from "./views/WizardScreens/SelectCountry";
 import VerificationCode from "./views/WizardScreens/VerificationCode";
 import LoginUsers from "./views/LoginUsers/Login";
-import TestCatalogo from './views/CatalogScreens/TestCatalogo'
 import SearchProducts from './views/CatalogScreens/SearchProducts'
 import ProductView from './views/CatalogScreens/ProductView'
 import NewProduct from './views/CatalogScreens/NewProduct'
@@ -22,7 +21,7 @@ import CreateSucursalContainer from './views/RegisterCompanyScreen/CreateSucursa
 import RegisterSucursalContanier from './views/RegisterCompanyScreen/RegisterSucursalContainer/RegisterSucursalContanier'; //this components works
 import RegisterHeadCompany from './views/RegisterCompanyScreen/RegisterHeadCompanyContainer/RegisterHeadCompany'; //this components works
 import RegisterCompanyContainer from './views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer';
-
+import FormTest from './components/CatologComponents/test/formtest';
 
 
 
@@ -137,9 +136,6 @@ const App = () => {
       <Route path="/catalog/productview">
         <ProductView/>
       </Route>
-      <Route path="/catalog/test">
-        <TestCatalogo/>
-      </Route>
       <Route path="/catalog/searchproducts">
         <SearchProducts/>
       </Route>
@@ -149,6 +145,7 @@ const App = () => {
       <Route path="/catalog/editproduct">
         <EditProduct/>
       </Route>
+      <Route path="/test" component={FormTest} />
     </BrowserRouter>
   </IntlProvider>
  )

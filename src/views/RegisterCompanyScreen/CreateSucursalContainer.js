@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import FormSuc from '../../components/RegisterCompaniesComponents/formulario/formSuc'
 import RegisterCompanyLayout from '../Layouts/RegisterCompanyLayout/index';
 

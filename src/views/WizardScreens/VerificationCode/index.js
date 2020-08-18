@@ -4,7 +4,7 @@
  *
  */
 //Libraries and components imported to use in this component.
-import React, { useState } from "react";
+import React from "react";
 import {
   InputGroup,
   InputGroupAddon,
@@ -23,7 +23,7 @@ import { FormattedMessage } from "react-intl";
 import WizardLayout from '../../Layouts/WizardLayout/index'
 
 const VerificationCode = (props) => {
-  const [band, setBand] = useState(false);
+  //const [band, setBand] = useState(false);
 
   /*const expireCode = (event) => {
         const expireTime =  new Date(props.codeVerification.codeTime); 

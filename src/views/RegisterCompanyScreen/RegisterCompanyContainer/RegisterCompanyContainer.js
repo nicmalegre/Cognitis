@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; //importacion de la libreria
+import React, { useState} from "react"; //importacion de la libreria
 import {
   Row,
   Col,
@@ -6,14 +6,13 @@ import {
   Card,
   Button,
   Table,
-  CardTitle,
   CardHeader,
   ModalFooter,
   ModalBody,
   Modal,
 } from "reactstrap"; //importar elementos
 //import Formulario from "../formulario/formulario";
-import { useHistory, Link } from "react-router-dom";
+import {Link } from "react-router-dom";
 import Logo from '../../../components/WizardComponents/base/logo';
 import { BsPlusCircle } from "react-icons/bs";
 import { AiTwotoneDelete } from "react-icons/ai";
