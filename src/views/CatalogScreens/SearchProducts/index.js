@@ -18,50 +18,50 @@ import axios from "axios";
 const SearchProducts = () => {
 
 //   //Ejemplo de producto que viene como respuesta luego de una busqueda.
-//   const [producto, setProducto] = useState({
-//     product_code: '133', 
-//     product_name: 'elprod',
-//     product_description: 'askdfj',
-//     product_dolarize: 'yes',
-//     product_state: 'active',
-//     product_mark: 'mark1',
-//     product_category: 'cat1',
-//     product_type: 'type1',
-//     product_providers: {  
+  const [producto, setProducto] = useState({
+    product_code: '133', 
+    product_name: 'elprod',
+    product_description: 'askdfj',
+    product_dolarize: 'yes',
+    product_state: 'active',
+    product_mark: 'mark1',
+    product_category: 'cat1',
+    product_type: 'type1',
+    product_providers: {  
 
-//     },
-//     ecommerce_published: '',
-//     product_images: {
+    },
+    ecommerce_published: '',
+    product_images: {
 
-//     },
-//     product_cost_and_prices: {
-//         neto_repo_cost: '',
-//         bonification:'',
-//         flete_cost:'',
-//         country_tax:'',
-//         cost_with_tax:'',
-//         list_price:'',
-//     },
-//     product_stock_caract: {
-//         unit: '1',
-//         volume:'',
-//         package:'',
-//         package_to_client:'',
-//         margin_min:'',
-//         margin_max:''
-//     },
-//     product_contables: {
-//         type: '',
-//         cuenta: '',
-//     }
-// })
+    },
+    product_cost_and_prices: {
+        neto_repo_cost: '',
+        bonification:'',
+        flete_cost:'',
+        country_tax:'',
+        cost_with_tax:'',
+        list_price:'',
+    },
+    product_stock_caract: {
+        unit: '1',
+        volume:'',
+        package:'',
+        package_to_client:'',
+        margin_min:'',
+        margin_max:''
+    },
+    product_contables: {
+        type: '',
+        cuenta: '',
+    }
+})
 
 // //Arreglo que contendra los productos que vienen como respuesta de la peticion
 // const resultados = [producto, producto, producto] //A modo de prueba tiene 3 objetos producto.
 
 
 //Estado de tipo arreglo que sirve para almacenar la respuesta de la peticion a la API
-const [resultSearch, setResults] = useState ([])
+const [resultSearch, setResults] = useState ([producto, producto, producto])
 
 
 //Objeto que se pasa por parametro en la peticion. Por defecto los valores de los campos son 'all' debido a que no filtra

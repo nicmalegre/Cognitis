@@ -7,6 +7,7 @@ const wrapperStyles = {
     width: '100%',
     height: '100%',
     position:'fixed',
+    overflow: 'auto'
 }
 const LayoutSucursal = (props) => {
     return(
