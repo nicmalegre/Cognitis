@@ -309,10 +309,10 @@ const FormHeadCompany = (props) => {
                             },
                             maxLength: {
                               value: 11,
-                              message: "No más de 6 numeros!",
+                              message: "No más de 11 numeros!",
                             },
                             minLength: {
-                              value: 7,
+                              value: 4,
                               message: "No menos de 4 numeros!",
                             },
                           })}
