@@ -90,13 +90,25 @@ const NewProduct = (props) => {
       .post("http://localhost:3000/api/catalog/newproduct", data)
       .then((res) => "Nuevo producto cargado en la BD")
       .catch((err) => console.log(err));
+      onDismiss();
     e.preventDefault();
+    
   };
+  //status to control the visibility of the alert
+  const [visible, setVisible] = useState(false);
+
+  const onDismiss = () => setVisible(
+    !visible
+  );
 
   return (
     <CatalogLayout>
       <Container>
-        <span>{alert}</span>
+        <span>
+          <Alert color="success" isOpen={visible} toggle={onDismiss}>
+            Producto guardado exitosamente!
+          </Alert>
+        </span>
         <Row>
           <Col lg="12" xs="12" style={{ marginTop: 20 }}>
             <h3>Nuevo Producto</h3>

@@ -11,6 +11,7 @@ import {
   CustomInput,
   ButtonToggle,
   Button,
+  Alert,
 } from "reactstrap";
 import CatalogLayout from "../../Layouts/CatalogLayout";
 import axios from "axios";
@@ -149,16 +150,26 @@ const EditProduct = (props) => {
       .put("http://localhost:3000/api/catalog/editproduct/" + id, data)
       .then((res) => "producto editado con exito")
       .catch((err) => console.log(err));
+    onDismiss();
     e.preventDefault();
   };
+
+  //status to control the visibility of the alert
+  const [visible, setVisible] = useState(false);
+
+  const onDismiss = () => setVisible(!visible);
 
   return (
     <CatalogLayout>
       <Container>
-        <span>{alert}</span>
+        <span>
+          <Alert color="primary" isOpen={visible} toggle={onDismiss}>
+            Producto editado exitosamente!
+          </Alert>
+        </span>
         <Row>
           <Col lg="12" xs="12" style={{ marginTop: 20 }}>
-            <h3>Nuevo Producto</h3>
+            <h3>Editar Producto</h3>
           </Col>
 
           <Col lg="12" xs="12" style={{ marginTop: 25 }}>
