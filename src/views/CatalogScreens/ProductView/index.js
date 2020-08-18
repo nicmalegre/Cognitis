@@ -15,8 +15,7 @@ const ProductView = (props) => {
         product_mark: '',
         product_category: '',
         product_type: '',
-        product_providers: {
-            
+        product_providers: {  
 
         },
         ecommerce_published: '',
@@ -56,46 +55,43 @@ const ProductView = (props) => {
         axios.get('url api', id_product)
         .then( res => { 
           setDataProduct(res); //le tenemos que pasar res para setear el objeto local
-          
+
         }).catch(err => console.log(err)); //mostrar error
     }*/
 
 
-
-      //Funcion que setea el producto con la respuesta de la peticion.
-      const setDataProduct = () => { //Recibe el product
-
-      
+    //Funcion que setea el producto con la respuesta de la peticion.
+    const setDataProduct = () => { //Recibe el product
+     
         setProducto ({
-          
-            product_code: 'nuevo codigo', //product.product_code
-
-
-          product_name : 'nuevo nombre', //product.product_name
-          product_description : 'nueva descripcion', //product.product_description
-          product_dolarize :  'Yes', //product.product_dolarize
-          product_state : 'active', //product.product_state
-          product_mark : 'marca 1', //product.product_mark
-          product_category : 'categoria 1', //product.product_category
-          product_type : 'tipo de producto 1', //product.product_type
-          //product_providers = {}; //product.product_providers
-          ecommerce_published : 'yes', //product.ecommerce_published
-          //product_images = []; //product.product_images
-          unit : 'U', //product.product_stock_caract.unit
-          volume : '1', //product.product_stock_caract.volume
-          package : '2', //product.product_stock_caract.package
-          package_to_client : '3', //product.product_stock_caract.package_to_client
-          margin_min : '4', //product.product_stock_caract.margin_min
-          margin_max : '6', //product.product_stock_caract.margin_max
-          neto_repo_cost : '1.20', //product.product_cost_and_prices.neto_repo_cost
-          bonification : '0.20', //product.product_cost_and_prices.bonification
-          cost_with_bonification : '1.00', //product.product_cost_and_prices.cost_with_bonification
-          flete_cost : '10', //product.product_cost_and_prices.flete_cost
-          country_tax : '21', //product.product_cost_and_prices.country_tax
-          cost_with_tax : '1.21', //product.product_cost_and_prices.cost_with_tax
-          list_price : '1.50', //product.product_cost_and_prices.list_price
-          type : 'tipo1', //product.product_contables.type
-          cuenta : 'cuenta1', //product.product_contables_cuenta
+         
+            product_code: 'nuevo codigo', //product.product_code        
+            product_name : 'nuevo nombre', //product.product_name
+            product_description : 'nueva descripcion', //product.product_description
+            product_dolarize :  'Yes', //product.product_dolarize
+            product_state : 'active', //product.product_state
+            product_mark : 'marca 1', //product.product_mark
+            product_category : 'categoria 1', //product.product_category
+            product_type : 'tipo de producto 1', //product.product_type
+            //product_providers = {}; //product.product_providers
+            ecommerce_published : 'yes', //product.ecommerce_published
+            //product_images = []; //product.product_images
+            unit : 'U', //product.product_stock_caract.unit
+            volume : '1', //product.product_stock_caract.volume
+            package : '2', //product.product_stock_caract.package
+            package_to_client : '3', //product.product_stock_caract.package_to_client
+            margin_min : '4', //product.product_stock_caract.margin_min
+            margin_max : '6', //product.product_stock_caract.margin_max
+            neto_repo_cost : '1.20', //product.product_cost_and_prices.neto_repo_cost
+            bonification : '0.20', //product.product_cost_and_prices.bonification
+            cost_with_bonification : '1.00', //product.product_cost_and_prices.cost_with_bonification
+            flete_cost : '10', //product.product_cost_and_prices.flete_cost
+            country_tax : '21', //product.product_cost_and_prices.country_tax
+            cost_with_tax : '1.21', //product.product_cost_and_prices.cost_with_tax
+            list_price : '1.50', //product.product_cost_and_prices.list_price
+            type : 'tipo1', //product.product_contables.type
+            cuenta : 'cuenta1', //product.product_contables_cuenta
+        
         })
         
         console.log(producto);
