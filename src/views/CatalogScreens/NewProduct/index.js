@@ -807,6 +807,7 @@ const NewProduct = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
+              <Label/>
               </UncontrolledCollapse>
 
               <hr style={{ color: "gray", border: "1px solid" }} />
