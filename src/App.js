@@ -7,7 +7,6 @@ import Registeruser from "./views/WizardScreens/Registeruser/index";
 import SelectCountry from "./views/WizardScreens/SelectCountry";
 import VerificationCode from "./views/WizardScreens/VerificationCode";
 import LoginUsers from "./views/LoginUsers/Login";
-import TestCatalogo from './views/CatalogScreens/TestCatalogo'
 import SearchProducts from './views/CatalogScreens/SearchProducts'
 import ProductView from './views/CatalogScreens/ProductView'
 import NewProduct from './views/CatalogScreens/NewProduct'
@@ -15,6 +14,14 @@ import EditProduct from './views/CatalogScreens/EditProduct/index'
 import axios from 'axios'
 import { IntlProvider } from "react-intl";
 import { messages } from './messages';
+// import de Register companies
+import Dashboard from './views/RegisterCompanyScreen/DashboardContainer'; //this components works
+import CreateCompanyContainer from './views/RegisterCompanyScreen/CreateCompanyContaniener'; //this components works
+import CreateSucursalContainer from './views/RegisterCompanyScreen/CreateSucursalContainer'; //this components works
+import RegisterSucursalContanier from './views/RegisterCompanyScreen/RegisterSucursalContainer/RegisterSucursalContanier'; //this components works
+import RegisterHeadCompany from './views/RegisterCompanyScreen/RegisterHeadCompanyContainer/RegisterHeadCompany'; //this components works
+import RegisterCompanyContainer from './views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer';
+import FormTest from './components/CatologComponents/test/formtest';
 
 
 
@@ -115,11 +122,19 @@ const App = () => {
       <Route path="/LoginUsers/Login">
         <LoginUsers changeLanguage={handleChangeLanguage} handleChange={handleChange} changePassword={handleChangePassword } handleChangePasswordExpired={handleChangePasswordExpired} user={user} />
       </Route>
+      {/*Routes of Register Companies*/}
+      <Route path="/dashboard" component={Dashboard} /> 
+      <Route path="/createcompany" component={CreateCompanyContainer} /> 
+      <Route path="/createsucursal" component={CreateSucursalContainer} />   
+      <Route path="/registersucursal" component={RegisterSucursalContanier}/>
+      <Route path="/registerheadcompany" component={RegisterHeadCompany} />
+      <Route path="/registercompany" component={RegisterCompanyContainer} />
+      <Route path="/registersucursal" component={RegisterSucursalContanier} />
+
+      
+      {/*Routes of Catlog*/}
       <Route path="/catalog/productview">
         <ProductView/>
-      </Route>
-      <Route path="/catalog/test">
-        <TestCatalogo/>
       </Route>
       <Route path="/catalog/searchproducts">
         <SearchProducts/>
@@ -130,6 +145,7 @@ const App = () => {
       <Route path="/catalog/editproduct">
         <EditProduct/>
       </Route>
+      <Route path="/test" component={FormTest} />
     </BrowserRouter>
   </IntlProvider>
  )

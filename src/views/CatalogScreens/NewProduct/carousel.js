@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Container, Row} from 'reactstrap'
+import {Container} from 'reactstrap'
 import iphone from "./iphone.jpg";
 import iphone2 from "./iphone2.jpg";
 import iphone3 from "./iphone3.jpg";
@@ -37,10 +37,10 @@ const items = [
 
 
 
-const CarouselComponent = (props) => {
+const CarouselComponent = (props)=> {
 
     //States and function for the Carousel
-    const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
   const next = () => {
@@ -90,6 +90,6 @@ const CarouselComponent = (props) => {
         
     </Container>
   )
-};
+  }
 
 export default CarouselComponent;

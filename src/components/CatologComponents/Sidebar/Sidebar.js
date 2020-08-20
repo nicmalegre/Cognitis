@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ProSidebar,
   Menu,
   MenuItem,
-  SidebarHeader,
-  SidebarContent,
-  SidebarFooter,
-  
+  SidebarContent
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 import { FaProductHunt } from "react-icons/fa";
-import { FiMenu } from "react-icons/fi";
+//import { FiMenu } from "react-icons/fi";
 import { FiMoreVertical } from "react-icons/fi";
 import "../Sidebar/Sidebar.css";
 

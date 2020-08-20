@@ -1,2 +1,2 @@
 # Cognitis
-Cognitis project to migrate an ERP.
+Frontend for Cognitis360 development.
