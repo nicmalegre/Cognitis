@@ -10,9 +10,14 @@ import {
   Pagination,
   
 } from "react-bootstrap";
-import {Label, Input} from "reactstrap"
+import {Link } from "react-router-dom";
+import {Label, Input} from "reactstrap";
+import { BsPlusCircle } from "react-icons/bs";
+import { AiTwotoneDelete } from "react-icons/ai";
+import { MdModeEdit } from "react-icons/md";
 import CatalogLayout from "../../Layouts/CatalogLayout";
 import axios from "axios";
+import './index.css'
 
 
 const SearchProducts = () => {
@@ -66,12 +71,12 @@ const [resultSearch, setResults] = useState ([producto, producto, producto])
 
 //Objeto que se pasa por parametro en la peticion. Por defecto los valores de los campos son 'all' debido a que no filtra
 const [datosPeticion, setDatosPeticion] = useState ({
-  code:'adfsd',
-  name:'asdfas',
-  mark: 'all',
-  provider: 'all',
-  category: 'all',
-  type: 'all'
+  product_id:'',
+  product_name: '',
+  product_brand: '',
+  product_providers: '',
+  product_category:'',
+  product_type: ''
 })
 
 
@@ -80,7 +85,7 @@ const setCode = (event) => {
 
   setDatosPeticion({
     ...datosPeticion,
-    code : event.target.value
+    product_id: event.target.value
   })
   
 }
@@ -89,7 +94,7 @@ const setCode = (event) => {
 const setName = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    name: event.target.value
+    product_name: event.target.value
   })
 }
 
@@ -97,7 +102,7 @@ const setName = (event) => {
 const setMark = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    mark: event.target.value 
+    product_brand: event.target.value 
   })
 }
 
@@ -105,7 +110,7 @@ const setMark = (event) => {
 const setProvider = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    provider: event.target.value 
+    product_providers: event.target.value 
   })
 }
 
@@ -113,7 +118,7 @@ const setProvider = (event) => {
 const setCategory = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    category: event.target.value 
+    product_category: event.target.value 
   })
 }
 
@@ -121,7 +126,7 @@ const setCategory = (event) => {
 const setType = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    type: event.target.value 
+    product_type: event.target.value 
   })
 }
 
@@ -131,13 +136,14 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
   
   console.log(datosPeticion);
   
-  axios.get('url api', datosPeticion) //Aplicar los parametros que entran en getResult
+  axios.get('http://localhost:3000/api/products/filters', datosPeticion) //Aplicar los parametros que entran en getResult
   .then( res => { 
 
     setResults({
       resultSearch: res,
     })
 
+    console.log(res)
 
   }).catch(err => console.log(err)); //mostrar error
 
@@ -164,7 +170,6 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
                       <Col className="d-flex">
                         <Label>Product Name</Label>
                         <Input onChange={setName}></Input>
-                        {/* <Form.Control onChange={setName} /> */}
                       </Col>
                       <Col className="d-flex">
                         <label>Product Code</label>
@@ -205,7 +210,6 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
               <Table bordered striped hover className="ml-3 mr-3">
                 <thead>
                   <tr>
-                    <th>Id</th>
                     <th>Code</th>
                     <th>Name</th>
                     <th>Dolarize</th>
@@ -220,20 +224,39 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
                   
                       {resultSearch.map( (product) => (
                         <tr>
-                        <td>{'id'}</td>
-                        <td>{product.product_code}</td>
+                        <td>{product.product_id}</td>
                         <td>{product.product_name}</td>
-                        <td>{product.product_dolarize}</td>
-                        <td>{product.product_state}</td>
-                        <td>{product.product_mark}</td>
+                        <td>{product.product_is_dollar}</td>
+                        <td>{product.product_status}</td>
+                        <td>{product.product_brand}</td>
                         <td>{product.product_category}</td>
                         <td>{product.product_type}</td>
 
 
                         <td>
-                          <Button color="primary" href="#" style={{margin:1}}>view</Button>{' '}
-                          <Button color="primary" href="#" style={{margin:1}}>edit</Button>{' '}
-                          <Button color="danger" href="#" style={{margin:1}}>delete</Button>{' '}
+                        <Link to="/catalog/editproduct" >
+                        <Button id="button-edit" size="sm"  >
+                          <i className="mr-1">< MdModeEdit/></i>
+                          <span className="align-middle">Edit</span>
+                        </Button>{" "}
+                        {"   "}
+                        </Link>
+                        <Button
+                          id="button-delete"
+                          size="sm"                          
+                        >
+                        <i className="mr-1"><AiTwotoneDelete /></i>
+                        <span className="align-middle">Delete</span>
+                        </Button>{" "}
+
+                        {"   "}
+                        <Link to="/catalog/productview">
+                          <Button id="button-view" size="sm" >
+                            <i className="mr-1"><BsPlusCircle/></i>
+                            <span className="align-middle">More</span>
+                          </Button>
+                          
+                        </Link>
                         </td>
                       </tr> 
                       ))}                    

@@ -427,7 +427,7 @@ const ProductView = (props) => {
                         <Row form className="content-align-end text-center">
                             <Col md={12}>
                                 <Button color="danger" href="/catalog/searchproducts" style={{margin:20}}>Volver</Button>{' '}
-                                <Button color="primary" href="#" style={{margin:20}}>Editar Producto</Button>{' '}
+                                <Button color="primary" href="/catalog/editproduct" style={{margin:20}}>Editar Producto</Button>{' '}
                             </Col>
                         </Row>
                     </Col>
