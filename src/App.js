@@ -65,6 +65,7 @@ const App = () => {
       product: dato,
     });
   };
+
   const handleChangePassword = (dato) => {
     setDatos({
       ...user,
@@ -95,8 +96,7 @@ const App = () => {
         })
         .then( res => ('Se cargo en la base de datos tu usuario'))
         .catch(err => console.log(err));
-
-      };
+};
 
  return(
   <IntlProvider locale={ language } messages={ messages[language]}>

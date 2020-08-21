@@ -1,100 +1,117 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Row, Col, Container, Form, Label,  Button,FormGroup, UncontrolledCollapse, ButtonToggle} from "reactstrap";
 import CatalogLayout from '../../Layouts/CatalogLayout'
 import CarouselComponent from './carousel'
 import IndumentaryProduct from './indumentaryProduct'
 import RetailProduct from './retailProduct'
-//import axios from "axios";  
+import axios from "axios";  
 
 
 const ProductView = (props) => {
 
     const [producto, setProducto] = useState({
-        product_code: '', 
+        
+        // //fields of product_stock table
+        // product_sku: '',
+        // product_id: '',
+        // provider_id: '',
+        // product_status:'',
+        
+        //fields of product table
+        product_id:'', //es el codigo de product
         product_name: '',
         product_description: '',
-        product_dolarize: '',
-        product_state: '',
-        product_mark: '',
-        product_category: '',
+        product_is_dollar: '',
+        product_brand: '',
+        // product_maker:'', falta en bd
         product_type: '',
-        product_providers: {  
+        product_in_ecommerce: '',
+        product_unit: '',
+        product_vol:'',
+        product_package:'', //modificar en bd
+        product_package_to_client:'', //modificar en bd
+        product_max_margin:'',
+        product_min_margin:'',
+        product_list_price:'', //modificar en bd
+        product_bonification:'',
+        product_price_bonification: '',
+        product_freight_cost:'',
+        // product_cost_neto_repo:'', falta en bd
+        // product_country_tax:'', falta en bd
+        // product_cost_with_tax:'', falta en bd
+        product_accountant_type:'',
+        product_accountant_account:'',
+        product_material:'',
+        product_origin:'',
+        product_shipping:'',
+        product_warranty:'',
+        product_barcode:'',
+        product_status:'',
+        product_category:'',
+        product_industry_id:''
+        
 
-        },
-        ecommerce_published: '',
-        product_images: {
 
-        },
-        product_cost_and_prices: {
-            neto_repo_cost: '',
-            bonification:'',
-            flete_cost:'',
-            country_tax:'',
-            cost_with_tax:'',
-            list_price:'',
-        },
-        product_stock_caract: {
-            unit: '1',
-            volume:'',
-            package:'',
-            package_to_client:'',
-            margin_min:'',
-            margin_max:''
-        },
-        product_contables: {
-            type: '',
-            cuenta: '',
-        }
     })
 
     //Variable que indica la industria en este momento
-    //const industry = 'retail'; //se va setear con una propiedad que se pase en props 
-    const industry = 'indumentary';
+    const industry = 'retail'; //se va setear con una propiedad que se pase en props 
+    //const industry = props.products_industry_id //if = 1 then retail else indumentary
 
     //Id del producto que se selecciono para ver 
-    //const id_product = '1'; //se va setear con una propiedad que se pase en props
+    const id_product = props.product_id; //se va setear con una propiedad que se pase en props
     
-    // //Haremos una peticion a la API para traer el objeto producto a partir de la id que nos llega  
-    /*const traerProducto = ()=>{
-        axios.get('url api', id_product)
-        .then( res => { 
-          setDataProduct(res); //le tenemos que pasar res para setear el objeto local
+    //Haremos una peticion a la API para traer el objeto producto a partir de la id que nos llega  
+    useEffect(() => {
+        //const traerProducto = ()=>{
+            axios.get('http://localhost:3000/api/products/getproduct', id_product)
+            .then( res => { 
+            setDataProduct(res); //le tenemos que pasar res para setear el objeto local
 
-        }).catch(err => console.log(err)); //mostrar error
-    }*/
-
+            }).catch(err => console.log(err)); //mostrar error
+        //}
+    }, []);
 
     //Funcion que setea el producto con la respuesta de la peticion.
-    const setDataProduct = () => { //Recibe el product
+    const setDataProduct = (product) => { //Recibe el product
      
         setProducto ({
          
-            product_code: 'nuevo codigo', //product.product_code        
-            product_name : 'nuevo nombre', //product.product_name
-            product_description : 'nueva descripcion', //product.product_description
-            product_dolarize :  'Yes', //product.product_dolarize
-            product_state : 'active', //product.product_state
-            product_mark : 'marca 1', //product.product_mark
-            product_category : 'categoria 1', //product.product_category
-            product_type : 'tipo de producto 1', //product.product_type
-            //product_providers = {}; //product.product_providers
-            ecommerce_published : 'yes', //product.ecommerce_published
-            //product_images = []; //product.product_images
-            unit : 'U', //product.product_stock_caract.unit
-            volume : '1', //product.product_stock_caract.volume
-            package : '2', //product.product_stock_caract.package
-            package_to_client : '3', //product.product_stock_caract.package_to_client
-            margin_min : '4', //product.product_stock_caract.margin_min
-            margin_max : '6', //product.product_stock_caract.margin_max
-            neto_repo_cost : '1.20', //product.product_cost_and_prices.neto_repo_cost
-            bonification : '0.20', //product.product_cost_and_prices.bonification
-            cost_with_bonification : '1.00', //product.product_cost_and_prices.cost_with_bonification
-            flete_cost : '10', //product.product_cost_and_prices.flete_cost
-            country_tax : '21', //product.product_cost_and_prices.country_tax
-            cost_with_tax : '1.21', //product.product_cost_and_prices.cost_with_tax
-            list_price : '1.50', //product.product_cost_and_prices.list_price
-            type : 'tipo1', //product.product_contables.type
-            cuenta : 'cuenta1', //product.product_contables_cuenta
+            product_sku: product.product_sku, 
+            product_id: product.product_id,  
+            provider_id: product.provider_id,     
+            product_status: product.product_status,
+            product_name: product.product_name,
+            product_description: product.product_description, 
+            product_is_dollar:  product.product_is_dollar,
+            product_brand: product.product_brand,
+            product_maker: product.product_maker,
+            product_type: product.product_type,
+            product_in_ecommerce: product.product_in_ecommerce,
+            //product_images = product.product_images
+            product_unit: product.product_unit,
+            product_vol: product.product_vol,
+            product_package: product.product_package,
+            product_package_to_client: product.product_package_to_client,
+            product_min_margin: product.product_min_margin,
+            product_max_margin: product.product_max_margin,
+            product_list_price: product.product_list_price,
+            product_bonification : product.product_bonification,
+            product_price_bonification : product.product_price_bonification,
+            product_freight_cost : product.product_freight_cost,
+            // product_cost_neto_repo:'', falta en bd
+            // product_country_tax:'', falta en bd
+            // product_cost_with_tax:'', falta en bd
+            product_accountant_type: product.product_accountant_type,
+            product_accountant_account: product.product_accountant_account,
+            product_material: product.product_material,
+            product_origin: product.product_origin,
+            product_shipping: product.product_shipping,
+            product_warranty: product.product_warranty,
+            product_barcode: product.product_barcode,
+            product_status: product.product_status,
+            product_category: product.product_category,
+            product_industry_id: product.product_industry_id
         
         })
         
@@ -103,7 +120,7 @@ const ProductView = (props) => {
       };
       
       //Funcion que controla el dinamismo de los campos de acuerdo a la industria
-      let industryMannage = industry === 'retail' ? (
+      let industryMannage = industry === 1 ? (
         <RetailProduct />
       ) : (
         <IndumentaryProduct />
@@ -122,7 +139,6 @@ const ProductView = (props) => {
                     <Col lg="12" xs="12" style={{marginTop:20}}>
                     <h3>Vista Producto</h3>
                     </Col>
-                    <Button onClick={setDataProduct}>Set Product</Button>
                     {/*Cuerpo de la vista */}
                     <Col lg="12" xs="12" style={{marginTop:25}}>
                         <Form>
