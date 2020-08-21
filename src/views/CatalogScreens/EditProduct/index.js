@@ -55,7 +55,15 @@ const EditProduct = (props) => {
       material:"nombredelmaterial",
       origen:"origendelprod",
       envio:"enviodelprod",
-      codbarra:"codbarradelprod"
+      codbarra:"codbarradelprod",
+      linea:"ejemplolinea",
+      segmento:"ejemplosegmento",
+      service:"ejemploservice",
+      serie:"ejemploserie",
+      modelo:"ejemplomodelo",
+      ntecnico:"ejemplo ntecnico",
+      datostecnicos:'esto seria un ejemplo de datos tecnicos del producto si tuviese datos tecnicos'
+
 
     },
 
@@ -108,11 +116,24 @@ const EditProduct = (props) => {
   //Imitating the selected product
   const id = 1;
 
+  const datosRetail = {
+    linea:"ejemplolinea",
+      segmento:"ejemplosegmento",
+      service:"ejemploservice",
+      serie:"ejemploserie",
+      modelo:"ejemplomodelo",
+      ntecnico:"ejemplo ntecnico",
+      datostecnicos:'esto seria un ejemplo de datos tecnicos del producto si tuviese datos tecnicos'
+
+  }
+
   //using the react hook form library for validations
   const { register, handleSubmit, errors } = useForm();
 
   //product status and selected product
-  const [productselect, setProductSelect] = useState({});
+  const [productselect, setProductSelect] = useState({
+  });
+  const [prodCod,setProdCod] = useState("");
   const [products, setProducts] = useState([]);
 
   //this function gets the data from the server
@@ -168,6 +189,17 @@ const EditProduct = (props) => {
   const [visible, setVisible] = useState(false);
 
   const onDismiss = () => setVisible(!visible);
+  
+  const handleChange = (e) => {
+    const {value,name} = e.target;
+    console.log(value);
+    console.log(name);
+    let stateProd = productselect;
+    stateProd[name] = value;
+    setProductSelect({
+      stateProd,
+    });
+  }
 
   
   //Variable que indica la industria en este momento
@@ -176,7 +208,7 @@ const EditProduct = (props) => {
 
   //Funcion que controla el dinamismo de los campos de acuerdo a la industria
   let industryMannage = industry === 'retail' ? (
-    <RetailProduct />
+    <RetailProduct datos = {datosRetail}/>
   ) : (
     <IndumentaryProduct />
   );
@@ -204,8 +236,12 @@ const EditProduct = (props) => {
                 <Col sm={9}>
                   <Input
                     type="number"
-                    name="codproduct"
+                    name="codProduct"
                     value={productselect.codProduct}
+                    //value = {prodCod}
+                    onChange = {
+                      handleChange
+                    }
                     innerRef={register({
                       required: {
                         value: true,
@@ -225,8 +261,11 @@ const EditProduct = (props) => {
                 <Col sm={9}>
                   <Input
                     type="text"
-                    name="nameproduct"
+                    name="nameProduct"
                     value={productselect.nameProduct}
+                    onChange = {
+                      handleChange
+                    }
                     placeholder="Ingresar el nombre de producto"
                     innerRef={register({
                       required: {
@@ -247,8 +286,11 @@ const EditProduct = (props) => {
                 <Col sm={9}>
                   <Input
                     type="textarea"
-                    name="description"
+                    name="Descripción"
                     value={productselect.Descripción}
+                    onChange = {
+                      handleChange
+                    }
                     placeholder="Ingrese una descripcion"
                     innerRef={register}
                   />
@@ -260,8 +302,11 @@ const EditProduct = (props) => {
                     <Label for="">Marca</Label>
                     <Input
                       type="select"
-                      name="marca"
+                      name="Marca"
                       value={productselect.Marca}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -283,8 +328,11 @@ const EditProduct = (props) => {
                     <Label for="">Dolarizado</Label>
                     <Input
                       type="select"
-                      name="dolarizado"
+                      name="Dolarizado"
                       value={productselect.Dolarizado}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -307,8 +355,11 @@ const EditProduct = (props) => {
                     <Label for="">Categoria</Label>
                     <Input
                       type="select"
-                      name="categoria"
+                      name="Categoria"
                       value={productselect.Categoria}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -332,8 +383,11 @@ const EditProduct = (props) => {
                     <Label for="">Tipo</Label>
                     <Input
                       type="select"
-                      name="tipo"
+                      name="Tipo"
                       value={productselect.Tipo}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -355,8 +409,11 @@ const EditProduct = (props) => {
                     <Label for="">Estado</Label>
                     <Input
                       type="select"
-                      name="estado"
+                      name="Estado"
                       value={productselect.Estado}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -380,8 +437,11 @@ const EditProduct = (props) => {
                     <Label for="">Proveedor</Label>
                     <Input
                       type="select"
-                      name="proveedor"
+                      name="Proveedor"
                       value={productselect.Proveedor}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -403,8 +463,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Código de Proveedor</Label>
                     <Input
                       type="number"
-                      name="codProveedor"
+                      name="CódProveedor"
                       value={productselect.CódProveedor}
+                      onChange = {
+                        handleChange
+                      }
                     />{" "}
                     {/*why??*/}
                   </FormGroup>
@@ -420,6 +483,9 @@ const EditProduct = (props) => {
                     id="exampleCustomRadio"
                     name="ecommerce"
                     value={productselect.ecommerce}
+                    onChange = {
+                      handleChange
+                    }
                     innerRef={register}
                   />
                 </div>
@@ -466,6 +532,9 @@ const EditProduct = (props) => {
                           type="text"
                           name="material"
                           value={productselect.material}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -485,6 +554,9 @@ const EditProduct = (props) => {
                           type="text"
                           name="origen"
                           value={productselect.origen}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -504,6 +576,9 @@ const EditProduct = (props) => {
                           type="text"
                           name="fabricante"
                           value={productselect.fabricante}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -525,6 +600,9 @@ const EditProduct = (props) => {
                           type="text"
                           name="envio"
                           value={productselect.envio}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -544,6 +622,9 @@ const EditProduct = (props) => {
                           type="text"
                           name="garantia"
                           value={productselect.garantia}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -563,6 +644,9 @@ const EditProduct = (props) => {
                           type="text"
                           name="codbarra"
                           value={productselect.codbarra}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -591,8 +675,11 @@ const EditProduct = (props) => {
                     <Label for="">Unidad</Label>
                     <Input
                       type="select"
-                      name="unidad"
+                      name="Unidad"
                       value={productselect.Unidad}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -614,8 +701,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Volumen</Label>
                     <Input
                       type="number"
-                      name="volumen"
+                      name="Volumen"
                       value={productselect.Volumen}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -633,8 +723,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Bultos</Label>
                     <Input
                       type="number"
-                      name="bultos"
+                      name="Bultos"
                       value={productselect.Bultos}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -654,8 +747,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Bultos al Cliente</Label>
                     <Input
                       type="number"
-                      name="bultosClientes"
+                      name="BultoCliente"
                       value={productselect.BultoCliente}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -675,6 +771,9 @@ const EditProduct = (props) => {
                       type="number"
                       name="margenMinimo"
                       value={productselect.margenMinimo}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -694,6 +793,9 @@ const EditProduct = (props) => {
                       type="number"
                       name="margenMaximo"
                       value={productselect.margenMaximo}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -722,8 +824,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Costo Neto/Reposicion</Label>
                     <Input
                       type="number"
-                      name="costoNetoReposicion"
+                      name="costoNetoRepo"
                       value={productselect.costoNetoRepo}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -744,8 +849,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Bonificaciones</Label>
                     <Input
                       type="number"
-                      name="bonificaciones"
+                      name="Bonificaciones"
                       value={productselect.Bonificaciones}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -764,8 +872,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Costo con Bonificacion</Label>
                     <Input
                       type="number"
-                      name="costoConBonificacion"
+                      name="CostoBonificacion"
                       value={productselect.CostoBonificacion}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -786,8 +897,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Costo Flete %</Label>
                     <Input
                       type="number"
-                      name="costoFlete"
+                      name="CostoFlete"
                       value={productselect.CostoFlete}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -810,6 +924,9 @@ const EditProduct = (props) => {
                       type="number"
                       name="tasaPais"
                       value={productselect.tasaPais}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -832,6 +949,9 @@ const EditProduct = (props) => {
                       type="number"
                       name="costoActualConImp"
                       value={productselect.costoActualConImp}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -854,6 +974,9 @@ const EditProduct = (props) => {
                       type="number"
                       name="precioLista"
                       value={productselect.precioLista}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -903,6 +1026,9 @@ const EditProduct = (props) => {
                       type="select"
                       name="tipoContable"
                       value={productselect.tipoContable}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -926,6 +1052,9 @@ const EditProduct = (props) => {
                       type="select"
                       name="cuentaContable"
                       value={productselect.cuentaContable}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,

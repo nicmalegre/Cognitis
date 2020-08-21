@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 const RetailProduct = (props)=> {
 
     const {  register, errors } = useForm();
-
+    /*
     const productFantasy = [
         {
             codProduct: 1,
@@ -58,6 +58,7 @@ const RetailProduct = (props)=> {
           Bulto: "",
         },
     ]
+    */
 
       //Imitating the selected product
   const id = 1;
@@ -68,14 +69,27 @@ const RetailProduct = (props)=> {
 
     //this function gets the data from the server
     useEffect(() => {
-        setProducts(productFantasy);
+        /*setProducts(productFantasy);
         const arrayEdit = productFantasy.map((item) =>
           item.codProduct === id
             ? setProductSelect(item)
             : console.log("product not found")
         );
-        setProducts(arrayEdit);
+        setProducts(arrayEdit);*/
+        console.log(props.datos)
+        setProductSelect(props.datos);
       }, []);
+
+      const handleChange = (e) => {
+        const {value,name} = e.target;
+        let productSel = productselect;
+        console.log(name);
+        console.log(value);
+        productSel[name] = value;
+        setProductSelect(
+          productSel,
+        );
+      } 
 
   return (
     <>
@@ -88,6 +102,9 @@ const RetailProduct = (props)=> {
             type="text"
             name="linea"
             value={productselect.linea}
+            onChange = {
+              handleChange
+            }
             innerRef={register({
                 required: {
                   value: false,
@@ -107,6 +124,9 @@ const RetailProduct = (props)=> {
             type="text"
             name="segmento"
             value={productselect.segmento}
+            onChange = {
+              handleChange
+            }
             innerRef={register({
                 required: {
                   value: false,
@@ -126,6 +146,9 @@ const RetailProduct = (props)=> {
             type="text"
             name="service"
             value={productselect.service}
+            onChange = {
+              handleChange
+            }
             innerRef={register({
                 required: {
                   value: false,
@@ -147,6 +170,9 @@ const RetailProduct = (props)=> {
             type="text"
             name="serie"
             value={productselect.serie}
+            onChange = {
+              handleChange
+            }
             innerRef={register({
                 required: {
                   value: false,
@@ -166,6 +192,9 @@ const RetailProduct = (props)=> {
             type="text"
             name="modelo"
             value={productselect.modelo}
+            onChange = {
+              handleChange
+            }
             innerRef={register({
                 required: {
                   value: false,
@@ -183,8 +212,11 @@ const RetailProduct = (props)=> {
             <Label for="">NTecnico</Label>
             <Input
             type="text"
-            name="nTecnico"
+            name="ntecnico"
             value={productselect.ntecnico}
+            onChange = {
+              handleChange
+            }
             innerRef={register({
                 required: {
                   value: false,
@@ -205,8 +237,11 @@ const RetailProduct = (props)=> {
             <Col sm={12}>
                   <Input
                     type="text"
-                    name="datos tecnicos"
+                    name="datostecnicos"
                     value={productselect.datostecnicos}
+                    onChange = {
+                      handleChange
+                    }
                     innerRef={register({
                         required: {
                           value: false,
