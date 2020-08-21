@@ -117,7 +117,7 @@ const EditProduct = (props) => {
   const id = 1;
 
   const datosRetail = {
-    linea:"ejemplolinea",
+      linea:"ejemplolinea",
       segmento:"ejemplosegmento",
       service:"ejemploservice",
       serie:"ejemploserie",

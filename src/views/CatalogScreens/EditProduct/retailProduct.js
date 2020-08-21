@@ -76,20 +76,19 @@ const RetailProduct = (props)=> {
             : console.log("product not found")
         );
         setProducts(arrayEdit);*/
-        console.log(props.datos)
         setProductSelect(props.datos);
       }, []);
 
       const handleChange = (e) => {
         const {value,name} = e.target;
-        let productSel = productselect;
-        console.log(name);
         console.log(value);
-        productSel[name] = value;
-        setProductSelect(
-          productSel,
-        );
-      } 
+        console.log(name);
+        let stateProd = productselect;
+        stateProd[name] = value;
+        setProductSelect({
+          stateProd,
+        });
+      }
 
   return (
     <>
@@ -97,7 +96,7 @@ const RetailProduct = (props)=> {
     <Row form>
         <Col md={4}>
         <FormGroup>
-            <Label for="">Linea</Label>
+            <Label for="linea">Linea</Label>
             <Input
             type="text"
             name="linea"
