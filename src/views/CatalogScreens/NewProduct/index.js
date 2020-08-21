@@ -105,7 +105,7 @@ const NewProduct = (props) => {
 
   //Variable que indica la industria en este momento
   //const industry = 'retail'; //se va setear con una propiedad que se pase en props 
-  const industry = 'indumentary';
+  const industry = 'retail';
 
   //Funcion que controla el dinamismo de los campos de acuerdo a la industria
   let industryMannage = industry === 'retail' ? (
