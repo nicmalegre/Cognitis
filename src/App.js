@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, BrowserRouter} from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import Login from "./views/WizardScreens/Login";
 import Welcomescreen from "./views/WizardScreens/Welcomescreen/index";
 import Product from "./views/WizardScreens/Product/index";
@@ -7,25 +7,24 @@ import Registeruser from "./views/WizardScreens/Registeruser/index";
 import SelectCountry from "./views/WizardScreens/SelectCountry";
 import VerificationCode from "./views/WizardScreens/VerificationCode";
 import LoginUsers from "./views/LoginUsers/Login";
-import SearchProducts from './views/CatalogScreens/SearchProducts'
-import ProductView from './views/CatalogScreens/ProductView'
-import NewProduct from './views/CatalogScreens/NewProduct'
-import EditProduct from './views/CatalogScreens/EditProduct/index'
-import axios from 'axios'
+import SearchProducts from "./views/CatalogScreens/SearchProducts";
+import ProductView from "./views/CatalogScreens/ProductView";
+import NewProduct from "./views/CatalogScreens/NewProduct";
+import EditProduct from "./views/CatalogScreens/EditProduct/index";
+import axios from "axios";
 import { IntlProvider } from "react-intl";
-import { messages } from './messages';
+import { messages } from "./messages";
 // import de Register companies
-import Dashboard from './views/RegisterCompanyScreen/DashboardContainer'; //this components works
-import CreateCompanyContainer from './views/RegisterCompanyScreen/CreateCompanyContaniener'; //this components works
-import CreateSucursalContainer from './views/RegisterCompanyScreen/CreateSucursalContainer'; //this components works
-import RegisterSucursalContanier from './views/RegisterCompanyScreen/RegisterSucursalContainer/RegisterSucursalContanier'; //this components works
-import RegisterHeadCompany from './views/RegisterCompanyScreen/RegisterHeadCompanyContainer/RegisterHeadCompany'; //this components works
-import RegisterCompanyContainer from './views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer';
-import FormTest from './components/CatologComponents/test/formtest';
+import Dashboard from "./views/RegisterCompanyScreen/DashboardContainer"; //this components works
+import CreateCompanyContainer from "./views/RegisterCompanyScreen/CreateCompanyContaniener"; //this components works
+import CreateSucursalContainer from "./views/RegisterCompanyScreen/CreateSucursalContainer"; //this components works
+import RegisterSucursalContanier from "./views/RegisterCompanyScreen/RegisterSucursalContainer/RegisterSucursalContanier"; //this components works
+import RegisterHeadCompany from "./views/RegisterCompanyScreen/RegisterHeadCompanyContainer/RegisterHeadCompany"; //this components works
+import RegisterCompanyContainer from "./views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer";
+import FormTest from "./components/CatologComponents/test/formtest";
+import { propTypes } from "react-bootstrap/esm/Image";
 
-
-
-const App = () => {
+const App = (props) => {
   const [user, setDatos] = useState({
     product: "",
     email: "",
@@ -34,7 +33,7 @@ const App = () => {
     passwordExpired: false,
   });
 
-  const [ language, setLanguage ] = useState('en')
+  const [language, setLanguage] = useState("en");
 
   const [code, setCode] = useState({
     codeVerification: null,
@@ -48,9 +47,8 @@ const App = () => {
     });
   };
   const handleChangeLanguage = (lang) => {
-    setLanguage(lang)
-  }
-
+    setLanguage(lang);
+  };
 
   const handleChangeCodeandTime = (code, time) => {
     setCode({
@@ -84,71 +82,70 @@ const App = () => {
       country: dato,
     });
   };
-  const postData = () =>{
-        console.log(user);
-        axios.post('http://localhost:3000/api/users/saveuser', {
-          product: user.product,
-          mail: user.email,
-          password: user.password,
-          country: user.country,
-          passwordExpired: user.passwordExpired
+  
+  return (
+    <IntlProvider locale={language} messages={messages[language]}>
+      <BrowserRouter>
+        <Route path="/" exact>
+          <Welcomescreen changeLanguage={handleChangeLanguage} />
+        </Route>
+        <Route path="/product">
+          <Product changeProduct={handleChangeProduct} />
+        </Route>
+        <Route path="/user">
+          <Registeruser
+            changeEmail={handleChange}
+            changeCodeTime={handleChangeCodeandTime}
+            userInfo={user}
+          />
+        </Route>
+        <Route path="/verificationcode">
+          <VerificationCode codeVerification={code} userInfo={user} />
+        </Route>
+        <Route exact path="/login">
+          <Login changePassword={handleChangePassword} userInfo={user} />
+        </Route>
+        <Route path="/selectcountry">
+          <SelectCountry
+            handleChangeCountry={handleChangeCountry}
+            userInfo={user}
+          />
+        </Route>
+        <Route path="/LoginUsers/Login">
+          <LoginUsers
+            changeLanguage={handleChangeLanguage}
+            handleChange={handleChange}
+            changePassword={handleChangePassword}
+            handleChangePasswordExpired={handleChangePasswordExpired}
+            user={user}
+          />
+        </Route>
+        {/*Routes of Register Companies*/}
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/createcompany" component={CreateCompanyContainer} />
+        <Route path="/createsucursal" component={CreateSucursalContainer} />
+        <Route path="/registersucursal" component={RegisterSucursalContanier} />
+        <Route path="/registerheadcompany" component={RegisterHeadCompany} />
+        <Route path="/registercompany" component={RegisterCompanyContainer} />
+        <Route path="/registersucursal" component={RegisterSucursalContanier} />
 
-        })
-        .then( res => ('Se cargo en la base de datos tu usuario'))
-        .catch(err => console.log(err));
+        {/*Routes of Catlog*/}
+        <Route path="/catalog/productview">
+          <ProductView />
+        </Route>
+        <Route path="/catalog/searchproducts">
+          <SearchProducts />
+        </Route>
+        <Route path="/catalog/newproduct">
+          <NewProduct />
+        </Route>
+        <Route path="/catalog/editproduct">
+          <EditProduct />
+        </Route>
+        <Route path="/test" component={FormTest} />
+      </BrowserRouter>
+    </IntlProvider>
+  );
 };
-
- return(
-  <IntlProvider locale={ language } messages={ messages[language]}>
-    <BrowserRouter>
-      <Route path='/' exact>
-        <Welcomescreen changeLanguage={handleChangeLanguage}/>
-      </Route>
-      <Route path="/product"> 
-        <Product changeProduct={handleChangeProduct}/>   
-      </Route>
-      <Route path="/user"> 
-        <Registeruser changeEmail={handleChange} changeCodeTime={handleChangeCodeandTime} userInfo={user}/>   
-      </Route>
-      <Route path="/verificationcode">
-        <VerificationCode codeVerification={code} userInfo={user}/>
-      </Route>
-      <Route exact path="/login">
-        <Login changePassword={handleChangePassword } userInfo={user}/>
-      </Route>
-      <Route path="/selectcountry">
-        <SelectCountry handleChangeCountry={handleChangeCountry} postData={postData} userInfo={user}/>
-      </Route>
-      <Route path="/LoginUsers/Login">
-        <LoginUsers changeLanguage={handleChangeLanguage} handleChange={handleChange} changePassword={handleChangePassword } handleChangePasswordExpired={handleChangePasswordExpired} user={user} />
-      </Route>
-      {/*Routes of Register Companies*/}
-      <Route path="/dashboard" component={Dashboard} /> 
-      <Route path="/createcompany" component={CreateCompanyContainer} /> 
-      <Route path="/createsucursal" component={CreateSucursalContainer} />   
-      <Route path="/registersucursal" component={RegisterSucursalContanier}/>
-      <Route path="/registerheadcompany" component={RegisterHeadCompany} />
-      <Route path="/registercompany" component={RegisterCompanyContainer} />
-      <Route path="/registersucursal" component={RegisterSucursalContanier} />
-
-      
-      {/*Routes of Catlog*/}
-      <Route path="/catalog/productview">
-        <ProductView/>
-      </Route>
-      <Route path="/catalog/searchproducts">
-        <SearchProducts/>
-      </Route>
-      <Route path="/catalog/newproduct">
-        <NewProduct/>
-      </Route>
-      <Route path="/catalog/editproduct">
-        <EditProduct/>
-      </Route>
-      <Route path="/test" component={FormTest} />
-    </BrowserRouter>
-  </IntlProvider>
- )
-}
 
 export default App;
