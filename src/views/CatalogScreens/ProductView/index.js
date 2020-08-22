@@ -59,17 +59,21 @@ const ProductView = (props) => {
     //const industry = props.products_industry_id //if = 1 then retail else indumentary
 
     //Id del producto que se selecciono para ver 
-    const id_product = props.product_id; //se va setear con una propiedad que se pase en props
+    let id_product = parseInt(props.match.params.id); //se va setear con una propiedad que se pase en props
     
     //Haremos una peticion a la API para traer el objeto producto a partir de la id que nos llega  
     useEffect(() => {
-        //const traerProducto = ()=>{
-            axios.get('http://localhost:3000/api/products/getproduct', id_product)
+        
+       
+        
+            axios.get('http://localhost:3000/api/products/getproduct/' + id_product)
             .then( res => { 
-            setDataProduct(res); //le tenemos que pasar res para setear el objeto local
+            console.log(res.data)
+            setDataProduct(res.data); //le tenemos que pasar res para setear el objeto local
 
             }).catch(err => console.log(err)); //mostrar error
-        //}
+       
+        
     }, []);
 
     //Funcion que setea el producto con la respuesta de la peticion.
@@ -115,7 +119,7 @@ const ProductView = (props) => {
         
         })
         
-        console.log(producto);
+        
 
       };
       
@@ -139,6 +143,7 @@ const ProductView = (props) => {
                     <Col lg="12" xs="12" style={{marginTop:20}}>
                     <h3>Vista Producto</h3>
                     </Col>
+                    
                     {/*Cuerpo de la vista */}
                     <Col lg="12" xs="12" style={{marginTop:25}}>
                         <Form>
@@ -146,7 +151,7 @@ const ProductView = (props) => {
                             {/*Campos comunes para todas las industrias */}
                             <FormGroup row>
                                 <Label for="" sm={4}>Código del Producto:</Label>
-                                <Label for="" sm={8}>{producto.product_code}</Label>
+                                <Label for="" sm={8}>{producto.product_id}</Label>
                             </FormGroup>
                             <FormGroup row>
                                 <Label for="" sm={4}>Nombre del Producto:</Label>
@@ -162,7 +167,7 @@ const ProductView = (props) => {
                                 <Col md={6}>
                                     <FormGroup row>
                                         <Label for="" sm={4}>Marca del Producto:</Label>
-                                        <Label for="" sm={4}>{producto.product_mark}</Label>
+                                        <Label for="" sm={4}>{producto.product_brand}</Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
