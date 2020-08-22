@@ -68,7 +68,7 @@ const ProductView = (props) => {
         
             axios.get('http://localhost:3000/api/products/getproduct/' + id_product)
             .then( res => { 
-            console.log(res.data)
+            
             setDataProduct(res.data); //le tenemos que pasar res para setear el objeto local
 
             }).catch(err => console.log(err)); //mostrar error
@@ -78,16 +78,16 @@ const ProductView = (props) => {
 
     //Funcion que setea el producto con la respuesta de la peticion.
     const setDataProduct = (product) => { //Recibe el product
-     
+        
         setProducto ({
-         
+            
             product_sku: product.product_sku, 
             product_id: product.product_id,  
             provider_id: product.provider_id,     
             product_status: product.product_status,
             product_name: product.product_name,
             product_description: product.product_description, 
-            product_is_dollar:  product.product_is_dollar,
+            product_is_dollar: product.product_is_dollar,
             product_brand: product.product_brand,
             product_maker: product.product_maker,
             product_type: product.product_type,
@@ -125,9 +125,9 @@ const ProductView = (props) => {
       
       //Funcion que controla el dinamismo de los campos de acuerdo a la industria
       let industryMannage = industry === 1 ? (
-        <RetailProduct />
+        <RetailProduct prop={producto}/>
       ) : (
-        <IndumentaryProduct />
+        <IndumentaryProduct prop={producto} />
       );
 
 
@@ -150,30 +150,30 @@ const ProductView = (props) => {
 
                             {/*Campos comunes para todas las industrias */}
                             <FormGroup row>
-                                <Label for="" sm={4}>Código del Producto:</Label>
-                                <Label for="" sm={8}>{producto.product_id}</Label>
+                                <Label for="" sm={3}>Código del Producto:</Label>
+                                <Label for="" sm={1}>{producto.product_id}</Label>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="" sm={4}>Nombre del Producto:</Label>
+                                <Label for="" sm={3}>Nombre del Producto:</Label>
                                 <Label for="" sm={3}>{producto.product_name}</Label>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="" sm={2}>Descripción del Producto:</Label>
-                                <Label for="" sm={10}>{producto.product_description}</Label>
+                                <Label for="" sm={3}>Descripción del Producto:</Label>
+                                <Label for="" sm={9}>{producto.product_description}</Label>
                             </FormGroup>
                             <Label/>
 
                             <Row form >
                                 <Col md={6}>
                                     <FormGroup row>
-                                        <Label for="" sm={4}>Marca del Producto:</Label>
+                                        <Label for="" sm={5}>Marca del Producto:</Label>
                                         <Label for="" sm={4}>{producto.product_brand}</Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup row>
                                         <Label for="" sm={4}>Dolarizado:</Label>
-                                        <Label for="" sm={4}>{producto.product_dolarize}</Label>            
+                                        <Label for="" sm={4}>{(producto.product_is_dollar) ? 'Yes' : 'No'}</Label>            
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -183,8 +183,8 @@ const ProductView = (props) => {
                             <Row form>
                                 <Col md={6}>
                                     <FormGroup row>
-                                        <Label for="" sm={4}>Estado del Producto:</Label>
-                                        <Label for="" sm={4}>{producto.product_state}</Label>
+                                        <Label for="" sm={5}>Estado del Producto:</Label>
+                                        <Label for="" sm={4}>{(producto.product_status) ? 'Active' : 'Inactive'}</Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
@@ -208,36 +208,22 @@ const ProductView = (props) => {
                                 <Col md={12}>
                                     <FormGroup row>
                                         <Label for="" sm={3}>Proveedores de Producto:</Label>
-                                        <Label for="" sm={6}>Nombre Producto</Label>
-                                        <Label for="" sm={3}>Codigo Producto</Label>
+                                        <Label for="" sm={6}>Nombre Proveedor</Label>
+                                        <Label for="" sm={3}>Codigo Proveedor</Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={12}>
                                     <FormGroup row>
                                         <Label for="" sm={3}></Label>
-                                        <Label for="" sm={6}>{producto.name}</Label>
-                                        <Label for="" sm={3}>{producto.code}</Label>
+                                        <Label for="" sm={6}>{producto.product_provider_name}</Label>
+                                        <Label for="" sm={3}>{producto.product_provider_code}</Label>
                                     </FormGroup>
-                                </Col>
-                                <Col md={12}>
-                                    <FormGroup row>
-                                        <Label for="" sm={3}></Label>
-                                        <Label for="" sm={6}>{producto.name}</Label>
-                                        <Label for="" sm={3}>{producto.code}</Label>
-                                    </FormGroup>
-                                </Col>
-                                <Col md={12}>
-                                    <FormGroup row>
-                                        <Label for="" sm={3}></Label>
-                                        <Label for="" sm={6}>{producto.name}</Label>
-                                        <Label for="" sm={3}>{producto.code}</Label>
-                                    </FormGroup>
-                                </Col>                             
+                                </Col>                           
                             </Row><br/>
                             
                             <FormGroup row>
                                 <Label for="" sm={3}>Publicado en E-Commerce:</Label>
-                                <Label for="" sm={3}>{producto.ecommerce_published}</Label>
+                                <Label for="" sm={3}>{(producto.product_in_ecommerce) ? 'Yes' : 'No'}</Label>
                             </FormGroup>
 
                             <Row>
@@ -263,19 +249,19 @@ const ProductView = (props) => {
                                     <Col md={4}>
                                         <FormGroup row>
                                             <Label for="" sm={4}>Material:</Label>
-                                            <Label for="" sm={4}>{}</Label>
+                                            <Label for="" sm={4}>{producto.product_material}</Label>
                                         </FormGroup>
                                     </Col>
                                     <Col md={4}>
                                         <FormGroup row>
                                             <Label for="" sm={4}>Origen:</Label>
-                                            <Label for="" sm={4}>{}</Label>            
+                                            <Label for="" sm={4}>{producto.product_origin}</Label>            
                                         </FormGroup>
                                     </Col>
                                     <Col md={4}>
                                         <FormGroup row>
                                             <Label for="" sm={4}>Fabricante:</Label>
-                                            <Label for="" sm={4}>{}</Label>            
+                                            <Label for="" sm={4}>{producto.product_maker}</Label>            
                                         </FormGroup>
                                     </Col>
                                 </Row>
@@ -283,19 +269,19 @@ const ProductView = (props) => {
                                     <Col md={4}>
                                         <FormGroup row>
                                             <Label for="" sm={4}>Envio:</Label>
-                                            <Label for="" sm={4}>{}</Label>
+                                            <Label for="" sm={4}>{producto.product_shipping}</Label>
                                         </FormGroup>
                                     </Col>
                                     <Col md={4}>
                                         <FormGroup row>
                                             <Label for="" sm={4}>Garantia:</Label>
-                                            <Label for="" sm={4}>{}</Label>            
+                                            <Label for="" sm={4}>{producto.product_warranty}</Label>            
                                         </FormGroup>
                                     </Col>
                                     <Col md={4}>
                                         <FormGroup row>
                                             <Label for="" sm={4}>Cod. de Barra:</Label>
-                                            <Label for="" sm={4}>{}</Label>            
+                                            <Label for="" sm={4}>{producto.product_barcode}</Label>            
                                         </FormGroup>
                                     </Col>
                                 </Row>
@@ -313,19 +299,19 @@ const ProductView = (props) => {
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="">Unidad</Label>
-                                        <Label for="" sm={3}>{producto.unit}</Label> 
+                                        <Label for="" sm={3}>{producto.product_unit}</Label> 
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Volumen</Label>
-                                        <Label for="" sm={3}>{producto.volume}</Label>
+                                        <Label for="" sm={3}>{producto.product_vol}</Label>
                                     </FormGroup> 
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Bultos</Label>
-                                        <Label for="" sm={3}>{producto.package}</Label>
+                                        <Label for="" sm={3}>{producto.product_package}</Label>
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -333,19 +319,19 @@ const ProductView = (props) => {
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Bultos al Cliente</Label>
-                                        <Label for="" sm={3}>{producto.package_to_client}</Label>
+                                        <Label for="" sm={3}>{producto.product_package_to_client}</Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Margen Minimo</Label>
-                                        <Label for="" sm={3}>{producto.margin_min}</Label>
+                                        <Label for="" sm={3}>{producto.product_min_margin}</Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Margen Maximo</Label>
-                                        <Label for="" sm={3}>{producto.margin_max}</Label>
+                                        <Label for="" sm={3}>{producto.product_max_margin}</Label>
                                     </FormGroup>   
                                 </Col>
                             </Row>
@@ -362,19 +348,19 @@ const ProductView = (props) => {
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="">Costo Neto/Reposicion:</Label>
-                                        <Label for="" sm={3}>{producto.unit}</Label> 
+                                        <Label for="" sm={3}>{producto.product_cost_neto_repo}</Label> 
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Bonificaciones:</Label>
-                                        <Label for="" sm={3}>{producto.unit}</Label>
+                                        <Label for="" sm={3}>{producto.product_bonification}</Label>
                                     </FormGroup> 
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Costo c/Bonificaciones:</Label>
-                                        <Label for="" sm={3}>{producto.unit}</Label>
+                                        <Label for="" sm={3}>{producto.product_price_bonification}</Label>
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -382,19 +368,19 @@ const ProductView = (props) => {
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Costo Flete (%):</Label>
-                                        <Label for="" sm={3}>{producto.unit}</Label>
+                                        <Label for="" sm={3}>{producto.product_freight_cost}</Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Tasa Pais (%):</Label>
-                                        <Label for="" sm={3}>{producto.unit}</Label>
+                                        <Label for="" sm={3}>{producto.product_tax_country}</Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Costo Actual c/Impuestos:</Label>
-                                        <Label for="" sm={3}>{producto.unit}</Label>
+                                        <Label for="" sm={3}>{producto.product_cost_with_tax}</Label>
                                     </FormGroup>   
                                 </Col>
                             </Row>
@@ -411,13 +397,13 @@ const ProductView = (props) => {
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="">Cuenta:</Label>
-                                        <Label for="" sm={3}>{producto.cuenta}</Label> 
+                                        <Label for="" sm={3}>{producto.product_accountant_account}</Label> 
                                     </FormGroup>
                                 </Col>                                
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="">Tipo de cuenta:</Label>
-                                        <Label for="" sm={3}>{producto.type}</Label> 
+                                        <Label for="" sm={3}>{producto.product_accountant_type}</Label> 
                                     </FormGroup>
                                 </Col>
                                 
