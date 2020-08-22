@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import {
   Container,
   Row,
@@ -22,62 +22,22 @@ import './index.css'
 
 const SearchProducts = () => {
 
-//   //Ejemplo de producto que viene como respuesta luego de una busqueda.
-  const [producto, setProducto] = useState({
-    product_code: '133', 
-    product_name: 'elprod',
-    product_description: 'askdfj',
-    product_dolarize: 'yes',
-    product_state: 'active',
-    product_mark: 'mark1',
-    product_category: 'cat1',
-    product_type: 'type1',
-    product_providers: {  
-
-    },
-    ecommerce_published: '',
-    product_images: {
-
-    },
-    product_cost_and_prices: {
-        neto_repo_cost: '',
-        bonification:'',
-        flete_cost:'',
-        country_tax:'',
-        cost_with_tax:'',
-        list_price:'',
-    },
-    product_stock_caract: {
-        unit: '1',
-        volume:'',
-        package:'',
-        package_to_client:'',
-        margin_min:'',
-        margin_max:''
-    },
-    product_contables: {
-        type: '',
-        cuenta: '',
-    }
-})
-
-// //Arreglo que contendra los productos que vienen como respuesta de la peticion
-// const resultados = [producto, producto, producto] //A modo de prueba tiene 3 objetos producto.
-
 
 //Estado de tipo arreglo que sirve para almacenar la respuesta de la peticion a la API
-const [resultSearch, setResults] = useState ([producto, producto, producto])
+let [resultSearch, setResults] = useState ([])
 
 
 //Objeto que se pasa por parametro en la peticion. Por defecto los valores de los campos son 'all' debido a que no filtra
 const [datosPeticion, setDatosPeticion] = useState ({
-  product_id:'',
-  product_name: '',
-  product_brand: '',
-  product_providers: '',
-  product_category:'',
-  product_type: ''
+  product_id: null,
+  product_name: null,
+  product_brand: null,
+  product_providers: null,
+  category: null,
+  product_type: null
 })
+
+
 
 
 //Funcion que controla el input del codigo de producto
@@ -85,7 +45,7 @@ const setCode = (event) => {
 
   setDatosPeticion({
     ...datosPeticion,
-    product_id: event.target.value
+    product_id: parseInt(event.target.value)
   })
   
 }
@@ -94,7 +54,7 @@ const setCode = (event) => {
 const setName = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    product_name: event.target.value
+    product_name: (event.target.value === "") ? null : event.target.value
   })
 }
 
@@ -118,7 +78,7 @@ const setProvider = (event) => {
 const setCategory = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    product_category: event.target.value 
+    category: event.target.value 
   })
 }
 
@@ -134,16 +94,14 @@ const setType = (event) => {
 //Funcion que se ejecuta al solicitar una busqueda.
 const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de la funcion
   
-  console.log(datosPeticion);
+  console.log(datosPeticion)
   
-  axios.get('http://localhost:3000/api/products/filters', datosPeticion) //Aplicar los parametros que entran en getResult
+  axios.post('http://localhost:3000/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
   .then( res => { 
-
-    setResults({
-      resultSearch: res,
-    })
-
-    console.log(res)
+    console.log(res);
+    setResults(
+      resultSearch = res.data
+    )
 
   }).catch(err => console.log(err)); //mostrar error
 
@@ -169,7 +127,8 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
                     <Row>
                       <Col className="d-flex">
                         <Label>Product Name</Label>
-                        <Input onChange={setName}></Input>
+                        <Form.Control onChange={setName} />
+                        {/* <Input onChange={setName}></Input> */}
                       </Col>
                       <Col className="d-flex">
                         <label>Product Code</label>
@@ -210,26 +169,26 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
               <Table bordered striped hover className="ml-3 mr-3">
                 <thead>
                   <tr>
-                    <th>Code</th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Dolarize</th>
-                    <th>State</th>
-                    <th>Mark</th>
+                    <th>Status</th>
+                    <th>Brand</th>
                     <th>Category</th>
                     <th>Type</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  
+                      
                       {resultSearch.map( (product) => (
                         <tr>
                         <td>{product.product_id}</td>
                         <td>{product.product_name}</td>
-                        <td>{product.product_is_dollar}</td>
-                        <td>{product.product_status}</td>
+                        <td>{product.product_is_dollar ? 'Si' : 'No' }</td>
+                        <td>{product.product_status ? 'Activo' : 'Inactivo'}</td>
                         <td>{product.product_brand}</td>
-                        <td>{product.product_category}</td>
+                        <td>{product.category}</td>
                         <td>{product.product_type}</td>
 
 
@@ -250,8 +209,8 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
                         </Button>{" "}
 
                         {"   "}
-                        <Link to="/catalog/productview">
-                          <Button id="button-view" size="sm" >
+                        <Link to={`/catalog/productview/${product.product_id}`}>
+                          <Button id="button-view" size="sm"  >
                             <i className="mr-1"><BsPlusCircle/></i>
                             <span className="align-middle">More</span>
                           </Button>
