@@ -24,6 +24,7 @@ import RetailProduct from './retailProduct'
 // EditProduct Component
 const EditProduct = (props) => {
   //imitating api data
+  /*
   const listproducts = [
     {
       codProduct: 1,
@@ -115,7 +116,7 @@ const EditProduct = (props) => {
   ];
   //Imitating the selected product
   const id = 1;
-
+  
   const datosRetail = {
       linea:"ejemplolinea",
       segmento:"ejemplosegmento",
@@ -126,6 +127,7 @@ const EditProduct = (props) => {
       datostecnicos:'esto seria un ejemplo de datos tecnicos del producto si tuviese datos tecnicos'
 
   }
+  */
 
   //using the react hook form library for validations
   const { register, handleSubmit, errors } = useForm();
