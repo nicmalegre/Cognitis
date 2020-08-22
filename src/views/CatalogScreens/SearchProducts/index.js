@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import {
   Container,
   Row,
@@ -10,69 +10,34 @@ import {
   Pagination,
   
 } from "react-bootstrap";
-import {Label, Input} from "reactstrap"
+import {Link } from "react-router-dom";
+import {Label, Input} from "reactstrap";
+import { BsPlusCircle } from "react-icons/bs";
+import { AiTwotoneDelete } from "react-icons/ai";
+import { MdModeEdit } from "react-icons/md";
 import CatalogLayout from "../../Layouts/CatalogLayout";
 import axios from "axios";
+import './index.css'
 
 
 const SearchProducts = () => {
 
-//   //Ejemplo de producto que viene como respuesta luego de una busqueda.
-  const [producto, setProducto] = useState({
-    product_code: '133', 
-    product_name: 'elprod',
-    product_description: 'askdfj',
-    product_dolarize: 'yes',
-    product_state: 'active',
-    product_mark: 'mark1',
-    product_category: 'cat1',
-    product_type: 'type1',
-    product_providers: {  
-
-    },
-    ecommerce_published: '',
-    product_images: {
-
-    },
-    product_cost_and_prices: {
-        neto_repo_cost: '',
-        bonification:'',
-        flete_cost:'',
-        country_tax:'',
-        cost_with_tax:'',
-        list_price:'',
-    },
-    product_stock_caract: {
-        unit: '1',
-        volume:'',
-        package:'',
-        package_to_client:'',
-        margin_min:'',
-        margin_max:''
-    },
-    product_contables: {
-        type: '',
-        cuenta: '',
-    }
-})
-
-// //Arreglo que contendra los productos que vienen como respuesta de la peticion
-// const resultados = [producto, producto, producto] //A modo de prueba tiene 3 objetos producto.
-
 
 //Estado de tipo arreglo que sirve para almacenar la respuesta de la peticion a la API
-const [resultSearch, setResults] = useState ([producto, producto, producto])
+let [resultSearch, setResults] = useState ([])
 
 
 //Objeto que se pasa por parametro en la peticion. Por defecto los valores de los campos son 'all' debido a que no filtra
 const [datosPeticion, setDatosPeticion] = useState ({
-  code:'adfsd',
-  name:'asdfas',
-  mark: 'all',
-  provider: 'all',
-  category: 'all',
-  type: 'all'
+  product_id: null,
+  product_name: null,
+  product_brand: null,
+  product_providers: null,
+  category: null,
+  product_type: null
 })
+
+
 
 
 //Funcion que controla el input del codigo de producto
@@ -80,7 +45,7 @@ const setCode = (event) => {
 
   setDatosPeticion({
     ...datosPeticion,
-    code : event.target.value
+    product_id: parseInt(event.target.value)
   })
   
 }
@@ -89,7 +54,7 @@ const setCode = (event) => {
 const setName = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    name: event.target.value
+    product_name: (event.target.value === "") ? null : event.target.value
   })
 }
 
@@ -97,7 +62,7 @@ const setName = (event) => {
 const setMark = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    mark: event.target.value 
+    product_brand: event.target.value 
   })
 }
 
@@ -105,7 +70,7 @@ const setMark = (event) => {
 const setProvider = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    provider: event.target.value 
+    product_providers: event.target.value 
   })
 }
 
@@ -121,7 +86,7 @@ const setCategory = (event) => {
 const setType = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    type: event.target.value 
+    product_type: event.target.value 
   })
 }
 
@@ -129,15 +94,14 @@ const setType = (event) => {
 //Funcion que se ejecuta al solicitar una busqueda.
 const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de la funcion
   
-  console.log(datosPeticion);
+  console.log(datosPeticion)
   
-  axios.get('url api', datosPeticion) //Aplicar los parametros que entran en getResult
+  axios.post('http://localhost:3000/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
   .then( res => { 
-
-    setResults({
-      resultSearch: res,
-    })
-
+    console.log(res);
+    setResults(
+      resultSearch = res.data
+    )
 
   }).catch(err => console.log(err)); //mostrar error
 
@@ -163,8 +127,8 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
                     <Row>
                       <Col className="d-flex">
                         <Label>Product Name</Label>
-                        <Input onChange={setName}></Input>
-                        {/* <Form.Control onChange={setName} /> */}
+                        <Form.Control onChange={setName} />
+                        {/* <Input onChange={setName}></Input> */}
                       </Col>
                       <Col className="d-flex">
                         <label>Product Code</label>
@@ -205,35 +169,53 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
               <Table bordered striped hover className="ml-3 mr-3">
                 <thead>
                   <tr>
-                    <th>Id</th>
-                    <th>Code</th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Dolarize</th>
-                    <th>State</th>
-                    <th>Mark</th>
+                    <th>Status</th>
+                    <th>Brand</th>
                     <th>Category</th>
                     <th>Type</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  
+                      
                       {resultSearch.map( (product) => (
                         <tr>
-                        <td>{'id'}</td>
-                        <td>{product.product_code}</td>
+                        <td>{product.product_id}</td>
                         <td>{product.product_name}</td>
-                        <td>{product.product_dolarize}</td>
-                        <td>{product.product_state}</td>
-                        <td>{product.product_mark}</td>
-                        <td>{product.product_category}</td>
+                        <td>{product.product_is_dollar ? 'Si' : 'No' }</td>
+                        <td>{product.product_status ? 'Activo' : 'Inactivo'}</td>
+                        <td>{product.product_brand}</td>
+                        <td>{product.category}</td>
                         <td>{product.product_type}</td>
 
 
                         <td>
-                          <Button color="primary" href="#" style={{margin:1}}>view</Button>{' '}
-                          <Button color="primary" href="#" style={{margin:1}}>edit</Button>{' '}
-                          <Button color="danger" href="#" style={{margin:1}}>delete</Button>{' '}
+                        <Link to="/catalog/editproduct" >
+                        <Button id="button-edit" size="sm"  >
+                          <i className="mr-1">< MdModeEdit/></i>
+                          <span className="align-middle">Edit</span>
+                        </Button>{" "}
+                        {"   "}
+                        </Link>
+                        <Button
+                          id="button-delete"
+                          size="sm"                          
+                        >
+                        <i className="mr-1"><AiTwotoneDelete /></i>
+                        <span className="align-middle">Delete</span>
+                        </Button>{" "}
+
+                        {"   "}
+                        <Link to={`/catalog/productview/${product.product_id}`}>
+                          <Button id="button-view" size="sm"  >
+                            <i className="mr-1"><BsPlusCircle/></i>
+                            <span className="align-middle">More</span>
+                          </Button>
+                          
+                        </Link>
                         </td>
                       </tr> 
                       ))}                    
