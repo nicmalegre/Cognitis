@@ -55,8 +55,8 @@ const LoginUsers = (props) => {
             setMaximiumAttemptsExceeded(true) //Show the message than the maximium attempts exceeded
 
             //Set the passwordExpired field true in the database. So the user have to restart his password
-            axios.put(`https://cognitis-360.herokuapp.com/api/users/updateUser/${props.user.email}`, {
-                passwordExpired:true,
+            axios.put(`https://cognitis-360.herokuapp.com/api/users/update/user/${props.user_mail}`, {
+                user_password_expired:true,
             }).then(console.log("User update"))
             .catch(console.log("Can't update"))         
         }
@@ -66,7 +66,7 @@ const LoginUsers = (props) => {
     const controlInput = (userFound) =>{
         if (userFound) { //If found an user that matched with the email from the input
             //Here we put the things when the email is right
-            if ((props.user.password === userFound.password) && (!userFound.passwordExpired) ){
+            if ((props.user.password === userFound.user_password) && (!userFound.user_password_expired) ){
                 //Here we put the things when the email match with the password and everything is right in the login
                 //Start Session
                 //Go to the next page
@@ -86,8 +86,8 @@ const LoginUsers = (props) => {
     }
 
     const getData = async () => {       
-        await axios.post('https://cognitis-360.herokuapp.com/api/users/getUser', {
-            mail: props.user.email
+        await axios.post('https://cognitis-360.herokuapp.com/api/users/getuser', {
+            user_mail: props.user_mail
         })
         .then(async res =>{
             const userExist = await res.data 
