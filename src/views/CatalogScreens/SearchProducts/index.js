@@ -8,7 +8,6 @@ import {
   Form,
   Button,
   Pagination,
-  
 } from "react-bootstrap";
 import {Link } from "react-router-dom";
 import {Label, Input} from "reactstrap";
@@ -117,7 +116,7 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
         <Row>
           <Col md={9}>
             <Row className="pt-3 pl-3">
-              <h3>Buscar Producto</h3>
+              <h2>Buscar Productos</h2>
             </Row>
             <Row className="p-3">
               <Card style={{ width: "100%" }}>

@@ -245,8 +245,8 @@ const ProductView = (props) => {
                             {/* Campos no comunes, cada industria tendra sus campos adicionales */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
                             <Col id="togglerCampos" lg="12" xs="12"  style={{marginTop:20, cursor:"pointer"}}>
-                                <h4>Ver Más Características</h4>
-                            </Col>
+                                <h4>Ver mas caracteristicas</h4>
+                            </Col><br/>
                             <UncontrolledCollapse toggler="#togglerCampos">
                             <br/>
                                 {//industryMannage
@@ -299,10 +299,9 @@ const ProductView = (props) => {
                             {/* Caracteristicas del Stock del producto */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
                             <Col id="togglerStock" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
-                                <h4>Ver Características de Stock</h4>
-                            </Col>
+                                <h4>Caracteristicas de Stock</h4>
+                            </Col><br/>
                             <UncontrolledCollapse toggler="#togglerStock">
-                            <br/>
                             <Row form>
                                 <Col md={4}>
                                     <FormGroup>
@@ -348,10 +347,9 @@ const ProductView = (props) => {
                             {/* Costos y Precios del producto */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
                             <Col id="togglerCostAndPrices" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
-                                <h4>Ver Costos y Precios</h4>
-                            </Col>
+                                <h4>Costos y Precios</h4>
+                            </Col><br/>
                             <UncontrolledCollapse toggler="#togglerCostAndPrices">
-                            <br/>
                             <Row form>
                                 <Col md={4}>
                                     <FormGroup>
@@ -391,16 +389,15 @@ const ProductView = (props) => {
                                         <Label for="" sm={3}>{producto.product_cost_with_tax}</Label>
                                     </FormGroup>   
                                 </Col>
-                            </Row>
+                            </Row><br/>
                             </UncontrolledCollapse>
 
                             {/* Contables del producto */}
                             <hr style={{color: 'gray', border:'1px solid'}}/>
                             <Col id="togglerContables" lg="12" xs="12" style={{marginTop:20, cursor:"pointer"}}>
-                                <h4>Ver Contables</h4>
-                            </Col>
+                                <h4>Contables</h4>
+                            </Col><br/>
                             <UncontrolledCollapse toggler="#togglerContables">
-                            <br/>
                             <Row form>
                                 <Col md={4}>
                                     <FormGroup>
