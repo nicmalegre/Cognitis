@@ -14,6 +14,7 @@ import {
   Button,
   Alert,
 } from "reactstrap";
+import {BASE_URL} from '../../../urls/url'
 import CatalogLayout from "../../Layouts/CatalogLayout";
 import axios from "axios";
 import CarouselComponent from "./carousel";
@@ -154,7 +155,7 @@ const EditProduct = (props) => {
       setNombre(props.productos.productoActual.producto_id);
     }
     */
-    axios.get('http://localhost:3000/api/products/productdata/' + id_product)
+    axios.get(`${BASE_URL}/products/productdata/${id_product}`)
     .then( async res => {
       props.dispatch(fetchProductoData(res.data))
       setDataProduct(res.data);

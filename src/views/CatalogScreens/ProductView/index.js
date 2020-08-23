@@ -5,7 +5,8 @@ import CarouselComponent from './carousel'
 import IndumentaryProduct from './indumentaryProduct'
 import RetailProduct from './retailProduct'
 import axios from "axios";
-import {connect} from 'react-redux'  
+import {connect} from 'react-redux';
+import {BASE_URL} from '../../../urls/url'
 import {
     fetchProductoData
   } from '../../../Redux/Actions/ProductosActions';
@@ -69,7 +70,7 @@ const ProductView = (props) => {
         
        
         
-            axios.get('http://localhost:3000/api/products/productdata/' + id_product)
+            axios.get(`${BASE_URL}/products/productdata/${id_product}`)
             .then( res => { 
             
             props.dispatch(fetchProductoData(res.data));
@@ -249,7 +250,7 @@ const ProductView = (props) => {
                             <UncontrolledCollapse toggler="#togglerCampos">
                             <br/>
                                 {//industryMannage
-                                    (props.productos.productoActual.products_industry_id === 2) ? 
+                                    (props.productos.productoActual.products_industry_id === 1) ? 
                                     (<RetailProduct />) : (<IndumentaryProduct />)
                                 }
                                 <Row form >
