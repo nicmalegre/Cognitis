@@ -99,8 +99,8 @@ const RegisterCompanyContainer = (props) => {
               <th className="text-center">ID</th>
               <th className="text-center">Name</th>
               <th className="text-center">Cuil o Cuit</th>
-              <th className="text-center">Pais</th>
-              <th className="text-center">Acciones</th>
+              <th className="text-center">Country</th>
+              <th className="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
