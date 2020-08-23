@@ -78,7 +78,7 @@ const Formulario = (props) => {
           <Logo />
         </Col>
         <Col lg="8" xs="10">
-          <h3 className="mt-5 text" style={{ marginBottom: 30, color: "rgb(0, 55, 100)"}}>
+          <h3 className="mt-5 text" style={{ marginBottom: 30}}>
             Ingrese datos de la Compañia {props.cantCompanies}{" "}
           </h3>
         </Col>
@@ -87,11 +87,13 @@ const Formulario = (props) => {
         <Col lg="12">
           <Card id="card-user">
             <Form onSubmit={handleSubmit(onSubmit)} id="card-user">
+              <br/>
               <h6 className="text">
                 Datos de la Compañia {props.cantCompanies}{" "}
               </h6>
               <Row form>
                 <Col md={6}>
+                <span className="text-danger font-weight-bold">*</span>{' '}
                   <Label for="company">
                     Nombre de la Compañia {props.cantCompanies}{" "}
                   </Label>
@@ -115,6 +117,7 @@ const Formulario = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="razonsocial">Razon Social</Label>
                     <Input
                       type="text"
@@ -138,12 +141,14 @@ const Formulario = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="Cuil">CUIL o CUIT</Label>
                     <Input
-                      type="text"
+                      //type="text"
                       name="cuil"
                       id="Cuil"
                       placeholder="Ejemplo XX12345678X"
+                      maxLength="11"
                       valid={input.cuil}
                       onChange={inputChange}
                       innerRef={register({
@@ -168,6 +173,7 @@ const Formulario = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="pais">Pais</Label>
                     <Input
                       type="select"
@@ -193,6 +199,7 @@ const Formulario = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="email">Email</Label>
                     <Input
                       type="email"
@@ -216,6 +223,7 @@ const Formulario = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="Tipo de Industria">Tipo de Industria</Label>
                     <Input
                       type="select"
@@ -244,6 +252,7 @@ const Formulario = (props) => {
                   <Row form>
                     <Col md={3}>
                       <FormGroup>
+                      <span className="text-danger font-weight-bold">*</span>{' '}
                         <Label for="codPais">Cod Pais</Label>
                         <Input
                           type="text"
@@ -274,6 +283,7 @@ const Formulario = (props) => {
                     </Col>
                     <Col md={3}>
                       <FormGroup>
+                      <span className="text-danger font-weight-bold">*</span>{' '}
                         <Label for="codArea">Cod Area</Label>
                         <Input
                           type="number"
@@ -291,8 +301,8 @@ const Formulario = (props) => {
                               message: "No más de 6 numeros!",
                             },
                             minLength: {
-                              value: 4,
-                              message: "No menos de 4 numeros!",
+                              value: 2,
+                              message: "No menos de 2 numeros!",
                             },
                           })}
                         />
@@ -303,6 +313,7 @@ const Formulario = (props) => {
                     </Col>
                     <Col md={6}>
                       <FormGroup>
+                      <span className="text-danger font-weight-bold">*</span>{' '}
                         <Label for="nrotel">Nro. Telefono</Label>
                         <Input
                           type="number"
@@ -317,10 +328,10 @@ const Formulario = (props) => {
                             },
                             maxLength: {
                               value: 11,
-                              message: "No más de 6 numeros!",
+                              message: "No más de 11 numeros!",
                             },
                             minLength: {
-                              value: 7,
+                              value: 4,
                               message: "No menos de 4 numeros!",
                             },
                           })}
@@ -351,10 +362,12 @@ const Formulario = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
+              <br/>
               <h6 className="text">Datos Bancarios</h6>
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="nameBank">Nombre del Banco</Label>
                     <Input
                       type="text"
@@ -387,6 +400,7 @@ const Formulario = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="cuentaBancaria">
                       Numero de Cuenta Bancaria
                     </Label>
@@ -404,11 +418,11 @@ const Formulario = (props) => {
                         },
                         maxLength: {
                           value: 15,
-                          message: "No más de 6 numeros!",
+                          message: "No más de 15 numeros!",
                         },
                         minLength: {
                           value: 12,
-                          message: "No menos de 4 numeros!",
+                          message: "No menos de 12 numeros!",
                         },
                       })}
                     />
@@ -421,6 +435,7 @@ const Formulario = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="cbu">CBU</Label>
                     <Input
                       type="number"
@@ -479,11 +494,12 @@ const Formulario = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
+              <br/>
               <Row
                 className="row justify-content-end"
                 style={{ marginTop: 10 }}
               >
-                <Col md={3}>
+                <Col md={2}>
                   {/*<Link to="/NumberCompanies">*/}
                   <Button
                     color="primary"
@@ -495,8 +511,10 @@ const Formulario = (props) => {
                   {/*</Link>*/}
                 </Col>
               </Row>
+              <br/>
             </Form>
           </Card>
+          <br/>
         </Col>
       </Row>
     </Container>

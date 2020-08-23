@@ -1,5 +1,5 @@
 //imports of all required libraries and components
-import React from "react";
+import React,{ useState } from "react";
 import {
   Row,
   Col,
@@ -9,7 +9,7 @@ import {
   Input,
   FormGroup,
   CustomInput,
-  ButtonToggle,
+  UncontrolledCollapse, ButtonToggle,
   Button,
   Alert,
 } from "reactstrap";
@@ -18,7 +18,8 @@ import "./index.css";
 import CarouselComponent from "./carousel";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import IndumentaryProduct from './indumentaryProduct';
+import RetailProduct from './retailProduct';
 
 const NewProduct = (props) => {
   const { register, handleSubmit, errors } = useForm();
@@ -99,6 +100,18 @@ const NewProduct = (props) => {
 
   const onDismiss = () => setVisible(
     !visible
+  );
+
+
+  //Variable que indica la industria en este momento
+  //const industry = 'retail'; //se va setear con una propiedad que se pase en props 
+  const industry = 'retail';
+
+  //Funcion que controla el dinamismo de los campos de acuerdo a la industria
+  let industryMannage = industry === 'retail' ? (
+    <RetailProduct />
+  ) : (
+    <IndumentaryProduct />
   );
 
   return (
@@ -354,11 +367,101 @@ const NewProduct = (props) => {
                 </Col>
               </Row>
 
+              <Label/>
+
+              {/* Campos no comunes, cada industria tendra sus campos adicionales */}
+              <hr style={{color: 'gray', border:'1px solid'}}/>
+              <Col id="togglerCampos" lg="12" xs="12"  style={{marginTop:20, cursor:"pointer"}}>
+                  <h4>Agregar Más Características</h4>
+              </Col>
+              <UncontrolledCollapse toggler="#togglerCampos">
+                  <br/>
+                  {industryMannage}
+                  <Row form>
+                      <Col md={4}>
+                      <FormGroup>
+                          <Label for="">Material</Label>
+                          <Input
+                          type="select"
+                          name="material"
+                          ></Input>
+                          <span className="text-danger span d-block mb-2">
+                          {errors?.material?.message}
+                          </span>
+                      </FormGroup>
+                      </Col>
+                      <Col md={4}>
+                      <FormGroup>
+                          <Label for="">Origen</Label>
+                          <Input
+                          type="select"
+                          name="origen"
+                          ></Input>
+                          <span className="text-danger span d-block mb-2">
+                          {errors?.origen?.message}
+                          </span>
+                      </FormGroup>
+                      </Col>
+                      <Col md={4}>
+                      <FormGroup>
+                          <Label for="">Fabricante</Label>
+                          <Input
+                          type="select"
+                          name="fabricante"
+                          ></Input>
+                          <span className="text-danger span d-block mb-2">
+                          {errors?.fabricante?.message}
+                          </span>
+                      </FormGroup>
+                      </Col>
+                  </Row>
+                  <Row form>
+                      <Col md={4}>
+                      <FormGroup>
+                          <Label for="">Envio</Label>
+                          <Input
+                          type="select"
+                          name="envio"
+                          ></Input>
+                          <span className="text-danger span d-block mb-2">
+                          {errors?.envio?.message}
+                          </span>
+                      </FormGroup>
+                      </Col>
+                      <Col md={4}>
+                      <FormGroup>
+                          <Label for="">Garantia</Label>
+                          <Input
+                          type="select"
+                          name="garantia"
+                          ></Input>
+                          <span className="text-danger span d-block mb-2">
+                          {errors?.garantia?.message}
+                          </span>
+                      </FormGroup>
+                      </Col>
+                      <Col md={4}>
+                      <FormGroup>
+                          <Label for="">Codigo de Barra</Label>
+                          <Input
+                          type="select"
+                          name="codbarra"
+                          ></Input>
+                          <span className="text-danger span d-block mb-2">
+                          {errors?.codbarra?.message}
+                          </span>
+                      </FormGroup>
+                      </Col>
+                  </Row> 
+                </UncontrolledCollapse>
+
               {/* Caracteristicas de Stock */}
               <hr style={{ color: "gray", border: "1px solid" }} />
-              <Col lg="12" xs="12" style={{ marginTop: 20 }}>
-                <h4>Caracteristicas de Stock</h4>
+              <Col id="togglerStock" lg="12" xs="12" style={{ marginTop: 20, cursor:"pointer" }}>
+                <h4>Agregar Caracteristicas de Stock</h4>
               </Col>
+              <UncontrolledCollapse toggler="#togglerStock">
+              <br/>
               <Row form>
                 <Col md={4}>
                   <FormGroup>
@@ -473,14 +576,18 @@ const NewProduct = (props) => {
                       {errors?.margenMaximo?.message}
                     </span>
                   </FormGroup>
+                  
                 </Col>
               </Row>
+              </UncontrolledCollapse>
 
               {/* Costos y Precios */}
               <hr style={{ color: "gray", border: "1px solid" }} />
-              <Col lg="12" xs="12" style={{ marginTop: 20 }}>
-                <h4>Costos y Precios</h4>
+              <Col id="togglerCostosyPrecios" lg="12" xs="12" style={{ marginTop: 20, cursor:"pointer" }}>
+                <h4>Agregar Costos y Precios</h4>
               </Col>
+              <UncontrolledCollapse toggler="#togglerCostosyPrecios">
+              <br/>
               <Row form>
                 <Col md={3}>
                   <FormGroup>
@@ -644,12 +751,16 @@ const NewProduct = (props) => {
                   </Button>{" "}
                 </Col>
               </Row>
+              </UncontrolledCollapse>
+
 
               {/* Contables */}
               <hr style={{ color: "gray", border: "1px solid" }} />
-              <Col lg="12" xs="12" style={{ marginTop: 20 }}>
-                <h4>Contables</h4>
+              <Col id="togglerContables" lg="12" xs="12" style={{ marginTop: 20, cursor:"pointer" }}>
+                <h4>Agregar Caracteristicas Contables</h4>
               </Col>
+              <UncontrolledCollapse toggler="#togglerContables">
+              <br/>
               <Row form>
                 <Col md={6}>
                   <FormGroup>
@@ -696,6 +807,10 @@ const NewProduct = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
+              <Label/>
+              </UncontrolledCollapse>
+
+              <hr style={{ color: "gray", border: "1px solid" }} />
               <Row form className="content-align-end text-center">
                 <Col md={12}>
                   <Button color="danger" style={{ margin: 20 }}>
@@ -706,6 +821,7 @@ const NewProduct = (props) => {
                   </Button>{" "}
                 </Col>
               </Row>
+              
             </Form>
           </Col>
         </Row>

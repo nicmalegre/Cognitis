@@ -65,7 +65,7 @@ const Formsuc = (props) => {
           <Logo />
         </Col>
         <Col lg="8" xs="10">
-          <h3 className="mt-5 text" style={{ marginBottom: 30,color: "rgb(0, 55, 100)"}}>
+          <h3 className="mt-5 text" style={{ marginBottom: 30}}>
             Ingrese datos de la Sucursal {props.cantSuc}{" "}
           </h3>
         </Col>
@@ -74,11 +74,13 @@ const Formsuc = (props) => {
         <Col lg="12">
           <Card id="card-user">
             <Form onSubmit={handleSubmit(onSubmit)} id="card-user">
+              <br/>
               <h6 className="text">
                 Datos de la Sucursal {props.cantSuc}{" "}
               </h6>
               <Row form>
                 <Col md={6}>
+                <span className="text-danger font-weight-bold">*</span>{' '}
                   <Label for="Sucursal">Nombre de la Sucursal</Label>
                   <Input
                     type="text"
@@ -100,6 +102,7 @@ const Formsuc = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="razonsocial">Razon Social</Label>
                     <Input
                       type="text"
@@ -123,12 +126,14 @@ const Formsuc = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="Cuil">CUIL o CUIT</Label>
                     <Input
                       type="text"
                       name="cuil"
                       id="Cuil"
                       placeholder="Ejemplo XX12345678X"
+                      maxLength="11"
                       valid={input.cuil}
                       onChange={inputChange}
                       innerRef={register({
@@ -155,6 +160,7 @@ const Formsuc = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="email">Email</Label>
                     <Input
                       type="email"
@@ -182,6 +188,7 @@ const Formsuc = (props) => {
                   <Row form>
                     <Col md={3}>
                       <FormGroup>
+                      <span className="text-danger font-weight-bold">*</span>{' '}
                         <Label for="codPais">Cod Pais</Label>
                         <Input
                           type="text"
@@ -212,6 +219,7 @@ const Formsuc = (props) => {
                     </Col>
                     <Col md={3}>
                       <FormGroup>
+                      <span className="text-danger font-weight-bold">*</span>{' '}
                         <Label for="codArea">Cod Area</Label>
                         <Input
                           type="number"
@@ -229,8 +237,8 @@ const Formsuc = (props) => {
                               message: "No más de 6 numeros!",
                             },
                             minLength: {
-                              value: 4,
-                              message: "No menos de 4 numeros!",
+                              value: 2,
+                              message: "No menos de 2 numeros!",
                             },
                           })}
                         />
@@ -241,6 +249,7 @@ const Formsuc = (props) => {
                     </Col>
                     <Col md={6}>
                       <FormGroup>
+                      <span className="text-danger font-weight-bold">*</span>{' '}
                         <Label for="nrotel">Nro. Telefono</Label>
                         <Input
                           type="number"
@@ -258,8 +267,8 @@ const Formsuc = (props) => {
                               message: "No más de 11 numeros!",
                             },
                             minLength: {
-                              value: 7,
-                              message: "No menos de 7 numeros!",
+                              value: 4,
+                              message: "No menos de 4 numeros!",
                             },
                           })}
                         />
@@ -289,10 +298,12 @@ const Formsuc = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
+              <br/>
               <h6 className="text">Datos Bancarios</h6>
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="nameBank">Nombre del Banco</Label>
                     <Input
                       type="text"
@@ -325,6 +336,7 @@ const Formsuc = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="cuentaBancaria">
                       Numero de Cuenta Bancaria
                     </Label>
@@ -359,6 +371,7 @@ const Formsuc = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
+                  <span className="text-danger font-weight-bold">*</span>{' '}
                     <Label for="cbu">CBU</Label>
                     <Input
                       type="number"
@@ -417,11 +430,12 @@ const Formsuc = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
+              <br/>
               <Row
                 className="row justify-content-end"
                 style={{ marginTop: 10 }}
               >
-                <Col md={3}>
+                <Col md={2}>
                   {/*<Link to="/NumberCompanies">*/}
                   <Button
                     color="primary"
@@ -433,8 +447,10 @@ const Formsuc = (props) => {
                   {/*</Link>*/}
                 </Col>
               </Row>
+              <br/>
             </Form>
           </Card>
+          <br/>
         </Col>
       </Row>
     </Container>

@@ -1,7 +1,6 @@
 import React, {useState} from "react"; //importacion de la libreria
-import { Redirect } from "react-router-dom";
-import { InputGroup, InputGroupAddon, Button, Input, Row, Col, Card } from "reactstrap"; //importar elementos
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
+import { InputGroup, InputGroupAddon, Button, Input, Row, Col, Card, Spinner } from "reactstrap"; //importar elementos
 import "./index.css"; //importar css
 import axios from "axios";
 import Logo from '../../../components/WizardComponents/base/logo';
@@ -12,7 +11,6 @@ import WizardLayout from '../../Layouts/WizardLayout/index'
 
 
 const Registeruser = (props) => {
-  //clase 'Nombre' extends React.component
 
   const [verifyingEmail, setVerifyingEmail] = useState(false)
   const [showErrorMessage, setShowErrorMessage] = useState(false)
@@ -21,11 +19,6 @@ const Registeruser = (props) => {
     adress:null,
   })
 
-  /*const adressMail = (dato) => {
-    setMailEntered({
-      adress: dato
-    })
-  }*/
 
   const handleInputChange = (event) => {
     props.changeEmail(event.target)
@@ -38,7 +31,7 @@ const Registeruser = (props) => {
     setVerifyingEmail(true)
 
     axios.post('http://localhost:3000/api/users/emailverification', {
-      mail: email
+      user_mail: email
     })
     .then( async res => {
       const isEmailAlreadyUsed =  await res.data.alreadyUsed
@@ -47,7 +40,7 @@ const Registeruser = (props) => {
         setShowErrorMessage(true)
         setVerifyingEmail(false)
       }else{
-        sendData()
+        sendData(email)
       }
     })
     .catch(error => {
@@ -55,14 +48,16 @@ const Registeruser = (props) => {
     }) 
   }
 
-  const sendData = () => {
+  /* SenData send a email to email address entered ànd return the verification cede and the expiration time */
+  const sendData = (email) => {
     
     axios.post('http://localhost:3000/api/verificationcode', {
-      mail: mailEntered.adress
+      user_mail: email
     })
-    .then( res => { 
-      props.changeCodeTime(res.data.verificationCode, res.data.expireAt)
-      
+    .then(async  res => { 
+    /* store the result (verification code) on global state */
+     await props.changeCodeTime(res.data.verificationCode, res.data.expireAt)
+    
     }).catch(err => console.log(err));
 
     if (document.querySelector("#input-email").value !== ""){
@@ -111,7 +106,7 @@ const Registeruser = (props) => {
                             onClick={() => verifyEmail(document.querySelector('#input-email').value)}
                             type="submit"
                           >
-                           { verifyingEmail ? <span>Verifying</span> : <FormattedMessage id="app.nextButton"/> }
+                           { verifyingEmail ? <Spinner size="sm" color="light" /> : <FormattedMessage id="app.nextButton"/> }
                           </Button>
                       </InputGroupAddon>
                     </InputGroup>

@@ -4,7 +4,7 @@
  *
  */
 //Libraries and components imported to use in this component.
-import React from "react";
+import React, { useState } from "react";
 import {
   FormGroup,
   Label,
@@ -14,17 +14,22 @@ import {
   Row,
   Container,
   Card,
+  Spinner,
 } from "reactstrap";
 import "./selectcountry.css";
 import Logo from "../../../components/WizardComponents/base/logo";
 import Welcome from "../../../components/WizardComponents/base/welcome";
 import { FormattedMessage } from "react-intl";
-import { Redirect } from "react-router-dom";
-import WizardLayout from '../../Layouts/WizardLayout/index'
+import { Redirect, withRouter } from "react-router-dom";
+import WizardLayout from "../../Layouts/WizardLayout/index";
+import axios from 'axios'
 
 const SelectCountry = (props) => {
+  const [sendingData, setSendingData] = useState(false);
+
   //Array of countries. This shows on the dropdown list of countries.
   var countries = [
+    "Select a Country",
     "Argentina",
     "Australia",
     "Bolivia",
@@ -42,23 +47,59 @@ const SelectCountry = (props) => {
     "Venezuela",
   ];
 
+ 
+
+  const postData = () => {
+    setSendingData(true)
+
+    axios
+      .post("http://localhost:3000/api/users/saveuser", {
+        user_name: "test",
+        user_mail: props.userInfo.email,
+        user_password: props.userInfo.password,
+        user_passwordExpired: props.userInfo.passwordExpired,
+        user_branch_office_house_id: 41,
+        users_role_id: 11,
+      })
+      .then((res) => {
+        props.history.push("/loginusers/login");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const controlNextButton =
+    props.userInfo.country !== "" ? (
+      <Button type="submit" color="primary" active onClick={postData}>
+        {sendingData ? (
+          <Spinner size="sm" color="light" />
+        ) : (
+          <FormattedMessage id="app.nextButton" />
+        )}
+      </Button>
+    ) : (
+      <Button
+        className="button-verification-code"
+        color="primary"
+        active
+        disabled
+      >
+        <FormattedMessage id="app.nextButton" />
+      </Button>
+    );
   //Arrow function to capture the name of the selected country with the value property.
   const inputChange = (event) => {
     props.handleChangeCountry(event.target.value);
   };
-
-  const sendData = (event) => {
-    props.postData();
-  };
-
+  
   /* verify if the password is registered on login screen
   if this is not registered redirect to login screen */
   const isPasswordEmpty = () => {
     return props.userInfo.password === "";
   };
 
-  return (
-      isPasswordEmpty() ? <Redirect to="/login" /> :
+  return isPasswordEmpty() ? (
+    <Redirect to="/login" />
+  ) : (
     <WizardLayout>
       <Container fluid>
         <Row>
@@ -93,9 +134,7 @@ const SelectCountry = (props) => {
                     ))}
                   </Input>
                 </Col>
-                <Button type="submit" color="primary" active onClick={sendData}>
-                  <FormattedMessage id="app.nextButton" />
-                </Button>
+                {controlNextButton}
               </FormGroup>
             </Card>
           </Col>
@@ -105,4 +144,4 @@ const SelectCountry = (props) => {
   );
 };
 
-export default SelectCountry;
+export default withRouter(SelectCountry);

@@ -27,6 +27,8 @@ const RegisterSucursalContainer = (props) => {
     { id: 4, name: "sucursal 4", cuil: "55556568778" },
   ];
 
+  console.log(props)
+
   //Se almacena la cantidad de compañias
   //const [company, setCompany] = useState(props.cantCompanies);
   //contador para mostrar dinamicamente el numero de compañia
@@ -59,7 +61,7 @@ const RegisterSucursalContainer = (props) => {
             <Logo />
           </Col>
         </Row>
-        <Card id="card" body style={{ marginTop: 100 }}>
+        <Card id="card" body style={{ marginTop: 50 }}>
           <CardHeader className="bg-dark">
             <Row card>
               <h5 className="text-white ml-2">Manage Sucursales</h5>
@@ -69,7 +71,7 @@ const RegisterSucursalContainer = (props) => {
                     <i className="mr-1 mt-1">
                       <BsPlusCircle />
                     </i>
-                    Add New Sucursal
+                    <span className="align-middle">Add New Sucursal</span>
                   </Button>
                 </Link>
               </Col>
@@ -95,7 +97,7 @@ const RegisterSucursalContainer = (props) => {
                       <i className="mr-1 mt-1">
                         <MdModeEdit />
                       </i>
-                      Editar
+                      <span className="align-middle">Editar</span>
                     </Button>{" "}
                     {"   "}
                     <Button
@@ -106,7 +108,7 @@ const RegisterSucursalContainer = (props) => {
                       <i className="mr-1 mt-1">
                         <AiTwotoneDelete />
                       </i>
-                      Eliminar
+                      <span className="align-middle">Eliminar</span>
                     </Button>{" "}
                     {"   "}
                   </td>
@@ -114,9 +116,8 @@ const RegisterSucursalContainer = (props) => {
               ))}
             </tbody>
           </Table>
-        </Card>
-        <Row className="row justify-content-end" style={{ marginTop: 10 }}>
-          <Col md={3}>
+          <Row className="row justify-content-end" style={{ marginTop: 10 }}>
+          <Col md={2}>
             <Link to="/dashboard">
               <Button color="primary" type="submit" active>
                 Finalizar
@@ -124,6 +125,11 @@ const RegisterSucursalContainer = (props) => {
             </Link>
           </Col>
         </Row>
+        <br/>
+        </Card>
+        <br/>
+        <br/>
+
 
         <Modal isOpen={modalEliminar}>
           <ModalBody>
