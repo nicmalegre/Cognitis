@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {Row, Col, FormGroup, Label, Input} from 'reactstrap'
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import {connect} from 'react-redux'
 
 const RetailProduct = (props)=> {
 
@@ -32,12 +34,12 @@ const RetailProduct = (props)=> {
             precioLista: 120,
             tipoContable: "Tipo 2",
             cuentaContable: "Cuenta 3",
-            linea:"ejemplolinea",
-            segmento:"ejemplosegmento",
-            service:"ejemploservice",
-            serie:"ejemploserie",
-            modelo:"ejemplomodelo",
-            ntecnico:"ejemplo ntecnico",
+            prod_line:"ejemploprod_line",
+            prod_seed:"ejemploprod_seed",
+            prod_service:"ejemploprod_service",
+            prod_serie:"ejemploprod_serie",
+            prod_model:"ejemploprod_model",
+            prod_NTecnico:"ejemplo prod_NTecnico",
             datostecnicos:'esto seria un ejemplo de datos tecnicos del producto si tuviese datos tecnicos'
 
         },
@@ -69,6 +71,9 @@ const RetailProduct = (props)=> {
 
     //this function gets the data from the server
     useEffect(() => {
+      const funcionSeteo = async() => {
+        await setProductSelect(props.productos.productoActual);
+      }
         /*setProducts(productFantasy);
         const arrayEdit = productFantasy.map((item) =>
           item.codProduct === id
@@ -76,7 +81,32 @@ const RetailProduct = (props)=> {
             : console.log("product not found")
         );
         setProducts(arrayEdit);*/
-        setProductSelect(props.datos);
+     /* axios.get('http://localhost:3000/api/products/productdata/' + '61')
+    .then( async res => {
+      //props.dispatch(fetchProductoData(id_product))
+      setProductSelect(res.data);
+      console.log(res.data) //le tenemos que pasar res para setear el objeto local
+      let industry2 = res.data.products_industry_id;
+      //if(industry2 === 1){
+        /*setProdTipo({
+          product_id: res.data.product_id,
+          product_line: res.data.product_line,
+          product_seed: res.data.product_seed,
+          product_service: res.data.product_service,
+          product_serie: res.data.product_serie,
+          product_NTecnico: res.data.product_NTecnico,
+          product_status: res.data.product_status,
+          product_technical_data: res.data.product_technical_data,
+          product_model: res.data.product_model,
+        })*///}else{
+          //console.log("otro tipo");
+        //};
+        //console.log(prodTipo);
+        //console.log(productselect)
+     // }).catch(err => console.log(err))
+        //setProductSelect(props.datos);
+        //console.log(props.datos)
+        funcionSeteo();
       }, []);
 
       const handleChange = (e) => {
@@ -96,11 +126,11 @@ const RetailProduct = (props)=> {
     <Row form>
         <Col md={4}>
         <FormGroup>
-            <Label for="linea">Linea</Label>
+  <Label for="prod_line">{props.productos.productoActual.product_id} Linea Producto</Label>
             <Input
             type="text"
-            name="linea"
-            value={productselect.linea}
+            name="product_line"
+            value={props.productos.productoActual.product_line}
             onChange = {
               handleChange
             }
@@ -112,17 +142,17 @@ const RetailProduct = (props)=> {
               })}
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.linea?.message}
+            {errors?.product_line?.message}
             </span>
         </FormGroup>
         </Col>
         <Col md={4}>
         <FormGroup>
-            <Label for="">Segmento</Label>
+            <Label for="">Seed</Label>
             <Input
             type="text"
-            name="segmento"
-            value={productselect.segmento}
+            name="product_seed"
+            value={productselect.product_seed}
             onChange = {
               handleChange
             }
@@ -134,17 +164,17 @@ const RetailProduct = (props)=> {
               })}
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.segmento?.message}
+            {errors?.product_seed?.message}
             </span>
         </FormGroup>
         </Col>
         <Col md={4}>
         <FormGroup>
-            <Label for="">Service</Label>
+            <Label for="">Servicio</Label>
             <Input
             type="text"
-            name="service"
-            value={productselect.service}
+            name="product_service"
+            value={productselect.product_service}
             onChange = {
               handleChange
             }
@@ -156,7 +186,7 @@ const RetailProduct = (props)=> {
               })}
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.service?.message}
+            {errors?.product_service?.message}
             </span>
         </FormGroup>
         </Col>
@@ -167,8 +197,8 @@ const RetailProduct = (props)=> {
             <Label for="">Serie</Label>
             <Input
             type="text"
-            name="serie"
-            value={productselect.serie}
+            name="product_serie"
+            value={productselect.product_serie}
             onChange = {
               handleChange
             }
@@ -180,7 +210,7 @@ const RetailProduct = (props)=> {
               })}
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.serie?.message}
+            {errors?.product_serie?.message}
             </span>
         </FormGroup>
         </Col>
@@ -189,8 +219,8 @@ const RetailProduct = (props)=> {
             <Label for="">Modelo</Label>
             <Input
             type="text"
-            name="modelo"
-            value={productselect.modelo}
+            name="product_model"
+            value={productselect.product_model}
             onChange = {
               handleChange
             }
@@ -202,7 +232,7 @@ const RetailProduct = (props)=> {
               })}
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.modelo?.message}
+            {errors?.product_model?.message}
             </span>
         </FormGroup>
         </Col>
@@ -211,8 +241,8 @@ const RetailProduct = (props)=> {
             <Label for="">NTecnico</Label>
             <Input
             type="text"
-            name="ntecnico"
-            value={productselect.ntecnico}
+            name="product_NTecnico"
+            value={productselect.product_NTecnico}
             onChange = {
               handleChange
             }
@@ -224,7 +254,7 @@ const RetailProduct = (props)=> {
               })}
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.nTecnico?.message}
+            {errors?.product_NTecnico?.message}
             </span>
         </FormGroup>
         </Col>
@@ -236,8 +266,8 @@ const RetailProduct = (props)=> {
             <Col sm={12}>
                   <Input
                     type="text"
-                    name="datostecnicos"
-                    value={productselect.datostecnicos}
+                    name="product_technical_data"
+                    value={productselect.product_technical_data}
                     onChange = {
                       handleChange
                     }
@@ -257,4 +287,12 @@ const RetailProduct = (props)=> {
   )
 }
 
-export default RetailProduct;
+const mapStateToProps = (state) => {
+  return {
+    productos: state.productos,  
+  }
+}
+
+export default connect(
+  mapStateToProps,
+)(RetailProduct)

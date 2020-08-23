@@ -22,7 +22,8 @@ import RegisterSucursalContanier from './views/RegisterCompanyScreen/RegisterSuc
 import RegisterHeadCompany from './views/RegisterCompanyScreen/RegisterHeadCompanyContainer/RegisterHeadCompany'; //this components works
 import RegisterCompanyContainer from './views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer';
 import FormTest from './components/CatologComponents/test/formtest';
-
+import { Provider } from "react-redux";
+import store from "./Redux/store";
 
 
 const App = () => {
@@ -99,6 +100,7 @@ const App = () => {
 };
 
  return(
+  <Provider store = {store}>
   <IntlProvider locale={ language } messages={ messages[language]}>
     <BrowserRouter>
       <Route path='/' exact>
@@ -148,6 +150,7 @@ const App = () => {
       <Route path="/test" component={FormTest} />
     </BrowserRouter>
   </IntlProvider>
+  </Provider>
  )
 }
 

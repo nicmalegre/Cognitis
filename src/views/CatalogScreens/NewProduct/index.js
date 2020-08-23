@@ -60,17 +60,17 @@ const NewProduct = (props) => {
   //This function prepared the data to be sent to the server. transforming the input to integer or float
   const transformToNumber = (data) => {
     //transform to integer
-    data.codproduct = parseInt(data.codproduct);
-    data.bultos = parseInt(data.bultos);
-    data.volumen = parseInt(data.volumen);
-    data.bultosClientes = parseInt(data.bultosClientes);
-    data.margenMinimo = parseInt(data.margenMinimo);
-    data.margenMaximo = parseInt(data.margenMaximo);
+    data.product_id = parseInt(data.product_id);
+    data.product_package = parseInt(data.product_package);
+    data.product_vol = parseInt(data.product_vol);
+    data.product_package = parseInt(data.product_vol);
+    data.product_min_margin = parseInt(data.product_min_margin);
+    data.product_max_margin = parseInt(data.product_max_margin);
     //transform to float
     data.costoNetoReposicion = parseFloat(data.costoNetoReposicion);
-    data.bonificaciones = parseFloat(data.bonificaciones);
-    data.costoConBonificacion = parseFloat(data.costoConBonificacion);
-    data.costoFlete = parseFloat(data.costoFlete);
+    data.product_bonification = parseFloat(data.product_bonification);
+    data.product_price_bonification = parseFloat(data.product_price_bonification);
+    data.product_freight_cost = parseFloat(data.product_freight_cost);
     data.tasaPais = parseFloat(data.tasaPais);
     data.costoActualConImp = parseFloat(data.costoActualConImp);
     data.precioLista = parseFloat(data.precioLista);
@@ -87,11 +87,17 @@ const NewProduct = (props) => {
   //Sending data to the server
   const onSubmit = (data, e) => {
     transformToNumber(data);
+    if(data.product_in_ecommerce === false){
+      data.product_in_ecommerce = 0;
+    }else{
+      data.product_in_ecommerce = 1;
+    };
     axios
-      .post("http://localhost:3000/api/catalog/newproduct", data)
+      .post("http://localhost:3000/api/products/saveproduct", data)
       .then((res) => "Nuevo producto cargado en la BD")
       .catch((err) => console.log(err));
       onDismiss();
+    console.log(data);
     e.preventDefault();
     
   };
@@ -130,13 +136,13 @@ const NewProduct = (props) => {
           <Col lg="12" xs="12" style={{ marginTop: 25 }}>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <FormGroup row>
-                <Label for="codproduct" sm={3}>
+                <Label for="product_id" sm={3}>
                   Código de Producto
                 </Label>
                 <Col sm={9}>
                   <Input
                     type="number"
-                    name="codproduct"
+                    name="product_id"
                     innerRef={register({
                       required: {
                         value: true,
@@ -145,7 +151,7 @@ const NewProduct = (props) => {
                     })}
                   />
                   <span className="text-danger span d-block mb-2">
-                    {errors?.codproduct?.message}
+                    {errors?.product_id?.message}
                   </span>
                 </Col>
               </FormGroup>
@@ -156,7 +162,7 @@ const NewProduct = (props) => {
                 <Col sm={9}>
                   <Input
                     type="text"
-                    name="nameproduct"
+                    name="product_name"
                     placeholder="Ingresar el nombre de producto"
                     innerRef={register({
                       required: {
@@ -166,7 +172,7 @@ const NewProduct = (props) => {
                     })}
                   />
                   <span className="text-danger span d-block mb-2">
-                    {errors?.nameproduct?.message}
+                    {errors?.product_name?.message}
                   </span>
                 </Col>
               </FormGroup>
@@ -177,7 +183,7 @@ const NewProduct = (props) => {
                 <Col sm={9}>
                   <Input
                     type="textarea"
-                    name="description"
+                    name="product_description"
                     placeholder="Ingrese una descripcion"
                     innerRef={register}
                   />
@@ -189,7 +195,7 @@ const NewProduct = (props) => {
                     <Label for="">Marca</Label>
                     <Input
                       type="select"
-                      name="marca"
+                      name="product_brand"
                       innerRef={register({
                         required: {
                           value: true,
@@ -202,7 +208,7 @@ const NewProduct = (props) => {
                       <option>Marca 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.marca?.message}
+                      {errors?.product_brand?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -211,7 +217,7 @@ const NewProduct = (props) => {
                     <Label for="">Dolarizado</Label>
                     <Input
                       type="select"
-                      name="dolarizado"
+                      name="product_is_dollar"
                       innerRef={register({
                         required: {
                           value: true,
@@ -223,7 +229,7 @@ const NewProduct = (props) => {
                       <option>Si</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.dolarizado?.message}
+                      {errors?.product_is_dollar?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -234,7 +240,7 @@ const NewProduct = (props) => {
                     <Label for="">Categoria</Label>
                     <Input
                       type="select"
-                      name="categoria"
+                      name="category"
                       innerRef={register({
                         required: {
                           value: true,
@@ -242,12 +248,12 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option>Categoria 1</option>
+                      <option value={1}>Categoria 1</option>
                       <option>Categoria 2</option>
                       <option>Categoria 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.dolarizado?.message}
+                      {errors?.category?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -258,7 +264,7 @@ const NewProduct = (props) => {
                     <Label for="">Tipo</Label>
                     <Input
                       type="select"
-                      name="tipo"
+                      name="product_type"
                       innerRef={register({
                         required: {
                           value: true,
@@ -271,7 +277,7 @@ const NewProduct = (props) => {
                       <option>Tipo 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.tipo?.message}
+                      {errors?.product_type?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -280,7 +286,7 @@ const NewProduct = (props) => {
                     <Label for="">Estado</Label>
                     <Input
                       type="select"
-                      name="estado"
+                      name="product_status"
                       innerRef={register({
                         required: {
                           value: true,
@@ -293,7 +299,7 @@ const NewProduct = (props) => {
                       <option>Estado 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.estado?.message}
+                      {errors?.product_status?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -337,7 +343,7 @@ const NewProduct = (props) => {
                   <CustomInput
                     type="checkbox"
                     id="exampleCustomRadio"
-                    name="customRadio"
+                    name="product_in_ecommerce"
                     label=""
                     innerRef={register}
                   />
@@ -383,10 +389,10 @@ const NewProduct = (props) => {
                           <Label for="">Material</Label>
                           <Input
                           type="select"
-                          name="material"
+                          name="product_material"
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.material?.message}
+                          {errors?.product_material?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -395,10 +401,10 @@ const NewProduct = (props) => {
                           <Label for="">Origen</Label>
                           <Input
                           type="select"
-                          name="origen"
+                          name="product_origin"
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.origen?.message}
+                          {errors?.product_origin?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -421,10 +427,10 @@ const NewProduct = (props) => {
                           <Label for="">Envio</Label>
                           <Input
                           type="select"
-                          name="envio"
+                          name="product_shipping"
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.envio?.message}
+                          {errors?.product_shipping?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -433,10 +439,10 @@ const NewProduct = (props) => {
                           <Label for="">Garantia</Label>
                           <Input
                           type="select"
-                          name="garantia"
+                          name="product_warranty"
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.garantia?.message}
+                          {errors?.product_warranty?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -445,10 +451,10 @@ const NewProduct = (props) => {
                           <Label for="">Codigo de Barra</Label>
                           <Input
                           type="select"
-                          name="codbarra"
+                          name="product_barcode"
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.codbarra?.message}
+                          {errors?.product_barcode?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -468,7 +474,7 @@ const NewProduct = (props) => {
                     <Label for="">Unidad</Label>
                     <Input
                       type="select"
-                      name="unidad"
+                      name="product_unit"
                       innerRef={register({
                         required: {
                           value: true,
@@ -481,7 +487,7 @@ const NewProduct = (props) => {
                       <option>B</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.unidad?.message}
+                      {errors?.product_unit?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -490,7 +496,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Volumen</Label>
                     <Input
                       type="number"
-                      name="volumen"
+                      name="product_vol"
                       innerRef={register({
                         required: {
                           value: true,
@@ -499,7 +505,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.volumen?.message}
+                      {errors?.product_vol?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -508,7 +514,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Bultos</Label>
                     <Input
                       type="number"
-                      name="bultos"
+                      name="product_package"
                       innerRef={register({
                         required: {
                           value: true,
@@ -517,7 +523,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bultos?.message}
+                      {errors?.product_package?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -528,7 +534,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Bultos al Cliente</Label>
                     <Input
                       type="number"
-                      name="bultosClientes"
+                      name="product_package_to_client"
                       innerRef={register({
                         required: {
                           value: true,
@@ -537,7 +543,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bultosClientes?.message}
+                      {errors?.product_package_to_client?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -546,7 +552,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Margen Minimo</Label>
                     <Input
                       type="number"
-                      name="margenMinimo"
+                      name="product_min_margin"
                       innerRef={register({
                         required: {
                           value: true,
@@ -555,7 +561,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.margenMinimo?.message}
+                      {errors?.product_min_margin?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -564,7 +570,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Margen Maximo</Label>
                     <Input
                       type="number"
-                      name="margenMaximo"
+                      name="product_max_margin"
                       innerRef={register({
                         required: {
                           value: true,
@@ -573,7 +579,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.margenMaximo?.message}
+                      {errors?.product_max_margin?.message}
                     </span>
                   </FormGroup>
                   
@@ -615,7 +621,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Bonificaciones</Label>
                     <Input
                       type="number"
-                      name="bonificaciones"
+                      name="product_bonification"
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -625,7 +631,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bonificaciones?.message}
+                      {errors?.product_bonification?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -634,7 +640,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Costo con Bonificacion</Label>
                     <Input
                       type="number"
-                      name="costoConBonificacion"
+                      name="product_price_bonification"
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -644,7 +650,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.costoConBonificacion?.message}
+                      {errors?.product_price_bonification?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -655,7 +661,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Costo Flete %</Label>
                     <Input
                       type="number"
-                      name="costoFlete"
+                      name="product_freight_cost"
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -665,7 +671,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.costoFlete?.message}
+                      {errors?.product_freight_cost?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -767,7 +773,7 @@ const NewProduct = (props) => {
                     <Label for="">Tipo</Label>
                     <Input
                       type="select"
-                      name="tipoContable"
+                      name="product_accountant_type"
                       innerRef={register({
                         required: {
                           value: true,
@@ -780,7 +786,7 @@ const NewProduct = (props) => {
                       <option>Tipo 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.tipoContable?.message}
+                      {errors?.product_accountant_type?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -789,7 +795,7 @@ const NewProduct = (props) => {
                     <Label for="">Cuenta</Label>
                     <Input
                       type="select"
-                      name="cuenta"
+                      name="product_accountant_account"
                       innerRef={register({
                         required: {
                           value: true,
@@ -802,7 +808,7 @@ const NewProduct = (props) => {
                       <option>Cuenta 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.cuenta?.message}
+                      {errors?.product_accountant_account?.message}
                     </span>
                   </FormGroup>
                 </Col>
