@@ -88,7 +88,7 @@ const NewProduct = (props) => {
   const onSubmit = (data, e) => {
     transformToNumber(data);
     axios
-      .post("http://localhost:3000/api/catalog/newproduct", data)
+      .post("https://cognitis-360.herokuapp.com/api/products/saveproduct", data)
       .then((res) => "Nuevo producto cargado en la BD")
       .catch((err) => console.log(err));
       onDismiss();
@@ -105,7 +105,7 @@ const NewProduct = (props) => {
 
   //Variable que indica la industria en este momento
   //const industry = 'retail'; //se va setear con una propiedad que se pase en props 
-  const industry = 'indumentary';
+  const industry = 'retail';
 
   //Funcion que controla el dinamismo de los campos de acuerdo a la industria
   let industryMannage = industry === 'retail' ? (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {Container} from 'reactstrap'
 import iphone from "./iphone.jpg";
 import iphone2 from "./iphone2.jpg";
@@ -40,9 +40,11 @@ const items = [
 const CarouselComponent = (props)=> {
 
     //States and function for the Carousel
+  const [images, setImages] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
+  
   const next = () => {
     if (animating) return;
     const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
@@ -60,18 +62,30 @@ const CarouselComponent = (props)=> {
     setActiveIndex(newIndex);
   }
 
-  const slides = items.map((item) => {
+  // useEffect(() => {
+  //   setImages(
+  //     items.map((item)=>{
+  //       images.push(item)
+  //     })
+  //   );
+  //   console.log(images);
+  // });
+
+  const slides = items.map((img) => {
     return (
       <CarouselItem
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
-        key={item.src}
+        key={img.src}
       >
-        <img src={item.src} alt={item.altText} />
-        <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+        <img src={img.src} alt={img.altText} />
+        <CarouselCaption captionText={img.caption} captionHeader={img.caption} />
       </CarouselItem>
     );
-    });
+  });
+
+
+
 
 
   return (
