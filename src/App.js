@@ -111,15 +111,16 @@ const App = (props) => {
             userInfo={user}
           />
         </Route>
-        <Route path="/LoginUsers/Login">
-          <LoginUsers
+        <Route path="/LoginUsers/Login" render={props => <LoginUsers
             changeLanguage={handleChangeLanguage}
             handleChange={handleChange}
             changePassword={handleChangePassword}
             handleChangePasswordExpired={handleChangePasswordExpired}
             user={user}
-          />
-        </Route>
+            {...props}
+          />} />
+
+        
         {/*Routes of Register Companies*/}
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/createcompany" component={CreateCompanyContainer} />
@@ -133,9 +134,7 @@ const App = (props) => {
         <Route path="/catalog/productview">
           <ProductView />
         </Route>
-        <Route path="/catalog/searchproducts">
-          <SearchProducts />
-        </Route>
+        <Route path="/catalog/searchproducts" render={props => <SearchProducts {...props} />} />
         <Route path="/catalog/newproduct">
           <NewProduct />
         </Route>
