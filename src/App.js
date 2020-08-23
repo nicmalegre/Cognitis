@@ -11,18 +11,17 @@ import SearchProducts from "./views/CatalogScreens/SearchProducts";
 import ProductView from "./views/CatalogScreens/ProductView";
 import NewProduct from "./views/CatalogScreens/NewProduct";
 import EditProduct from "./views/CatalogScreens/EditProduct/index";
-import axios from "axios";
 import { IntlProvider } from "react-intl";
 import { messages } from "./messages";
 // import de Register companies
 import Dashboard from "./views/RegisterCompanyScreen/DashboardContainer"; //this components works
 import CreateCompanyContainer from "./views/RegisterCompanyScreen/CreateCompanyContaniener"; //this components works
+import EditCompanyContainer from "./views/RegisterCompanyScreen/EditCompanyContainer"; //this components works
 import CreateSucursalContainer from "./views/RegisterCompanyScreen/CreateSucursalContainer"; //this components works
 import RegisterSucursalContanier from "./views/RegisterCompanyScreen/RegisterSucursalContainer/RegisterSucursalContanier"; //this components works
 import RegisterHeadCompany from "./views/RegisterCompanyScreen/RegisterHeadCompanyContainer/RegisterHeadCompany"; //this components works
 import RegisterCompanyContainer from "./views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer";
 import FormTest from "./components/CatologComponents/test/formtest";
-import { propTypes } from "react-bootstrap/esm/Image";
 
 const App = (props) => {
   const [user, setDatos] = useState({
@@ -128,6 +127,7 @@ const App = (props) => {
         <Route path="/registerheadcompany" component={RegisterHeadCompany} />
         <Route path="/registercompany" component={RegisterCompanyContainer} />
         <Route path="/registersucursal" component={RegisterSucursalContanier} />
+        <Route path="/editcompany/:id" component={EditCompanyContainer} />
 
         {/*Routes of Catlog*/}
         <Route path="/catalog/productview">
