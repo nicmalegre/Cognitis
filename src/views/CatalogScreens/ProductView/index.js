@@ -54,12 +54,14 @@ const ProductView = (props) => {
 
     })
 
+    console.log(props)
     //Variable que indica la industria en este momento
     const industry = 'retail'; //se va setear con una propiedad que se pase en props 
     //const industry = props.products_industry_id //if = 1 then retail else indumentary
 
     //Id del producto que se selecciono para ver 
-    let id_product = parseInt(props.match.params.id); //se va setear con una propiedad que se pase en props
+    let id_product = parseInt(props.match.params.idProduct); //se va setear con una propiedad que se pase en props
+
     
     //Haremos una peticion a la API para traer el objeto producto a partir de la id que nos llega  
     useEffect(() => {

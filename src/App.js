@@ -130,9 +130,10 @@ const App = (props) => {
         <Route path="/registersucursal" component={RegisterSucursalContanier} />
 
         {/*Routes of Catlog*/}
-        <Route path="/catalog/productview">
+        <Route path="/catalog/productview/:idProduct" render={(props) => <ProductView {...props} /> }/>
+        {/* <Route path="/catalog/productview/">
           <ProductView />
-        </Route>
+        </Route> */}
         <Route path="/catalog/searchproducts">
           <SearchProducts />
         </Route>
