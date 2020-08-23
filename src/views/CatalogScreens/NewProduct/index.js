@@ -93,7 +93,7 @@ const NewProduct = (props) => {
       data.product_in_ecommerce = 1;
     };
     axios
-      .post("http://localhost:3000/api/products/saveproduct", data)
+      .post("https://cognitis-360.herokuapp.com/api/products/saveproduct", data)
       .then((res) => "Nuevo producto cargado en la BD")
       .catch((err) => console.log(err));
       onDismiss();

@@ -200,19 +200,11 @@ const EditProduct = (props) => {
     //data.precioLista = parseFloat(data.precioLista);
   };
 
-  /*const notification = (err) => {
-    alert = (err)?(<Alert color="danger">This is a success alert — check it out!</Alert>)
-    :(<Alert color="success">This is a success alert — check it out!</Alert>)
-    setNotification({
-      notificacion: true
-    })
-  };*/
-
   //Sending data to the server
   const onSubmit = (data, e) => {
     transformToNumber(data);
     axios
-      .put("http://localhost:3000/api/catalog/editproduct/" + 61, data)
+      .put("https://cognitis-360.herokuapp.com/api/products/updateProduct" + 61, data)
       .then((res) => "producto editado con exito")
       .catch((err) => console.log(err));
     onDismiss();

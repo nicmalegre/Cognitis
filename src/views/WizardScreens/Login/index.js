@@ -10,7 +10,7 @@ import {
   Card,
   Col,
 } from "reactstrap";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { BsInfoCircleFill } from "react-icons/bs";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
 import { FaEye } from "react-icons/fa";
@@ -69,6 +69,12 @@ class Login extends React.Component {
   handleClick = () => {
     this.props.changePassword(this.state.newPass);
   };
+
+  createPassword = () => {
+    this.props.changePassword(this.state.newPass)
+
+    this.props.history.push('/selectcountry')
+  }
 
   /* verify if a email is registered on user screen
   if this is not selected redirect to user screen */
@@ -241,7 +247,7 @@ class Login extends React.Component {
     //Function for control the button create password.
     let controlCreatePassButton =
       newPassConfirm === newPass && newPassConfirm !== "" ? (
-        <Button color="primary">
+        <Button color="primary" onClick={ () => this.createPassword() }>
           <FormattedMessage id="app.btnCreatePassword" />
         </Button>
       ) : (
@@ -271,7 +277,7 @@ class Login extends React.Component {
                   <FormGroup>
                     <Label>
                       <FormattedMessage id="app.enterYourNewPasswordMessage" />{" "}
-                      <b>'correo@correo.com'</b>
+                        <b>{ this.props.userInfo.email }</b>
                     </Label>
                     <br />
                     <Label>
@@ -357,4 +363,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

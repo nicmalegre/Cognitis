@@ -66,7 +66,7 @@ const ProductView = (props) => {
         
        
         
-            axios.get('http://localhost:3000/api/products/getproduct/' + id_product)
+            axios.get('https://cognitis-360.herokuapp.com/api/products/getproduct/' + id_product)
             .then( res => { 
             
             setDataProduct(res.data); //le tenemos que pasar res para setear el objeto local

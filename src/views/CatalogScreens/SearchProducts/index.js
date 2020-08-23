@@ -96,7 +96,7 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
   
   console.log(datosPeticion)
   
-  axios.post('http://localhost:3000/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
+  axios.post('https://cognitis-360.herokuapp.com/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
   .then( res => { 
     console.log(res);
     setResults(
