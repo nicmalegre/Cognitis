@@ -22,13 +22,19 @@ const FormHeadCompany = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
 
+
+  const changeTel = (data)=>{
+      data.head_tel = data.codPais + data.codArea + data.head_tel;
+  }
+
   const onSubmit = (data, e) => {
     e.preventDefault();
-    
-    axios.post("http://localhost:3000/api/registerheadhouse", data)
+    changeTel(data);
+    console.log(data);
+    axios.post("https://cognitis-360.herokuapp.com/api/head_house/registerheadhouse", data)
     .then((res) => "Se cargo en la base de datos una nueva compañia matriz")
     .catch((err) => console.log(err));
-    window.location.href = '/registercompany';
+   //window.location.href = '/registercompany';
   };
 
   const [input, setInput] = useState({
@@ -90,7 +96,7 @@ const FormHeadCompany = (props) => {
         <Card id="card-user">
           <Form onSubmit={handleSubmit(onSubmit)} id="card-user" /*body*/>
               <br/>
-              <h6 className="text"  >Datos de la Compañia Matriz</h6>
+              <h6 className="text">Datos de la Compañia Matriz</h6>
               <Row form>
                 <Col md={6}>
                 <span className="text-danger font-weight-bold">*</span>{' '}
@@ -99,10 +105,9 @@ const FormHeadCompany = (props) => {
                   </Label>
                   <Input
                     type="text"
-                    name="nameHeadCompany"
-                    id="nameHeadCompany"
+                    name="head_name"
                     placeholder="ingrese el nombre de la compañia matriz"
-                    valid={input.nameHeadCompany}
+                    valid={input.head_name}
                     onChange={inputChange}
                     innerRef={register({
                       required: {
@@ -112,7 +117,7 @@ const FormHeadCompany = (props) => {
                     })}
                   />
                   <span className="text-danger span d-block mb-2">
-                    {errors?.nameHeadCompany?.message}
+                    {errors?.head_name?.message}
                   </span>
                 </Col>
                 <Col md={6}>
@@ -121,9 +126,8 @@ const FormHeadCompany = (props) => {
                     <Label for="razonsocial">Razon Social</Label>
                     <Input
                       type="text"
-                      name="razonsocial"
-                      id="razonsocial"
-                      valid={input.razonsocial}
+                      name="head_business_name"
+                      valid={input.head_business_name}
                       onChange={inputChange}
                       innerRef={register({
                         required: {
@@ -133,7 +137,7 @@ const FormHeadCompany = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.razonsocial?.message}
+                      {errors?.head_business_name?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -145,9 +149,9 @@ const FormHeadCompany = (props) => {
                     <Label for="Cuil">CUIL o CUIT</Label>
                     <Input
                       //type="number"
-                      name="Cuil"
+                      name="head_cuit"
                       id="Cuil"
-                      valid={input.Cuil}
+                      valid={input.head_cuit}
                       onChange={inputChange}
                       placeholder="Ejemplo XX12345678X"
                       maxLength="11"
@@ -171,7 +175,7 @@ const FormHeadCompany = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.cuil?.message}
+                      {errors?.head_cuit?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -181,9 +185,9 @@ const FormHeadCompany = (props) => {
                     <Label for="pais">Pais</Label>
                     <Input
                       type="select"
-                      name="pais"
+                      name="head_country"
                       id="pais"
-                      valid={input.pais}
+                      valid={input.head_country}
                       onChange={inputChange}
                       innerRef={register({
                         required: {
@@ -209,9 +213,8 @@ const FormHeadCompany = (props) => {
                     <Label for="email">Email</Label>
                     <Input
                       type="email"
-                      name="email"
-                      id="email"
-                      valid={input.email}
+                      name="head_email"
+                      valid={input.head_email}
                       onChange={inputChange}
                       placeholder="Ingrese su email"
                       innerRef={register({
@@ -223,7 +226,7 @@ const FormHeadCompany = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.email?.message}
+                      {errors?.head_email?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -238,7 +241,6 @@ const FormHeadCompany = (props) => {
                         <Input
                           type="text"
                           name="codPais"
-                          id="codPais"
                           valid={input.codPais}
                           onChange={inputChange}
                           placeholder="+54"
@@ -269,7 +271,6 @@ const FormHeadCompany = (props) => {
                         <Input
                           type="number"
                           name="codArea"
-                          id="codArea"
                           valid={input.codArea}
                           onChange={inputChange}
                           innerRef={register({
@@ -298,9 +299,9 @@ const FormHeadCompany = (props) => {
                         <Label for="nrotel">Nro. Telefono</Label>
                         <Input
                           type="number"
-                          name="nrotel"
+                          name="head_tel"
                           id="nrotel"
-                          valid={input.nrotel}
+                          valid={input.head_tel}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -318,7 +319,7 @@ const FormHeadCompany = (props) => {
                           })}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.nrotel?.message}
+                          {errors?.head_tel?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -330,9 +331,9 @@ const FormHeadCompany = (props) => {
                     <Label for="nroFax">Fax</Label>
                     <Input
                       type="number"
-                      name="nroFax"
+                      name="head_fax"
                       id="nroFax"
-                      valid={input.nroFax}
+                      valid={input.head_fax}
                       onChange={inputChange}
                       placeholder="Ingrese el nro de fax de la compañia"
                       innerRef={register({
@@ -353,9 +354,9 @@ const FormHeadCompany = (props) => {
                     <Label for="nameBank">Nombre del Banco</Label>
                     <Input
                       type="text"
-                      name="nameBank"
+                      name="bank_head_house_name"
                       id="nameBank"
-                      valid={input.nameBank}
+                      valid={input.bank_head_house_name}
                       onChange={inputChange}
                       placeholder="Ingrese el nombre del banco"
                       innerRef={register({
@@ -374,7 +375,7 @@ const FormHeadCompany = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.nameBank?.message}
+                      {errors?.bank_head_house_name?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -388,9 +389,8 @@ const FormHeadCompany = (props) => {
                     </Label>
                     <Input
                       type="number"
-                      name="cuentaBancaria"
-                      id="cuentaBancaria"
-                      valid={input.cuentaBancaria}
+                      name="bank_head_house_account"
+                      valid={input.bank_head_house_account}
                       onChange={inputChange}
                       placeholder="Ingrese su nro de cuenta bancaria"
                       innerRef={register({
@@ -409,7 +409,7 @@ const FormHeadCompany = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.cuentaBancaria?.message}
+                      {errors?.bank_head_house_account?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -421,9 +421,9 @@ const FormHeadCompany = (props) => {
                     <Label for="cbu">CBU</Label>
                     <Input
                       type="number"
-                      name="cbu"
+                      name="bank_head_house_cbu"
                       id="cbu"
-                      valid={input.cbu}
+                      valid={input.bank_head_house_cbu}
                       onChange={inputChange}
                       placeholder="Ingrese el nro de CBU"
                       innerRef={register({
@@ -442,7 +442,7 @@ const FormHeadCompany = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.cbu?.message}
+                      {errors?.bank_head_house_cbu?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -451,9 +451,8 @@ const FormHeadCompany = (props) => {
                     <Label for="alias">Alias</Label>
                     <Input
                       type="text"
-                      name="alias"
-                      id="alias"
-                      valid={input.alias}
+                      name="bank_head_house_alias"
+                      valid={input.bank_head_house_alias}
                       onChange={inputChange}
                       placeholder="Ingrese su alias"
                       innerRef={register({
@@ -471,7 +470,7 @@ const FormHeadCompany = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.alias?.message}
+                      {errors?.bank_head_house_alias?.message}
                     </span>
                   </FormGroup>
                 </Col>
