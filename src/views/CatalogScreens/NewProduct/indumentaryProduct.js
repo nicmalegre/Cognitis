@@ -8,12 +8,13 @@ const IndumentaryProduct = (props)=> {
     const {  errors } = useForm();
 
   return (
+      <>
     <Row form>
         <Col md={4}>
         <FormGroup>
             <Label for="">Curva</Label>
             <Input
-            type="select"
+            type="input"
             name="curva"
             ></Input>
             <span className="text-danger span d-block mb-2">
@@ -25,7 +26,7 @@ const IndumentaryProduct = (props)=> {
         <FormGroup>
             <Label for="">Temporada</Label>
             <Input
-            type="select"
+            type="input"
             name="temporada"
             ></Input>
             <span className="text-danger span d-block mb-2">
@@ -46,7 +47,7 @@ const IndumentaryProduct = (props)=> {
         </FormGroup>
         </Col>
     </Row>
-    
+    </>
 
   )
 }
