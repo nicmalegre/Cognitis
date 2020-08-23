@@ -4,8 +4,11 @@ import CatalogLayout from '../../Layouts/CatalogLayout'
 import CarouselComponent from './carousel'
 import IndumentaryProduct from './indumentaryProduct'
 import RetailProduct from './retailProduct'
-import axios from "axios";  
-
+import axios from "axios";
+import {connect} from 'react-redux'  
+import {
+    fetchProductoData
+  } from '../../../Redux/Actions/ProductosActions';
 
 const ProductView = (props) => {
 
@@ -66,9 +69,10 @@ const ProductView = (props) => {
         
        
         
-            axios.get('https://cognitis-360.herokuapp.com/api/products/getproduct/' + id_product)
+            axios.get('http://localhost:3000/api/products/productdata/' + id_product)
             .then( res => { 
             
+            props.dispatch(fetchProductoData(res.data));
             setDataProduct(res.data); //le tenemos que pasar res para setear el objeto local
 
             }).catch(err => console.log(err)); //mostrar error
@@ -124,7 +128,7 @@ const ProductView = (props) => {
       };
       
       //Funcion que controla el dinamismo de los campos de acuerdo a la industria
-      let industryMannage = industry === 1 ? (
+      let industryMannage = industry === 'retail' ? (
         <RetailProduct prop={producto}/>
       ) : (
         <IndumentaryProduct prop={producto} />
@@ -244,7 +248,10 @@ const ProductView = (props) => {
                             </Col>
                             <UncontrolledCollapse toggler="#togglerCampos">
                             <br/>
-                                {industryMannage}
+                                {//industryMannage
+                                    (props.productos.productoActual.products_industry_id === 2) ? 
+                                    (<RetailProduct />) : (<IndumentaryProduct />)
+                                }
                                 <Row form >
                                     <Col md={4}>
                                         <FormGroup row>
@@ -430,4 +437,13 @@ const ProductView = (props) => {
     )
 }
 
-export default ProductView;
+
+const mapStateToProps = (state) => {
+    return {
+      productos: state.productos,  
+    }
+  }
+  
+  export default connect(
+    mapStateToProps,
+  )(ProductView);

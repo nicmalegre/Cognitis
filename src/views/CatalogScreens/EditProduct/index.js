@@ -156,7 +156,7 @@ const EditProduct = (props) => {
     */
     axios.get('http://localhost:3000/api/products/productdata/' + id_product)
     .then( async res => {
-      props.dispatch(fetchProductoData(id_product))
+      props.dispatch(fetchProductoData(res.data))
       setDataProduct(res.data);
       console.log(res.data) //le tenemos que pasar res para setear el objeto local
       let industry2 = res.data.products_industry_id;

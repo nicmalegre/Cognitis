@@ -1,5 +1,5 @@
 //imports of all required libraries and components
-import React,{ useState } from "react";
+import React,{ useState,useEffect } from "react";
 import {
   Row,
   Col,
@@ -23,6 +23,8 @@ import RetailProduct from './retailProduct';
 
 const NewProduct = (props) => {
   const { register, handleSubmit, errors } = useForm();
+  const [industry,setIndustry] = useState(1);
+  const [cambio,setCambio] = useState(false);
   //This a function we use when te user click on "Add Image" button
   const buttonAddImageClick = () => {
     Array.prototype.forEach.call(
@@ -84,6 +86,10 @@ const NewProduct = (props) => {
     })
   };*/
 
+  useEffect(() => {
+    console.log(industry)
+  },[cambio])
+
   //Sending data to the server
   const onSubmit = (data, e) => {
     transformToNumber(data);
@@ -93,7 +99,7 @@ const NewProduct = (props) => {
       data.product_in_ecommerce = 1;
     };
     axios
-      .post("https://cognitis-360.herokuapp.com/api/products/saveproduct", data)
+      .post("http://localhost:3000/api/products/saveproduct", data)
       .then((res) => "Nuevo producto cargado en la BD")
       .catch((err) => console.log(err));
       onDismiss();
@@ -108,13 +114,19 @@ const NewProduct = (props) => {
     !visible
   );
 
+  const setearIndustria = (e) => {
+    setIndustry(e.target.value);
+    setCambio(!cambio);
+    //console.log(cambio);
+    //console.log(industry);
+    console.log(e.target.value)
+  }
 
   //Variable que indica la industria en este momento
   //const industry = 'retail'; //se va setear con una propiedad que se pase en props 
-  const industry = 'retail';
 
   //Funcion que controla el dinamismo de los campos de acuerdo a la industria
-  let industryMannage = industry === 'retail' ? (
+  let industryMannage = industry === 1 ? (
     <RetailProduct />
   ) : (
     <IndumentaryProduct />
@@ -334,6 +346,28 @@ const NewProduct = (props) => {
                     {/*why??*/}
                   </FormGroup>
                 </Col>
+                <FormGroup>
+                    <Label for="">Tipo Industria</Label>
+                    <Input
+                      type="select"
+                      name="products_industry_id"
+                      value = {industry}
+                      onChange = {setearIndustria}
+                      innerRef={register({
+                        required: {
+                          value: true,
+                          message: "marca es requerido",
+                        },
+                      })}
+                    >
+                      <option value={1}>Retail</option>
+                      <option value={11}>Indumentary</option>
+                      
+                    </Input>
+                    <span className="text-danger span d-block mb-2">
+                      {errors?.product_brand?.message}
+                    </span>
+                  </FormGroup>
               </Row>
               <FormGroup>
                 <Label for="exampleCheckbox" style={{ display: "inline" }}>
@@ -382,7 +416,10 @@ const NewProduct = (props) => {
               </Col>
               <UncontrolledCollapse toggler="#togglerCampos">
                   <br/>
-                  {industryMannage}
+                  {industry === 1 ?
+                    (<RetailProduct />) :
+                    (<IndumentaryProduct />)
+                  }
                   <Row form>
                       <Col md={4}>
                       <FormGroup>
@@ -471,7 +508,7 @@ const NewProduct = (props) => {
               <Row form>
                 <Col md={4}>
                   <FormGroup>
-                    <Label for="">Unidad</Label>
+                    <Label for="product_unit">Unidad</Label>
                     <Input
                       type="select"
                       name="product_unit"
