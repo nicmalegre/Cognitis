@@ -36,11 +36,9 @@ const FormHeadCompany = (props) => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     changeTel(data);
-    setDataCompany({...setDataCompany, head_house_id: 32})
     axios.post("https://cognitis-360.herokuapp.com/api/head_house/registerheadhouse", data)
-    .then((res) => 
-    "exito"    
-    //setDataCompany({...setDataCompany, head_house_id: res.head_id})
+    .then((res) =>    
+    setDataCompany({...setDataCompany, head_house_id: res.data})
     )
     .catch((err) => console.log(err));
      props.history.push("/registercompany");

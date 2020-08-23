@@ -25,7 +25,7 @@ import "./index.css";
 import RegisterSucursalContainer from "../RegisterSucursalContainer/RegisterSucursalContanier";
 
 const RegisterCompanyContainer = (props) => {
-  const companies = [
+  /*const companies = [
     { id: 1, name: "fama", cuil: "122555555", pais: "argentina" },
     { id: 2, name: "campany 2", cuil: "23370432896", pais: "paraguay" },
     { id: 3, name: "company 3", cuil: "1212313213212", pais: "urugauay" },
@@ -33,7 +33,7 @@ const RegisterCompanyContainer = (props) => {
     { id: 4, name: "comapny 4", cuil: "55556568778", pais: "canada" },
     { id: 4, name: "comapny 4", cuil: "55556568778", pais: "canada" },
     { id: 4, name: "comapny 4", cuil: "55556568778", pais: "canada" },
-  ];
+  ];*/
 
   //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
@@ -43,7 +43,7 @@ const RegisterCompanyContainer = (props) => {
   //contador para mostrar dinamicamente el numero de compañia
   //const [cont, setContador] = useState(1);
   // state donde se almacena los datos de la compañia
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [modalEliminar, setModalEliminar] = useState(false);
   const [selectcompany, setCompSelect] = useState({
     id: "",
@@ -54,13 +54,14 @@ const RegisterCompanyContainer = (props) => {
 
   //peticion a la API para traer todas las compañias
   useEffect(() => {
+    console.log(dataCompany);
     axios
       .get(
-        "https://cognitis-360.herokuapp.com/api/company/headhouse/" +
-          dataCompany.head_house_id
+        "https://cognitis-360.herokuapp.com/api/company/headhouse/" + dataCompany.head_house_id
       )
       .then((res) => {
-        setData(res.companies_house); //le tenemos que pasar res para setear el objeto local
+        console.log(res)
+        setData(res.data.companies_house); //le tenemos que pasar res para setear el objeto local
       })
       .catch((err) => console.log(err)); //mostrar error
   }, []);
@@ -117,12 +118,13 @@ const RegisterCompanyContainer = (props) => {
               </tr>
             </thead>
             <tbody>
-              {data.map((elemento) => (
-                <tr>
-                  <td className="text-center">{elemento.id}</td>
-                  <td className="text-center">{elemento.name}</td>
-                  <td className="text-center">{elemento.cuil}</td>
-                  <td className="text-center">{elemento.pais}</td>
+              {(data.length > 0)?(
+               data.map(elemento => (
+                <tr key={elemento.company_id}>
+                  <td className="text-center">{elemento.company_id}</td>
+                  <td className="text-center">{elemento.company_name}</td>
+                  <td className="text-center">{elemento.company_cuit}</td>
+                  <td className="text-center">{elemento.company_country}</td>
                   <td className="text-center">
                     <Button color="primary" size="sm">
                       <i className="mr-1">
@@ -155,7 +157,11 @@ const RegisterCompanyContainer = (props) => {
                     {"   "}
                   </td>
                 </tr>
-              ))}
+              ))): (
+                 <tr>
+                   <td colSpan={6}> No hay ninguna compañia registrada</td>
+                 </tr> 
+              )}
             </tbody>
           </Table>
 
