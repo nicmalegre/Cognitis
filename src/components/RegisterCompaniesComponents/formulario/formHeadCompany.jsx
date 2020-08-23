@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState, useContext } from "react";
+import { CompanyContext } from "../../../store/CompanyContext";
 //importacion de la libreria
-//import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import {
   FormGroup,
   Button,
@@ -14,26 +15,35 @@ import {
 } from "reactstrap"; //importar elementos
 //import "../RegisterHeadCompany/index.css"; //importar css
 import { useForm } from "react-hook-form";
-import axios from 'axios'
+import axios from "axios";
 import Logo from "../../WizardComponents/base/logo";
-import "./index.css"
+import "./index.css";
+import { MdLineWeight } from "react-icons/md";
 
 const FormHeadCompany = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
 
-
-  const changeTel = (data)=>{
-      data.head_tel = data.codPais + data.codArea + data.head_tel;
-  }
+  //mediante context almaceno en una variable global el head_house_id al registrar mi compañia house
+  const [dataCompany, setDataCompany] = useContext(CompanyContext);
+  
+  
+  // concateno los datos de codpais + codarea + head_tel para almacenalo en la BD como head_tel
+  const changeTel = (data) => {
+    data.head_tel = data.codPais + data.codArea + data.head_tel;
+  };
 
   const onSubmit = (data, e) => {
     e.preventDefault();
     changeTel(data);
+    setDataCompany({...setDataCompany, head_house_id: 32})
     axios.post("https://cognitis-360.herokuapp.com/api/head_house/registerheadhouse", data)
-    .then((res) => "Se cargo en la base de datos una nueva compañia matriz")
+    .then((res) => 
+    "exito"    
+    //setDataCompany({...setDataCompany, head_house_id: res.head_id})
+    )
     .catch((err) => console.log(err));
-    window.location.href = '/registercompany';
+     props.history.push("/registercompany");
   };
 
   const [input, setInput] = useState({
@@ -65,7 +75,7 @@ const FormHeadCompany = (props) => {
     let length = inputvalue.length;
     let name = event.target.name;
     let noerror = await trigger(name);
-    
+
     if (length > 0 && noerror) {
       value = errors?.name ? false : true;
     } else {
@@ -79,26 +89,26 @@ const FormHeadCompany = (props) => {
 
   //Funcion que renderiza el componente visual jsx
   return (
-    <Container fluid >
+    <Container fluid>
       <Row>
         <Col lg="4" md="4" xs="10">
           <Logo />
         </Col>
         <Col lg="8" xs="10">
-          <h3 className="mt-5 text" style={{ marginBottom: 30}}>
+          <h3 className="mt-5 text" style={{ marginBottom: 30 }}>
             Ingrese datos de la Compañia Matriz
           </h3>
         </Col>
       </Row>
       <Row>
         <Col lg="12">
-        <Card id="card-user">
-          <Form onSubmit={handleSubmit(onSubmit)} id="card-user" /*body*/>
-              <br/>
+          <Card id="card-user">
+            <Form onSubmit={handleSubmit(onSubmit)} id="card-user" /*body*/>
+              <br />
               <h6 className="text">Datos de la Compañia Matriz</h6>
               <Row form>
                 <Col md={6}>
-                <span className="text-danger font-weight-bold">*</span>{' '}
+                  <span className="text-danger font-weight-bold">*</span>{" "}
                   <Label for="nameHeadCompany">
                     Nombre de la Compañia Matriz
                   </Label>
@@ -121,7 +131,7 @@ const FormHeadCompany = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="razonsocial">Razon Social</Label>
                     <Input
                       type="text"
@@ -144,7 +154,7 @@ const FormHeadCompany = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                    <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="Cuil">CUIL o CUIT</Label>
                     <Input
                       //type="number"
@@ -170,7 +180,7 @@ const FormHeadCompany = (props) => {
                         pattern: {
                           value: /^[0-9]{11}$/i,
                           message: "Solo caracteres numéricos",
-                        }
+                        },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
@@ -180,7 +190,7 @@ const FormHeadCompany = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="pais">Pais</Label>
                     <Input
                       type="select"
@@ -208,7 +218,7 @@ const FormHeadCompany = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="email">Email</Label>
                     <Input
                       type="email"
@@ -235,7 +245,7 @@ const FormHeadCompany = (props) => {
                   <Row form>
                     <Col md={3}>
                       <FormGroup>
-                      <span className="text-danger font-weight-bold">*</span>{' '}
+                        <span className="text-danger font-weight-bold">*</span>{" "}
                         <Label for="codPais">Cod Pais</Label>
                         <Input
                           type="text"
@@ -265,7 +275,7 @@ const FormHeadCompany = (props) => {
                     </Col>
                     <Col md={3}>
                       <FormGroup>
-                      <span className="text-danger font-weight-bold">*</span>{' '}
+                        <span className="text-danger font-weight-bold">*</span>{" "}
                         <Label for="codArea">Cod Area</Label>
                         <Input
                           type="number"
@@ -294,7 +304,7 @@ const FormHeadCompany = (props) => {
                     </Col>
                     <Col md={6}>
                       <FormGroup>
-                      <span className="text-danger font-weight-bold">*</span>{' '}
+                        <span className="text-danger font-weight-bold">*</span>{" "}
                         <Label for="nrotel">Nro. Telefono</Label>
                         <Input
                           type="number"
@@ -326,7 +336,6 @@ const FormHeadCompany = (props) => {
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                  
                     <Label for="nroFax">Fax</Label>
                     <Input
                       type="number"
@@ -344,12 +353,12 @@ const FormHeadCompany = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
-              <br/>
+              <br />
               <h6 className="text">Datos Bancarios</h6>
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="nameBank">Nombre del Banco</Label>
                     <Input
                       type="text"
@@ -382,7 +391,7 @@ const FormHeadCompany = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="cuentaBancaria">
                       Numero de Cuenta Bancaria
                     </Label>
@@ -416,7 +425,7 @@ const FormHeadCompany = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="cbu">CBU</Label>
                     <Input
                       type="number"
@@ -474,7 +483,7 @@ const FormHeadCompany = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
-              <br/>
+              <br />
               <Row
                 className="row justify-content-end"
                 style={{ marginTop: 10 }}
@@ -487,15 +496,14 @@ const FormHeadCompany = (props) => {
                   {/*</Link>*/}
                 </Col>
               </Row>
-            <br/>
+              <br />
             </Form>
           </Card>
-          <br/>
+          <br />
         </Col>
       </Row>
     </Container>
   );
 };
 
-export default FormHeadCompany;
-
+export default withRouter(FormHeadCompany);

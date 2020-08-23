@@ -1,5 +1,6 @@
-import React, { useState } from "react"; //importacion de la libreria
-//import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react"; //importacion de la libreria
+import { CompanyContext } from "../../../store/CompanyContext";
+import { withRouter } from "react-router-dom";
 import {
   FormGroup,
   Input,
@@ -20,22 +21,34 @@ const Formsuc = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
 
+  //DATA FROM CONTEXT
+  const [dataCompany, setDataCompany] = useContext(CompanyContext);
+
+  //DATA FOR SUBMIT
+  const [dataSend, setDataSend] = useState({});
+
   //I change the input "tel" to the proper format according to the DB
   const changeTel = (data) => {
     data.tel = data.codPais + data.codArea + data.tel;
   };
 
+  //preparing data for send
+  const preparedData = (data) => {
+    changeTel(data);
+    setDataSend({ ...data, company_id: dataCompany.company_id });
+  };
+
   const onSubmit = (data, e) => {
     e.preventDefault();
-    changeTel(data)
+    preparedData(data);
     axios
       .post(
-        "https://cognitis-360.herokuapp.com/api/headcompany/company/sucursal/savesucursal",
-        data
+        "https://cognitis-360.herokuapp.com/api/branchofficehouse/newbranchoffice",
+        dataSend
       )
-      .then((res) => "Se cargo en la base de datos una nueva compañia")
+      .then((res) => "Se cargo en la base de datos una nueva sucursal")
       .catch((err) => console.log(err));
-    window.location.href = "/registersucursal";
+    props.history.push("/registersucursal");
   };
 
   const [input, setInput] = useState({
@@ -452,4 +465,4 @@ const Formsuc = (props) => {
     </Container>
   );
 };
-export default Formsuc;
+export default withRouter(Formsuc);

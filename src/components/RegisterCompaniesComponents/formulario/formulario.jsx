@@ -1,4 +1,6 @@
-import React, { useState } from "react"; //importacion de la libreria
+import React, { useState,useContext } from "react"; //importacion de la libreria
+import { CompanyContext } from "../../../store/CompanyContext";
+import { withRouter } from "react-router-dom";
 import {
   FormGroup,
   Input,
@@ -18,23 +20,33 @@ import "./index.css";
 const Formulario = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
-
+  
+  //DATA FROM CONTEXT 
+  const [dataCompany, setDataCompany] = useContext(CompanyContext);
+  
+  //DATA FOR SUBMIT
+  const [dataSend, setDataSend] = useState({})
+  
   const changeTel = (data) => {
     data.company_tel = data.codPais + data.codArea + data.company_tel;
   };
 
+  const preparedData=(data)=>{
+    changeTel(data);
+    setDataSend({...data, head_house_id: dataCompany.head_house_id})
+  }
+
   const onSubmit = (data, e) => {
     e.preventDefault();
-    changeTel(data);
-    console.log(data)
+    preparedData(data);
     axios
       .post(
-        "https://cognitis-360.herokuapp.com/api/company/headhouse/:head_house_id/company/newcompany",
-        data
+        "https://cognitis-360.herokuapp.com/api/company/newcompany",
+        dataSend
       )
       .then((res) => "Se cargo en la base de datos una nueva compañia")
       .catch((err) => console.log(err));
-    //window.location.href = "/registercompany";
+      props.history.push("/registercompany");
   };
   // const of countries
   const countries = [
@@ -516,4 +528,4 @@ const Formulario = (props) => {
     </Container>
   );
 };
-export default Formulario;
+export default withRouter(Formulario);

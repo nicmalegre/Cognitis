@@ -23,6 +23,8 @@ import RegisterHeadCompany from "./views/RegisterCompanyScreen/RegisterHeadCompa
 import RegisterCompanyContainer from "./views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer";
 import FormTest from "./components/CatologComponents/test/formtest";
 import { propTypes } from "react-bootstrap/esm/Image";
+//import Company Context
+import {CompanyProvider} from './store/CompanyContext';
 
 const App = (props) => {
   const [user, setDatos] = useState({
@@ -121,14 +123,15 @@ const App = (props) => {
           />
         </Route>
         {/*Routes of Register Companies*/}
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/createcompany" component={CreateCompanyContainer} />
-        <Route path="/createsucursal" component={CreateSucursalContainer} />
-        <Route path="/registersucursal" component={RegisterSucursalContanier} />
-        <Route path="/registerheadcompany" component={RegisterHeadCompany} />
-        <Route path="/registercompany" component={RegisterCompanyContainer} />
-        <Route path="/registersucursal" component={RegisterSucursalContanier} />
-
+        <CompanyProvider>
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/createcompany" component={CreateCompanyContainer} />
+            <Route path="/createsucursal" component={CreateSucursalContainer} />
+            <Route path="/registersucursal" component={RegisterSucursalContanier} />
+            <Route path="/registerheadcompany" component={RegisterHeadCompany} />
+            <Route path="/registercompany" component={RegisterCompanyContainer} />
+            <Route path="/registersucursal" component={RegisterSucursalContanier} />
+        </CompanyProvider>
         {/*Routes of Catlog*/}
         <Route path="/catalog/productview">
           <ProductView />
