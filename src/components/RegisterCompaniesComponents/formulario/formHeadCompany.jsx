@@ -30,11 +30,10 @@ const FormHeadCompany = (props) => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     changeTel(data);
-    console.log(data);
     axios.post("https://cognitis-360.herokuapp.com/api/head_house/registerheadhouse", data)
     .then((res) => "Se cargo en la base de datos una nueva compañia matriz")
     .catch((err) => console.log(err));
-   //window.location.href = '/registercompany';
+    window.location.href = '/registercompany';
   };
 
   const [input, setInput] = useState({
