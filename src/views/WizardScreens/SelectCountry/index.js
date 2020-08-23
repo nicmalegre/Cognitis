@@ -53,7 +53,7 @@ const SelectCountry = (props) => {
     setSendingData(true)
 
     axios
-      .post("http://localhost:3000/api/users/saveuser", {
+      .post("https://cognitis-360.herokuapp.com/api/users/saveuser", {
         user_name: "test",
         user_mail: props.userInfo.email,
         user_password: props.userInfo.password,

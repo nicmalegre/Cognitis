@@ -149,7 +149,7 @@ const EditProduct = (props) => {
   const onSubmit = (data, e) => {
     transformToNumber(data);
     axios
-      .put("http://localhost:3000/api/catalog/editproduct/" + id, data)
+      .put("https://cognitis-360.herokuapp.com/api/products/updateProduct" + id, data)
       .then((res) => "producto editado con exito")
       .catch((err) => console.log(err));
     onDismiss();
