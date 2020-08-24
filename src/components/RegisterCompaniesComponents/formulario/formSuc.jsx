@@ -24,31 +24,30 @@ const Formsuc = (props) => {
   //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
 
-  //DATA FOR SUBMIT
-  const [dataSend, setDataSend] = useState({});
-
   //I change the input "tel" to the proper format according to the DB
   const changeTel = (data) => {
     data.tel = data.codPais + data.codArea + data.tel;
   };
 
   //preparing data for send
-  const preparedData = (data) => {
+  const preparedData=(data)=>{
     changeTel(data);
-    setDataSend({ ...data, company_id: dataCompany.company_id });
-  };
+    data["company_house_id"] = props.match.params.id;
+    data["address"] = "calle 123"
+  }
 
   const onSubmit = (data, e) => {
     e.preventDefault();
     preparedData(data);
+    console.log(data);
     axios
       .post(
         "https://cognitis-360.herokuapp.com/api/branchofficehouse/newbranchoffice",
-        dataSend
+        data
       )
-      .then((res) => "Se cargo en la base de datos una nueva sucursal")
+      .then((res) => console.log(res))
       .catch((err) => console.log(err));
-    props.history.push("/registersucursal");
+    //props.history.push("/registersucursal" + props.match.params.id);
   };
 
   const [input, setInput] = useState({
@@ -121,7 +120,7 @@ const Formsuc = (props) => {
                     <Label for="razonsocial">Razon Social</Label>
                     <Input
                       type="text"
-                      name="razonsocial"
+                      name="business_name"
                       id="razosocial"
                       valid={input.razonsocial}
                       onChange={inputChange}
@@ -133,7 +132,7 @@ const Formsuc = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.razonsocial?.message}
+                      {errors?.business_name?.message}
                     </span>
                   </FormGroup>
                 </Col>

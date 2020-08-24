@@ -77,13 +77,13 @@ const RegisterCompanyContainer = (props) => {
   };
 
   // SET COMPANY_ID EN CONTEXT
-  const enviarIdSuc = (elemento_id) => {
-    setDataCompany({ ...setDataCompany, company_id: elemento_id });
-    props.history.push("/registersucursal");
+  const enviarIdSuc = (company_id) => {
+    //setDataCompany({ ...setDataCompany, company_id: elemento_id });
+    console.log(company_id)
+    props.history.push("/registersucursal/" + company_id);
   };
 
   const toCreateCompany=()=>{
-    console.log(dataCompany.head_house_id)
     props.history.push("/createcompany/" + props.match.params.id);
   }
 
@@ -152,7 +152,7 @@ const RegisterCompanyContainer = (props) => {
                     <Button
                       color="info"
                       size="sm"
-                      onClick={() => enviarIdSuc(elemento.id)}
+                      onClick={() => enviarIdSuc(elemento.company_id)}
                     >
                       <i className="mr-1">
                         <BsPlusCircle />

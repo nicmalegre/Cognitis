@@ -42,6 +42,7 @@ const Formulario = (props) => {
   }
 
 
+  //preparing data for send
   const preparedData=(data)=>{
     changeTel(data);
     changeIndustry(data);
