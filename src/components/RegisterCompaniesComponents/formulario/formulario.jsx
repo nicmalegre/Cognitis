@@ -17,6 +17,7 @@ import axios from "axios";
 import Logo from "../../WizardComponents/base/logo";
 //importar css
 import "./index.css";
+
 const Formulario = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
@@ -25,29 +26,39 @@ const Formulario = (props) => {
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
   
   //DATA FOR SUBMIT
-  const [dataSend, setDataSend] = useState({})
+  const [data, setData] = useState({head_house_id: props.match.params.id})
   
   const changeTel = (data) => {
     data.company_tel = data.codPais + data.codArea + data.company_tel;
   };
 
+  const changeIndustry = (data) => {
+    if (data.company_house_industry_id === "Retail"){
+      data.company_house_industry_id = "1";
+    }
+    else{
+      data.company_house_industry_id = "11";
+    }
+  }
+
+
   const preparedData=(data)=>{
     changeTel(data);
-    setDataSend({...data, head_house_id: props.match.params.id})
+    changeIndustry(data);
+    data["head_house_id"] = props.match.params.id
   }
 
   const onSubmit = (data, e) => {
-    e.preventDefault();
     preparedData(data);
     axios
       .post(
         "https://cognitis-360.herokuapp.com/api/company/newcompany",
-        dataSend
+        data
       )
-      .then((res) => "Se cargo en la base de datos una nueva compañia")
+      .then((res) => console.log("registro exitoso"))
       .catch((err) => console.log(err));
-      console.log(dataSend);
-      //props.history.push("/registercompany/"+ props.match.params.id);
+      e.preventDefault();
+      props.history.push("/registercompany/"+ props.match.params.id);
   };
   // const of countries
   const countries = [
@@ -195,8 +206,8 @@ const Formulario = (props) => {
                     <Label for="pais">Pais</Label>
                     <Input
                       type="select"
-                      name="company_cuit"
-                      valid={input.company_cuit}
+                      name="company_country"
+                      valid={input.company_country}
                       innerRef={register({
                         required: {
                           value: false,
