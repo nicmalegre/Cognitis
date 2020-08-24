@@ -132,7 +132,7 @@ const RegisterSucursalContainer = (props) => {
           </Table>
           <Row className="row justify-content-end" style={{ marginTop: 10 }}>
           <Col md={2}>
-            <Link to="/dashboard">
+            <Link to="/LoginUsers/Login">
               <Button color="primary" type="submit" active>
                 Finalizar
               </Button>
