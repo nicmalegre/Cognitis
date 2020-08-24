@@ -32,8 +32,9 @@ const Formsuc = (props) => {
   //preparing data for send
   const preparedData=(data)=>{
     changeTel(data);
-    data["company_house_id"] = props.match.params.id;
-    data["address"] = "calle 123"
+    data["company_id"] = props.match.params.id;
+    data["address"] = "calle 123";
+    data["country"] = "argentina"
   }
 
   const onSubmit = (data, e) => {
@@ -47,7 +48,7 @@ const Formsuc = (props) => {
       )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-    //props.history.push("/registersucursal" + props.match.params.id);
+    props.history.push("/registersucursal/" + props.match.params.id);
   };
 
   const [input, setInput] = useState({
@@ -122,7 +123,7 @@ const Formsuc = (props) => {
                       type="text"
                       name="business_name"
                       id="razosocial"
-                      valid={input.razonsocial}
+                      valid={input.business_name}
                       onChange={inputChange}
                       innerRef={register({
                         required: {
