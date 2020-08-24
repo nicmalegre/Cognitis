@@ -221,7 +221,7 @@ const Formsuc = (props) => {
                               message: "No más de 5 carácteres!",
                             },
                             minLength: {
-                              value: 3,
+                              value: 2,
                               message: "No menos de 3 carácteres!",
                             },
                           })}
