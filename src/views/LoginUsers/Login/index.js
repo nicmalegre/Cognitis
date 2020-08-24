@@ -72,6 +72,7 @@ const LoginUsers = (props) => {
                 //Start Session
                 //Go to the next page
                 console.log("Las credenciales ingresadas son correctas.")
+                props.history.push('/catalog/searchproducts')
 
             }else{//The password doesn't match with the email
                 incorrectCredentialActions()

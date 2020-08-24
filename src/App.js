@@ -24,6 +24,8 @@ import RegisterCompanyContainer from './views/RegisterCompanyScreen/RegisterComp
 import FormTest from './components/CatologComponents/test/formtest';
 import { Provider } from "react-redux";
 import { propTypes } from "react-bootstrap/esm/Image";
+//import Company Context
+import {CompanyProvider} from './store/CompanyContext';
 import store from "./Redux/store";
 
 const App = (props) => {
@@ -115,25 +117,25 @@ const App = (props) => {
             userInfo={user}
           />
         </Route>
-        <Route path="/LoginUsers/Login">
-          <LoginUsers
+        <Route path="/LoginUsers/Login" render={props => <LoginUsers
             changeLanguage={handleChangeLanguage}
             handleChange={handleChange}
             changePassword={handleChangePassword}
             handleChangePasswordExpired={handleChangePasswordExpired}
             user={user}
-          />
-        </Route>
-        {/*Routes of Register Companies*/}
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/createcompany" component={CreateCompanyContainer} />
-        <Route path="/createsucursal" component={CreateSucursalContainer} />
-        <Route path="/registersucursal" component={RegisterSucursalContanier} />
-        <Route path="/registerheadcompany" component={RegisterHeadCompany} />
-        <Route path="/registercompany" component={RegisterCompanyContainer} />
-        <Route path="/registersucursal" component={RegisterSucursalContanier} />
-        <Route path="/editcompany/:id" component={EditCompanyContainer} />
+            {...props}
+          />} />
 
+        
+        {/*Routes of Register Companies*/}
+        <CompanyProvider>
+            <Route path="/createcompany/:id" render={props =><CreateCompanyContainer {...props} />} />
+            <Route path="/createsucursal/:id" render={props =><CreateSucursalContainer {...props} />} />
+            <Route path="/registersucursal/:id" render={props =><RegisterSucursalContanier {...props}/>} />
+            <Route path="/registerheadcompany" component={RegisterHeadCompany} />
+            <Route path="/registercompany/:id" render={props =><RegisterCompanyContainer {...props} />} />
+            <Route path="/editcompany/:id" component={EditCompanyContainer} />
+        </CompanyProvider>
         {/*Routes of Catlog*/}
   <Route path="/catalog/productview/:id" render={props => <ProductView {...props}/>}/>
   

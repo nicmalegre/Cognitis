@@ -1,4 +1,6 @@
-import React, { useState } from "react"; //importacion de la libreria
+import React, { useState,useContext } from "react"; //importacion de la libreria
+import { CompanyContext } from "../../../store/CompanyContext";
+import { withRouter } from "react-router-dom";
 import {
   FormGroup,
   Input,
@@ -11,22 +13,54 @@ import {
   Button,
 } from "reactstrap"; //importar elementos
 import { useForm } from "react-hook-form";
-import axios from 'axios'
+import axios from "axios";
 import Logo from "../../WizardComponents/base/logo";
 //importar css
 import "./index.css";
+
 const Formulario = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
+  
+  //DATA FROM CONTEXT 
+  const [dataCompany, setDataCompany] = useContext(CompanyContext);
+  
+  //DATA FOR SUBMIT
+  const [data, setData] = useState({head_house_id: props.match.params.id})
+  
+  const changeTel = (data) => {
+    data.company_tel = data.codPais + data.codArea + data.company_tel;
+  };
+
+  const changeIndustry = (data) => {
+    if (data.company_house_industry_id === "Retail"){
+      data.company_house_industry_id = "1";
+    }
+    else{
+      data.company_house_industry_id = "11";
+    }
+  }
+
+
+  //preparing data for send
+  const preparedData=(data)=>{
+    changeTel(data);
+    changeIndustry(data);
+    data["head_house_id"] = props.match.params.id
+  }
 
   const onSubmit = (data, e) => {
-    e.preventDefault();
-    axios.post("http://localhost:3000/api/headcompany/company/savecompany", data)
-    .then((res) => "Se cargo en la base de datos una nueva compañia")
-    .catch((err) => console.log(err));
-    window.location.href = '/registercompany';
-    
-  }
+    preparedData(data);
+    axios
+      .post(
+        "https://cognitis-360.herokuapp.com/api/company/newcompany",
+        data
+      )
+      .then((res) => console.log("registro exitoso"))
+      .catch((err) => console.log(err));
+      e.preventDefault();
+      props.history.push("/registercompany/"+ props.match.params.id);
+  };
   // const of countries
   const countries = [
     "Argentina",
@@ -58,7 +92,6 @@ const Formulario = (props) => {
     let length = inputvalue.length;
     let name = event.target.name;
     let noerror = await trigger(name);
-    console.log(noerror);
     if (length > 0 && noerror) {
       value = errors?.name ? false : true;
     } else {
@@ -78,7 +111,7 @@ const Formulario = (props) => {
           <Logo />
         </Col>
         <Col lg="8" xs="10">
-          <h3 className="mt-5 text" style={{ marginBottom: 30}}>
+          <h3 className="mt-5 text" style={{ marginBottom: 30 }}>
             Ingrese datos de la Compañia {props.cantCompanies}{" "}
           </h3>
         </Col>
@@ -87,22 +120,21 @@ const Formulario = (props) => {
         <Col lg="12">
           <Card id="card-user">
             <Form onSubmit={handleSubmit(onSubmit)} id="card-user">
-              <br/>
+              <br />
               <h6 className="text">
                 Datos de la Compañia {props.cantCompanies}{" "}
               </h6>
               <Row form>
                 <Col md={6}>
-                <span className="text-danger font-weight-bold">*</span>{' '}
+                  <span className="text-danger font-weight-bold">*</span>{" "}
                   <Label for="company">
                     Nombre de la Compañia {props.cantCompanies}{" "}
                   </Label>
                   <Input
                     type="text"
-                    name="company"
-                    id="company"
+                    name="company_name"
                     placeholder="ingrese el nombre de la compañia"
-                    valid={input.company}
+                    valid={input.company_name}
                     onChange={inputChange}
                     innerRef={register({
                       required: {
@@ -112,18 +144,17 @@ const Formulario = (props) => {
                     })}
                   />
                   <span className="text-danger span d-block mb-2">
-                    {errors?.company?.message}
+                    {errors?.company_name?.message}
                   </span>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="razonsocial">Razon Social</Label>
                     <Input
                       type="text"
-                      name="razonsocial"
-                      id="razosocial"
-                      valid={input.razonsocial}
+                      name="company_business_name"
+                      valid={input.company_business_name}
                       onChange={inputChange}
                       innerRef={register({
                         required: {
@@ -133,7 +164,7 @@ const Formulario = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.razonsocial?.message}
+                      {errors?.company_business_name?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -141,15 +172,14 @@ const Formulario = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="Cuil">CUIL o CUIT</Label>
                     <Input
                       //type="text"
-                      name="cuil"
-                      id="Cuil"
+                      name="company_cuit"
                       placeholder="Ejemplo XX12345678X"
                       maxLength="11"
-                      valid={input.cuil}
+                      valid={input.company_cuit}
                       onChange={inputChange}
                       innerRef={register({
                         required: {
@@ -167,18 +197,18 @@ const Formulario = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.cuil?.message}
+                      {errors?.company_cuit?.message}
                     </span>
                   </FormGroup>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="pais">Pais</Label>
                     <Input
                       type="select"
-                      name="pais"
-                      id="pais"
+                      name="company_country"
+                      valid={input.company_country}
                       innerRef={register({
                         required: {
                           value: false,
@@ -199,36 +229,34 @@ const Formulario = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="email">Email</Label>
                     <Input
                       type="email"
-                      name="email"
-                      id="email"
-                      valid={input.email}
+                      name="company_email"
+                      valid={input.company_email}
                       onChange={inputChange}
                       placeholder="Ingrese su email"
                       innerRef={register({
                         required: "Email es requerido",
                         pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "invalid email address",
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: "invalid email address",
                         },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.email?.message}
+                      {errors?.company_email?.message}
                     </span>
                   </FormGroup>
                 </Col>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="Tipo de Industria">Tipo de Industria</Label>
                     <Input
                       type="select"
-                      name="industria"
-                      id="inductria"
+                      name="company_house_industry_id"
                       placeholder="seleccione su industria"
                       innerRef={register({
                         required: "Tipo de industria requerido",
@@ -242,7 +270,7 @@ const Formulario = (props) => {
                       </option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.inductria?.message}
+                      {errors?.company_house_industry_id?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -252,12 +280,11 @@ const Formulario = (props) => {
                   <Row form>
                     <Col md={3}>
                       <FormGroup>
-                      <span className="text-danger font-weight-bold">*</span>{' '}
+                        <span className="text-danger font-weight-bold">*</span>{" "}
                         <Label for="codPais">Cod Pais</Label>
                         <Input
                           type="text"
                           name="codPais"
-                          id="codPais"
                           placeholder="+54"
                           valid={input.codPais}
                           onChange={inputChange}
@@ -271,8 +298,8 @@ const Formulario = (props) => {
                               message: "No más de 5 carácteres!",
                             },
                             minLength: {
-                              value: 3,
-                              message: "No menos de 3 carácteres!",
+                              value: 2,
+                              message: "No menos de 2 carácteres!",
                             },
                           })}
                         />
@@ -283,7 +310,7 @@ const Formulario = (props) => {
                     </Col>
                     <Col md={3}>
                       <FormGroup>
-                      <span className="text-danger font-weight-bold">*</span>{' '}
+                        <span className="text-danger font-weight-bold">*</span>{" "}
                         <Label for="codArea">Cod Area</Label>
                         <Input
                           type="number"
@@ -313,13 +340,13 @@ const Formulario = (props) => {
                     </Col>
                     <Col md={6}>
                       <FormGroup>
-                      <span className="text-danger font-weight-bold">*</span>{' '}
+                        <span className="text-danger font-weight-bold">*</span>{" "}
                         <Label for="nrotel">Nro. Telefono</Label>
                         <Input
                           type="number"
-                          name="nrotel"
+                          name="company_tel"
                           id="nrotel"
-                          valid={input.nrotel}
+                          valid={input.company_tel}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -337,7 +364,7 @@ const Formulario = (props) => {
                           })}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.nrotel?.message}
+                          {errors?.company_tel?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -348,9 +375,9 @@ const Formulario = (props) => {
                     <Label for="nroFax">Fax</Label>
                     <Input
                       type="number"
-                      name="fax"
+                      name="company_fax"
                       id="nroFax"
-                      valid={input.fax}
+                      valid={input.company_fax}
                       onChange={inputChange}
                       placeholder="Ingrese el nro de fax de la compañia"
                       innerRef={register({
@@ -362,18 +389,18 @@ const Formulario = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
-              <br/>
+              <br />
               <h6 className="text">Datos Bancarios</h6>
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="nameBank">Nombre del Banco</Label>
                     <Input
                       type="text"
-                      name="nameBank"
+                      name="bank_company_name"
                       id="nameBank"
-                      valid={input.nameBank}
+                      valid={input.bank_company_name}
                       onChange={inputChange}
                       placeholder="Ingrese el nombre del banco"
                       innerRef={register({
@@ -400,15 +427,14 @@ const Formulario = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="cuentaBancaria">
                       Numero de Cuenta Bancaria
                     </Label>
                     <Input
                       type="number"
-                      name="cuentaBancaria"
-                      id="cuentaBancaria"
-                      valid={input.cuentaBancaria}
+                      name="bank_company_account"
+                      valid={input.bank_company_account}
                       onChange={inputChange}
                       placeholder="Ingrese su nro de cuenta bancaria"
                       innerRef={register({
@@ -427,7 +453,7 @@ const Formulario = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.cuentaBancaria?.message}
+                      {errors?.bank_company_account?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -435,13 +461,12 @@ const Formulario = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                  <span className="text-danger font-weight-bold">*</span>{' '}
+                    <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="cbu">CBU</Label>
                     <Input
                       type="number"
-                      name="cbu"
-                      id="cbu"
-                      valid={input.cbu}
+                      name="bank_company_cbu"
+                      valid={input.bank_company_cbu}
                       onChange={inputChange}
                       placeholder="Ingrese el nro de CBU"
                       innerRef={register({
@@ -460,7 +485,7 @@ const Formulario = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.cbu?.message}
+                      {errors?.bank_company_cbu?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -469,9 +494,9 @@ const Formulario = (props) => {
                     <Label for="alias">Alias</Label>
                     <Input
                       type="text"
-                      name="alias"
+                      name="bank_company_alias"
                       id="alias"
-                      valid={input.alias}
+                      valid={input.bank_company_alias}
                       onChange={inputChange}
                       placeholder="Ingrese su alias"
                       innerRef={register({
@@ -489,35 +514,31 @@ const Formulario = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.alias?.message}
+                      {errors?.bank_company_alias?.message}
                     </span>
                   </FormGroup>
                 </Col>
               </Row>
-              <br/>
+              <br />
               <Row
                 className="row justify-content-end"
                 style={{ marginTop: 10 }}
               >
                 <Col md={2}>
                   {/*<Link to="/NumberCompanies">*/}
-                  <Button
-                    color="primary"
-                    type="submit"
-                    active
-                  >
+                  <Button color="primary" type="submit" active>
                     Continuar
                   </Button>
                   {/*</Link>*/}
                 </Col>
               </Row>
-              <br/>
+              <br />
             </Form>
           </Card>
-          <br/>
+          <br />
         </Col>
       </Row>
     </Container>
   );
 };
-export default Formulario;
+export default withRouter(Formulario);

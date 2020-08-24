@@ -62,7 +62,7 @@ const SelectCountry = (props) => {
         users_role_id: 11,
       })
       .then((res) => {
-        props.history.push("/loginusers/login");
+        props.history.push("/registerheadcompany");
       })
       .catch((err) => console.log(err));
   };
