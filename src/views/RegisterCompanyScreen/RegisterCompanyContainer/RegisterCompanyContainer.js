@@ -25,19 +25,9 @@ import "./index.css";
 import RegisterSucursalContainer from "../RegisterSucursalContainer/RegisterSucursalContanier";
 
 const RegisterCompanyContainer = (props) => {
-  /*const companies = [
-    { id: 1, name: "fama", cuil: "122555555", pais: "argentina" },
-    { id: 2, name: "campany 2", cuil: "23370432896", pais: "paraguay" },
-    { id: 3, name: "company 3", cuil: "1212313213212", pais: "urugauay" },
-    { id: 4, name: "comapny 4", cuil: "55556568778", pais: "canada" },
-    { id: 4, name: "comapny 4", cuil: "55556568778", pais: "canada" },
-    { id: 4, name: "comapny 4", cuil: "55556568778", pais: "canada" },
-    { id: 4, name: "comapny 4", cuil: "55556568778", pais: "canada" },
-  ];*/
-
   //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
-  
+
   //Se almacena la cantidad de compañias
   //const [company, setCompany] = useState(props.cantCompanies);
   //contador para mostrar dinamicamente el numero de compañia
@@ -57,10 +47,11 @@ const RegisterCompanyContainer = (props) => {
     console.log(props);
     axios
       .get(
-        "https://cognitis-360.herokuapp.com/api/company/headhouse/"+ props.match.params.id
+        "https://cognitis-360.herokuapp.com/api/company/headhouse/" +
+          props.match.params.id
       )
       .then((res) => {
-        console.log(res)
+        //console.log(res);
         setData(res.data.companies_house); //le tenemos que pasar res para setear el objeto local
       })
       .catch((err) => console.log(err)); //mostrar error
@@ -78,15 +69,12 @@ const RegisterCompanyContainer = (props) => {
 
   // SET COMPANY_ID EN CONTEXT
   const enviarIdSuc = (company_id) => {
-    //setDataCompany({ ...setDataCompany, company_id: elemento_id });
-    console.log(company_id)
     props.history.push("/registersucursal/" + company_id);
   };
 
-  const toCreateCompany=()=>{
+  const toCreateCompany = () => {
     props.history.push("/createcompany/" + props.match.params.id);
-  }
-
+  };
 
   //Funcion que renderiza el componente visual jsx
   return (
@@ -102,12 +90,16 @@ const RegisterCompanyContainer = (props) => {
             <Row card>
               <h5 className="text-white ml-2">Manage Companies</h5>
               <Col className="row justify-content-end">
-                  <Button color="secondary" size="md" onClick={()=> toCreateCompany()}>
-                    <i className="mr-1">
-                      <BsPlusCircle />
-                    </i>
-                    <span className="align-middle">Add New Company</span>
-                  </Button>
+                <Button
+                  color="secondary"
+                  size="md"
+                  onClick={() => toCreateCompany()}
+                >
+                  <i className="mr-1">
+                    <BsPlusCircle />
+                  </i>
+                  <span className="align-middle">Add New Company</span>
+                </Button>
               </Col>
             </Row>
           </CardHeader>
@@ -123,49 +115,50 @@ const RegisterCompanyContainer = (props) => {
               </tr>
             </thead>
             <tbody>
-              {(data.length > 0)?(
-               data.map(elemento => (
-                <tr key={elemento.company_id}>
-                  <td className="text-center">{elemento.company_id}</td>
-                  <td className="text-center">{elemento.company_name}</td>
-                  <td className="text-center">{elemento.company_cuit}</td>
-                  <td className="text-center">{elemento.company_country}</td>
-                  <td className="text-center">
-                    <Button color="primary" size="sm">
-                      <i className="mr-1">
-                        <MdModeEdit />
-                      </i>
-                      <span className="align-middle">Editar</span>
-                    </Button>{" "}
-                    {"   "}
-                    <Button
-                      color="danger"
-                      size="sm"
-                      onClick={() => selectComp(elemento)}
-                    >
-                      <i className="mr-1">
-                        <AiTwotoneDelete />
-                      </i>
-                      <span className="align-middle">Eliminar</span>
-                    </Button>{" "}
-                    {"   "}
-                    <Button
-                      color="info"
-                      size="sm"
-                      onClick={() => enviarIdSuc(elemento.company_id)}
-                    >
-                      <i className="mr-1">
-                        <BsPlusCircle />
-                      </i>
-                      <span className="align-middle">Add Sucursal</span>
-                    </Button>{" "}
-                    {"   "}
-                  </td>
+              {data.length > 0 ? (
+                data.map((elemento) => (
+                  <tr key={elemento.company_id}>
+                    <td className="text-center">{elemento.company_id}</td>
+                    <td className="text-center">{elemento.company_name}</td>
+                    <td className="text-center">{elemento.company_cuit}</td>
+                    <td className="text-center">{elemento.company_country}</td>
+                    <td className="text-center">
+                      <Button color="primary" size="sm">
+                        <i className="mr-1">
+                          <MdModeEdit />
+                        </i>
+                        <span className="align-middle">Editar</span>
+                      </Button>{" "}
+                      {"   "}
+                      <Button
+                        color="danger"
+                        size="sm"
+                        onClick={() => selectComp(elemento)}
+                      >
+                        <i className="mr-1">
+                          <AiTwotoneDelete />
+                        </i>
+                        <span className="align-middle">Eliminar</span>
+                      </Button>{" "}
+                      {"   "}
+                      <Button
+                        color="info"
+                        size="sm"
+                        onClick={() => enviarIdSuc(elemento.company_id)}
+                      >
+                        <i className="mr-1">
+                          <BsPlusCircle />
+                        </i>
+                        <span className="align-middle">Add Sucursal</span>
+                      </Button>{" "}
+                      {"   "}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6}> No hay ninguna compañia registrada</td>
                 </tr>
-              ))): (
-                 <tr>
-                   <td colSpan={6}> No hay ninguna compañia registrada</td>
-                 </tr> 
               )}
             </tbody>
           </Table>
