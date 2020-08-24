@@ -44,7 +44,6 @@ const RegisterCompanyContainer = (props) => {
 
   //peticion a la API para traer todas las compañias
   useEffect(() => {
-    console.log(props);
     axios
       .get(
         "https://cognitis-360.herokuapp.com/api/company/headhouse/" +
@@ -63,7 +62,13 @@ const RegisterCompanyContainer = (props) => {
   };
 
   const eliminar = () => {
-    setData(data.filter((elemento) => elemento.id !== selectcompany.id));
+    const company_id = props.match.params.id
+    axios.post(`https://localhost:4000/api/company/deletecompany/`, company_id)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => console.log(err)); //mostrar error
+    //setData(data.filter((elemento) => elemento.id !== selectcompany.id));
     setModalEliminar(false);
   };
 
