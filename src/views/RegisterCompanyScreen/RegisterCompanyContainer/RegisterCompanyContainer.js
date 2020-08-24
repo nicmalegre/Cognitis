@@ -56,14 +56,16 @@ const RegisterCompanyContainer = (props) => {
       .catch((err) => console.log(err)); //mostrar error
   }, []);
 
-  const selectComp = (elemento) => {
-    setCompSelect(elemento);
+  const selectComp = (company_id) => {
+    setCompSelect(company_id);
     setModalEliminar(true);
   };
 
   const eliminar = () => {
-    const company_id = props.match.params.id
-    axios.post(`https://localhost:4000/api/company/deletecompany/`, company_id)
+    const dataDelete ={
+      company_id: selectcompany
+    }
+    axios.post("http://localhost:4000/api/company/deletecompany/", dataDelete)
     .then((res) => {
       console.log(res);
     })
@@ -138,7 +140,7 @@ const RegisterCompanyContainer = (props) => {
                       <Button
                         color="danger"
                         size="sm"
-                        onClick={() => selectComp(elemento)}
+                        onClick={() => selectComp(elemento.company_id)}
                       >
                         <i className="mr-1">
                           <AiTwotoneDelete />
