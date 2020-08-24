@@ -1,7 +1,7 @@
 import axios from "axios";
-import { PRODUCTOS_URL } from "../urls/url";
+import { PRODUCTS_URL } from "../urls/url";
 const axiosRequest = axios.create({
-  baseURL: PRODUCTOS_URL,
+  baseURL: PRODUCTS_URL,
 });
 
 export const getDataProduct = async(idProducto) => {

@@ -13,6 +13,7 @@ import {
   Button,
   Alert,
 } from "reactstrap";
+import {PRODUCTS_URL} from '../../../urls/url';
 import CatalogLayout from "../../Layouts/CatalogLayout";
 import "./index.css";
 import CarouselComponent from "./carousel";
@@ -23,8 +24,29 @@ import RetailProduct from './retailProduct';
 
 const NewProduct = (props) => {
   const { register, handleSubmit, errors } = useForm();
-  const [industry,setIndustry] = useState(1);
+  const [industry,setIndustry] = useState('1');
   const [cambio,setCambio] = useState(false);
+  //let auxiliarObject = {};
+  const [dataExtra,setDataExtra] = useState({});
+  const [selects,setSelects] = useState({
+    product_brand:"Marca Uno",
+    product_is_dollar:"0",
+    category:"1",
+    product_type: "Tipo 1",
+    product_status: "1",
+    product_material: "Material Uno",
+    product_origin: "Origen Uno",
+    product_unit: "U",
+    product_accountant_type: "Bienes de Cambio",
+    product_accountant_account: "Venta de Mercaderia",
+  })
+
+  const handleChangeDataExtra = (data) => {
+    /*auxiliarObject = dataExtra;
+    auxiliarObject[name] = value;*/
+    setDataExtra(data);
+  }
+
   //This a function we use when te user click on "Add Image" button
   const buttonAddImageClick = () => {
     Array.prototype.forEach.call(
@@ -62,12 +84,16 @@ const NewProduct = (props) => {
   //This function prepared the data to be sent to the server. transforming the input to integer or float
   const transformToNumber = (data) => {
     //transform to integer
+    data.category = parseInt(data.category)
     data.product_id = parseInt(data.product_id);
     data.product_package = parseInt(data.product_package);
     data.product_vol = parseInt(data.product_vol);
     data.product_package = parseInt(data.product_vol);
     data.product_min_margin = parseInt(data.product_min_margin);
+    data.product_is_dollar = parseInt(data.product_is_dollar);
     data.product_max_margin = parseInt(data.product_max_margin);
+    data.product_status = parseInt(data.product_status);
+    data.products_industry_id = parseInt(data.products_industry_id);
     //transform to float
     data.costoNetoReposicion = parseFloat(data.costoNetoReposicion);
     data.product_bonification = parseFloat(data.product_bonification);
@@ -87,19 +113,24 @@ const NewProduct = (props) => {
   };*/
 
   useEffect(() => {
-    console.log(industry)
+    setDataExtra({})
   },[cambio])
 
   //Sending data to the server
   const onSubmit = (data, e) => {
     transformToNumber(data);
+    data = {
+      ...data,
+      ...selects,
+      ...dataExtra,
+    }
     if(data.product_in_ecommerce === false){
       data.product_in_ecommerce = 0;
     }else{
       data.product_in_ecommerce = 1;
     };
     axios
-      .post("http://localhost:3000/api/products/saveproduct", data)
+      .post(`${PRODUCTS_URL}/saveproduct`, data)
       .then((res) => "Nuevo producto cargado en la BD")
       .catch((err) => console.log(err));
       onDismiss();
@@ -122,15 +153,25 @@ const NewProduct = (props) => {
     console.log(e.target.value)
   }
 
+  const setearSelect = (event) => {
+    const {value,name} = event.target;
+    setSelects(
+      {
+        ...selects,
+        [name]: value,
+      }
+    )
+  }
+
   //Variable que indica la industria en este momento
   //const industry = 'retail'; //se va setear con una propiedad que se pase en props 
 
   //Funcion que controla el dinamismo de los campos de acuerdo a la industria
-  let industryMannage = industry === 1 ? (
+  /*let industryMannage = industry ===  ? (
     <RetailProduct />
   ) : (
     <IndumentaryProduct />
-  );
+  );*/
 
   return (
     <CatalogLayout>
@@ -208,6 +249,7 @@ const NewProduct = (props) => {
                     <Input
                       type="select"
                       name="product_brand"
+                      onChange={setearSelect}
                       innerRef={register({
                         required: {
                           value: true,
@@ -215,9 +257,9 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option>Marca 1</option>
-                      <option>Marca 2</option>
-                      <option>Marca 3</option>
+                      <option value = {"Marca 1"}>Marca 1</option>
+                      <option value = {"Marca 2"}>Marca 2</option>
+                      <option value = {"Marca 3"}>Marca 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_brand?.message}
@@ -230,6 +272,7 @@ const NewProduct = (props) => {
                     <Input
                       type="select"
                       name="product_is_dollar"
+                      onChange={setearSelect}
                       innerRef={register({
                         required: {
                           value: true,
@@ -237,8 +280,8 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option>No</option>
-                      <option>Si</option>
+                      <option value={"0"}>No</option>
+                      <option value={"1"}>Si</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_is_dollar?.message}
@@ -253,6 +296,7 @@ const NewProduct = (props) => {
                     <Input
                       type="select"
                       name="category"
+                      onChange={setearSelect}
                       innerRef={register({
                         required: {
                           value: true,
@@ -260,9 +304,9 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option value={1}>Categoria 1</option>
-                      <option>Categoria 2</option>
-                      <option>Categoria 3</option>
+                      <option value={"1"}>Categoria 1</option>
+                      <option value={"2"}>Categoria 2</option>
+                      <option value={"3"}>Categoria 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.category?.message}
@@ -277,6 +321,7 @@ const NewProduct = (props) => {
                     <Input
                       type="select"
                       name="product_type"
+                      onChange={setearSelect}
                       innerRef={register({
                         required: {
                           value: true,
@@ -284,9 +329,9 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option>Tipo 1</option>
-                      <option>Tipo 2</option>
-                      <option>Tipo 3</option>
+                      <option value={"Tipo 1"}>Tipo 1</option>
+                      <option value={"Tipo 2"}>Tipo 2</option>
+                      <option value={"Tipo 3"}>Tipo 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_type?.message}
@@ -299,6 +344,7 @@ const NewProduct = (props) => {
                     <Input
                       type="select"
                       name="product_status"
+                      onChange={setearSelect}
                       innerRef={register({
                         required: {
                           value: true,
@@ -306,9 +352,9 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option>Estado 1</option>
-                      <option>Estado 2</option>
-                      <option>Estado 3</option>
+                      <option value={"1"}>Estado 1</option>
+                      <option value={"2"}>Estado 2</option>
+                      <option value={"3"}>Estado 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_status?.message}
@@ -330,9 +376,9 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option>Proveedor 1</option>
-                      <option>Proveedor 2</option>
-                      <option>Proveedor 3</option>
+                      <option value={"1"}>Proveedor 1</option>
+                      <option value={"2"}>Proveedor 2</option>
+                      <option value={"3"}>Proveedor 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.proveedor?.message}
@@ -360,8 +406,8 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option value={1}>Retail</option>
-                      <option value={11}>Indumentary</option>
+                      <option value={'1'}>Retail</option>
+                      <option value={'11'}>Indumentary</option>
                       
                     </Input>
                     <span className="text-danger span d-block mb-2">
@@ -416,9 +462,11 @@ const NewProduct = (props) => {
               </Col>
               <UncontrolledCollapse toggler="#togglerCampos">
                   <br/>
-                  {industry === 1 ?
-                    (<RetailProduct />) :
-                    (<IndumentaryProduct />)
+                  {industry === '1' ?
+                    (<RetailProduct passData={handleChangeDataExtra}/>) : null
+                  }
+                  { industry === '11' ?  
+                    <IndumentaryProduct passData={handleChangeDataExtra}/> : null
                   }
                   <Row form>
                       <Col md={4}>
@@ -427,7 +475,12 @@ const NewProduct = (props) => {
                           <Input
                           type="select"
                           name="product_material"
-                          ></Input>
+                          onChange={setearSelect}
+                          >
+                            <option value={"Material Uno"} default>Material uno</option>
+                            <option value={"Material Dos"}>Material dos</option>
+                            <option value={"Material Tres"}>Material tres</option>
+                          </Input>
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_material?.message}
                           </span>
@@ -439,7 +492,11 @@ const NewProduct = (props) => {
                           <Input
                           type="select"
                           name="product_origin"
-                          ></Input>
+                          onChange={setearSelect}
+                          >
+                            <option value={"Origen 1"}>Origen Uno</option>
+                            <option value={"Origen 2"}>Origen Dos</option>
+                          </Input>
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_origin?.message}
                           </span>
@@ -451,7 +508,11 @@ const NewProduct = (props) => {
                           <Input
                           type="select"
                           name="fabricante"
-                          ></Input>
+                          >
+                            <option  value={"Fabricante uno"}>Fabricante Uno</option>  
+                            <option  value={"Fabricante dos"}>Fabricante Doso</option>  
+                            <option  value={"Fabricante tres"}>Fabricante Tres</option>  
+                          </Input>
                           <span className="text-danger span d-block mb-2">
                           {errors?.fabricante?.message}
                           </span>
@@ -463,9 +524,9 @@ const NewProduct = (props) => {
                       <FormGroup>
                           <Label for="">Envio</Label>
                           <Input
-                          type="select"
+                          type="input"
                           name="product_shipping"
-                          ></Input>
+                          />
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_shipping?.message}
                           </span>
@@ -475,9 +536,9 @@ const NewProduct = (props) => {
                       <FormGroup>
                           <Label for="">Garantia</Label>
                           <Input
-                          type="select"
+                          type="input"
                           name="product_warranty"
-                          ></Input>
+                          />
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_warranty?.message}
                           </span>
@@ -487,9 +548,9 @@ const NewProduct = (props) => {
                       <FormGroup>
                           <Label for="">Codigo de Barra</Label>
                           <Input
-                          type="select"
+                          type="input"
                           name="product_barcode"
-                          ></Input>
+                          />
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_barcode?.message}
                           </span>
@@ -512,6 +573,7 @@ const NewProduct = (props) => {
                     <Input
                       type="select"
                       name="product_unit"
+                      onChange={setearSelect}
                       innerRef={register({
                         required: {
                           value: true,
@@ -519,9 +581,9 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option>U</option>
-                      <option>L</option>
-                      <option>B</option>
+                      <option value={"U"}>U</option>
+                      <option value={"L"}>L</option>
+                      <option value={"B"}>B</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_unit?.message}
@@ -571,7 +633,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Bultos al Cliente</Label>
                     <Input
                       type="number"
-                      name="product_package_to_client"
+                      name="product_package_customers"
                       innerRef={register({
                         required: {
                           value: true,
@@ -580,7 +642,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.product_package_to_client?.message}
+                      {errors?.product_package_customers?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -811,6 +873,7 @@ const NewProduct = (props) => {
                     <Input
                       type="select"
                       name="product_accountant_type"
+                      onChange={setearSelect}
                       innerRef={register({
                         required: {
                           value: true,
@@ -818,9 +881,9 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option>Bienes de cambio</option>
-                      <option>Tipo 2</option>
-                      <option>Tipo 3</option>
+                      <option value={"Bienes de Cambio"}>Bienes de cambio</option>
+                      <option value={"Tipo 2"}>Tipo 2</option>
+                      <option value={"Tipo 3"}>Tipo 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_accountant_type?.message}
@@ -833,6 +896,7 @@ const NewProduct = (props) => {
                     <Input
                       type="select"
                       name="product_accountant_account"
+                      onChange={setearSelect}
                       innerRef={register({
                         required: {
                           value: true,
@@ -840,9 +904,9 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option>Venta de Mercaderia</option>
-                      <option>Cuenta 2</option>
-                      <option>Cuenta 3</option>
+                      <option value={"Venta de Mercaderia"}>Venta de Mercaderia</option>
+                      <option value={"Cuenta 2"}>Cuenta 2</option>
+                      <option value={"Cuenta 3"}>Cuenta 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_accountant_account?.message}

@@ -5,8 +5,25 @@ import { useForm } from "react-hook-form";
 
 const IndumentaryProduct = (props)=> {
 
-    const {  errors } = useForm();
-
+    const {  register,errors } = useForm();
+    const [dataIndumentary,setDataIndumentary] = useState({
+        product_id: '',
+        product_curve: '',
+        product_color: 'Verde',
+        product_season: '',
+        product_status: '',
+      });
+    const handleChange = (event) => {
+        const {value,name} = event.target;
+        let objAux = {};
+        setDataIndumentary(
+            {
+                ...dataIndumentary,
+                [name]: value,
+            }
+        );
+        props.passData(dataIndumentary);
+    }
   return (
       <>
     <Row form>
@@ -15,10 +32,18 @@ const IndumentaryProduct = (props)=> {
             <Label for="">Curva</Label>
             <Input
             type="input"
-            name="curva"
+            name="product_curve"
+            value={dataIndumentary.product_curve}
+            onChange={handleChange}
+            innerRef={register({
+                required: {
+                  value: true,
+                  message: "curva del producto es requerido",
+                },
+            })}
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.curva?.message}
+            {errors?.product_curve?.message}
             </span>
         </FormGroup>
         </Col>
@@ -27,10 +52,18 @@ const IndumentaryProduct = (props)=> {
             <Label for="">Temporada</Label>
             <Input
             type="input"
-            name="temporada"
+            name="product_season"
+            value={dataIndumentary.product_season}
+            onChange={handleChange}
+            innerRef={register({
+                required: {
+                  value: true,
+                  message: "Temporada del producto es requerido",
+                },
+            })}
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.temporada?.message}
+            {errors?.product_season?.message}
             </span>
         </FormGroup>
         </Col>
@@ -39,10 +72,22 @@ const IndumentaryProduct = (props)=> {
             <Label for="">Colores</Label>
             <Input
             type="select"
-            name="colores"
-            ></Input>
+            name="product_color"
+            value={dataIndumentary.product_color}
+            onChange={handleChange}
+            innerRef={register({
+                required: {
+                  value: true,
+                  message: "color del producto es requerido",
+                },
+            })}
+            >
+                <option value={"Verde"}>Verde</option>
+                <option value={"Azul"}>Azul</option>
+                <option value = {"Amarillo"}>Amarillo</option>
+            </Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.colores?.message}
+            {errors?.product_color?.message}
             </span>
         </FormGroup>
         </Col>
