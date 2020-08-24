@@ -81,6 +81,13 @@ const RegisterCompanyContainer = (props) => {
     setDataCompany({ ...setDataCompany, company_id: elemento_id });
     props.history.push("/registersucursal");
   };
+
+  const toCreateCompany=()=>{
+    console.log(dataCompany.head_house_id)
+    props.history.push("/createcompany/" + props.match.params.id);
+  }
+
+
   //Funcion que renderiza el componente visual jsx
   return (
     <LayoutSucursal>
@@ -95,14 +102,12 @@ const RegisterCompanyContainer = (props) => {
             <Row card>
               <h5 className="text-white ml-2">Manage Companies</h5>
               <Col className="row justify-content-end">
-                <Link to="/createcompany">
-                  <Button color="secondary" size="md">
+                  <Button color="secondary" size="md" onClick={()=> toCreateCompany()}>
                     <i className="mr-1">
                       <BsPlusCircle />
                     </i>
                     <span className="align-middle">Add New Company</span>
                   </Button>
-                </Link>
               </Col>
             </Row>
           </CardHeader>

@@ -33,7 +33,7 @@ const Formulario = (props) => {
 
   const preparedData=(data)=>{
     changeTel(data);
-    setDataSend({...data, head_house_id: dataCompany.head_house_id})
+    setDataSend({...data, head_house_id: props.match.params.id})
   }
 
   const onSubmit = (data, e) => {
@@ -46,7 +46,8 @@ const Formulario = (props) => {
       )
       .then((res) => "Se cargo en la base de datos una nueva compañia")
       .catch((err) => console.log(err));
-      props.history.push("/registercompany");
+      console.log(dataSend);
+      //props.history.push("/registercompany/"+ props.match.params.id);
   };
   // const of countries
   const countries = [

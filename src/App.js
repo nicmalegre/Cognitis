@@ -125,7 +125,7 @@ const App = (props) => {
         {/*Routes of Register Companies*/}
         <CompanyProvider>
             <Route path="/dashboard" component={Dashboard} />
-            <Route path="/createcompany" component={CreateCompanyContainer} />
+            <Route path="/createcompany/:id" render={props =><CreateCompanyContainer {...props} />} />
             <Route path="/createsucursal" component={CreateSucursalContainer} />
             <Route path="/registersucursal" component={RegisterSucursalContanier} />
             <Route path="/registerheadcompany" component={RegisterHeadCompany} />
