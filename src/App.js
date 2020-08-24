@@ -129,7 +129,7 @@ const App = (props) => {
             <Route path="/createsucursal" component={CreateSucursalContainer} />
             <Route path="/registersucursal" component={RegisterSucursalContanier} />
             <Route path="/registerheadcompany" component={RegisterHeadCompany} />
-            <Route path="/registercompany" component={RegisterCompanyContainer} />
+            <Route path="/registercompany/:id" render={props =><RegisterCompanyContainer {...props} />} />
             <Route path="/registersucursal" component={RegisterSucursalContanier} />
         </CompanyProvider>
         {/*Routes of Catlog*/}

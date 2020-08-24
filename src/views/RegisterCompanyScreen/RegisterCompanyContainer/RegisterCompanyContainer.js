@@ -54,10 +54,10 @@ const RegisterCompanyContainer = (props) => {
 
   //peticion a la API para traer todas las compañias
   useEffect(() => {
-    console.log(dataCompany);
+    console.log(props);
     axios
       .get(
-        "https://cognitis-360.herokuapp.com/api/company/headhouse/" + dataCompany.head_house_id
+        "https://cognitis-360.herokuapp.com/api/company/headhouse/"+ props.match.params.id
       )
       .then((res) => {
         console.log(res)
