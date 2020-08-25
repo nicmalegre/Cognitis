@@ -46,7 +46,7 @@ const RegisterCompanyContainer = (props) => {
   useEffect(() => {
     axios
       .get(
-        "https://cognitis-360.herokuapp.com/api/company/headhouse/" +
+        "http://localhost:4000/api/company/headhouse/" +
           props.match.params.id
       )
       .then((res) => {
@@ -83,6 +83,9 @@ const RegisterCompanyContainer = (props) => {
     props.history.push("/createcompany/" + props.match.params.id);
   };
 
+  const toEditCompany = (company_id) => {
+    props.history.push("/editcompany/" + company_id);
+  };
   //Funcion que renderiza el componente visual jsx
   return (
     <LayoutSucursal>
@@ -130,7 +133,7 @@ const RegisterCompanyContainer = (props) => {
                     <td className="text-center">{elemento.company_cuit}</td>
                     <td className="text-center">{elemento.company_country}</td>
                     <td className="text-center">
-                      <Button color="primary" size="sm">
+                      <Button color="primary" size="sm" onClick={()=>toEditCompany(elemento.company_id)}>
                         <i className="mr-1">
                           <MdModeEdit />
                         </i>
