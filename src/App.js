@@ -131,7 +131,7 @@ const App = (props) => {
         <CompanyProvider>
             <Route path="/createcompany/:id" render={props =><CreateCompanyContainer {...props} />} />
             <Route path="/createsucursal/:id" render={props =><CreateSucursalContainer {...props} />} />
-            <Route path="/registersucursal/:id" render={props =><RegisterSucursalContanier {...props}/>} />
+            <Route path="/registersucursal/:id?" render={props =><RegisterSucursalContanier {...props}/>} />
             <Route path="/registerheadcompany" component={RegisterHeadCompany} />
             <Route path="/registercompany/:id" render={props =><RegisterCompanyContainer {...props} />} />
             <Route path="/editcompany/:id" component={EditCompanyContainer} />

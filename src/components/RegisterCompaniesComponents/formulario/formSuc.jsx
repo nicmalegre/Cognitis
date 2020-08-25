@@ -30,17 +30,16 @@ const Formsuc = (props) => {
   };
 
   //preparing data for send
-  const preparedData=(data)=>{
+  const preparedData = (data) => {
     changeTel(data);
     data["company_id"] = props.match.params.id;
     data["address"] = "calle 123";
-    data["country"] = "argentina"
-  }
+    data["country"] = "argentina";
+  };
 
   const onSubmit = (data, e) => {
     e.preventDefault();
     preparedData(data);
-    console.log(data);
     axios
       .post(
         "https://cognitis-360.herokuapp.com/api/branchofficehouse/newbranchoffice",
@@ -48,7 +47,8 @@ const Formsuc = (props) => {
       )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-    props.history.push("/registersucursal/" + props.match.params.id);
+    //props.history.push("/registersucursal/" + props.match.params.id);
+    props.history.goBack();
   };
 
   const [input, setInput] = useState({

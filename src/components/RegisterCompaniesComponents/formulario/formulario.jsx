@@ -59,7 +59,8 @@ const Formulario = (props) => {
       .then((res) => console.log("registro exitoso"))
       .catch((err) => console.log(err));
       e.preventDefault();
-      props.history.push("/registercompany/"+ props.match.params.id);
+      //props.history.push("/registercompany/"+ props.match.params.id);
+      props.history.goBack();
   };
   // const of countries
   const countries = [

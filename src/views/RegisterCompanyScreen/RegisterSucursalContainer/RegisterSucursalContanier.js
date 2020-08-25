@@ -55,7 +55,14 @@ const RegisterSucursalContainer = (props) => {
   };
 
   const eliminar = () => {
-    setData(data.filter((elemento) => elemento.id !== selectsuc.id));
+    const dataDelete ={
+      id: selectsuc.branch_office_id,
+    }
+    axios.post("http://localhost:4000/api/branchofficehouse/delete", dataDelete)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => console.log(err)); //mostrar error
     setModalEliminar(false);
   };
 
@@ -148,7 +155,7 @@ const RegisterSucursalContainer = (props) => {
         <Modal isOpen={modalEliminar}>
           <ModalBody>
             Estás Seguro que deseas eliminar la sucursal{" "}
-            {selectsuc && selectsuc.name}
+            {selectsuc && selectsuc.branch_office_name}
           </ModalBody>
           <ModalFooter>
             <button className="btn btn-danger" onClick={() => eliminar()}>

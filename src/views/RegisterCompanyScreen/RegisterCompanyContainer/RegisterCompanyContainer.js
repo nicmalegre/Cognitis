@@ -56,14 +56,14 @@ const RegisterCompanyContainer = (props) => {
       .catch((err) => console.log(err)); //mostrar error
   }, []);
 
-  const selectComp = (company_id) => {
-    setCompSelect(company_id);
+  const selectComp = (elemento) => {
+    setCompSelect(elemento);
     setModalEliminar(true);
   };
 
   const eliminar = () => {
     const dataDelete ={
-      company_id: selectcompany
+      company_id: selectcompany.company_id
     }
     axios.post("http://localhost:4000/api/company/deletecompany/", dataDelete)
     .then((res) => {
@@ -140,7 +140,7 @@ const RegisterCompanyContainer = (props) => {
                       <Button
                         color="danger"
                         size="sm"
-                        onClick={() => selectComp(elemento.company_id)}
+                        onClick={() => selectComp(elemento)}
                       >
                         <i className="mr-1">
                           <AiTwotoneDelete />
@@ -188,7 +188,7 @@ const RegisterCompanyContainer = (props) => {
         <Modal isOpen={modalEliminar}>
           <ModalBody>
             Estás Seguro que deseas eliminar la compañia{" "}
-            {selectcompany && selectcompany.name}
+            {selectcompany && selectcompany.company_name}
           </ModalBody>
           <ModalFooter>
             <button className="btn btn-danger" onClick={() => eliminar()}>
