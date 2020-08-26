@@ -31,6 +31,7 @@ const RegisterCompanyContainer = (props) => {
   //contador para mostrar dinamicamente el numero de compañia
   //const [cont, setContador] = useState(1);
   // state donde se almacena los datos de la compañia
+  //test
   const [data, setData] = useState([]);
   const [modalEliminar, setModalEliminar] = useState(false);
   const [selectcompany, setCompSelect] = useState({
