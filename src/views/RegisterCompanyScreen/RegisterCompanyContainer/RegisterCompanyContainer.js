@@ -81,7 +81,7 @@ const RegisterCompanyContainer = (props) => {
         }
         })
       .catch((err) => console.log(err)); //mostrar error
-    //setData(data.filter((elemento) => elemento.id !== selectcompany.id));
+    //setData(data.filter((elemento) => elemento.id !== selectcompany.id))
     setModalEliminar(false);
   };
 
