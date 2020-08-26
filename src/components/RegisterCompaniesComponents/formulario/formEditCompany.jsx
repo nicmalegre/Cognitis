@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"; //importacion de la libreria
+import { withRouter } from "react-router-dom";
 import {
   FormGroup,
   Input,
@@ -28,9 +29,9 @@ const Formulario = (props) => {
     const {company_id}= props.company_id
     axios
       .put(`https://cognitis-360.herokuapp.com/api/company/${company_id}`, data)
-      .then((res) => "Se actualizo en la base de datos la compañia")
+      .then((res) => props.history.goBack())
       .catch((err) => console.log(err));
-    window.location.href = "/registercompany";
+    //window.location.href = "/registercompany";
   };
   // const of countries
   const countries = [
@@ -528,4 +529,4 @@ const Formulario = (props) => {
     </Container>
   );
 };
-export default Formulario;
+export default withRouter(Formulario);

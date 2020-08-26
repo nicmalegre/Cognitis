@@ -50,17 +50,26 @@ const Formulario = (props) => {
   }
 
   const onSubmit = (data, e) => {
+    e.preventDefault();
     preparedData(data);
     axios
       .post(
         "https://cognitis-360.herokuapp.com/api/company/newcompany",
         data
       )
-      .then((res) => console.log("registro exitoso"))
+      .then((res) =>{
+        if(res.status == 200){
+          props.history.goBack()
+          //console.log(res);
+        }else{
+          console.log("error"+ res);
+        }
+      } 
+      )
       .catch((err) => console.log(err));
-      e.preventDefault();
+      
       //props.history.push("/registercompany/"+ props.match.params.id);
-      props.history.goBack();
+      
   };
   // const of countries
   const countries = [

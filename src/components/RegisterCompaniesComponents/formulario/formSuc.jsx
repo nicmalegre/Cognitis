@@ -45,10 +45,9 @@ const Formsuc = (props) => {
         "https://cognitis-360.herokuapp.com/api/branchofficehouse/newbranchoffice",
         data
       )
-      .then((res) => console.log(res))
+      .then((res) => props.history.goBack())
       .catch((err) => console.log(err));
     //props.history.push("/registersucursal/" + props.match.params.id);
-    props.history.goBack();
   };
 
   const [input, setInput] = useState({
