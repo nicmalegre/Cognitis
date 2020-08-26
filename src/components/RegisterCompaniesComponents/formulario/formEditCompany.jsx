@@ -1,4 +1,5 @@
-import React, { useState } from "react"; //importacion de la libreria
+import React, { useState, useEffect } from "react"; //importacion de la libreria
+import { withRouter } from "react-router-dom";
 import {
   FormGroup,
   Input,
@@ -19,16 +20,18 @@ const Formulario = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
 
+  useEffect(() => {
+    console.log('comapany id: ', props.company_id);
+  },[]);
 
   const onSubmit = (data, e) => {
-    /* e.preventDefault();
-    axios
-      .post("http://localhost:3000/api/headcompany/company/savecompany", data)
-      .then((res) => "Se cargo en la base de datos una nueva compañia")
-      .catch((err) => console.log(err));
-    window.location.href = "/registercompany"; */
     e.preventDefault();
-    console.log(data);
+    const {company_id}= props.company_id
+    axios
+      .put(`https://cognitis-360.herokuapp.com/api/company/${company_id}`, data)
+      .then((res) => props.history.goBack())
+      .catch((err) => console.log(err));
+    //window.location.href = "/registercompany";
   };
   // const of countries
   const countries = [
@@ -61,7 +64,6 @@ const Formulario = (props) => {
     let length = inputvalue.length;
     let name = event.target.name;
     let noerror = await trigger(name);
-    console.log(noerror);
     if (length > 0 && noerror) {
       value = errors?.name ? false : true;
     } else {
@@ -525,4 +527,4 @@ const Formulario = (props) => {
     </Container>
   );
 };
-export default Formulario;
+export default withRouter(Formulario);

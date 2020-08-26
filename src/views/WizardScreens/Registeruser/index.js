@@ -30,7 +30,7 @@ const Registeruser = (props) => {
 
     setVerifyingEmail(true)
 
-    axios.post('http://localhost:3000/api/users/emailverification', {
+    axios.post('https://cognitis-360.herokuapp.com/api/users/emailverification', {
       user_mail: email
     })
     .then( async res => {
@@ -51,7 +51,7 @@ const Registeruser = (props) => {
   /* SenData send a email to email address entered ànd return the verification cede and the expiration time */
   const sendData = (email) => {
     
-    axios.post('http://localhost:3000/api/verificationcode', {
+    axios.post('https://cognitis-360.herokuapp.com/api/verificationcode', {
       user_mail: email
     })
     .then(async  res => { 

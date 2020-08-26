@@ -55,10 +55,11 @@ const LoginUsers = (props) => {
             setMaximiumAttemptsExceeded(true) //Show the message than the maximium attempts exceeded
 
             //Set the passwordExpired field true in the database. So the user have to restart his password
-            axios.put(`https://cognitis-360.herokuapp.com/api/users/updateUser/${props.user.email}`, {
-                passwordExpired:true,
-            }).then(console.log("User update"))
-            .catch(console.log("Can't update"))         
+            //axios.put(`http://localhost:3000/api/users/update/user/${props.user.email}`, {
+            axios.put(`https://cognitis-360.herokuapp.com/api/users/update/user/${props.user.email}`, {
+                user_password_expired:true,
+            }).then(console.log(""))
+            .catch(console.log(""))         
         }
     }
 
@@ -66,15 +67,16 @@ const LoginUsers = (props) => {
     const controlInput = (userFound) =>{
         if (userFound) { //If found an user that matched with the email from the input
             //Here we put the things when the email is right
-            if ((props.user.password === userFound.password) && (!userFound.passwordExpired) ){
+            if ((props.user.password === userFound.user_password) && (!userFound.user_password_expired) ){
                 //Here we put the things when the email match with the password and everything is right in the login
                 //Start Session
                 //Go to the next page
-                console.log("Todo ok")
+                console.log("Las credenciales ingresadas son correctas.")
+                props.history.push('/catalog/searchproducts')
 
             }else{//The password doesn't match with the email
                 incorrectCredentialActions()
-                console.log("entra aca")
+                console.log("Las credenciales ingresadas son incorrectas.")
             }
 
         }else{
@@ -86,8 +88,9 @@ const LoginUsers = (props) => {
     }
 
     const getData = async () => {       
-        await axios.post('https://cognitis-360.herokuapp.com/api/users/getUser', {
-            mail: props.user.email
+        //await axios.post('http://localhost:3000/api/users/getuser', {
+        await axios.post('https://cognitis-360.herokuapp.com/api/users/getuser', {
+            user_mail: props.user.email
         })
         .then(async res =>{
             const userExist = await res.data 

@@ -13,7 +13,7 @@ const EditCompanyContainer = (props) => {
   },[]);
 
   const getCompany = id => {
-    axios.get(`http://localhost:3000/api/company/${id}`)
+    axios.get(`https://cognitis-360.herokuapp.com/api/company/${id}`)
     .then(res => {
         setCompany(res.data)
     })
@@ -22,7 +22,7 @@ const EditCompanyContainer = (props) => {
 
   return (
     <RegisterCompanyLayout>
-      { company ? <Form company={company}/> : <span>Loading...</span>}
+      { company ? <Form company={company} company_id={props.match.params.id}/> : <span>Loading...</span>}
     </RegisterCompanyLayout>
   );
 };
