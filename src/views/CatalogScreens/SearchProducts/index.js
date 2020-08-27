@@ -106,8 +106,13 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
 
 }
 
+const getCategories = ()=>{
+  axios.get('https://cognitis-360.herokuapp.com/api/categories')
+  .then(res => {console.log(res)})
+  .catch(err => console.log(err))
+}
 
-
+getCategories()
 
 
   return (
