@@ -49,12 +49,30 @@ const Formulario = (props) => {
     data["head_house_id"] = props.match.params.id
   }
 
-  const onSubmit = (data, e) => {
+
+  const onSubmit = async(data, e) => {
     e.preventDefault();
     preparedData(data);
-    axios
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/company/newcompany", data
+      )
+      if(res.status == 200){
+        props.history.goBack()
+        //console.log(res);
+      }else{
+        console.log("error"+ res);
+      }
+    } 
+     catch (e) {
+      console.log(e);
+    }
+  };
+        
+    
+  /*  axios
       .post(
-        "https://cognitis-360.herokuapp.com/api/company/newcompany",
+        "https://localhost:3000/api/company/newcompany",
         data
       )
       .then((res) =>{
@@ -66,11 +84,8 @@ const Formulario = (props) => {
         }
       } 
       )
-      .catch((err) => console.log(err));
-      
-      //props.history.push("/registercompany/"+ props.match.params.id);
-      
-  };
+      .catch((err) => console.log(err));*/  
+  
   // const of countries
   const countries = [
     "Argentina",
