@@ -3,7 +3,7 @@ import Form from "../../components/RegisterCompaniesComponents/formulario/formEd
 import RegisterCompanyLayout from "../Layouts/RegisterCompanyLayout/index";
 import axios from 'axios'
 const EditBranchContainer = (props) => {
-  const [branchoffice, setBranchOffice] = useState([]);
+  const [branchoffice, setBranchOffice] = useState(null);
   const [dataSend , setDataSend] = useState({company_id:props.match.params.id});
   
   useEffect(() => {
@@ -12,9 +12,10 @@ const EditBranchContainer = (props) => {
   },[]);
 
   const getBranchOffice = id => {
-    axios.post("http://localhost:3000/api/branchofficehouse/branchofficebycompany", dataSend)
+    axios.get(`http://localhost:3000/api/branchofficehouse/${id}`)
     .then(res => {
         setBranchOffice(res.data)
+        console.log(branchoffice);
     })
     .catch(err => console.log(err))
   }

@@ -32,17 +32,18 @@ const Formulario = (props) => {
   //preparing data for send
   const preparedData = (data) => {
     changeTel(data);
-    data["company_id"] = props.match.params.id;
+    //data["company_id"] = props.match.params.id;
     data["address"] = "calle 123";
     data["country"] = "argentina";
+    data["id"]= props.branch_office_id;
   };
 
   const onSubmit = async(data, e) => {
     e.preventDefault();
     preparedData(data);
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/branchofficehouse/newbranchoffice", data
+      const res = await axios.put(
+        "http://localhost:3000/api/branchofficehouse/update", data
       )
       if(res.status == 200){
         console.log(res);
@@ -100,7 +101,7 @@ const Formulario = (props) => {
         </Col>
         <Col lg="8" xs="10">
           <h3 className="mt-5 text" style={{ marginBottom: 30 }}>
-            Edite datos de la Sucursal {props.cantSuc}{" "}
+            Edite los datos de la Sucursal {props.cantSuc}{" "}
           </h3>
         </Col>
       </Row>
@@ -329,7 +330,7 @@ const Formulario = (props) => {
                           value: false,
                         },
                       })}
-                      defaultValue={props.branchoffice.branch_office_name}
+                      defaultValue={props.branchoffice.branch_office_fax}
                     />
                   </FormGroup>
                 </Col>
@@ -362,7 +363,7 @@ const Formulario = (props) => {
                           message: "No menos de 3 caracteres!",
                         },
                       })}
-                      defaultValue={props.company.bankcompany[0].bank_company_name}
+                      defaultValue={props.branchoffice.bankbranch[0].bank_branch_office_name}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.bank_name?.message}
@@ -378,7 +379,7 @@ const Formulario = (props) => {
                       Numero de Cuenta Bancaria
                     </Label>
                     <Input
-                     defaultValue={props.company.bankcompany[0].bank_company_account}
+                     defaultValue={props.branchoffice.bankbranch[0].bank_branch_office_account}
                       type="number"
                       name="bank_account"
                       valid={input.bank_account}
@@ -431,7 +432,7 @@ const Formulario = (props) => {
                           message: "No menos de 22 numeros",
                         },
                       })}
-                      defaultValue={props.company.bankcompany[0].bank_company_cbu}
+                      defaultValue={props.branchoffice.bankbranch[0].bank_branch_office_cbu}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.bank_cbu?.message}
@@ -461,7 +462,7 @@ const Formulario = (props) => {
                           message: "No menos de 6 caracteres!",
                         },
                       })}
-                      defaultValue={props.company.bankcompany[0].bank_company_alias}
+                      defaultValue={props.branchoffice.bankbranch[0].bank_branch_office_alias}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.bank_alias?.message}
