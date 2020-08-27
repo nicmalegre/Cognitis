@@ -86,6 +86,7 @@ const LoginUsers = (props) => {
     }
 
     const getData = async () => {       
+        console.log(props.user.email)
         await axios.post('https://cognitis-360.herokuapp.com/api/users/getUser', {
             mail: props.user.email
         })

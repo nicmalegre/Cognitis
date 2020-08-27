@@ -4,7 +4,7 @@ import {Row, Col, FormGroup, Label} from 'reactstrap'
 
 const IndumentaryProduct = (props)=> {
 
-  console.log(props.prop) //Llega el array con los atributos de forma correcta.
+  console.log(props) //Llega el array con los atributos de forma correcta.
 
   return (
     <Row form >
