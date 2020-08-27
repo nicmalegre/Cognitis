@@ -90,6 +90,10 @@ const RegisterSucursalContainer = (props) => {
     props.history.push("/createsucursal/" + props.match.params.id);
   }
 
+  const toEditBranch = (branchoffice_id) => {
+    props.history.push("/editbranchoffice/" + branchoffice_id);
+  };
+
   //Funcion que renderiza el componente visual jsx
   return (
     <LayoutSucursal>
@@ -130,7 +134,9 @@ const RegisterSucursalContainer = (props) => {
                   <td className="text-center">{elemento.branch_office_name}</td>
                   <td className="text-center">{elemento.branch_office_cuit}</td>
                   <td className="text-center">
-                    <Button color="primary" size="sm">
+                    <Button color="primary"
+                            size="sm"
+                            onClick={()=> toEditBranch(elemento.branch_office_id)}>
                       <i className="mr-1 mt-1">
                         <MdModeEdit />
                       </i>
@@ -193,4 +199,4 @@ const RegisterSucursalContainer = (props) => {
     </LayoutSucursal>
   );
 };
-export default RegisterSucursalContainer;
+export default withRouter(RegisterSucursalContainer);

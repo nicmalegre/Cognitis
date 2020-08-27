@@ -21,6 +21,7 @@ import CreateSucursalContainer from './views/RegisterCompanyScreen/CreateSucursa
 import RegisterSucursalContanier from './views/RegisterCompanyScreen/RegisterSucursalContainer/RegisterSucursalContanier'; //this components works
 import RegisterHeadCompany from './views/RegisterCompanyScreen/RegisterHeadCompanyContainer/RegisterHeadCompany'; //this components works
 import RegisterCompanyContainer from './views/RegisterCompanyScreen/RegisterCompanyContainer/RegisterCompanyContainer';
+import EditBranchContainer from './views/RegisterCompanyScreen/EditBranchContainer';
 import FormTest from './components/CatologComponents/test/formtest';
 import { Provider } from "react-redux";
 import { propTypes } from "react-bootstrap/esm/Image";
@@ -135,9 +136,10 @@ const App = (props) => {
             <Route path="/registerheadcompany" component={RegisterHeadCompany} />
             <Route path="/registercompany/:id" render={props =><RegisterCompanyContainer {...props} />} />
             <Route path="/editcompany/:id" component={EditCompanyContainer} />
+            <Route path="/editbranchoffice/:id" component={EditBranchContainer} />
         </CompanyProvider>
         {/*Routes of Catlog*/}
-  <Route path="/catalog/productview/:id" render={props => <ProductView {...props}/>}/>
+        F<Route path="/catalog/productview/:id" render={props => <ProductView {...props}/>}/>
   
         <Route path="/catalog/searchproducts">
           <SearchProducts />
