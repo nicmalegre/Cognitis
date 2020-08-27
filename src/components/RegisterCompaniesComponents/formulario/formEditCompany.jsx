@@ -115,7 +115,7 @@ const Formulario = (props) => {
                         message: "Nombre de sucursal es requerido",
                       },
                     })}
-                    value={props.company.company_name}
+                    defaultValue={props.company.company_name}
                   />
                   <span className="text-danger span d-block mb-2">
                     {errors?.company?.message}
@@ -137,7 +137,7 @@ const Formulario = (props) => {
                           message: "Razon Social es requerido",
                         },
                       })}
-                      value={props.company.company_business_name}
+                      defaultValue={props.company.company_business_name}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.razonsocial?.message}
@@ -172,7 +172,7 @@ const Formulario = (props) => {
                           message: "invalid cuil o cuit",
                         },
                       })}
-                      value={props.company.company_cuit}
+                      defaultValue={props.company.company_cuit}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.cuil?.message}
@@ -229,7 +229,7 @@ const Formulario = (props) => {
                           message: "invalid email address",
                         },
                       })}
-                      value={props.company.company_email}
+                      defaultValue={props.company.company_email}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.email?.message}
@@ -356,7 +356,7 @@ const Formulario = (props) => {
                               message: "No menos de 4 numeros!",
                             },
                           })}
-                          value={props.company.company_tel}
+                          defaultValue={props.company.company_tel}
                         />
                         <span className="text-danger span d-block mb-2">
                           {errors?.nrotel?.message}
@@ -380,7 +380,7 @@ const Formulario = (props) => {
                           value: false,
                         },
                       })}
-                      value={props.company.company_fax}
+                      defaultValue={props.company.company_fax}
                     />
                   </FormGroup>
                 </Col>
@@ -413,7 +413,7 @@ const Formulario = (props) => {
                           message: "No menos de 3 caracteres!",
                         },
                       })}
-                      value={props.company.bankcompany[0].bank_company_name}
+                      defaultValue={props.company.bankcompany[0].bank_company_name}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.nameBank?.message}
@@ -429,7 +429,7 @@ const Formulario = (props) => {
                       Numero de Cuenta Bancaria
                     </Label>
                     <Input
-                      value={props.company.bankcompany[0].bank_company_account}
+                      defaultValue={props.company.bankcompany[0].bank_company_account}
                       type="text"
                       name="cuentaBancaria"
                       id="cuentaBancaria"
@@ -469,7 +469,7 @@ const Formulario = (props) => {
                           message: "No menos de 22 numeros",
                         },
                       })}
-                      value={props.company.bankcompany[0].bank_company_cbu}
+                      defaultValue={props.company.bankcompany[0].bank_company_cbu}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.cbu?.message}
@@ -499,7 +499,7 @@ const Formulario = (props) => {
                           message: "No menos de 6 caracteres!",
                         },
                       })}
-                      value={props.company.bankcompany[0].bank_company_alias}
+                      defaultValue={props.company.bankcompany[0].bank_company_alias}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.alias?.message}
@@ -513,11 +513,9 @@ const Formulario = (props) => {
                 style={{ marginTop: 10 }}
               >
                 <Col md={2}>
-                  {/*<Link to="/NumberCompanies">*/}
                   <Button color="primary" type="submit" active>
                     Continuar
                   </Button>
-                  {/*</Link>*/}
                 </Col>
               </Row>
               <br />
