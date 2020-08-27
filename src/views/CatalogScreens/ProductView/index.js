@@ -52,19 +52,23 @@ const ProductView = (props) => {
         product_barcode:'',
         product_status:'',
         product_category:'',
-        product_industry_id:''
+        product_industry_id:'',
+        product_curve: '',
         
 
 
     })
 
+    console.log(props)
     //Variable que indica la industria en este momento
     const industry = 'retail'; //se va setear con una propiedad que se pase en props 
     //const industry = props.products_industry_id //if = 1 then retail else indumentary
 
     //Id del producto que se selecciono para ver 
-    let id_product = parseInt(props.match.params.id); //se va setear con una propiedad que se pase en props
-    
+    let id_product = parseInt(props.match.params.idProduct); //se va setear con una propiedad que se pase en props
+
+
+
     //Haremos una peticion a la API para traer el objeto producto a partir de la id que nos llega  
     useEffect(() => {
         
@@ -76,8 +80,9 @@ const ProductView = (props) => {
             props.dispatch(fetchProductoData(res.data));
             setDataProduct(res.data); //le tenemos que pasar res para setear el objeto local
 
+
             }).catch(err => console.log(err)); //mostrar error
-       
+            
         
     }, []);
 
@@ -120,10 +125,11 @@ const ProductView = (props) => {
             product_barcode: product.product_barcode,
             product_status: product.product_status,
             product_category: product.product_category,
-            product_industry_id: product.product_industry_id
+            product_industry_id: product.product_industry_id,
+
         
         })
-        
+
         
 
       };
@@ -134,6 +140,8 @@ const ProductView = (props) => {
       ) : (
         <IndumentaryProduct prop={producto} />
       );
+    
+      
 
 
 
