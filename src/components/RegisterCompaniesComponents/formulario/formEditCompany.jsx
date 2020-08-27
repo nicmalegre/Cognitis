@@ -1,10 +1,7 @@
-import React, { useState, useContext } from "react";
-import { CompanyContext } from "../../../store/CompanyContext";
-//importacion de la libreria
+import React, { useState, useEffect } from "react"; //importacion de la libreria
 import { withRouter } from "react-router-dom";
 import {
   FormGroup,
-  Button,
   Input,
   Row,
   Container,
@@ -12,43 +9,30 @@ import {
   Label,
   Card,
   Form,
+  Button,
 } from "reactstrap"; //importar elementos
-//import "../RegisterHeadCompany/index.css"; //importar css
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Logo from "../../WizardComponents/base/logo";
+//importar css
 import "./index.css";
-import { MdLineWeight } from "react-icons/md";
-
-const FormHeadCompany = (props) => {
+const Formulario = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
 
-  //mediante context almaceno en una variable global el head_house_id al registrar mi compañia house
-  const [dataCompany, setDataCompany] = useContext(CompanyContext);
-  
-  
-  // concateno los datos de codpais + codarea + head_tel para almacenalo en la BD como head_tel
-  const changeTel = (data) => {
-    data.head_tel = data.codPais + data.codArea + data.head_tel;
-  };
+  useEffect(() => {
+    console.log('comapany id: ', props.company_id);
+  },[]);
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    changeTel(data);
-    axios.post("https://cognitis-360.herokuapp.com/api/head_house/registerheadhouse", data)
-    .then((res) =>    
-    //setDataCompany({...setDataCompany, head_house_id: res.data})
-    props.history.push("/registercompany/"+ res.data)
-    )
-    .catch((err) => console.log(err));
-     //props.history.push("/registercompany");
+    const {company_id}= props.company_id
+    axios
+      .put(`https://cognitis-360.herokuapp.com/api/company/${company_id}`, data)
+      .then((res) => props.history.goBack())
+      .catch((err) => console.log(err));
+    //window.location.href = "/registercompany";
   };
-
-  const [input, setInput] = useState({
-    value: false,
-  });
-
   // const of countries
   const countries = [
     "Argentina",
@@ -68,13 +52,18 @@ const FormHeadCompany = (props) => {
     "Venezuela",
   ];
 
+  const [input, setInput] = useState({
+    company: "",
+    razonsocial: "",
+    cuil: "",
+  });
+
   const inputChange = async (event) => {
     let value = "";
     let inputvalue = event.target.value;
     let length = inputvalue.length;
     let name = event.target.name;
     let noerror = await trigger(name);
-
     if (length > 0 && noerror) {
       value = errors?.name ? false : true;
     } else {
@@ -95,37 +84,41 @@ const FormHeadCompany = (props) => {
         </Col>
         <Col lg="8" xs="10">
           <h3 className="mt-5 text" style={{ marginBottom: 30 }}>
-            Ingrese datos de la Compañia Matriz
+            Ingrese datos de la Compañia {props.cantCompanies}{" "}
           </h3>
         </Col>
       </Row>
       <Row>
         <Col lg="12">
           <Card id="card-user">
-            <Form onSubmit={handleSubmit(onSubmit)} id="card-user" /*body*/>
+            <Form onSubmit={handleSubmit(onSubmit)} id="card-user">
               <br />
-              <h6 className="text">Datos de la Compañia Matriz</h6>
+              <h6 className="text">
+                Datos de la Compañia {props.cantCompanies}{" "}
+              </h6>
               <Row form>
                 <Col md={6}>
                   <span className="text-danger font-weight-bold">*</span>{" "}
-                  <Label for="nameHeadCompany">
-                    Nombre de la Compañia Matriz
+                  <Label for="company">
+                    Nombre de la Compañia {props.cantCompanies}{" "}
                   </Label>
                   <Input
                     type="text"
-                    name="head_name"
-                    placeholder="ingrese el nombre de la compañia matriz"
-                    valid={input.head_name}
+                    name="company"
+                    id="company"
+                    placeholder="ingrese el nombre de la compañia"
+                    valid={input.company}
                     onChange={inputChange}
                     innerRef={register({
                       required: {
                         value: true,
-                        message: "Compañia Matriz es requerido",
+                        message: "Nombre de sucursal es requerido",
                       },
                     })}
+                    value={props.company.company_name}
                   />
                   <span className="text-danger span d-block mb-2">
-                    {errors?.head_name?.message}
+                    {errors?.company?.message}
                   </span>
                 </Col>
                 <Col md={6}>
@@ -134,8 +127,9 @@ const FormHeadCompany = (props) => {
                     <Label for="razonsocial">Razon Social</Label>
                     <Input
                       type="text"
-                      name="head_business_name"
-                      valid={input.head_business_name}
+                      name="razonsocial"
+                      id="razosocial"
+                      valid={input.razonsocial}
                       onChange={inputChange}
                       innerRef={register({
                         required: {
@@ -143,9 +137,10 @@ const FormHeadCompany = (props) => {
                           message: "Razon Social es requerido",
                         },
                       })}
+                      value={props.company.company_business_name}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.head_business_name?.message}
+                      {errors?.razonsocial?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -156,34 +151,31 @@ const FormHeadCompany = (props) => {
                     <span className="text-danger font-weight-bold">*</span>{" "}
                     <Label for="Cuil">CUIL o CUIT</Label>
                     <Input
-                      //type="number"
-                      name="head_cuit"
+                      //type="text"
+                      name="cuil"
                       id="Cuil"
-                      valid={input.head_cuit}
-                      onChange={inputChange}
                       placeholder="Ejemplo XX12345678X"
                       maxLength="11"
+                      valid={input.cuil}
+                      onChange={inputChange}
                       innerRef={register({
                         required: {
                           value: true,
                           message: "Cuil o Cuit es requerido",
-                        },
-                        maxLength: {
-                          value: 11,
-                          message: "No más de 11 carácteres!",
                         },
                         minLength: {
                           value: 11,
                           message: "No menos de 11 carácteres!",
                         },
                         pattern: {
-                          value: /^[0-9]{11}$/i,
-                          message: "Solo caracteres numéricos",
+                          value: /^[0-9]{11}$/,
+                          message: "invalid cuil o cuit",
                         },
                       })}
+                      value={props.company.company_cuit}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.head_cuit?.message}
+                      {errors?.cuil?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -193,10 +185,8 @@ const FormHeadCompany = (props) => {
                     <Label for="pais">Pais</Label>
                     <Input
                       type="select"
-                      name="head_country"
+                      name="pais"
                       id="pais"
-                      valid={input.head_country}
-                      onChange={inputChange}
                       innerRef={register({
                         required: {
                           value: false,
@@ -204,6 +194,12 @@ const FormHeadCompany = (props) => {
                       })}
                       onChange={inputChange}
                     >
+                      <option
+                        key={props.company.company_country}
+                        value={props.company.company_country}
+                      >
+                        {props.company.company_country}
+                      </option>
                       {/* Function to insert the countries of the array like items in dropdown menu */}
                       {countries.map((country) => (
                         <option key={country} value={country}>
@@ -221,8 +217,9 @@ const FormHeadCompany = (props) => {
                     <Label for="email">Email</Label>
                     <Input
                       type="email"
-                      name="head_email"
-                      valid={input.head_email}
+                      name="email"
+                      id="email"
+                      valid={input.email}
                       onChange={inputChange}
                       placeholder="Ingrese su email"
                       innerRef={register({
@@ -232,9 +229,41 @@ const FormHeadCompany = (props) => {
                           message: "invalid email address",
                         },
                       })}
+                      value={props.company.company_email}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.head_email?.message}
+                      {errors?.email?.message}
+                    </span>
+                  </FormGroup>
+                </Col>
+                <Col md={6}>
+                  <FormGroup>
+                    <span className="text-danger font-weight-bold">*</span>{" "}
+                    <Label for="Tipo de Industria">Tipo de Industria</Label>
+                    <Input
+                      type="select"
+                      name="industria"
+                      id="inductria"
+                      placeholder="seleccione su industria"
+                      innerRef={register({
+                        required: "Tipo de industria requerido",
+                      })}
+                    >
+                      <option
+                        key={props.company.industry.industry_name}
+                        value={props.company.industry.industry_id}
+                      >
+                        {props.company.industry.industry_name}
+                      </option>
+                      <option key="Retail" value="Retail">
+                        Retail{" "}
+                      </option>
+                      <option key="Indumentaria" value="Indumentaria">
+                        Indumentaria
+                      </option>
+                    </Input>
+                    <span className="text-danger span d-block mb-2">
+                      {errors?.inductria?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -249,9 +278,10 @@ const FormHeadCompany = (props) => {
                         <Input
                           type="text"
                           name="codPais"
+                          id="codPais"
+                          placeholder="+54"
                           valid={input.codPais}
                           onChange={inputChange}
-                          placeholder="+54"
                           innerRef={register({
                             required: {
                               value: true,
@@ -262,7 +292,7 @@ const FormHeadCompany = (props) => {
                               message: "No más de 5 carácteres!",
                             },
                             minLength: {
-                              value: 2,
+                              value: 3,
                               message: "No menos de 3 carácteres!",
                             },
                           })}
@@ -279,6 +309,7 @@ const FormHeadCompany = (props) => {
                         <Input
                           type="number"
                           name="codArea"
+                          id="codArea"
                           valid={input.codArea}
                           onChange={inputChange}
                           innerRef={register({
@@ -307,9 +338,9 @@ const FormHeadCompany = (props) => {
                         <Label for="nrotel">Nro. Telefono</Label>
                         <Input
                           type="number"
-                          name="head_tel"
+                          name="nrotel"
                           id="nrotel"
-                          valid={input.head_tel}
+                          valid={input.nrotel}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -325,9 +356,10 @@ const FormHeadCompany = (props) => {
                               message: "No menos de 4 numeros!",
                             },
                           })}
+                          value={props.company.company_tel}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.head_tel?.message}
+                          {errors?.nrotel?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -337,10 +369,10 @@ const FormHeadCompany = (props) => {
                   <FormGroup>
                     <Label for="nroFax">Fax</Label>
                     <Input
-                      type="number"
-                      name="head_fax"
+                      type="text"
+                      name="fax"
                       id="nroFax"
-                      valid={input.head_fax}
+                      valid={input.fax}
                       onChange={inputChange}
                       placeholder="Ingrese el nro de fax de la compañia"
                       innerRef={register({
@@ -348,6 +380,7 @@ const FormHeadCompany = (props) => {
                           value: false,
                         },
                       })}
+                      value={props.company.company_fax}
                     />
                   </FormGroup>
                 </Col>
@@ -361,9 +394,9 @@ const FormHeadCompany = (props) => {
                     <Label for="nameBank">Nombre del Banco</Label>
                     <Input
                       type="text"
-                      name="bank_head_house_name"
+                      name="nameBank"
                       id="nameBank"
-                      valid={input.bank_head_house_name}
+                      valid={input.nameBank}
                       onChange={inputChange}
                       placeholder="Ingrese el nombre del banco"
                       innerRef={register({
@@ -380,9 +413,10 @@ const FormHeadCompany = (props) => {
                           message: "No menos de 3 caracteres!",
                         },
                       })}
+                      value={props.company.bankcompany[0].bank_company_name}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bank_head_house_name?.message}
+                      {errors?.nameBank?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -395,28 +429,16 @@ const FormHeadCompany = (props) => {
                       Numero de Cuenta Bancaria
                     </Label>
                     <Input
-                      type="number"
-                      name="bank_head_house_account"
-                      valid={input.bank_head_house_account}
+                      value={props.company.bankcompany[0].bank_company_account}
+                      type="text"
+                      name="cuentaBancaria"
+                      id="cuentaBancaria"
+                      valid={input.cuentaBancaria}
                       onChange={inputChange}
                       placeholder="Ingrese su nro de cuenta bancaria"
-                      innerRef={register({
-                        required: {
-                          value: true,
-                          message: "Numero de cuenta bancaria es requerido",
-                        },
-                        maxLength: {
-                          value: 15,
-                          message: "No más de 15 numeros!",
-                        },
-                        minLength: {
-                          value: 12,
-                          message: "No menos de 12 numeros!",
-                        },
-                      })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bank_head_house_account?.message}
+                      {errors?.cuentaBancaria?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -428,9 +450,9 @@ const FormHeadCompany = (props) => {
                     <Label for="cbu">CBU</Label>
                     <Input
                       type="number"
-                      name="bank_head_house_cbu"
+                      name="cbu"
                       id="cbu"
-                      valid={input.bank_head_house_cbu}
+                      valid={input.cbu}
                       onChange={inputChange}
                       placeholder="Ingrese el nro de CBU"
                       innerRef={register({
@@ -447,9 +469,10 @@ const FormHeadCompany = (props) => {
                           message: "No menos de 22 numeros",
                         },
                       })}
+                      value={props.company.bankcompany[0].bank_company_cbu}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bank_head_house_cbu?.message}
+                      {errors?.cbu?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -458,8 +481,9 @@ const FormHeadCompany = (props) => {
                     <Label for="alias">Alias</Label>
                     <Input
                       type="text"
-                      name="bank_head_house_alias"
-                      valid={input.bank_head_house_alias}
+                      name="alias"
+                      id="alias"
+                      valid={input.alias}
                       onChange={inputChange}
                       placeholder="Ingrese su alias"
                       innerRef={register({
@@ -475,9 +499,10 @@ const FormHeadCompany = (props) => {
                           message: "No menos de 6 caracteres!",
                         },
                       })}
+                      value={props.company.bankcompany[0].bank_company_alias}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bank_head_house_alias?.message}
+                      {errors?.alias?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -489,7 +514,7 @@ const FormHeadCompany = (props) => {
               >
                 <Col md={2}>
                   {/*<Link to="/NumberCompanies">*/}
-                  <Button color="primary" type="Submit" active>
+                  <Button color="primary" type="submit" active>
                     Continuar
                   </Button>
                   {/*</Link>*/}
@@ -504,5 +529,4 @@ const FormHeadCompany = (props) => {
     </Container>
   );
 };
-
-export default withRouter(FormHeadCompany);
+export default withRouter(Formulario);

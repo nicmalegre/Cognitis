@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -11,7 +11,8 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap"; //importar elementos
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import axios from 'axios';
 import Logo from "../../../components/WizardComponents/base/logo";
 import { BsPlusCircle } from "react-icons/bs";
 import { AiTwotoneDelete } from "react-icons/ai";
@@ -20,21 +21,13 @@ import LayoutSucursal from '../../Layouts/RegisterCompanyLayout/layoutsucursal';
 import "./index.css";
 
 const RegisterSucursalContainer = (props) => {
-  const sucursal = [
-    { id: 1, name: "sucursal 1", cuil: "122555555" },
-    { id: 2, name: "sucursal 2", cuil: "23370432896" },
-    { id: 3, name: "sucursal 3", cuil: "1212313213212" },
-    { id: 4, name: "sucursal 4", cuil: "55556568778" },
-  ];
-
-  console.log(props)
-
   //Se almacena la cantidad de compañias
   //const [company, setCompany] = useState(props.cantCompanies);
   //contador para mostrar dinamicamente el numero de compañia
   //const [cont, setContador] = useState(1);
   // state donde se almacena los datos de la compañia
-  const [data, setData] = useState(sucursal);
+  const [data, setData] = useState([]);
+  const [dataSend , setDataSend] = useState({company_id:props.match.params.id});
   const [modalEliminar, setModalEliminar] = useState(false);
   const [selectsuc, setSucSelect] = useState({
     id: "",
@@ -42,15 +35,45 @@ const RegisterSucursalContainer = (props) => {
     cuil: "",
   });
 
+
+  const getBranchOffices=()=>{
+    axios
+    .get(
+      "http://localhost:3000/api/branchofficehouse/branchofficebycompany",dataSend
+    )
+    .then((res) => {
+      setData(res.data); //le tenemos que pasar res para setear el objeto local
+    })
+    .catch((err) => console.log(err)); //mostrar error
+  }
+
+  //peticion a la API para traer todas las compañias
+  useEffect(() => {
+   getBranchOffices();
+  }, []);
+
+  
   const selectSucursal = (elemento) => {
     setSucSelect(elemento);
     setModalEliminar(true);
   };
 
   const eliminar = () => {
-    setData(data.filter((elemento) => elemento.id !== selectsuc.id));
+    const dataDelete = {
+      id: selectsuc.branch_office_id,
+    }
+    axios.post("http://localhost:3000/api/branchofficehouse/delete", dataDelete)
+    .then((res) => {
+      //getBranchOffices();
+      setData(data.filter((elemento) => elemento.branch_office_id !== selectsuc.branch_office_id))
+    })
+    .catch((err) => console.log(err)); //mostrar error
     setModalEliminar(false);
   };
+
+  const toCreateSucursal=()=>{
+    props.history.push("/createsucursal/" + props.match.params.id);
+  }
 
   //Funcion que renderiza el componente visual jsx
   return (
@@ -66,14 +89,12 @@ const RegisterSucursalContainer = (props) => {
             <Row card>
               <h5 className="text-white ml-2">Manage Sucursales</h5>
               <Col className="row justify-content-end">
-                <Link to="/createsucursal">
-                  <Button color="secondary" size="md">
-                    <i className="mr-1 mt-1">
-                      <BsPlusCircle />
-                    </i>
-                    <span className="align-middle">Add New Sucursal</span>
+                  <Button color="secondary" size="md" onClick={()=>toCreateSucursal()} >
+                      <i className="mr-1 mt-1">
+                        <BsPlusCircle />
+                      </i>
+                      <span className="align-middle">Add New Sucursal</span>
                   </Button>
-                </Link>
               </Col>
             </Row>
           </CardHeader>
@@ -87,11 +108,12 @@ const RegisterSucursalContainer = (props) => {
               </tr>
             </thead>
             <tbody>
-              {data.map((elemento) => (
-                <tr>
-                  <td className="text-center">{elemento.id}</td>
-                  <td className="text-center">{elemento.name}</td>
-                  <td className="text-center">{elemento.cuil}</td>
+            {(data.length > 0)?(
+              data.map((elemento) => (
+                <tr key={elemento.branch_office_id}>
+                  <td className="text-center">{elemento.branch_office_id}</td>
+                  <td className="text-center">{elemento.branch_office_name}</td>
+                  <td className="text-center">{elemento.branch_office_cuit}</td>
                   <td className="text-center">
                     <Button color="primary" size="sm">
                       <i className="mr-1 mt-1">
@@ -113,12 +135,16 @@ const RegisterSucursalContainer = (props) => {
                     {"   "}
                   </td>
                 </tr>
-              ))}
+              ))) :  (
+                <tr>
+                  <td colSpan={6}> No hay ninguna Sucursal registrada</td>
+                </tr> 
+             )}
             </tbody>
           </Table>
           <Row className="row justify-content-end" style={{ marginTop: 10 }}>
           <Col md={2}>
-            <Link to="/dashboard">
+            <Link to="/LoginUsers/Login">
               <Button color="primary" type="submit" active>
                 Finalizar
               </Button>
@@ -134,7 +160,7 @@ const RegisterSucursalContainer = (props) => {
         <Modal isOpen={modalEliminar}>
           <ModalBody>
             Estás Seguro que deseas eliminar la sucursal{" "}
-            {selectsuc && selectsuc.name}
+            {selectsuc && selectsuc.branch_office_name}
           </ModalBody>
           <ModalFooter>
             <button className="btn btn-danger" onClick={() => eliminar()}>

@@ -1,5 +1,5 @@
 //imports of all required libraries and components
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
   Row,
   Col,
@@ -14,142 +14,198 @@ import {
   Button,
   Alert,
 } from "reactstrap";
+import {BASE_URL} from '../../../urls/url'
 import CatalogLayout from "../../Layouts/CatalogLayout";
 import axios from "axios";
 import CarouselComponent from "./carousel";
 import { useForm } from "react-hook-form";
 import IndumentaryProduct from './indumentaryProduct'
-import RetailProduct from './retailProduct'
-
+import RetailProduct from './retailProduct';
+import {connect} from 'react-redux';
+import {
+  fetchProductoData
+} from '../../../Redux/Actions/ProductosActions';
 // EditProduct Component
 const EditProduct = (props) => {
   //imitating api data
+  /*
   const listproducts = [
     {
-      codProduct: 1,
-      nameProduct: "product1",
-      Descripción: "this is a test",
-      Marca: "Marca1",
-      Dolarizado: "si",
-      Categoria: "categoria 1",
-      Estado: "Estado 1",
+      product_id: 1,
+      product_name: "product1",
+      product_description: "this is a test",
+      product_brand: "product_brand1",
+      product_is_dollar: "si",
+      category: "category 1",
+      product_status: "product_status 1",
       Proveedor: "Proveedor 1",
       CódProveedor: "22",
-      Unidad: "L",
-      Volumen: 23,
-      Bultos: 41,
-      BultoCliente: 25,
-      margenMinimo: 15,
-      margenMaximo: 20,
+      product_unit: "L",
+      product_vol: 23,
+      product_package: 41,
+      product_package_to_client: 25,
+      product_min_margin: 15,
+      product_max_margin: 20,
       costoNetoRepo: 23,
-      Bonificaciones: 56,
-      CostoBonificacion: 25,
-      CostoFlete: 23,
+      product_bonification: 56,
+      product_price_bonification: 25,
+      product_freight_cost: 23,
       tasaPais: 10,
       costoActualConImp: 12,
       precioLista: 120,
-      tipoContable: "Tipo 2",
-      cuentaContable: "Cuenta 3",
+      product_accountant_type: "Tipo 2",
+      product_accountant_account: "Cuenta 3",
       fabricante: "nombredelfabricante1",
-      garantia:"nombredelagarantia",
-      material:"nombredelmaterial",
-      origen:"origendelprod",
-      envio:"enviodelprod",
-      codbarra:"codbarradelprod"
+      product_warranty:"nombredelaproduct_warranty",
+      product_material:"nombredelproduct_material",
+      product_origin:"product_origindelprod",
+      product_shipping:"product_shippingdelprod",
+      product_barcode:"product_barcodedelprod",
+      linea:"ejemplolinea",
+      segmento:"ejemplosegmento",
+      service:"ejemploservice",
+      serie:"ejemploserie",
+      modelo:"ejemplomodelo",
+      ntecnico:"ejemplo ntecnico",
+      datostecnicos:'esto seria un ejemplo de datos tecnicos del producto si tuviese datos tecnicos'
+
 
     },
 
     {
-      codProduct: 2,
-      nameProduct: "product2",
-      Descripción: "test2",
-      Marca: "Marca2",
-      Dolarizado: "no",
-      Categoria: "categoria 2",
+      product_id: 2,
+      product_name: "product2",
+      product_description: "test2",
+      product_brand: "product_brand2",
+      product_is_dollar: "no",
+      category: "category 2",
       Tipo: "tipo 2",
-      Estado: "Estado 2",
+      product_status: "product_status 2",
       Proveedor: "Provedor 2",
       CódProveedor: "335",
-      Unidad: "L",
-      Volumen: "",
+      product_unit: "L",
+      product_vol: "",
       Bulto: "",
     },
     {
-      codProduct: 3,
-      nameProduct: "product3",
-      Descripción: "test3",
-      Marca: "Marca3",
-      Dolarizado: "si",
-      Categoria: "categoria 3",
+      product_id: 3,
+      product_name: "product3",
+      product_description: "test3",
+      product_brand: "product_brand3",
+      product_is_dollar: "si",
+      category: "category 3",
       Tipo: "tipo 2",
-      Estado: "Estado 3",
+      product_status: "product_status 3",
       Proveedor: "Proveedor 3",
       CódProveedor: "336",
-      Unidad: "B",
-      Volumen: "",
+      product_unit: "B",
+      product_vol: "",
       Bulto: "",
     },
     {
-      codProduct: 4,
-      nameProduct: "product4",
-      Descripción: "test4",
-      Marca: "Marca1",
-      Dolarizado: "no",
-      Categoria: "categoria 1",
+      product_id: 4,
+      product_name: "product4",
+      product_description: "test4",
+      product_brand: "product_brand1",
+      product_is_dollar: "no",
+      category: "category 1",
       Tipo: "tipo 3",
-      Estado: "Estado 1",
+      product_status: "product_status 1",
       Proveedor: "Proveedor 1",
       CódProveedor: "256",
-      Unidad: "B",
-      Volumen: "",
+      product_unit: "B",
+      product_vol: "",
       Bulto: "",
     },
   ];
   //Imitating the selected product
   const id = 1;
+  */
+  const datosRetail = {
+      linea:"ejemplolinea",
+      segmento:"ejemplosegmento",
+      service:"ejemploservice",
+      serie:"ejemploserie",
+      modelo:"ejemplomodelo",
+      ntecnico:"ejemplo ntecnico",
+      datostecnicos:'esto seria un ejemplo de datos tecnicos del producto si tuviese datos tecnicos'
+
+  }
+  
 
   //using the react hook form library for validations
   const { register, handleSubmit, errors } = useForm();
 
   //product status and selected product
-  const [productselect, setProductSelect] = useState({});
-  const [products, setProducts] = useState([]);
+  const [productselect, setDataProduct] = useState({
+  });
+  const [prodCod,setProdCod] = useState("");
+  const [products,setProducts] = useState([]);
+  const [prodTipo,setProdTipo] = useState({});
+  let industry = "retail";
+  const [nombre,setNombre] = useState(0);
 
   //this function gets the data from the server
-  useEffect(() => {
-    setProducts(listproducts);
-    const arrayEdit = listproducts.map((item) =>
-      item.codProduct === id
-        ? setProductSelect(item)
-        : console.log("product not found")
-    );
-    setProducts(arrayEdit);
+  useEffect(() => {   
+    const id_product = 61;
+    /*const obtenerData = async() => {
+      await props.dispatch(fetchProductoData(id_product));
+      console.log(props);
+      setDataProduct(props.productos.productoActual);
+      setNombre(props.productos.productoActual.producto_id);
+    }
+    */
+    axios.get(`${BASE_URL}/products/productdata/${id_product}`)
+    .then( async res => {
+      props.dispatch(fetchProductoData(res.data))
+      setDataProduct(res.data);
+      console.log(res.data) //le tenemos que pasar res para setear el objeto local
+      let industry2 = res.data.products_industry_id;
+      //if(industry2 === 1){
+        setProdTipo({
+          product_id: res.data.product_id,
+          product_line: res.data.product_line,
+          product_seed: res.data.product_seed,
+          product_service: res.data.product_service,
+          product_serie: res.data.product_serie,
+          product_NTecnico: res.data.product_NTecnico,
+          product_status: res.data.product_status,
+          product_technical_data: res.data.product_technical_data,
+          product_model: res.data.product_model,
+        })//}else{
+          //console.log("otro tipo");
+        //};
+        console.log(prodTipo);
+        console.log(productselect)
+      }).catch(err => console.log(err));///mostrar error
+      console.log(props);
+      //console.log(props);
   }, []);
 
   //This function prepared the data to be sent to the server. transforming the input to integer or float
   const transformToNumber = (data) => {
     //transform to integer
-    data.codproduct = parseInt(data.codproduct);
-    data.bultos = parseInt(data.bultos);
-    data.volumen = parseInt(data.volumen);
-    data.bultosClientes = parseInt(data.bultosClientes);
-    data.margenMinimo = parseInt(data.margenMinimo);
-    data.margenMaximo = parseInt(data.margenMaximo);
+    data.product_id = parseInt(data.product_id);
+    data.product_package = parseInt(data.product_package);
+    data.product_vol = parseInt(data.product_vol);
+    data.product_package_to_client = parseInt(data.product_package_to_client);
+    data.product_min_margin = parseInt(data.product_min_margin);
+    data.product_max_margin = parseInt(data.product_max_margin);
     //transform to float
-    data.costoNetoReposicion = parseFloat(data.costoNetoReposicion);
-    data.bonificaciones = parseFloat(data.bonificaciones);
-    data.costoConBonificacion = parseFloat(data.costoConBonificacion);
-    data.costoFlete = parseFloat(data.costoFlete);
-    data.tasaPais = parseFloat(data.tasaPais);
-    data.costoActualConImp = parseFloat(data.costoActualConImp);
-    data.precioLista = parseFloat(data.precioLista);
+    //data.costoNetoReposicion = parseFloat(data.costoNetoReposicion);
+    data.product_bonification = parseFloat(data.product_bonification);
+    data.product_price_bonification = parseFloat(data.product_price_bonification);
+    data.product_freight_cost = parseFloat(data.product_freight_cost);
+    //data.tasaPais = parseFloat(data.tasaPais);
+    //data.costoActualConImp = parseFloat(data.costoActualConImp);
+    //data.precioLista = parseFloat(data.precioLista);
   };
 
   //Sending data to the server
   const onSubmit = (data, e) => {
     transformToNumber(data);
     axios
-      .put("https://cognitis-360.herokuapp.com/api/products/updateProduct" + id, data)
+      .put("https://cognitis-360.herokuapp.com/api/products/updateProduct" + 61, data)
       .then((res) => "producto editado con exito")
       .catch((err) => console.log(err));
     onDismiss();
@@ -160,18 +216,39 @@ const EditProduct = (props) => {
   const [visible, setVisible] = useState(false);
 
   const onDismiss = () => setVisible(!visible);
+  
+  const handleChange = (e) => {
+    const {value,name} = e.target;
+    console.log(value);
+    console.log(name);
+    let stateProd = productselect;
+    stateProd[name] = value;
+    setDataProduct({
+      stateProd,
+    });
+  }
 
   
   //Variable que indica la industria en este momento
-  const industry = 'retail'; //se va setear con una propiedad que se pase en props 
+  //se va setear con una propiedad que se pase en props 
  
 
   //Funcion que controla el dinamismo de los campos de acuerdo a la industria
-  let industryMannage = industry === 'retail' ? (
-    <RetailProduct />
+  /*let industryMannage = industry == "retail" ? (
+    <RetailProduct datos = {{
+      product_id: productselect.product_id,
+      product_line: productselect.product_line,
+      product_seed: productselect.product_seed,
+      product_service: productselect.product_service,
+      product_serie: productselect.product_serie,
+      product_NTecnico: productselect.product_NTecnico,
+      product_status: productselect.product_status,
+      product_technical_data: productselect.product_technical_data,
+      product_model: productselect.product_model,
+    }}/>
   ) : (
     <IndumentaryProduct />
-  );
+  );*/
 
 
   return (
@@ -190,14 +267,19 @@ const EditProduct = (props) => {
           <Col lg="12" xs="12" style={{ marginTop: 25 }}>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <FormGroup row>
-                <Label for="codproduct" sm={3}>
+                <Label for="product_id" sm={3}>
                   Código de Producto
                 </Label>
                 <Col sm={9}>
                   <Input
                     type="number"
-                    name="codproduct"
-                    value={productselect.codProduct}
+                    name="product_id"
+                    //value={productselect.product_id}
+                    //value = {prodCod}
+                    value = {nombre}
+                    onChange = {
+                      handleChange
+                    }
                     innerRef={register({
                       required: {
                         value: true,
@@ -206,7 +288,7 @@ const EditProduct = (props) => {
                     })}
                   />
                   <span className="text-danger span d-block mb-2">
-                    {errors?.codproduct?.message}
+                    {errors?.product_id?.message}
                   </span>
                 </Col>
               </FormGroup>
@@ -217,8 +299,11 @@ const EditProduct = (props) => {
                 <Col sm={9}>
                   <Input
                     type="text"
-                    name="nameproduct"
-                    value={productselect.nameProduct}
+                    name="product_name"
+                    value={productselect.product_name}
+                    onChange = {
+                      handleChange
+                    }
                     placeholder="Ingresar el nombre de producto"
                     innerRef={register({
                       required: {
@@ -234,13 +319,16 @@ const EditProduct = (props) => {
               </FormGroup>
               <FormGroup row>
                 <Label for="" sm={3}>
-                  Descripción
+                  Descripcion
                 </Label>
                 <Col sm={9}>
                   <Input
                     type="textarea"
-                    name="description"
-                    value={productselect.Descripción}
+                    name="product_description"
+                    value={productselect.product_description}
+                    onChange = {
+                      handleChange
+                    }
                     placeholder="Ingrese una descripcion"
                     innerRef={register}
                   />
@@ -252,8 +340,11 @@ const EditProduct = (props) => {
                     <Label for="">Marca</Label>
                     <Input
                       type="select"
-                      name="marca"
-                      value={productselect.Marca}
+                      name="product_brand"
+                      value={productselect.product_brand}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -266,7 +357,7 @@ const EditProduct = (props) => {
                       <option>Marca 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.marca?.message}
+                      {errors?.product_brand?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -275,12 +366,15 @@ const EditProduct = (props) => {
                     <Label for="">Dolarizado</Label>
                     <Input
                       type="select"
-                      name="dolarizado"
-                      value={productselect.Dolarizado}
+                      name="product_is_dollar"
+                      value={productselect.product_is_dollar}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "dolarizado es requerido",
+                          message: "Dolarizacion es requerido",
                         },
                       })}
                     >
@@ -288,7 +382,7 @@ const EditProduct = (props) => {
                       <option>Si</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.dolarizado?.message}
+                      {errors?.product_is_dollar?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -296,24 +390,27 @@ const EditProduct = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="">Categoria</Label>
+                    <Label for="">category</Label>
                     <Input
                       type="select"
-                      name="categoria"
-                      value={productselect.Categoria}
+                      name="category"
+                      value={productselect.category}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "categoria es requerido",
+                          message: "category es requerido",
                         },
                       })}
                     >
-                      <option>Categoria 1</option>
-                      <option>Categoria 2</option>
-                      <option>Categoria 3</option>
+                      <option>category 1</option>
+                      <option>category 2</option>
+                      <option>category 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.dolarizado?.message}
+                      {errors?.category?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -324,12 +421,15 @@ const EditProduct = (props) => {
                     <Label for="">Tipo</Label>
                     <Input
                       type="select"
-                      name="tipo"
-                      value={productselect.Tipo}
+                      name="product_type"
+                      value={productselect.product_type}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "categoria es requerido",
+                          message: "category es requerido",
                         },
                       })}
                     >
@@ -338,7 +438,7 @@ const EditProduct = (props) => {
                       <option>Tipo 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.tipo?.message}
+                      {errors?.prodcut_type?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -347,21 +447,24 @@ const EditProduct = (props) => {
                     <Label for="">Estado</Label>
                     <Input
                       type="select"
-                      name="estado"
-                      value={productselect.Estado}
+                      name="product_status"
+                      value={productselect.product_status}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "Estado es requerido",
+                          message: "product_status es requerido",
                         },
                       })}
                     >
-                      <option>Estado 1</option>
-                      <option>Estado 2</option>
-                      <option>Estado 3</option>
+                      <option>product_status 1</option>
+                      <option>product_status 2</option>
+                      <option>product_status 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.estado?.message}
+                      {errors?.product_status?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -372,8 +475,11 @@ const EditProduct = (props) => {
                     <Label for="">Proveedor</Label>
                     <Input
                       type="select"
-                      name="proveedor"
-                      value={productselect.Proveedor}
+                      name="Proveedor"
+                      //value={productselect.Proveedor}
+                      /*onChange = {
+                        handleChange
+                      }*/
                       innerRef={register({
                         required: {
                           value: true,
@@ -395,8 +501,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Código de Proveedor</Label>
                     <Input
                       type="number"
-                      name="codProveedor"
+                      name="CódProveedor"
                       value={productselect.CódProveedor}
+                      onChange = {
+                        handleChange
+                      }
                     />{" "}
                     {/*why??*/}
                   </FormGroup>
@@ -412,6 +521,9 @@ const EditProduct = (props) => {
                     id="exampleCustomRadio"
                     name="ecommerce"
                     value={productselect.ecommerce}
+                    onChange = {
+                      handleChange
+                    }
                     innerRef={register}
                   />
                 </div>
@@ -449,15 +561,20 @@ const EditProduct = (props) => {
               </Col>
               <UncontrolledCollapse toggler="#togglerCampos">
                   <br/>
-                  {industryMannage}
+                  {
+                  <RetailProduct datos = {props.productos.productoActual}/>
+                  }
                   <Row form>
                       <Col md={4}>
                       <FormGroup>
                           <Label for="">Material</Label>
                           <Input
                           type="text"
-                          name="material"
-                          value={productselect.material}
+                          name="product_material"
+                          value={productselect.product_material}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -466,7 +583,7 @@ const EditProduct = (props) => {
                           })}
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.material?.message}
+                          {errors?.product_material?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -475,8 +592,11 @@ const EditProduct = (props) => {
                           <Label for="">Origen</Label>
                           <Input
                           type="text"
-                          name="origen"
-                          value={productselect.origen}
+                          name="product_origin"
+                          value={productselect.product_origin}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -485,7 +605,7 @@ const EditProduct = (props) => {
                           })}
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.origen?.message}
+                          {errors?.product_origin?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -496,6 +616,9 @@ const EditProduct = (props) => {
                           type="text"
                           name="fabricante"
                           value={productselect.fabricante}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -515,8 +638,11 @@ const EditProduct = (props) => {
                           <Label for="">Envio</Label>
                           <Input
                           type="text"
-                          name="envio"
-                          value={productselect.envio}
+                          name="product_shipping"
+                          value={productselect.product_shipping}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -525,7 +651,7 @@ const EditProduct = (props) => {
                           })}
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.envio?.message}
+                          {errors?.product_shipping?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -534,8 +660,11 @@ const EditProduct = (props) => {
                           <Label for="">Garantia</Label>
                           <Input
                           type="text"
-                          name="garantia"
-                          value={productselect.garantia}
+                          name="product_warranty"
+                          value={productselect.product_warranty}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -544,7 +673,7 @@ const EditProduct = (props) => {
                           })}
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.garantia?.message}
+                          {errors?.product_warranty?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -553,8 +682,11 @@ const EditProduct = (props) => {
                           <Label for="">Codigo de Barra</Label>
                           <Input
                           type="text"
-                          name="codbarra"
-                          value={productselect.codbarra}
+                          name="product_barcode"
+                          value={productselect.product_barcode}
+                          onChange = {
+                            handleChange
+                          }
                           innerRef={register({
                             required: {
                               value: false,
@@ -563,7 +695,7 @@ const EditProduct = (props) => {
                           })}
                           ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.codbarra?.message}
+                          {errors?.product_barcode?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -583,8 +715,11 @@ const EditProduct = (props) => {
                     <Label for="">Unidad</Label>
                     <Input
                       type="select"
-                      name="unidad"
-                      value={productselect.Unidad}
+                      name="product_unit"
+                      value={productselect.product_unit}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -597,7 +732,7 @@ const EditProduct = (props) => {
                       <option>B</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.unidad?.message}
+                      {errors?.product_unit?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -606,36 +741,42 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Volumen</Label>
                     <Input
                       type="number"
-                      name="volumen"
-                      value={productselect.Volumen}
+                      name="product_vol"
+                      value={productselect.product_vol}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "Volumen es requerido",
+                          message: "product_vol es requerido",
                         },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.volumen?.message}
+                      {errors?.product_vol?.message}
                     </span>
                   </FormGroup>
                 </Col>
                 <Col md={4}>
                   <FormGroup>
-                    <Label for="exampleEmail">Bultos</Label>
+                    <Label for="exampleEmail">Package</Label>
                     <Input
                       type="number"
-                      name="bultos"
-                      value={productselect.Bultos}
+                      name="product_package"
+                      value={productselect.product_package}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "Bultos es requerido",
+                          message: "product_package es requerido",
                         },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bultos?.message}
+                      {errors?.product_package?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -643,20 +784,23 @@ const EditProduct = (props) => {
               <Row form>
                 <Col md={4}>
                   <FormGroup>
-                    <Label for="exampleEmail">Bultos al Cliente</Label>
+                    <Label for="exampleEmail">Paquetes al Cliente</Label>
                     <Input
                       type="number"
-                      name="bultosClientes"
-                      value={productselect.BultoCliente}
+                      name="product_package_to_client"
+                      value={productselect.product_package_to_client}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "Bultos es requerido",
+                          message: "product_package es requerido",
                         },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bultosClientes?.message}
+                      {errors?.product_packageClientes?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -665,8 +809,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Margen Minimo</Label>
                     <Input
                       type="number"
-                      name="margenMinimo"
-                      value={productselect.margenMinimo}
+                      name="product_min_margin"
+                      value={productselect.product_min_margin}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -675,7 +822,7 @@ const EditProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.margenMinimo?.message}
+                      {errors?.product_min_margin?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -684,8 +831,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Margen Maximo</Label>
                     <Input
                       type="number"
-                      name="margenMaximo"
-                      value={productselect.margenMaximo}
+                      name="product_max_margin"
+                      value={productselect.product_max_margin}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -694,7 +844,7 @@ const EditProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.margenMaximo?.message}
+                      {errors?.product_max_margin?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -714,8 +864,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Costo Neto/Reposicion</Label>
                     <Input
                       type="number"
-                      name="costoNetoReposicion"
+                      name="costoNetoRepo"
                       value={productselect.costoNetoRepo}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -733,21 +886,24 @@ const EditProduct = (props) => {
               <Row form>
                 <Col md={4}>
                   <FormGroup>
-                    <Label for="exampleEmail">Bonificaciones</Label>
+                    <Label for="exampleEmail">Bonificacion Producto</Label>
                     <Input
                       type="number"
-                      name="bonificaciones"
-                      value={productselect.Bonificaciones}
+                      name="product_bonification"
+                      value={productselect.product_bonification}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "Bonificaciones es requerido",
+                          message: "product_bonification es requerido",
                         },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.bonificaciones?.message}
+                      {errors?.product_bonification?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -756,8 +912,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Costo con Bonificacion</Label>
                     <Input
                       type="number"
-                      name="costoConBonificacion"
-                      value={productselect.CostoBonificacion}
+                      name="product_price_bonification"
+                      value={productselect.product_price_bonification}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -767,7 +926,7 @@ const EditProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.costoConBonificacion?.message}
+                      {errors?.product_price_bonification?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -778,8 +937,11 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Costo Flete %</Label>
                     <Input
                       type="number"
-                      name="costoFlete"
-                      value={productselect.CostoFlete}
+                      name="product_freight_cost"
+                      value={productselect.product_freight_cost}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -789,7 +951,7 @@ const EditProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.costoFlete?.message}
+                      {errors?.product_freight_cost?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -802,6 +964,9 @@ const EditProduct = (props) => {
                       type="number"
                       name="tasaPais"
                       value={productselect.tasaPais}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -824,6 +989,9 @@ const EditProduct = (props) => {
                       type="number"
                       name="costoActualConImp"
                       value={productselect.costoActualConImp}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -846,6 +1014,9 @@ const EditProduct = (props) => {
                       type="number"
                       name="precioLista"
                       value={productselect.precioLista}
+                      onChange = {
+                        handleChange
+                      }
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -874,7 +1045,7 @@ const EditProduct = (props) => {
                       backgroundColor: "rgb(247, 147, 1)",
                     }}
                   >
-                    Otras Bonificaciones
+                    Otras product_bonification
                   </Button>{" "}
                 </Col>
               </Row>
@@ -893,8 +1064,11 @@ const EditProduct = (props) => {
                     <Label for="">Tipo</Label>
                     <Input
                       type="select"
-                      name="tipoContable"
-                      value={productselect.tipoContable}
+                      name="product_accountant_type"
+                      value={productselect.product_accountant_type}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -907,7 +1081,7 @@ const EditProduct = (props) => {
                       <option>Tipo 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.tipoContable?.message}
+                      {errors?.product_accountant_type?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -916,8 +1090,11 @@ const EditProduct = (props) => {
                     <Label for="">Cuenta</Label>
                     <Input
                       type="select"
-                      name="cuentaContable"
-                      value={productselect.cuentaContable}
+                      name="product_accountant_account"
+                      value={productselect.product_accountant_account}
+                      onChange = {
+                        handleChange
+                      }
                       innerRef={register({
                         required: {
                           value: true,
@@ -944,7 +1121,7 @@ const EditProduct = (props) => {
                   <Button color="danger" style={{ margin: 20 }}>
                     Cancelar
                   </Button>{" "}
-                  <Button color="primary" type="submit" style={{ margin: 20 }}>
+                  <Button color="primary" type="submit" style={{ margin: 20 }} onClick = {() => {console.log(errors)}}>
                     Guardar Producto
                   </Button>{" "}
                 </Col>
@@ -959,4 +1136,12 @@ const EditProduct = (props) => {
   );
 };
 
-export default EditProduct;
+const mapStateToProps = (state) => {
+  return {
+    productos: state.productos,  
+  }
+}
+
+export default connect(
+  mapStateToProps,
+)(EditProduct)
