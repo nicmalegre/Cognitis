@@ -45,7 +45,7 @@ const RegisterCompanyContainer = (props) => {
   const getCompanies = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/api/company/headhouse/" + props.match.params.id
+        "http://localhost:3000/api/company/headhouse/" + props.match.params.id
       );
       //console.log(res);
       setData(res.data.companies_house); //le tenemos que pasar res para setear el objeto local
