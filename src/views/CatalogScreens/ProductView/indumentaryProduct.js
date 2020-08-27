@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 
 const IndumentaryProduct = (props)=> {
 
-  console.log(props.prop) //Llega el array con los atributos de forma correcta.
+  console.log(props) //Llega el array con los atributos de forma correcta.
 
   return (
     <Row form >
