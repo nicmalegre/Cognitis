@@ -28,9 +28,9 @@ const Formulario = (props) => {
   //DATA FOR SUBMIT
   const [data, setData] = useState({head_house_id: props.match.params.id})
   
-  const changeTel = (data) => {
-    data.company_tel = data.codPais + data.codArea + data.company_tel;
-  };
+  // const changeTel = (data) => {
+  //   data.company_tel = data.codPais + data.codArea + data.company_tel;
+  // };
 
   const changeIndustry = (data) => {
     if (data.company_house_industry_id === "Retail"){
@@ -44,7 +44,7 @@ const Formulario = (props) => {
 
   //preparing data for send
   const preparedData=(data)=>{
-    changeTel(data);
+    //changeTel(data);
     changeIndustry(data);
     data["head_house_id"] = props.match.params.id
   }
@@ -53,21 +53,22 @@ const Formulario = (props) => {
   const onSubmit = async(data, e) => {
     e.preventDefault();
     preparedData(data);
-    try {
-      const res = await axios.post(
-        "http://localhost:3000/api/company/newcompany", data
-      )
-      if(res.status == 200){
-        //console.log(res);
-        props.history.goBack()
+    console.log(data);
+    // try {
+    //   const res = await axios.post(
+    //     "http://localhost:3000/api/company/newcompany", data
+    //   )
+    //   if(res.status == 200){
+    //     //console.log(res);
+    //     props.history.goBack()
         
-      }else{
-        console.log("error"+ res);
-      }
-    } 
-     catch (e) {
-      console.log(e);
-    }
+    //   }else{
+    //     console.log("error"+ res);
+    //   }
+    // } 
+    //  catch (e) {
+    //   console.log(e);
+    // }
   };
         
     
