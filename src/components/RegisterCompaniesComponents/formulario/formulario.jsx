@@ -58,8 +58,9 @@ const Formulario = (props) => {
         "http://localhost:3000/api/company/newcompany", data
       )
       if(res.status == 200){
-        props.history.goBack()
         //console.log(res);
+        props.history.goBack()
+        
       }else{
         console.log("error"+ res);
       }

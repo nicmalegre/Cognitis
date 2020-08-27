@@ -35,22 +35,37 @@ const RegisterSucursalContainer = (props) => {
     cuil: "",
   });
 
-
+/*
   const getBranchOffices=()=>{
     axios
-    .get(
+    .post(
       "http://localhost:3000/api/branchofficehouse/branchofficebycompany",dataSend
     )
     .then((res) => {
       setData(res.data); //le tenemos que pasar res para setear el objeto local
     })
     .catch((err) => console.log(err)); //mostrar error
-  }
-
-  //peticion a la API para traer todas las compañias
-  useEffect(() => {
-   getBranchOffices();
-  }, []);
+  }*/
+    //
+    const getBranchOffices = async () => {
+      try {
+        const res = await axios.post(
+          "http://localhost:3000/api/branchofficehouse/branchofficebycompany", dataSend
+        );
+        console.log(res);
+        setData(res.data); //le tenemos que pasar res para setear el objeto local
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    //peticion a la API para traer todas las compañias
+    useEffect(() => {
+      async function loadBranchOffices() {
+        const res = await getBranchOffices()
+        return res;
+      }
+      loadBranchOffices();
+    },[]);
 
   
   const selectSucursal = (elemento) => {
