@@ -47,7 +47,7 @@ const RegisterCompanyContainer = (props) => {
       const res = await axios.get(
         "http://localhost:3000/api/company/headhouse/" + props.match.params.id
       );
-      //console.log(res);
+      console.log(res);
       setData(res.data.companies_house); //le tenemos que pasar res para setear el objeto local
     } catch (e) {
       console.log(e);
@@ -60,7 +60,7 @@ const RegisterCompanyContainer = (props) => {
       return res;
     }
     loadCompanies();
-  },[data]);
+  },[]);
 
   const selectComp = (elemento) => {
     setCompSelect(elemento);
@@ -72,11 +72,12 @@ const RegisterCompanyContainer = (props) => {
       company_id: selectcompany.company_id,
     };
     axios
-      .post("http://localhost:4000/api/company/deletecompany/", dataDelete)
+      .post("http://localhost:3000/api/company/deletecompany/", dataDelete)
       .then((res) => {
         if (res.status == 200){
           console.log(res);
-          getCompanies()
+          //getCompanies()
+          setData(data.filter((elemento) => elemento.company_id !== selectcompany.company_id))
         }else{
           console.log("error al eliminar la compania,"+ res);
         }
