@@ -52,7 +52,7 @@ const RegisterSucursalContainer = (props) => {
         const res = await axios.post(
           "http://localhost:3000/api/branchofficehouse/branchofficebycompany", dataSend
         );
-        console.log(res);
+        //console.log(res);
         setData(res.data); //le tenemos que pasar res para setear el objeto local
       } catch (e) {
         console.log(e);

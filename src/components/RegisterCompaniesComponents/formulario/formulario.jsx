@@ -53,13 +53,11 @@ const Formulario = (props) => {
   const onSubmit = async(data, e) => {
     e.preventDefault();
     preparedData(data);
-    console.log(data);
     try {
       const res = await axios.post(
         "http://localhost:3000/api/company/newcompany", data
       )
       if(res.status == 200){
-        //console.log(res);
         props.history.goBack()
         
       }else{
