@@ -135,7 +135,7 @@ const NewProduct = (props) => {
   };*/
 
   const cargar = () => {
-    axios.get(`${PRODUCTS_URL}/allProviders`).then(res => {
+    axios.get(`${PRODUCTS_URL}/providers/allProviders`).then(res => {
       console.log(res.data)
       
       setProviders(
@@ -598,7 +598,7 @@ const NewProduct = (props) => {
                           <Label for="">Fabricante</Label>
                           <Input
                           type="select"
-                          name="fabricante"
+                          name="product_maker"
                           >
                             <option  value={"Fabricante uno"}>Fabricante Uno</option>  
                             <option  value={"Fabricante dos"}>Fabricante Doso</option>  
