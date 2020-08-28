@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react"; //importacion de la libreria
+import React, { useState, useContext } from "react"; //importacion de la libreria
 import { CompanyContext } from "../../../store/CompanyContext";
 import { withRouter } from "react-router-dom";
 import {
@@ -11,6 +11,8 @@ import {
   Card,
   Form,
   Button,
+  Spinner,
+  Alert,
 } from "reactstrap"; //importar elementos
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -21,54 +23,53 @@ import "./index.css";
 const Formulario = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
-  
-  //DATA FROM CONTEXT 
+
+  //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
-  
+
   //DATA FOR SUBMIT
-  const [data, setData] = useState({head_house_id: props.match.params.id})
-  
+  const [data, setData] = useState({ head_house_id: props.match.params.id });
+
   // const changeTel = (data) => {
   //   data.company_tel = data.codPais + data.codArea + data.company_tel;
   // };
 
   const changeIndustry = (data) => {
-    if (data.company_house_industry_id === "Retail"){
+    if (data.company_house_industry_id === "Retail") {
       data.company_house_industry_id = "1";
-    }
-    else{
+    } else {
       data.company_house_industry_id = "11";
     }
-  }
-
+  };
 
   //preparing data for send
-  const preparedData=(data)=>{
+  const preparedData = (data) => {
     //changeTel(data);
     changeIndustry(data);
-    data["head_house_id"] = props.match.params.id
-  }
+    data["head_house_id"] = props.match.params.id;
+  };
 
-
-  const onSubmit = async(data, e) => {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
     preparedData(data);
+    setCreating(true);
+
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/company/newcompany", data
-      )
-      if(res.status == 200){
-        props.history.goBack()
-        
-      }else{
-        console.log("error"+ res);
-      }
-    } 
-     catch (e) {
+      axios
+        .post("http://localhost:3000/api/company/newcompany", data)
+        .then((res) => {
+          if (res.data.cuit_already_used) {
+            setCuitAlreadyUsed(true);
+            setCreating(false);
+          } else {
+            props.history.goBack();
+          }
+        });
+    } catch (e) {
       console.log(e);
     }
-  }; 
-  
+  };
+
   // const of countries
   const countries = [
     "Argentina",
@@ -93,6 +94,9 @@ const Formulario = (props) => {
     razonsocial: "",
     cuil: "",
   });
+
+  const [creating, setCreating] = useState(false);
+  const [cuitAlreadyUsed, setCuitAlreadyUsed] = useState(false);
 
   const inputChange = async (event) => {
     let value = "";
@@ -526,6 +530,13 @@ const Formulario = (props) => {
                     </span>
                   </FormGroup>
                 </Col>
+                <Col>
+                  {cuitAlreadyUsed && (
+                    <Alert color="danger">
+                      El cuit ingresado ya está siendo usado por otra companía
+                    </Alert>
+                  )}
+                </Col>
               </Row>
               <br />
               <Row
@@ -535,7 +546,11 @@ const Formulario = (props) => {
                 <Col md={2}>
                   {/*<Link to="/NumberCompanies">*/}
                   <Button color="primary" type="submit" active>
-                    Continuar
+                    {creating ? (
+                      <Spinner color="ligth" size="sm" />
+                    ) : (
+                      <span>Guardar</span>
+                    )}
                   </Button>
                   {/*</Link>*/}
                 </Col>

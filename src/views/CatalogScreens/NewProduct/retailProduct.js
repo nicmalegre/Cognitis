@@ -51,8 +51,9 @@ const RetailProduct = (props)=> {
             <Label for="">Segmento</Label>
             <Input
             type="select"
-            name="product_segment"
-            value={"no esta en la base"}
+            name="product_seed"
+            value={dataRetail.product_seed}
+            onChange={handleChange}
             >
                 <option value={"Segmento Uno"}>Segmento Uno</option>
                 <option value={"Segmento Dos"}>Segmento Dos</option>
