@@ -24,14 +24,10 @@ const Formsuc = (props) => {
   //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
 
-  //I change the input "tel" to the proper format according to the DB
-  const changeTel = (data) => {
-    data.tel = data.codPais + data.codArea + data.tel;
-  };
+
 
   //preparing data for send
   const preparedData = (data) => {
-    changeTel(data);
     data["company_id"] = props.match.params.id;
     data["address"] = "calle 123";
     data["country"] = "argentina";
@@ -79,7 +75,6 @@ const Formsuc = (props) => {
     let length = inputvalue.length;
     let name = event.target.name;
     let noerror = await trigger(name);
-    console.log(noerror);
     if (length > 0 && noerror) {
       value = errors?.name ? false : true;
     } else {
@@ -222,10 +217,9 @@ const Formsuc = (props) => {
                         <Label for="codPais">Cod Pais</Label>
                         <Input
                           type="text"
-                          name="codPais"
-                          id="codPais"
+                          name="country_code"
                           placeholder="+54"
-                          valid={input.codPais}
+                          valid={input.country_code}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -243,7 +237,7 @@ const Formsuc = (props) => {
                           })}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.codPais?.message}
+                          {errors?.country_code?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -253,9 +247,9 @@ const Formsuc = (props) => {
                         <Label for="codArea">Cod Area</Label>
                         <Input
                           type="number"
-                          name="codArea"
+                          name="area_code"
                           id="codArea"
-                          valid={input.codArea}
+                          valid={input.area_code}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -273,7 +267,7 @@ const Formsuc = (props) => {
                           })}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.codArea?.message}
+                          {errors?.area_code?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -284,7 +278,6 @@ const Formsuc = (props) => {
                         <Input
                           type="number"
                           name="tel"
-                          id="nrotel"
                           valid={input.tel}
                           onChange={inputChange}
                           innerRef={register({

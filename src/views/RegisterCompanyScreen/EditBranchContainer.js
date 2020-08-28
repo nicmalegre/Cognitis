@@ -4,7 +4,6 @@ import RegisterCompanyLayout from "../Layouts/RegisterCompanyLayout/index";
 import axios from 'axios'
 const EditBranchContainer = (props) => {
   const [branchoffice, setBranchOffice] = useState(null);
-  const [dataSend , setDataSend] = useState({company_id:props.match.params.id});
   
   useEffect(() => {
     const { id } = props.match.params;
@@ -15,7 +14,7 @@ const EditBranchContainer = (props) => {
     axios.get(`http://localhost:3000/api/branchofficehouse/${id}`)
     .then(res => {
         setBranchOffice(res.data)
-        console.log(branchoffice);
+        //console.log(branchoffice);
     })
     .catch(err => console.log(err))
   }

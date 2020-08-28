@@ -105,7 +105,7 @@ const RegisterSucursalContainer = (props) => {
         </Row>
         <Card id="card" body style={{ marginTop: 50 }}>
           <CardHeader className="bg-dark">
-            <Row card>
+            <Row >
               <h5 className="text-white ml-2">Manage Sucursales</h5>
               <Col className="row justify-content-end">
                   <Button color="secondary" size="md" onClick={()=>toCreateSucursal()} >

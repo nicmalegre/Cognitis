@@ -24,63 +24,48 @@ const Formulario = (props) => {
   //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
 
-  //I change the input "tel" to the proper format according to the DB
-  const changeTel = (data) => {
-    data.tel = data.codPais + data.codArea + data.tel;
-  };
-
   //preparing data for send
   const preparedData = (data) => {
-    changeTel(data);
     //data["company_id"] = props.match.params.id;
     data["address"] = "calle 123";
     data["country"] = "argentina";
-    data["id"]= props.branch_office_id;
+    data["id"] = props.branch_office_id;
   };
 
-  const onSubmit = async(data, e) => {
+  //function in charge of sending the data to the server
+  const onSubmit = async (data, e) => {
     e.preventDefault();
     preparedData(data);
+    //console.log(data);
     try {
       const res = await axios.put(
-        "http://localhost:3000/api/branchofficehouse/update", data
-      )
-      if(res.status == 200){
-        console.log(res);
-        props.history.goBack()
-      }else{
-        console.log("error"+ res);
+        "http://localhost:3000/api/branchofficehouse/update",
+        data
+      );
+      if (res.status == 200) {
+        props.history.goBack();
+      } else {
+        console.log("error" + res);
       }
-    } 
-     catch (e) {
+    } catch (e) {
       console.log(e);
     }
   };
-     
-    /*
-    axios
-      .post(
-        "localhost:3000/api/branchofficehouse/newbranchoffice",
-        data
-      )
-      .then((res) => props.history.goBack())
-      .catch((err) => console.log(err));
-    //props.history.push("/registersucursal/" + props.match.params.id);
-  };*/
 
+  //state in charge of controlling if each input is valid
   const [input, setInput] = useState({
     company: "",
     razonsocial: "",
     cuil: "",
   });
 
+  //function that checks if each input is valid
   const inputChange = async (event) => {
     let value = "";
     let inputvalue = event.target.value;
     let length = inputvalue.length;
     let name = event.target.name;
     let noerror = await trigger(name);
-    console.log(noerror);
     if (length > 0 && noerror) {
       value = errors?.name ? false : true;
     } else {
@@ -91,6 +76,9 @@ const Formulario = (props) => {
       [name]: value,
     });
   };
+
+  //function that breaks down the tel into country.code, area.code, number.tel
+  const splited_tel = props.branchoffice.branch_tel.split("-");
 
   //Funcion que renderiza el componente visual jsx
   return (
@@ -107,7 +95,7 @@ const Formulario = (props) => {
       </Row>
       <Row>
         <Col lg="12">
-          <Card id="card-user">
+          <Card id="card">
             <Form onSubmit={handleSubmit(onSubmit)} id="card-user">
               <br />
               <h6 className="text">Datos de la Sucursal {props.cantSuc} </h6>
@@ -149,7 +137,9 @@ const Formulario = (props) => {
                           message: "Razon Social es requerido",
                         },
                       })}
-                      defaultValue={props.branchoffice.branch_office_business_name}
+                      defaultValue={
+                        props.branchoffice.branch_office_business_name
+                      }
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.business_name?.message}
@@ -227,10 +217,9 @@ const Formulario = (props) => {
                         <Label for="codPais">Cod Pais</Label>
                         <Input
                           type="text"
-                          name="codPais"
-                          id="codPais"
+                          name="country_code"
                           placeholder="+54"
-                          valid={input.codPais}
+                          valid={input.country_code}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -246,9 +235,10 @@ const Formulario = (props) => {
                               message: "No menos de 3 carácteres!",
                             },
                           })}
+                          defaultValue={splited_tel[0]}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.codPais?.message}
+                          {errors?.country_code?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -258,9 +248,8 @@ const Formulario = (props) => {
                         <Label for="codArea">Cod Area</Label>
                         <Input
                           type="number"
-                          name="codArea"
-                          id="codArea"
-                          valid={input.codArea}
+                          name="area_code"
+                          valid={input.area_code}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -276,9 +265,10 @@ const Formulario = (props) => {
                               message: "No menos de 2 numeros!",
                             },
                           })}
+                          defaultValue={splited_tel[1]}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.codArea?.message}
+                          {errors?.area_code?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -289,7 +279,6 @@ const Formulario = (props) => {
                         <Input
                           type="number"
                           name="tel"
-                          id="nrotel"
                           valid={input.tel}
                           onChange={inputChange}
                           innerRef={register({
@@ -306,7 +295,7 @@ const Formulario = (props) => {
                               message: "No menos de 4 numeros!",
                             },
                           })}
-                          defaultValue={props.branchoffice.branch_tel}
+                          defaultValue={splited_tel[2]}
                         />
                         <span className="text-danger span d-block mb-2">
                           {errors?.tel?.message}
@@ -363,7 +352,9 @@ const Formulario = (props) => {
                           message: "No menos de 3 caracteres!",
                         },
                       })}
-                      defaultValue={props.branchoffice.bankbranch[0].bank_branch_office_name}
+                      defaultValue={
+                        props.branchoffice.bankbranch[0].bank_branch_office_name
+                      }
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.bank_name?.message}
@@ -379,7 +370,10 @@ const Formulario = (props) => {
                       Numero de Cuenta Bancaria
                     </Label>
                     <Input
-                     defaultValue={props.branchoffice.bankbranch[0].bank_branch_office_account}
+                      defaultValue={
+                        props.branchoffice.bankbranch[0]
+                          .bank_branch_office_account
+                      }
                       type="number"
                       name="bank_account"
                       valid={input.bank_account}
@@ -432,7 +426,9 @@ const Formulario = (props) => {
                           message: "No menos de 22 numeros",
                         },
                       })}
-                      defaultValue={props.branchoffice.bankbranch[0].bank_branch_office_cbu}
+                      defaultValue={
+                        props.branchoffice.bankbranch[0].bank_branch_office_cbu
+                      }
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.bank_cbu?.message}
@@ -462,7 +458,10 @@ const Formulario = (props) => {
                           message: "No menos de 6 caracteres!",
                         },
                       })}
-                      defaultValue={props.branchoffice.bankbranch[0].bank_branch_office_alias}
+                      defaultValue={
+                        props.branchoffice.bankbranch[0]
+                          .bank_branch_office_alias
+                      }
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.bank_alias?.message}
