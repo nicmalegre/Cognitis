@@ -27,22 +27,22 @@ const ProductView = (props) => {
         product_description: '',
         product_is_dollar: '',
         product_brand: '',
-        // product_maker:'', falta en bd
+        product_maker:'', 
         product_type: '',
         product_in_ecommerce: '',
         product_unit: '',
         product_vol:'',
-        product_package:'', //modificar en bd
-        product_package_to_client:'', //modificar en bd
+        product_package:'', 
+        product_package_to_client:'', 
         product_max_margin:'',
         product_min_margin:'',
-        product_list_price:'', //modificar en bd
+        product_list_price:'', 
         product_bonification:'',
         product_price_bonification: '',
         product_freight_cost:'',
-        // product_cost_neto_repo:'', falta en bd
-        // product_country_tax:'', falta en bd
-        // product_cost_with_tax:'', falta en bd
+        product_cost_neto_repo:'', 
+        product_country_tax:'', 
+        product_cost_with_tax:'', 
         product_accountant_type:'',
         product_accountant_account:'',
         product_material:'',
@@ -54,6 +54,8 @@ const ProductView = (props) => {
         product_category:'',
         product_industry_id:'',
         product_curve: '',
+        product_NTecnico:'',
+        product_branch_office_id:'',
         
 
 
@@ -62,7 +64,7 @@ const ProductView = (props) => {
     console.log(props)
     //Variable que indica la industria en este momento
     const industry = 'retail'; //se va setear con una propiedad que se pase en props 
-    //const industry = props.products_industry_id //if = 1 then retail else indumentary
+    //const industry = props.product_industry_id //if = 1 then retail else indumentary
 
     //Id del producto que se selecciono para ver 
     let id_product = parseInt(props.match.params.idProduct); //se va setear con una propiedad que se pase en props
@@ -73,16 +75,19 @@ const ProductView = (props) => {
     useEffect(() => {
         
        
-        
-            axios.get(`${BASE_URL}/products/productdata/${id_product}`)
+            
+           axios.get(`${BASE_URL}/products/productdata/${id_product}`)
             .then( res => { 
-            
+           
             props.dispatch(fetchProductoData(res.data));
+            console.log(res.data)
             setDataProduct(res.data); //le tenemos que pasar res para setear el objeto local
-
-
             }).catch(err => console.log(err)); //mostrar error
-            
+        
+        
+
+
+
         
     }, []);
 
@@ -91,9 +96,9 @@ const ProductView = (props) => {
         
         setProducto ({
             
-            product_sku: product.product_sku, 
+            //product_sku: product.product_sku, 
             product_id: product.product_id,  
-            provider_id: product.provider_id,     
+            //provider_id: product.provider_id,     
             product_status: product.product_status,
             product_name: product.product_name,
             product_description: product.product_description, 
@@ -106,16 +111,16 @@ const ProductView = (props) => {
             product_unit: product.product_unit,
             product_vol: product.product_vol,
             product_package: product.product_package,
-            product_package_to_client: product.product_package_to_client,
+            product_package_to_client: product.product_package_customers,
             product_min_margin: product.product_min_margin,
             product_max_margin: product.product_max_margin,
             product_list_price: product.product_list_price,
             product_bonification : product.product_bonification,
             product_price_bonification : product.product_price_bonification,
             product_freight_cost : product.product_freight_cost,
-            // product_cost_neto_repo:'', falta en bd
-            // product_country_tax:'', falta en bd
-            // product_cost_with_tax:'', falta en bd
+            product_cost_neto_repo: product.product_cost_neto_repo , 
+            product_country_tax: product.product_country_tax,
+            product_cost_with_tax: product.product_cost_with_tax,
             product_accountant_type: product.product_accountant_type,
             product_accountant_account: product.product_accountant_account,
             product_material: product.product_material,
@@ -124,8 +129,10 @@ const ProductView = (props) => {
             product_warranty: product.product_warranty,
             product_barcode: product.product_barcode,
             product_status: product.product_status,
-            product_category: product.product_category,
+            product_category: product.category,
             product_industry_id: product.product_industry_id,
+            product_NTecnico: product.product_NTecnico,
+            product_branch_office_id: product.product_branch_office_id,
 
         
         })
@@ -388,7 +395,7 @@ const ProductView = (props) => {
                                 <Col md={4}>
                                     <FormGroup>
                                         <Label for="exampleEmail">Tasa Pais (%):</Label>
-                                        <Label for="" sm={3}>{producto.product_tax_country}</Label>
+                                        <Label for="" sm={3}>{producto.product_country_tax}</Label>
                                     </FormGroup>
                                 </Col>
                                 <Col md={4}>
