@@ -1,7 +1,5 @@
 //imports of all required libraries and components
-import React, { useState, useEffect, useContext } from "react";
-import {ProviderContext} from '../../../store/ProvidersContext';
-import ProvidersTable from '../ProvidersTable'
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import {
   Row,
   Col,
@@ -16,7 +14,7 @@ import {
   Button,
   Alert,
 } from "reactstrap";
-import {PRODUCTS_URL,CATEGORIES_URL} from '../../../urls/url';
+import {BASE_URL} from '../../../urls/url'
 import CatalogLayout from "../../Layouts/CatalogLayout";
 import axios from "axios";
 import CarouselComponent from "./carousel";
@@ -27,149 +25,193 @@ import {connect} from 'react-redux';
 import {
   fetchProductoData
 } from '../../../Redux/Actions/ProductosActions';
-import { FaIndustry } from "react-icons/fa";
 // EditProduct Component
 const EditProduct = (props) => {
-  //using the react hook form library for validations
-  const { register, handleSubmit, errors } = useForm();
-  //data product selected
-  const [productselect, setDataProduct] = useState({});
-  //All Categories
-  const [categorias,setCategorias] = useState([]);
-  //All Providers
-  const [proveedores,setProv] = useState([]);
-  //This data reflects if the selected product is a retail or indumentary product
-  const [dataExtra,setDataExtra] = useState({});
-  //Context of providers
-  const [providersContext,setProvidersContext] = useContext(ProviderContext);
-  //Actual providers of the selected product
-  const [provActual,setProvActual] = useState([]);
-  const [ind,setInd] = useState();
-  //const [dataExtra,setDataExtra] = useState({})
+  //imitating api data
+  /*
+  const listproducts = [
+    {
+      product_id: 1,
+      product_name: "product1",
+      product_description: "this is a test",
+      product_brand: "product_brand1",
+      product_is_dollar: "si",
+      category: "category 1",
+      product_status: "product_status 1",
+      Proveedor: "Proveedor 1",
+      CódProveedor: "22",
+      product_unit: "L",
+      product_vol: 23,
+      product_package: 41,
+      product_package_to_client: 25,
+      product_min_margin: 15,
+      product_max_margin: 20,
+      costoNetoRepo: 23,
+      product_bonification: 56,
+      product_price_bonification: 25,
+      product_freight_cost: 23,
+      tasaPais: 10,
+      costoActualConImp: 12,
+      precioLista: 120,
+      product_accountant_type: "Tipo 2",
+      product_accountant_account: "Cuenta 3",
+      fabricante: "nombredelfabricante1",
+      product_warranty:"nombredelaproduct_warranty",
+      product_material:"nombredelproduct_material",
+      product_origin:"product_origindelprod",
+      product_shipping:"product_shippingdelprod",
+      product_barcode:"product_barcodedelprod",
+      linea:"ejemplolinea",
+      segmento:"ejemplosegmento",
+      service:"ejemploservice",
+      serie:"ejemploserie",
+      modelo:"ejemplomodelo",
+      ntecnico:"ejemplo ntecnico",
+      datostecnicos:'esto seria un ejemplo de datos tecnicos del producto si tuviese datos tecnicos'
 
-  //Load Categories Function
-  const cargarCategorias = () => {
-    axios.get(`${CATEGORIES_URL}/`).
-    then(res => {
-      setCategorias(
-        res.data
-      );
-    }).
-    catch(error => {
-      console.log(error);
-    })
-  }
 
-  const setearDataExtra = (objeto) => {
-    setDataExtra({
-      ...dataExtra,
-      ...objeto,
-    });
-  }
+    },
 
-  //Load Providers Function
-  const cargarProv = () => {
-    axios.get(`${PRODUCTS_URL}/allProviders`).
-    then(res => {
-      setProv(
-        res.data
-      )
-      setProvidersContext({
-        providers: res.data.map(value=>{
-          return ({
-           ...value,
-           selected: false, 
-          })
-        })
-      });
-    }).
-    catch(error => {
-      console.log(error);
-    })
-  }
-  //Load Providers of the actual product
-  const cargarProvProd = (dataProd) => {
-    axios.post(`${PRODUCTS_URL}/getProvider`,dataProd).
-    then(res=>{
-      setProvActual(
-        res.data
-      );
-    }).
-    catch(error=>{console.log(error)});
-  }
-  //Load Data of the Choosed Product
-  const traerDatosProductos = (id_product) => {
-    axios.get(`${PRODUCTS_URL}/productdata/${id_product}`)
-    .then( async res => {
-      await props.dispatch(fetchProductoData(res.data))
-      setDataProduct(res.data);
-      setInd(res.data.nombreIndustria);
-    }).
-    catch(err => console.log(err));
+    {
+      product_id: 2,
+      product_name: "product2",
+      product_description: "test2",
+      product_brand: "product_brand2",
+      product_is_dollar: "no",
+      category: "category 2",
+      Tipo: "tipo 2",
+      product_status: "product_status 2",
+      Proveedor: "Provedor 2",
+      CódProveedor: "335",
+      product_unit: "L",
+      product_vol: "",
+      Bulto: "",
+    },
+    {
+      product_id: 3,
+      product_name: "product3",
+      product_description: "test3",
+      product_brand: "product_brand3",
+      product_is_dollar: "si",
+      category: "category 3",
+      Tipo: "tipo 2",
+      product_status: "product_status 3",
+      Proveedor: "Proveedor 3",
+      CódProveedor: "336",
+      product_unit: "B",
+      product_vol: "",
+      Bulto: "",
+    },
+    {
+      product_id: 4,
+      product_name: "product4",
+      product_description: "test4",
+      product_brand: "product_brand1",
+      product_is_dollar: "no",
+      category: "category 1",
+      Tipo: "tipo 3",
+      product_status: "product_status 1",
+      Proveedor: "Proveedor 1",
+      CódProveedor: "256",
+      product_unit: "B",
+      product_vol: "",
+      Bulto: "",
+    },
+  ];
+  //Imitating the selected product
+  const id = 1;
+  */
+  const datosRetail = {
+      linea:"ejemplolinea",
+      segmento:"ejemplosegmento",
+      service:"ejemploservice",
+      serie:"ejemploserie",
+      modelo:"ejemplomodelo",
+      ntecnico:"ejemplo ntecnico",
+      datostecnicos:'esto seria un ejemplo de datos tecnicos del producto si tuviese datos tecnicos'
+
   }
   
-  //This function gets the data from the server
+
+  //using the react hook form library for validations
+  const { register, handleSubmit, errors } = useForm();
+
+  //product status and selected product
+  const [productselect, setDataProduct] = useState({
+  });
+  const [prodCod,setProdCod] = useState("");
+  const [products,setProducts] = useState([]);
+  const [prodTipo,setProdTipo] = useState({});
+  let industry = "retail";
+  const [nombre,setNombre] = useState(0);
+
+  //this function gets the data from the server
   useEffect(() => {   
-    const id_product = props.match.params.idProd;
-    const traerData = async() => {
-      await traerDatosProductos(id_product);
-      await cargarProv();
-      await cargarCategorias();
-      await cargarProvProd({product_id:id_product});
-      const aux = await proveedores.map(value => {
-        return value.provider_id
-      })
-      console.log(aux)
-      if(props.productos.productoActual.nombreIndustria === 'retail'){
-        setDataExtra({
-          product_line: props.productos.productoActual.product_line,
-          product_seed: props.productos.productoActual.product_seed,
-          product_service: props.productos.productoActual.product_service,
-          product_serie: props.productos.productoActual.product_serie,
-          product_NTecnico: props.productos.productoActual.product_NTecnico,
-          prodcut_status: props.productos.productoActual.product_status,
-          product_technical_data: props.productos.productoActual.product_technical_data,
-          product_model: props.productos.productoActual.product_model,
-        })
-      }
+    const id_product = 61;
+    /*const obtenerData = async() => {
+      await props.dispatch(fetchProductoData(id_product));
+      console.log(props);
+      setDataProduct(props.productos.productoActual);
+      setNombre(props.productos.productoActual.producto_id);
     }
-    traerData();
+    */
+    axios.get(`${BASE_URL}/products/productdata/${id_product}`)
+    .then( async res => {
+      props.dispatch(fetchProductoData(res.data))
+      setDataProduct(res.data);
+      console.log(res.data) //le tenemos que pasar res para setear el objeto local
+      let industry2 = res.data.products_industry_id;
+      //if(industry2 === 1){
+        setProdTipo({
+          product_id: res.data.product_id,
+          product_line: res.data.product_line,
+          product_seed: res.data.product_seed,
+          product_service: res.data.product_service,
+          product_serie: res.data.product_serie,
+          product_NTecnico: res.data.product_NTecnico,
+          product_status: res.data.product_status,
+          product_technical_data: res.data.product_technical_data,
+          product_model: res.data.product_model,
+        })//}else{
+          //console.log("otro tipo");
+        //};
+        console.log(prodTipo);
+        console.log(productselect)
+      }).catch(err => console.log(err));///mostrar error
+      console.log(props);
+      //console.log(props);
   }, []);
+
   //This function prepared the data to be sent to the server. transforming the input to integer or float
   const transformToNumber = (data) => {
     //transform to integer
     data.product_id = parseInt(data.product_id);
     data.product_package = parseInt(data.product_package);
     data.product_vol = parseInt(data.product_vol);
-    data.product_package_customers = parseInt(data.product_package_customers);
+    data.product_package_to_client = parseInt(data.product_package_to_client);
     data.product_min_margin = parseInt(data.product_min_margin);
     data.product_max_margin = parseInt(data.product_max_margin);
     //transform to float
-    data.product_cost_neto_repo = parseFloat(data.product_cost_neto_repo);
+    //data.costoNetoReposicion = parseFloat(data.costoNetoReposicion);
     data.product_bonification = parseFloat(data.product_bonification);
     data.product_price_bonification = parseFloat(data.product_price_bonification);
     data.product_freight_cost = parseFloat(data.product_freight_cost);
-    data.product_country_tax = parseFloat(data.product_country_tax);
-    data.product_cost_with_tax = parseFloat(data.product_cost_with_tax);
-    data.product_list_price = parseFloat(data.product_list_price);
+    //data.tasaPais = parseFloat(data.tasaPais);
+    //data.costoActualConImp = parseFloat(data.costoActualConImp);
+    //data.precioLista = parseFloat(data.precioLista);
   };
+
   //Sending data to the server
   const onSubmit = (data, e) => {
-    e.preventDefault();
-    const aux = {
-      ...data,
-      ...dataExtra,
-      nombreIndustria: ind,
-    }
-    transformToNumber(aux);
+    transformToNumber(data);
     axios
-      .put(`${PRODUCTS_URL}/updateProduct/${props.match.params.idProd}`, aux)
+      .put("https://cognitis-360.herokuapp.com/api/products/updateProduct" + 61, data)
       .then((res) => "producto editado con exito")
       .catch((err) => console.log(err));
-    //console.log(data);
-    console.log(aux)
     onDismiss();
+    e.preventDefault();
   };
+
   //status to control the visibility of the alert
   const [visible, setVisible] = useState(false);
 
@@ -177,12 +219,37 @@ const EditProduct = (props) => {
   
   const handleChange = (e) => {
     const {value,name} = e.target;
+    console.log(value);
+    console.log(name);
     let stateProd = productselect;
     stateProd[name] = value;
     setDataProduct({
       stateProd,
     });
   }
+
+  
+  //Variable que indica la industria en este momento
+  //se va setear con una propiedad que se pase en props 
+ 
+
+  //Funcion que controla el dinamismo de los campos de acuerdo a la industria
+  /*let industryMannage = industry == "retail" ? (
+    <RetailProduct datos = {{
+      product_id: productselect.product_id,
+      product_line: productselect.product_line,
+      product_seed: productselect.product_seed,
+      product_service: productselect.product_service,
+      product_serie: productselect.product_serie,
+      product_NTecnico: productselect.product_NTecnico,
+      product_status: productselect.product_status,
+      product_technical_data: productselect.product_technical_data,
+      product_model: productselect.product_model,
+    }}/>
+  ) : (
+    <IndumentaryProduct />
+  );*/
+
 
   return (
     <CatalogLayout>
@@ -200,17 +267,16 @@ const EditProduct = (props) => {
           <Col lg="12" xs="12" style={{ marginTop: 25 }}>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <FormGroup row>
-                <Label for="product_id" 
-                  sm={3}
-                >
+                <Label for="product_id" sm={3}>
                   Código de Producto
                 </Label>
                 <Col sm={9}>
                   <Input
                     type="number"
                     name="product_id"
-                    disabled
-                    value = {productselect.product_id}
+                    //value={productselect.product_id}
+                    //value = {prodCod}
+                    value = {nombre}
                     onChange = {
                       handleChange
                     }
@@ -247,7 +313,7 @@ const EditProduct = (props) => {
                     })}
                   />
                   <span className="text-danger span d-block mb-2">
-                    {errors?.product_name?.message}
+                    {errors?.nameproduct?.message}
                   </span>
                 </Col>
               </FormGroup>
@@ -312,8 +378,8 @@ const EditProduct = (props) => {
                         },
                       })}
                     >
-                      <option value={"0"}>No</option>
-                      <option value={"1"}>Si</option>
+                      <option>No</option>
+                      <option>Si</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_is_dollar?.message}
@@ -324,7 +390,7 @@ const EditProduct = (props) => {
               <Row form>
                 <Col md={6}>
                   <FormGroup>
-                    <Label for="">Categoria</Label>
+                    <Label for="">category</Label>
                     <Input
                       type="select"
                       name="category"
@@ -339,17 +405,9 @@ const EditProduct = (props) => {
                         },
                       })}
                     >
-                      {
-                        categorias.map(cat => {
-                          return(
-                            <option 
-                              value={cat.category_id}
-                            >
-                              {cat.category_name}
-                            </option>
-                          )
-                        })
-                      }
+                      <option>category 1</option>
+                      <option>category 2</option>
+                      <option>category 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.category?.message}
@@ -375,9 +433,9 @@ const EditProduct = (props) => {
                         },
                       })}
                     >
-                      <option value={"Tipo 1"}>Tipo 1</option>
-                      <option value={"Tipo 2"}>Tipo 2</option>
-                      <option value={"Tipo 3"}>Tipo 3</option>
+                      <option>Tipo 1</option>
+                      <option>Tipo 2</option>
+                      <option>Tipo 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.prodcut_type?.message}
@@ -401,8 +459,9 @@ const EditProduct = (props) => {
                         },
                       })}
                     >
-                      <option value={"0"}>Inactivo</option>
-                      <option value={"1"}>Activo</option>
+                      <option>product_status 1</option>
+                      <option>product_status 2</option>
+                      <option>product_status 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_status?.message}
@@ -414,7 +473,27 @@ const EditProduct = (props) => {
                 <Col md={6}>
                   <FormGroup>
                     <Label for="">Proveedor</Label>
-                    <ProvidersTable/>
+                    <Input
+                      type="select"
+                      name="Proveedor"
+                      //value={productselect.Proveedor}
+                      /*onChange = {
+                        handleChange
+                      }*/
+                      innerRef={register({
+                        required: {
+                          value: true,
+                          message: "Proveedor es requerido",
+                        },
+                      })}
+                    >
+                      <option>Proveedor 1</option>
+                      <option>Proveedor 2</option>
+                      <option>Proveedor 3</option>
+                    </Input>
+                    <span className="text-danger span d-block mb-2">
+                      {errors?.proveedor?.message}
+                    </span>
                   </FormGroup>
                 </Col>
                 <Col md={3}>
@@ -433,15 +512,15 @@ const EditProduct = (props) => {
                 </Col>
               </Row>
               <FormGroup>
-                <Label for="product_in_ecommerce" style={{ display: "inline" }}>
+                <Label for="ecommerce" style={{ display: "inline" }}>
                   Publicado en E-Commerce
                 </Label>
                 <div>
                   <CustomInput
                     type="checkbox"
                     id="exampleCustomRadio"
-                    name="product_in_ecommerce"
-                    value={productselect.product_in_ecommerce}
+                    name="ecommerce"
+                    value={productselect.ecommerce}
                     onChange = {
                       handleChange
                     }
@@ -458,16 +537,15 @@ const EditProduct = (props) => {
                     type="file"
                     color="primary"
                     style={{ marginTop: 10 }}
-                    disabled
                   >
                     Añadir Imagen
                   </ButtonToggle>{" "}
                   <br />
-                  <ButtonToggle color="danger" style={{ marginTop: 10 }} disabled>
+                  <ButtonToggle color="danger" style={{ marginTop: 10 }}>
                     Remover Imagen
                   </ButtonToggle>{" "}
                   <br />
-                  <ButtonToggle color="danger" style={{ marginTop: 10 }} disabled>
+                  <ButtonToggle color="danger" style={{ marginTop: 10 }}>
                     Remover Todo
                   </ButtonToggle>{" "}
                   <br />
@@ -484,19 +562,14 @@ const EditProduct = (props) => {
               <UncontrolledCollapse toggler="#togglerCampos">
                   <br/>
                   {
-                  (props.productos.productoActual.nombreIndustria === "indumentary") ? (
-                    <IndumentaryProduct datos = {props.productos.productoActual} handleDataExtra={setearDataExtra}/>) : null
+                  <RetailProduct datos = {props.productos.productoActual}/>
                   }
-                  {
-                    (props.productos.productoActual.nombreIndustria === "retail") ?
-                    (<RetailProduct datos = {props.productos.productoActual} handleDataExtra={setearDataExtra}/>) : null
-                  }
-                    <Row form>
+                  <Row form>
                       <Col md={4}>
                       <FormGroup>
                           <Label for="">Material</Label>
                           <Input
-                          type="select"
+                          type="text"
                           name="product_material"
                           value={productselect.product_material}
                           onChange = {
@@ -508,13 +581,7 @@ const EditProduct = (props) => {
                               message: "no es requerido",
                             },
                           })}
-                          >
-
-                            <option value={"Material Uno"}>Material uno</option>
-                            <option value={"Material Dos"}>Material dos</option>
-                            <option value={"Material Tres"}>Material tres</option>
-
-                          </Input>
+                          ></Input>
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_material?.message}
                           </span>
@@ -524,7 +591,7 @@ const EditProduct = (props) => {
                       <FormGroup>
                           <Label for="">Origen</Label>
                           <Input
-                          type="select"
+                          type="text"
                           name="product_origin"
                           value={productselect.product_origin}
                           onChange = {
@@ -536,12 +603,7 @@ const EditProduct = (props) => {
                               message: "no es requerido",
                             },
                           })}
-                          >
-
-                            <option value={"Origen 1"}>Origen Uno</option>
-                            <option value={"Origen 2"}>Origen Dos</option>
-
-                          </Input>
+                          ></Input>
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_origin?.message}
                           </span>
@@ -549,11 +611,11 @@ const EditProduct = (props) => {
                       </Col>
                       <Col md={4}>
                       <FormGroup>
-                          <Label for="product_maker">Fabricante</Label>
+                          <Label for="">Fabricante</Label>
                           <Input
-                          type="select"
-                          name="product_maker"
-                          value={productselect.product_maker}
+                          type="text"
+                          name="fabricante"
+                          value={productselect.fabricante}
                           onChange = {
                             handleChange
                           }
@@ -563,15 +625,9 @@ const EditProduct = (props) => {
                               message: "no es requerido",
                             },
                           })}
-                          >
-
-                            <option  value={"Fabricante uno"}>Fabricante Uno</option>  
-                            <option  value={"Fabricante dos"}>Fabricante Doso</option>  
-                            <option  value={"Fabricante tres"}>Fabricante Tres</option> 
-
-                          </Input>
+                          ></Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.product_maker?.message}
+                          {errors?.fabricante?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -731,15 +787,15 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Paquetes al Cliente</Label>
                     <Input
                       type="number"
-                      name="product_package_customers"
-                      value={productselect.product_package_customers}
+                      name="product_package_to_client"
+                      value={productselect.product_package_to_client}
                       onChange = {
                         handleChange
                       }
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "product_package_customers es requerido",
+                          message: "product_package es requerido",
                         },
                       })}
                     />
@@ -808,8 +864,8 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Costo Neto/Reposicion</Label>
                     <Input
                       type="number"
-                      name="product_cost_neto_repo"
-                      value={productselect.product_cost_neto_repo}
+                      name="costoNetoRepo"
+                      value={productselect.costoNetoRepo}
                       onChange = {
                         handleChange
                       }
@@ -822,7 +878,7 @@ const EditProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.product_costo_neto_repo?.message}
+                      {errors?.costoNetoReposicion?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -906,8 +962,8 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Tasa Pais %</Label>
                     <Input
                       type="number"
-                      name="product_country_tax"
-                      value={productselect.product_country_tax}
+                      name="tasaPais"
+                      value={productselect.tasaPais}
                       onChange = {
                         handleChange
                       }
@@ -920,7 +976,7 @@ const EditProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.product_country_tax?.message}
+                      {errors?.tasaPais?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -928,11 +984,11 @@ const EditProduct = (props) => {
               <Row form>
                 <Col md={4}>
                   <FormGroup>
-                    <Label for="product_cost_with_tax">Costo actual con impuestos</Label>
+                    <Label for="exampleEmail">Costo actual con impuestos</Label>
                     <Input
                       type="number"
-                      name="product_cost_with_tax"
-                      value={productselect.product_cost_with_tax}
+                      name="costoActualConImp"
+                      value={productselect.costoActualConImp}
                       onChange = {
                         handleChange
                       }
@@ -945,7 +1001,7 @@ const EditProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.product_cost_with_tax?.message}
+                      {errors?.costoActualConImp?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -956,8 +1012,8 @@ const EditProduct = (props) => {
                     <Label for="exampleEmail">Precio de Lista</Label>
                     <Input
                       type="number"
-                      name="product_list_price"
-                      value={productselect.product_list_price}
+                      name="precioLista"
+                      value={productselect.precioLista}
                       onChange = {
                         handleChange
                       }
@@ -970,7 +1026,7 @@ const EditProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.product_list_price?.message}
+                      {errors?.precioLista?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -1051,7 +1107,7 @@ const EditProduct = (props) => {
                       <option>Cuenta 3</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
-                      {errors?.product_accountant_account?.message}
+                      {errors?.cuenta?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -1065,8 +1121,8 @@ const EditProduct = (props) => {
                   <Button color="danger" style={{ margin: 20 }}>
                     Cancelar
                   </Button>{" "}
-                  <Button color="primary" type="submit" style={{ margin: 20 }}>
-                    Editar Producto
+                  <Button color="primary" type="submit" style={{ margin: 20 }} onClick = {() => {console.log(errors)}}>
+                    Guardar Producto
                   </Button>{" "}
                 </Col>
               </Row>

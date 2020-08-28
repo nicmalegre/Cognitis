@@ -1,33 +1,77 @@
 import React, { useState, useEffect } from "react";
 import {Row, Col, FormGroup, Label, Input} from 'reactstrap'
 import { useForm } from "react-hook-form";
-import {connect} from 'react-redux'
+
 
 const IndumentaryProduct = (props)=> {
 
     const {  register, errors } = useForm();
+
+    const productFantasy = [
+        {
+            codProduct: 1,
+            nameProduct: "product1",
+            Descripción: "this is a test",
+            Marca: "Marca1",
+            Dolarizado: "si",
+            Categoria: "categoria 1",
+            Estado: "Estado 1",
+            Proveedor: "Proveedor 1",
+            CódProveedor: "22",
+            Unidad: "L",
+            Volumen: 23,
+            Bultos: 41,
+            BultoCliente: 25,
+            margenMinimo: 15,
+            margenMaximo: 20,
+            costoNetoRepo: 23,
+            Bonificaciones: 56,
+            CostoBonificacion: 25,
+            CostoFlete: 23,
+            tasaPais: 10,
+            costoActualConImp: 12,
+            precioLista: 120,
+            tipoContable: "Tipo 2",
+            cuentaContable: "Cuenta 3",
+            curva: 'lacurva',
+            temporada:'latemporada',
+            colores:'rojo, amarillo, azul'
+        },
+
+        {
+          codProduct: 2,
+          nameProduct: "product2",
+          Descripción: "test2",
+          Marca: "Marca2",
+          Dolarizado: "no",
+          Categoria: "categoria 2",
+          Tipo: "tipo 2",
+          Estado: "Estado 2",
+          Proveedor: "Provedor 2",
+          CódProveedor: "335",
+          Unidad: "L",
+          Volumen: "",
+          Bulto: "",
+        },
+    ]
+
+      //Imitating the selected product
+  const id = 1;
+
       //product status and selected product
   const [productselect, setProductSelect] = useState({});
-
-  const handleChange = (e) => {
-    const {value,name} = e.target;
-    let stateProd = productselect;
-    stateProd[name] = value;
-    setProductSelect({
-      stateProd,
-    });
-    props.handleDataExtra(productselect)
-    console.log(value);
-  }
+  const [products, setProducts] = useState([]);
 
     //this function gets the data from the server
-  useEffect(() => {
-    const funcionSeteo = async() => {
-      await setProductSelect(props.productos.productoActual);
-      console.log(props)
-    }
-      funcionSeteo();  
-    },[]);
+    useEffect(() => {
+        setProducts(productFantasy);
+        const arrayEdit = productFantasy.map((item) =>
+          item.codProduct === id
+            ? setProductSelect(item)
+            : console.log("product not found")
+        );
+        setProducts(arrayEdit);
+      }, []);
 
   return (
     <Row form>
@@ -37,9 +81,8 @@ const IndumentaryProduct = (props)=> {
             <Label for="">Curva</Label>
             <Input
             type="text"
-            name="product_curve"
-            value={productselect.product_curve}
-            onChange={handleChange}
+            name="curva"
+            value={productselect.curva}
             innerRef={register({
                 required: {
                   value: false,
@@ -49,7 +92,7 @@ const IndumentaryProduct = (props)=> {
             
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.product_curve?.message}
+            {errors?.curva?.message}
             </span>
         </FormGroup>
         </Col>
@@ -58,9 +101,8 @@ const IndumentaryProduct = (props)=> {
             <Label for="">Temporada</Label>
             <Input
             type="text"
-            name="product_season"
-            value={productselect.product_season}
-            onChange={handleChange}
+            name="temporada"
+            value="unatemporada"
             innerRef={register({
                 required: {
                   value: false,
@@ -69,7 +111,7 @@ const IndumentaryProduct = (props)=> {
               })}
             ></Input>
             <span className="text-danger span d-block mb-2">
-            {errors?.product_season?.message}
+            {errors?.temporada?.message}
             </span>
         </FormGroup>
         </Col>
@@ -77,21 +119,16 @@ const IndumentaryProduct = (props)=> {
         <FormGroup>
             <Label for="">Colores</Label>
             <Input
-            type="select"
-            name="product_color"
-            value={productselect.product_color}
-            onChange={handleChange}
+            type="text"
+            name="colores"
+            value="uncolor"
             innerRef={register({
                 required: {
                   value: false,
                   message: "no es requerido",
                 },
               })}
-            >
-                <option value={"Verde"}>Verde</option>
-                <option value={"Azul"}>Azul</option>
-                <option value = {"Amarillo"}>Amarillo</option>
-            </Input>
+            ></Input>
             <span className="text-danger span d-block mb-2">
             {errors?.colores?.message}
             </span>
@@ -103,12 +140,4 @@ const IndumentaryProduct = (props)=> {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    productos: state.productos,  
-  }
-}
-
-export default connect(
-  mapStateToProps,
-)(IndumentaryProduct)
+export default IndumentaryProduct;

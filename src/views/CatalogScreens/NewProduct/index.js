@@ -598,7 +598,7 @@ const NewProduct = (props) => {
                           <Label for="">Fabricante</Label>
                           <Input
                           type="select"
-                          name="product_maker"
+                          name="fabricante"
                           >
                             <option  value={"Fabricante uno"}>Fabricante Uno</option>  
                             <option  value={"Fabricante dos"}>Fabricante Doso</option>  

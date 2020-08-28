@@ -149,7 +149,9 @@ const App = (props) => {
         <Route path="/catalog/newproduct">
           <NewProduct />
         </Route>
-        <Route path="/catalog/editproduct/:idProd" render = {(props) => <EditProduct {...props}/>} />
+        <Route path="/catalog/editproduct">
+          <EditProduct />
+        </Route>
         </ProvidersProvider>
         <Route path="/test" component={FormTest} />
       </BrowserRouter>
