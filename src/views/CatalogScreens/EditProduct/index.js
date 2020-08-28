@@ -28,7 +28,7 @@ import {
   fetchProductoData
 } from '../../../Redux/Actions/ProductosActions';
 import { FaIndustry } from "react-icons/fa";
-// EditProduct Component
+// EditProduct Componenta
 const EditProduct = (props) => {
   //using the react hook form library for validations
   const { register, handleSubmit, errors } = useForm();
