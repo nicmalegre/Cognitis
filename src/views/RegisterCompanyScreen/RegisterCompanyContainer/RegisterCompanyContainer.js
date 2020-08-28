@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"; //importacion de la libreria
 import { CompanyContext } from "../../../store/CompanyContext";
-import { withRouter } from "react-router-dom";
 import {
   Row,
   Col,
@@ -22,7 +21,6 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
 import LayoutSucursal from "../../Layouts/RegisterCompanyLayout/layoutsucursal";
 import "./index.css";
-import RegisterSucursalContainer from "../RegisterSucursalContainer/RegisterSucursalContanier";
 
 const RegisterCompanyContainer = (props) => {
   //DATA FROM CONTEXT
@@ -33,6 +31,7 @@ const RegisterCompanyContainer = (props) => {
   //contador para mostrar dinamicamente el numero de compañia
   //const [cont, setContador] = useState(1);
   // state donde se almacena los datos de la compañia
+  //test
   const [data, setData] = useState([]);
   const [modalEliminar, setModalEliminar] = useState(false);
   const [selectcompany, setCompSelect] = useState({
@@ -42,19 +41,26 @@ const RegisterCompanyContainer = (props) => {
     pais: "",
   });
 
+  //
+  const getCompanies = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:3000/api/company/headhouse/" + props.match.params.id
+      );
+      console.log(res);
+      setData(res.data.companies_house); //le tenemos que pasar res para setear el objeto local
+    } catch (e) {
+      console.log(e);
+    }
+  };
   //peticion a la API para traer todas las compañias
   useEffect(() => {
-    axios
-      .get(
-        "http://localhost:4000/api/company/headhouse/" +
-          props.match.params.id
-      )
-      .then((res) => {
-        //console.log(res);
-        setData(res.data.companies_house); //le tenemos que pasar res para setear el objeto local
-      })
-      .catch((err) => console.log(err)); //mostrar error
-  }, []);
+    async function loadCompanies() {
+      const res = await getCompanies()
+      return res;
+    }
+    loadCompanies();
+  },[]);
 
   const selectComp = (elemento) => {
     setCompSelect(elemento);
@@ -62,15 +68,22 @@ const RegisterCompanyContainer = (props) => {
   };
 
   const eliminar = () => {
-    const dataDelete ={
-      company_id: selectcompany.company_id
-    }
-    axios.post("http://localhost:4000/api/company/deletecompany/", dataDelete)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => console.log(err)); //mostrar error
-    //setData(data.filter((elemento) => elemento.id !== selectcompany.id));
+    const dataDelete = {
+      company_id: selectcompany.company_id,
+    };
+    axios
+      .post("http://localhost:3000/api/company/deletecompany/", dataDelete)
+      .then((res) => {
+        if (res.status == 200){
+          console.log(res);
+          //getCompanies()
+          setData(data.filter((elemento) => elemento.company_id !== selectcompany.company_id))
+        }else{
+          console.log("error al eliminar la compania,"+ res);
+        }
+        })
+      .catch((err) => console.log(err)); //mostrar error
+    //setData(data.filter((elemento) => elemento.id !== selectcompany.id))
     setModalEliminar(false);
   };
 
@@ -133,7 +146,11 @@ const RegisterCompanyContainer = (props) => {
                     <td className="text-center">{elemento.company_cuit}</td>
                     <td className="text-center">{elemento.company_country}</td>
                     <td className="text-center">
-                      <Button color="primary" size="sm" onClick={()=>toEditCompany(elemento.company_id)}>
+                      <Button
+                        color="primary"
+                        size="sm"
+                        onClick={() => toEditCompany(elemento.company_id)}
+                      >
                         <i className="mr-1">
                           <MdModeEdit />
                         </i>

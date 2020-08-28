@@ -140,9 +140,7 @@ const App = (props) => {
         </CompanyProvider>
         <ProvidersProvider>
         {/*Routes of Catlog*/}
-      
-        <Route path="/catalog/productview/:id" render={props => <ProductView {...props}/>}/>
-  
+        <Route path="/catalog/productview/:idProduct" render={(props) => <ProductView {...props} /> }/>
         <Route path="/catalog/searchproducts">
           <SearchProducts />
         </Route>

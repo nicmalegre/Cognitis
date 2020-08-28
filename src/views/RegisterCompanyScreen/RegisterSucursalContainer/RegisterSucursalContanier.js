@@ -35,32 +35,37 @@ const RegisterSucursalContainer = (props) => {
     cuil: "",
   });
 
+
+  const getBranchOffices=()=>{
+    axios
+    .get(
+      "http://localhost:3000/api/branchofficehouse/branchofficebycompany",dataSend
+    )
+    .then((res) => {
+      setData(res.data); //le tenemos que pasar res para setear el objeto local
+    })
+    .catch((err) => console.log(err)); //mostrar error
+  }
+
   //peticion a la API para traer todas las compañias
   useEffect(() => {
-    console.log(props.match.params.id);
-    axios
-      .post(
-        "https://cognitis-360.herokuapp.com/api/branchofficehouse/branchofficebycompany",dataSend
-      )
-      .then((res) => {
-        console.log(res)
-        setData(res.data); //le tenemos que pasar res para setear el objeto local
-      })
-      .catch((err) => console.log(err)); //mostrar error
+   getBranchOffices();
   }, []);
 
+  
   const selectSucursal = (elemento) => {
     setSucSelect(elemento);
     setModalEliminar(true);
   };
 
   const eliminar = () => {
-    const dataDelete ={
+    const dataDelete = {
       id: selectsuc.branch_office_id,
     }
-    axios.post("http://localhost:4000/api/branchofficehouse/delete", dataDelete)
+    axios.post("http://localhost:3000/api/branchofficehouse/delete", dataDelete)
     .then((res) => {
-      console.log(res);
+      //getBranchOffices();
+      setData(data.filter((elemento) => elemento.branch_office_id !== selectsuc.branch_office_id))
     })
     .catch((err) => console.log(err)); //mostrar error
     setModalEliminar(false);

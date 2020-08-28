@@ -37,19 +37,35 @@ const Formsuc = (props) => {
     data["country"] = "argentina";
   };
 
-  const onSubmit = (data, e) => {
+  const onSubmit = async(data, e) => {
     e.preventDefault();
     preparedData(data);
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/branchofficehouse/newbranchoffice", data
+      )
+      if(res.status == 200){
+        console.log(res);
+        props.history.goBack()
+      }else{
+        console.log("error"+ res);
+      }
+    } 
+     catch (e) {
+      console.log(e);
+    }
+  };
+     
+    /*
     axios
       .post(
-        "https://cognitis-360.herokuapp.com/api/branchofficehouse/newbranchoffice",
+        "localhost:3000/api/branchofficehouse/newbranchoffice",
         data
       )
-      .then((res) => console.log(res))
+      .then((res) => props.history.goBack())
       .catch((err) => console.log(err));
     //props.history.push("/registersucursal/" + props.match.params.id);
-    props.history.goBack();
-  };
+  };*/
 
   const [input, setInput] = useState({
     company: "",
