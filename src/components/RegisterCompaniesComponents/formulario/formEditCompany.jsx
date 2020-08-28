@@ -23,14 +23,12 @@ const Formulario = (props) => {
   const onSubmit = (data, e) => {
     e.preventDefault();
     const { company_id } = props;
-    console.log('company id', company_id );
     axios
       .put(`http://localhost:3000/api/company/${company_id}`, data)
       .then(() => {
         props.history.goBack();
       })
       .catch((err) => console.log(err));
-    console.log('Datos del form',data);  
   };
   // const of countries
   const countries = [
@@ -86,7 +84,7 @@ const Formulario = (props) => {
         </Col>
         <Col lg="8" xs="10">
           <h3 className="mt-5 text" style={{ marginBottom: 30 }}>
-            Ingrese datos de la Compañia {props.cantCompanies}{" "}
+            Edite los datos de la Compañia {props.cantCompanies}{" "}
           </h3>
         </Col>
       </Row>
@@ -109,7 +107,7 @@ const Formulario = (props) => {
                     name="company_name"
                     id="company"
                     placeholder="ingrese el nombre de la compañia"
-                    valid={input.company}
+                    valid={input.company_name}
                     onChange={inputChange}
                     innerRef={register({
                       required: {
@@ -188,7 +186,8 @@ const Formulario = (props) => {
                     <Input
                       type="select"
                       name="company_country"
-                      id="pais"
+                      valid={input.company_country}
+                      onChange={inputChange}
                       innerRef={register({
                         required: {
                           value: false,
@@ -247,6 +246,8 @@ const Formulario = (props) => {
                       name="company_house_industry_id"
                       id="inductria"
                       placeholder="seleccione su industria"
+                      valid={input.company_house_industry_id}
+                      onChange={inputChange}
                       innerRef={register({
                         required: "Tipo de industria requerido",
                       })}
