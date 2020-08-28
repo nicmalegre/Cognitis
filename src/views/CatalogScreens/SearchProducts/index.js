@@ -66,7 +66,7 @@ const setMark = (event) => {
   setDatosPeticion({
     ...datosPeticion,
     
-    product_brand: (event.target.value === "null") ? null : event.target.value
+    product_brand: event.target.value 
   })
 }
 
@@ -75,7 +75,7 @@ const setProvider = (event) => {
   setDatosPeticion({
     ...datosPeticion,
     
-    product_providers: (event.target.value === "null") ? null : event.target.value
+    product_providers: event.target.value 
   })
 }
 
@@ -84,7 +84,7 @@ const setCategory = (event) => {
   
   setDatosPeticion({
     ...datosPeticion,
-    category: (event.target.value === "null") ? null : event.target.value 
+    category: event.target.value 
   })
 }
 
@@ -93,7 +93,7 @@ const setType = (event) => {
   setDatosPeticion({
     ...datosPeticion,
     
-    product_type: (event.target.value === "null") ? null : event.target.value 
+    product_type: event.target.value 
   })
 }
 
@@ -106,6 +106,7 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
   console.log(datosPeticion)
   axios.post('http://localhost:4000/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
   .then( res => { 
+    console.log(res.data)
     setResults(
       resultSearch = res.data
     )
@@ -128,7 +129,6 @@ const getCategories = ()=>{
 const getProviders = ()=>{
   axios.get('http://localhost:4000/api/products/allproviders')
   .then(res => {
-    console.log(res.data)
     setProviders(
       providers = res.data
     )
@@ -183,23 +183,24 @@ useEffect(() => {
               <Card.Header>Filters</Card.Header>
               <Form className="p-3">
                 <Form.Control as="select" onChange={setMark} className="mb-1">
-                  <option key="brand0" value="null">Marca</option>
+                  <option>Marca</option>
                 </Form.Control>
                 <Form.Control as="select" onChange={setProvider} className="mb-1">
-                  <option key="noneprov" value="null">Proveedores</option>
+                  <option key="null" value="null">Proveedores</option>
                     {providers.map( (prov) => (
                       <option key={prov.provider_id} value={prov.provider_id}>{prov.provider_name}</option>
                     ))} 
-                    
+                    <option key="noneprov" value="null">None</option> 
                 </Form.Control>
                 <Form.Control  as="select" onChange={setCategory} className="mb-1">
-                  <option key="nonecat" value="null">Categorías</option>                 
+                  <option key="null" value="null">Categorías</option>                 
                   {categories.map( (cat) => (
                     <option key={cat.category_id} value={cat.category_id}>{cat.category_name}</option>
-                  ))}                    
+                  ))}
+                  <option key="nonecat" value="null">None</option>                    
                 </Form.Control>
                 <Form.Control as="select" onChange={setType} className="mb-1">
-                  <option key="tipo0">Tipo de Producto</option>
+                  <option>Tipo de Producto</option>
                 </Form.Control>
               </Form>
             </Card>
@@ -235,7 +236,7 @@ useEffect(() => {
 
 
                         <td>
-                        <Link to={`/catalog/editproduct/${product.product_id}`} >
+                        <Link to="/catalog/editproduct" >
                         <Button id="button-edit" size="sm"  >
                           <i className="mr-1">< MdModeEdit/></i>
                           <span className="align-middle">Edit</span>
