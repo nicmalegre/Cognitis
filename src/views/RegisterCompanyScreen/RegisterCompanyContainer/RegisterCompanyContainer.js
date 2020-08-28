@@ -47,7 +47,6 @@ const RegisterCompanyContainer = (props) => {
       const res = await axios.get(
         "http://localhost:3000/api/company/headhouse/" + props.match.params.id
       );
-      console.log(res);
       setData(res.data.companies_house); //le tenemos que pasar res para setear el objeto local
     } catch (e) {
       console.log(e);
@@ -75,11 +74,9 @@ const RegisterCompanyContainer = (props) => {
       .post("http://localhost:3000/api/company/deletecompany/", dataDelete)
       .then((res) => {
         if (res.status == 200){
-          console.log(res);
-          //getCompanies()
           setData(data.filter((elemento) => elemento.company_id !== selectcompany.company_id))
         }else{
-          console.log("error al eliminar la compania,"+ res);
+          console.log("error al eliminar la compania,"+ res.status);
         }
         })
       .catch((err) => console.log(err)); //mostrar error
@@ -110,7 +107,7 @@ const RegisterCompanyContainer = (props) => {
         </Row>
         <Card id="card" body style={{ marginTop: 50 }}>
           <CardHeader className="bg-dark">
-            <Row card>
+            <Row >
               <h5 className="text-white ml-2">Manage Companies</h5>
               <Col className="row justify-content-end">
                 <Button

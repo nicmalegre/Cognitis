@@ -35,22 +35,37 @@ const RegisterSucursalContainer = (props) => {
     cuil: "",
   });
 
-
+/*
   const getBranchOffices=()=>{
     axios
-    .get(
+    .post(
       "http://localhost:3000/api/branchofficehouse/branchofficebycompany",dataSend
     )
     .then((res) => {
       setData(res.data); //le tenemos que pasar res para setear el objeto local
     })
     .catch((err) => console.log(err)); //mostrar error
-  }
-
-  //peticion a la API para traer todas las compañias
-  useEffect(() => {
-   getBranchOffices();
-  }, []);
+  }*/
+    //
+    const getBranchOffices = async () => {
+      try {
+        const res = await axios.post(
+          "http://localhost:3000/api/branchofficehouse/branchofficebycompany", dataSend
+        );
+        //console.log(res);
+        setData(res.data); //le tenemos que pasar res para setear el objeto local
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    //peticion a la API para traer todas las compañias
+    useEffect(() => {
+      async function loadBranchOffices() {
+        const res = await getBranchOffices()
+        return res;
+      }
+      loadBranchOffices();
+    },[]);
 
   
   const selectSucursal = (elemento) => {
@@ -75,6 +90,10 @@ const RegisterSucursalContainer = (props) => {
     props.history.push("/createsucursal/" + props.match.params.id);
   }
 
+  const toEditBranch = (branchoffice_id) => {
+    props.history.push("/editbranchoffice/" + branchoffice_id);
+  };
+
   //Funcion que renderiza el componente visual jsx
   return (
     <LayoutSucursal>
@@ -86,7 +105,7 @@ const RegisterSucursalContainer = (props) => {
         </Row>
         <Card id="card" body style={{ marginTop: 50 }}>
           <CardHeader className="bg-dark">
-            <Row card>
+            <Row >
               <h5 className="text-white ml-2">Manage Sucursales</h5>
               <Col className="row justify-content-end">
                   <Button color="secondary" size="md" onClick={()=>toCreateSucursal()} >
@@ -115,7 +134,9 @@ const RegisterSucursalContainer = (props) => {
                   <td className="text-center">{elemento.branch_office_name}</td>
                   <td className="text-center">{elemento.branch_office_cuit}</td>
                   <td className="text-center">
-                    <Button color="primary" size="sm">
+                    <Button color="primary"
+                            size="sm"
+                            onClick={()=> toEditBranch(elemento.branch_office_id)}>
                       <i className="mr-1 mt-1">
                         <MdModeEdit />
                       </i>
@@ -178,4 +199,4 @@ const RegisterSucursalContainer = (props) => {
     </LayoutSucursal>
   );
 };
-export default RegisterSucursalContainer;
+export default withRouter(RegisterSucursalContainer);

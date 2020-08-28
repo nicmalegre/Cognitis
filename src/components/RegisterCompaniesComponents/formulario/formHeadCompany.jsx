@@ -28,18 +28,17 @@ const FormHeadCompany = (props) => {
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
   
   
-  // concateno los datos de codpais + codarea + head_tel para almacenalo en la BD como head_tel
-  const changeTel = (data) => {
-    data.head_tel = data.codPais + data.codArea + data.head_tel;
-  };
+  // // concateno los datos de codpais + codarea + head_tel para almacenalo en la BD como head_tel
+  // const changeTel = (data) => {
+  //   data.head_tel = data.codPais + data.codArea + data.head_tel;
+  // };
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    changeTel(data);
-    axios.post("https://cognitis-360.herokuapp.com/api/head_house/registerheadhouse", data)
+    axios.post("http://localhost:3000/api/head_house/registerheadhouse", data)
     .then((res) =>    
     //setDataCompany({...setDataCompany, head_house_id: res.data})
-    props.history.push("/registercompany/"+ res.data)
+     props.history.push("/registercompany/"+ res.data)
     )
     .catch((err) => console.log(err));
      //props.history.push("/registercompany");
@@ -248,8 +247,8 @@ const FormHeadCompany = (props) => {
                         <Label for="codPais">Cod Pais</Label>
                         <Input
                           type="text"
-                          name="codPais"
-                          valid={input.codPais}
+                          name="country_code"
+                          valid={input.country_code}
                           onChange={inputChange}
                           placeholder="+54"
                           innerRef={register({
@@ -268,7 +267,7 @@ const FormHeadCompany = (props) => {
                           })}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.codPais?.message}
+                          {errors?.country_code?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -278,8 +277,8 @@ const FormHeadCompany = (props) => {
                         <Label for="codArea">Cod Area</Label>
                         <Input
                           type="number"
-                          name="codArea"
-                          valid={input.codArea}
+                          name="area_code"
+                          valid={input.area_code}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -297,7 +296,7 @@ const FormHeadCompany = (props) => {
                           })}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.codArea?.message}
+                          {errors?.area_code?.message}
                         </span>
                       </FormGroup>
                     </Col>

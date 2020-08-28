@@ -17,58 +17,49 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Logo from "../../WizardComponents/base/logo";
 
-const Formsuc = (props) => {
+const Formulario = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
 
   //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
 
-
-
   //preparing data for send
   const preparedData = (data) => {
-    data["company_id"] = props.match.params.id;
+    //data["company_id"] = props.match.params.id;
     data["address"] = "calle 123";
     data["country"] = "argentina";
+    data["id"] = props.branch_office_id;
   };
 
-  const onSubmit = async(data, e) => {
+  //function in charge of sending the data to the server
+  const onSubmit = async (data, e) => {
     e.preventDefault();
     preparedData(data);
+    //console.log(data);
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/branchofficehouse/newbranchoffice", data
-      )
-      if(res.status == 200){
-        console.log(res);
-        props.history.goBack()
-      }else{
-        console.log("error"+ res);
+      const res = await axios.put(
+        "http://localhost:3000/api/branchofficehouse/update",
+        data
+      );
+      if (res.status == 200) {
+        props.history.goBack();
+      } else {
+        console.log("error" + res);
       }
-    } 
-     catch (e) {
+    } catch (e) {
       console.log(e);
     }
   };
-     
-    /*
-    axios
-      .post(
-        "localhost:3000/api/branchofficehouse/newbranchoffice",
-        data
-      )
-      .then((res) => props.history.goBack())
-      .catch((err) => console.log(err));
-    //props.history.push("/registersucursal/" + props.match.params.id);
-  };*/
 
+  //state in charge of controlling if each input is valid
   const [input, setInput] = useState({
     company: "",
     razonsocial: "",
     cuil: "",
   });
 
+  //function that checks if each input is valid
   const inputChange = async (event) => {
     let value = "";
     let inputvalue = event.target.value;
@@ -86,6 +77,9 @@ const Formsuc = (props) => {
     });
   };
 
+  //function that breaks down the tel into country.code, area.code, number.tel
+  const splited_tel = props.branchoffice.branch_tel.split("-");
+
   //Funcion que renderiza el componente visual jsx
   return (
     <Container fluid>
@@ -95,13 +89,13 @@ const Formsuc = (props) => {
         </Col>
         <Col lg="8" xs="10">
           <h3 className="mt-5 text" style={{ marginBottom: 30 }}>
-            Ingrese datos de la Sucursal {props.cantSuc}{" "}
+            Edite los datos de la Sucursal {props.cantSuc}{" "}
           </h3>
         </Col>
       </Row>
       <Row>
         <Col lg="12">
-          <Card id="card-user">
+          <Card id="card">
             <Form onSubmit={handleSubmit(onSubmit)} id="card-user">
               <br />
               <h6 className="text">Datos de la Sucursal {props.cantSuc} </h6>
@@ -121,6 +115,7 @@ const Formsuc = (props) => {
                         message: "Nombre de sucursal es requerido",
                       },
                     })}
+                    defaultValue={props.branchoffice.branch_office_name}
                   />
                   <span className="text-danger span d-block mb-2">
                     {errors?.name?.message}
@@ -142,6 +137,9 @@ const Formsuc = (props) => {
                           message: "Razon Social es requerido",
                         },
                       })}
+                      defaultValue={
+                        props.branchoffice.branch_office_business_name
+                      }
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.business_name?.message}
@@ -176,6 +174,7 @@ const Formsuc = (props) => {
                           message: "invalid cuil o cuit",
                         },
                       })}
+                      defaultValue={props.branchoffice.branch_office_cuit}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.cuit?.message}
@@ -201,6 +200,7 @@ const Formsuc = (props) => {
                           message: "invalid email address",
                         },
                       })}
+                      defaultValue={props.branchoffice.branch_office_email}
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.email?.message}
@@ -235,6 +235,7 @@ const Formsuc = (props) => {
                               message: "No menos de 3 carácteres!",
                             },
                           })}
+                          defaultValue={splited_tel[0]}
                         />
                         <span className="text-danger span d-block mb-2">
                           {errors?.country_code?.message}
@@ -248,7 +249,6 @@ const Formsuc = (props) => {
                         <Input
                           type="number"
                           name="area_code"
-                          id="codArea"
                           valid={input.area_code}
                           onChange={inputChange}
                           innerRef={register({
@@ -265,6 +265,7 @@ const Formsuc = (props) => {
                               message: "No menos de 2 numeros!",
                             },
                           })}
+                          defaultValue={splited_tel[1]}
                         />
                         <span className="text-danger span d-block mb-2">
                           {errors?.area_code?.message}
@@ -294,6 +295,7 @@ const Formsuc = (props) => {
                               message: "No menos de 4 numeros!",
                             },
                           })}
+                          defaultValue={splited_tel[2]}
                         />
                         <span className="text-danger span d-block mb-2">
                           {errors?.tel?.message}
@@ -317,6 +319,7 @@ const Formsuc = (props) => {
                           value: false,
                         },
                       })}
+                      defaultValue={props.branchoffice.branch_office_fax}
                     />
                   </FormGroup>
                 </Col>
@@ -349,6 +352,9 @@ const Formsuc = (props) => {
                           message: "No menos de 3 caracteres!",
                         },
                       })}
+                      defaultValue={
+                        props.branchoffice.bankbranch[0].bank_branch_office_name
+                      }
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.bank_name?.message}
@@ -364,6 +370,10 @@ const Formsuc = (props) => {
                       Numero de Cuenta Bancaria
                     </Label>
                     <Input
+                      defaultValue={
+                        props.branchoffice.bankbranch[0]
+                          .bank_branch_office_account
+                      }
                       type="number"
                       name="bank_account"
                       valid={input.bank_account}
@@ -416,6 +426,9 @@ const Formsuc = (props) => {
                           message: "No menos de 22 numeros",
                         },
                       })}
+                      defaultValue={
+                        props.branchoffice.bankbranch[0].bank_branch_office_cbu
+                      }
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.bank_cbu?.message}
@@ -445,6 +458,10 @@ const Formsuc = (props) => {
                           message: "No menos de 6 caracteres!",
                         },
                       })}
+                      defaultValue={
+                        props.branchoffice.bankbranch[0]
+                          .bank_branch_office_alias
+                      }
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.bank_alias?.message}
@@ -474,4 +491,4 @@ const Formsuc = (props) => {
     </Container>
   );
 };
-export default withRouter(Formsuc);
+export default withRouter(Formulario);

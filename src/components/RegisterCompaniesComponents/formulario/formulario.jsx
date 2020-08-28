@@ -28,9 +28,9 @@ const Formulario = (props) => {
   //DATA FOR SUBMIT
   const [data, setData] = useState({head_house_id: props.match.params.id})
   
-  const changeTel = (data) => {
-    data.company_tel = data.codPais + data.codArea + data.company_tel;
-  };
+  // const changeTel = (data) => {
+  //   data.company_tel = data.codPais + data.codArea + data.company_tel;
+  // };
 
   const changeIndustry = (data) => {
     if (data.company_house_industry_id === "Retail"){
@@ -44,7 +44,7 @@ const Formulario = (props) => {
 
   //preparing data for send
   const preparedData=(data)=>{
-    changeTel(data);
+    //changeTel(data);
     changeIndustry(data);
     data["head_house_id"] = props.match.params.id
   }
@@ -59,7 +59,7 @@ const Formulario = (props) => {
       )
       if(res.status == 200){
         props.history.goBack()
-        //console.log(res);
+        
       }else{
         console.log("error"+ res);
       }
@@ -67,24 +67,7 @@ const Formulario = (props) => {
      catch (e) {
       console.log(e);
     }
-  };
-        
-    
-  /*  axios
-      .post(
-        "https://localhost:3000/api/company/newcompany",
-        data
-      )
-      .then((res) =>{
-        if(res.status == 200){
-          props.history.goBack()
-          //console.log(res);
-        }else{
-          console.log("error"+ res);
-        }
-      } 
-      )
-      .catch((err) => console.log(err));*/  
+  }; 
   
   // const of countries
   const countries = [
@@ -283,6 +266,8 @@ const Formulario = (props) => {
                       type="select"
                       name="company_house_industry_id"
                       placeholder="seleccione su industria"
+                      valid={input.company_house_industry_id}
+                      onChange={inputChange}
                       innerRef={register({
                         required: "Tipo de industria requerido",
                       })}
@@ -309,9 +294,9 @@ const Formulario = (props) => {
                         <Label for="codPais">Cod Pais</Label>
                         <Input
                           type="text"
-                          name="codPais"
+                          name="country_code"
                           placeholder="+54"
-                          valid={input.codPais}
+                          valid={input.country_code}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -329,7 +314,7 @@ const Formulario = (props) => {
                           })}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.codPais?.message}
+                          {errors?.country_code?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -339,9 +324,8 @@ const Formulario = (props) => {
                         <Label for="codArea">Cod Area</Label>
                         <Input
                           type="number"
-                          name="codArea"
-                          id="codArea"
-                          valid={input.codArea}
+                          name="area_code"
+                          valid={input.area_code}
                           onChange={inputChange}
                           innerRef={register({
                             required: {
@@ -359,7 +343,7 @@ const Formulario = (props) => {
                           })}
                         />
                         <span className="text-danger span d-block mb-2">
-                          {errors?.codArea?.message}
+                          {errors?.area_code?.message}
                         </span>
                       </FormGroup>
                     </Col>
@@ -370,7 +354,6 @@ const Formulario = (props) => {
                         <Input
                           type="number"
                           name="company_tel"
-                          id="nrotel"
                           valid={input.company_tel}
                           onChange={inputChange}
                           innerRef={register({

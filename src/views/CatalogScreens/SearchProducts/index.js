@@ -101,10 +101,10 @@ const setType = (event) => {
 //Funcion que se ejecuta al solicitar una busqueda.
 const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de la funcion
   
-  if ((datosPeticion.category === null) && (datosPeticion.product_name === null) && (datosPeticion.product_id === null) && (datosPeticion.product_brand === null) && (datosPeticion.product_type === null) && (datosPeticion.product_providers === null)) { console.log(datosPeticion)}
+  if ((datosPeticion.category === null) && (datosPeticion.product_name === null) && (datosPeticion.product_id === null) && (datosPeticion.product_brand === null) && (datosPeticion.product_type === null) && (datosPeticion.product_providers === null)) { console.log('Es todo nulo')}
   else {
   console.log(datosPeticion)
-  axios.post('https://cognitis-360.herokuapp.com/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
+  axios.post('http://localhost:4000/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
   .then( res => { 
     console.log(res.data)
     setResults(
