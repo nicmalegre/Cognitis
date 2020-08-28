@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; //importacion de la libreria
+import React, { useState } from "react"; //importacion de la libreria
 import { withRouter } from "react-router-dom";
 import {
   FormGroup,
@@ -10,6 +10,7 @@ import {
   Card,
   Form,
   Button,
+  Spinner
 } from "reactstrap"; //importar elementos
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -22,7 +23,9 @@ const Formulario = (props) => {
 
   const onSubmit = (data, e) => {
     e.preventDefault();
+    setUpdating(true);
     const { company_id } = props;
+
     axios
       .put(`http://localhost:3000/api/company/${company_id}`, data)
       .then(() => {
@@ -30,6 +33,7 @@ const Formulario = (props) => {
       })
       .catch((err) => console.log(err));
   };
+
   // const of countries
   const countries = [
     "Argentina",
@@ -54,6 +58,9 @@ const Formulario = (props) => {
     razonsocial: "",
     cuil: "",
   });
+
+  //stat to control if update action was executed
+  const [updating, setUpdating] = useState(false);
 
   const inputChange = async (event) => {
     let value = "";
@@ -240,7 +247,9 @@ const Formulario = (props) => {
                 <Col md={6}>
                   <FormGroup>
                     <span className="text-danger font-weight-bold">*</span>{" "}
-                    <Label for="company_house_industry_id">Tipo de Industria</Label>
+                    <Label for="company_house_industry_id">
+                      Tipo de Industria
+                    </Label>
                     <Input
                       type="select"
                       name="company_house_industry_id"
@@ -563,7 +572,7 @@ const Formulario = (props) => {
               >
                 <Col md={2}>
                   <Button color="primary" type="submit" active>
-                    Continuar
+                    { updating ? <Spinner size="sm" color="ligth" /> : <span>Guardar</span> }
                   </Button>
                 </Col>
               </Row>
