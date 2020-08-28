@@ -185,7 +185,7 @@ const Formulario = (props) => {
                     <Input
                       //type="text"
                       name="company_cuit"
-                      placeholder="Ejemplo XX12345678X"
+                      placeholder="Ejemplo: XX12345678X"
                       maxLength="11"
                       valid={input.company_cuit}
                       onChange={inputChange}
@@ -296,6 +296,7 @@ const Formulario = (props) => {
                           type="text"
                           name="country_code"
                           placeholder="+54"
+                          maxLength="5"
                           valid={input.country_code}
                           onChange={inputChange}
                           innerRef={register({
@@ -310,6 +311,10 @@ const Formulario = (props) => {
                             minLength: {
                               value: 2,
                               message: "No menos de 2 carácteres!",
+                            },
+                            pattern: {
+                              value: /^[+]+[0-9]{1,5}/,
+                              message: "invalid country_code",
                             },
                           })}
                         />
@@ -333,8 +338,8 @@ const Formulario = (props) => {
                               message: "Codigo de Area es requerido",
                             },
                             maxLength: {
-                              value: 6,
-                              message: "No más de 6 numeros!",
+                              value: 4,
+                              message: "No más de 4 numeros!",
                             },
                             minLength: {
                               value: 2,
@@ -407,9 +412,9 @@ const Formulario = (props) => {
                     <Input
                       type="text"
                       name="bank_company_name"
-                      id="nameBank"
                       valid={input.bank_company_name}
                       onChange={inputChange}
+                      maxLength="60"
                       placeholder="Ingrese el nombre del banco"
                       innerRef={register({
                         required: {
@@ -417,17 +422,22 @@ const Formulario = (props) => {
                           message: "Nombre del banco es requerido",
                         },
                         maxLength: {
-                          value: 100,
-                          message: "No más de 100 caracteres!",
+                          value: 60,
+                          message: "No más de 60 caracteres!",
                         },
                         minLength: {
                           value: 3,
                           message: "No menos de 3 caracteres!",
                         },
+                        pattern: {
+                          value: /^[A-Z]+$/i,
+                          //value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: "nombre del banco invalido",
+                        },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.nameBank?.message}
+                      {errors?.bank_company_name?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -440,23 +450,19 @@ const Formulario = (props) => {
                       Numero de Cuenta Bancaria
                     </Label>
                     <Input
-                      type="number"
                       name="bank_company_account"
                       valid={input.bank_company_account}
                       onChange={inputChange}
-                      placeholder="Ingrese su nro de cuenta bancaria"
+                      placeholder="Ejemplo: XXX-XXXXXX/X"
+                      maxLength="12"
                       innerRef={register({
                         required: {
                           value: true,
                           message: "Numero de cuenta bancaria es requerido",
                         },
-                        maxLength: {
-                          value: 15,
-                          message: "No más de 15 numeros!",
-                        },
-                        minLength: {
-                          value: 12,
-                          message: "No menos de 12 numeros!",
+                        pattern: {
+                          value: /^\d{3}-\d{6}[/]\d{1}/i,
+                          message: "Numero de cuenta bancaria invalido",
                         },
                       })}
                     />
@@ -476,6 +482,7 @@ const Formulario = (props) => {
                       name="bank_company_cbu"
                       valid={input.bank_company_cbu}
                       onChange={inputChange}
+                      //maxLength="2"
                       placeholder="Ingrese el nro de CBU"
                       innerRef={register({
                         required: {
@@ -484,11 +491,11 @@ const Formulario = (props) => {
                         },
                         maxLength: {
                           value: 22,
-                          message: "No más de 22 numeros",
+                          message: "No más de 22 numeros!",
                         },
-                        minLength: {
-                          value: 22,
-                          message: "No menos de 22 numeros",
+                        pattern: {
+                          value: /^\d{22}$/i,
+                          message: "Numero de cuenta bancaria invalido",
                         },
                       })}
                     />
@@ -519,6 +526,10 @@ const Formulario = (props) => {
                           value: 6,
                           message: "No menos de 6 caracteres!",
                         },
+                        pattern:{
+                          value: /^[A-Za-z-?.?]{6,20}/i,
+                          message:""
+                        }
                       })}
                     />
                     <span className="text-danger span d-block mb-2">

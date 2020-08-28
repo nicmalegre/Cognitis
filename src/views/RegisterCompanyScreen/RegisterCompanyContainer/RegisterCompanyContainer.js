@@ -187,7 +187,7 @@ const RegisterCompanyContainer = (props) => {
             </tbody>
           </Table>
 
-          <Row className="row justify-content-end" style={{ marginTop: 10 }}>
+          {/* <Row className="row justify-content-end" style={{ marginTop: 10 }}>
             <Col md={2}>
               <Link to="/registersucursal">
                 <Button color="primary" type="submit" active>
@@ -195,7 +195,7 @@ const RegisterCompanyContainer = (props) => {
                 </Button>
               </Link>
             </Col>
-          </Row>
+          </Row> */}
           <br />
         </Card>
 
