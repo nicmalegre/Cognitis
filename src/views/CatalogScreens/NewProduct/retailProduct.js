@@ -138,9 +138,9 @@ const RetailProduct = (props)=> {
             <Col sm={12}>
                   <Input
                     type="textarea"
-                    name="datos tecnicos"
+                    name="product_technical_data"
                     placeholder="Ingrese datos tecnicos"
-                    
+                    onChange={handleChange}
                   />
             </Col>
         </FormGroup>

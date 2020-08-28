@@ -1,5 +1,8 @@
 //imports of all required libraries and components
-import React,{ useState,useEffect } from "react";
+import React,{ useState,useEffect,useContext } from "react";
+import {ProductContext} from '../../../store/ProductsContext';
+import {ProviderContext} from '../../../store/ProvidersContext';
+import ProvidersTable from '../ProvidersTable'
 import {
   Row,
   Col,
@@ -13,7 +16,10 @@ import {
   Button,
   Alert,
 } from "reactstrap";
-import {PRODUCTS_URL} from '../../../urls/url';
+import {
+  PRODUCTS_URL,
+  CATEGORIES_URL,
+} from '../../../urls/url';
 import CatalogLayout from "../../Layouts/CatalogLayout";
 import "./index.css";
 import CarouselComponent from "./carousel";
@@ -24,8 +30,11 @@ import RetailProduct from './retailProduct';
 
 const NewProduct = (props) => {
   const { register, handleSubmit, errors } = useForm();
-  const [industry,setIndustry] = useState('1');
+  const [industry,setIndustry] = useState('retail');
   const [cambio,setCambio] = useState(false);
+  const [provContext,setProvContext] = useContext(ProviderContext);
+  const [providers,setProviders] = useState([]);
+  const [categories,setCategories] = useState([]);
   //let auxiliarObject = {};
   const [dataExtra,setDataExtra] = useState({});
   const [selects,setSelects] = useState({
@@ -40,6 +49,19 @@ const NewProduct = (props) => {
     product_accountant_type: "Bienes de Cambio",
     product_accountant_account: "Venta de Mercaderia",
   })
+  const [dataNoObligatory,setDataNoObligatory] = useState({
+    product_warranty: '',
+    product_barcode:  '',
+    product_shipping: '',
+  })
+
+  const handleSetDataInput = (event) => {
+    let {name,value} = event.target;
+    setDataNoObligatory({
+      ...dataNoObligatory,
+      [name]:value,
+    })
+  } 
 
   const handleChangeDataExtra = (data) => {
     /*auxiliarObject = dataExtra;
@@ -93,7 +115,7 @@ const NewProduct = (props) => {
     data.product_is_dollar = parseInt(data.product_is_dollar);
     data.product_max_margin = parseInt(data.product_max_margin);
     data.product_status = parseInt(data.product_status);
-    data.products_industry_id = parseInt(data.products_industry_id);
+    //data.products_industry_id = parseInt(data.products_industry_id);
     //transform to float
     data.costoNetoReposicion = parseFloat(data.costoNetoReposicion);
     data.product_bonification = parseFloat(data.product_bonification);
@@ -112,17 +134,61 @@ const NewProduct = (props) => {
     })
   };*/
 
+  const cargar = () => {
+    axios.get(`${PRODUCTS_URL}/allProviders`).then(res => {
+      console.log(res.data)
+      
+      setProviders(
+        res.data.map(prov => {
+          return {
+            ...prov,
+            selected: false,
+          }
+        })
+      )
+      setProvContext({
+        providers:res.data.map(prov => {
+          return {
+            ...prov,
+            selected: false,
+          }
+        })
+      });
+    });
+  }
+
+  const cargar2 = () => {
+    axios.get(`${CATEGORIES_URL}`).then(res2 => {
+      console.log(res2.data)
+      setCategories(
+        res2.data
+        );
+    });
+  }
+
   useEffect(() => {
-    setDataExtra({})
+    //setDataExtra({})
+   
+    cargar();
+    cargar2();
+    
   },[cambio])
 
   //Sending data to the server
   const onSubmit = (data, e) => {
     transformToNumber(data);
+    const proveedoresSeleccionados = []
+    provContext.providers.map(value => {
+      if(value.selected === true){
+         proveedoresSeleccionados.push(value);
+      }
+    })
     data = {
       ...data,
       ...selects,
       ...dataExtra,
+      ...dataNoObligatory,
+      proveedores: proveedoresSeleccionados,
     }
     if(data.product_in_ecommerce === false){
       data.product_in_ecommerce = 0;
@@ -153,6 +219,8 @@ const NewProduct = (props) => {
     console.log(e.target.value)
   }
 
+  
+
   const setearSelect = (event) => {
     const {value,name} = event.target;
     setSelects(
@@ -161,6 +229,7 @@ const NewProduct = (props) => {
         [name]: value,
       }
     )
+    console.log(`${value} ${name}`);
   }
 
   //Variable que indica la industria en este momento
@@ -196,12 +265,7 @@ const NewProduct = (props) => {
                   <Input
                     type="number"
                     name="product_id"
-                    innerRef={register({
-                      required: {
-                        value: true,
-                        message: "codigo del producto es requerido",
-                      },
-                    })}
+                    disabled
                   />
                   <span className="text-danger span d-block mb-2">
                     {errors?.product_id?.message}
@@ -303,10 +367,13 @@ const NewProduct = (props) => {
                           message: "categoria es requerido",
                         },
                       })}
-                    >
-                      <option value={"1"}>Categoria 1</option>
-                      <option value={"2"}>Categoria 2</option>
-                      <option value={"3"}>Categoria 3</option>
+                    >{
+                      categories.map(cat => {
+                        return(
+                          <option value={cat.category_id}>{cat.category_name}</option>  
+                        )
+                      })
+                    }
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.category?.message}
@@ -352,9 +419,8 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option value={"1"}>Estado 1</option>
-                      <option value={"2"}>Estado 2</option>
-                      <option value={"3"}>Estado 3</option>
+                      <option value={"0"}>Inactivo</option>
+                      <option value={"1"}>Activo</option>
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_status?.message}
@@ -362,11 +428,24 @@ const NewProduct = (props) => {
                   </FormGroup>
                 </Col>
               </Row>
-              <Row form>
-                <Col md={6}>
+              <br/>
+              <Row form 
+                style={{
+                  alignItems: 'center',
+                  //textAlign: 'center'
+                }}
+              >
+                <Col md={3}></Col>
+                <Col 
+                  md={6}
+                  style={{
+                    alignItems: 'center',
+                    textAligm: 'center'
+                  }}
+                >
                   <FormGroup>
                     <Label for="">Proveedor</Label>
-                    <Input
+                    {/*<Input
                       type="select"
                       name="proveedor"
                       innerRef={register({
@@ -375,28 +454,37 @@ const NewProduct = (props) => {
                           message: "Proveedor es requerido",
                         },
                       })}
-                    >
-                      <option value={"1"}>Proveedor 1</option>
-                      <option value={"2"}>Proveedor 2</option>
-                      <option value={"3"}>Proveedor 3</option>
-                    </Input>
-                    <span className="text-danger span d-block mb-2">
-                      {errors?.proveedor?.message}
-                    </span>
+                    >{
+                      providers.map(prov => {
+                        return(
+                        <option 
+                        value = {prov.provider_id}
+                        >
+                          {prov.provider_name}
+                        </option>
+                        )
+                      })
+                    }
+                  </Input>*/}
+                  <ProvidersTable/>
                   </FormGroup>
                 </Col>
-                <Col md={3}>
+                </Row>
+                <br/>
+                <Row for>
+                <Col md={6}>
                   <FormGroup>
                     <Label for="exampleEmail">Código de Proveedor</Label>
                     <Input type="number" name="codProveedor" disabled />{" "}
                     {/*why??*/}
                   </FormGroup>
                 </Col>
+                <Col md={6}>
                 <FormGroup>
                     <Label for="">Tipo Industria</Label>
                     <Input
                       type="select"
-                      name="products_industry_id"
+                      name="products_industry_name"
                       value = {industry}
                       onChange = {setearIndustria}
                       innerRef={register({
@@ -406,14 +494,15 @@ const NewProduct = (props) => {
                         },
                       })}
                     >
-                      <option value={'1'}>Retail</option>
-                      <option value={'11'}>Indumentary</option>
+                      <option value={'retail'}>Retail</option>
+                      <option value={'indumentary'}>Indumentary</option>
                       
                     </Input>
                     <span className="text-danger span d-block mb-2">
                       {errors?.product_brand?.message}
                     </span>
                   </FormGroup>
+                  </Col>
               </Row>
               <FormGroup>
                 <Label for="exampleCheckbox" style={{ display: "inline" }}>
@@ -438,15 +527,16 @@ const NewProduct = (props) => {
                     type="file"
                     color="primary"
                     style={{ marginTop: 10 }}
+                    disabled
                   >
                     Añadir Imagen
                   </ButtonToggle>{" "}
                   <br />
-                  <ButtonToggle color="danger" style={{ marginTop: 10 }}>
+                  <ButtonToggle color="danger" style={{ marginTop: 10 }} disabled>
                     Remover Imagen
                   </ButtonToggle>{" "}
                   <br />
-                  <ButtonToggle color="danger" style={{ marginTop: 10 }}>
+                  <ButtonToggle color="danger" style={{ marginTop: 10 }} disabled>
                     Remover Todo
                   </ButtonToggle>{" "}
                   <br />
@@ -462,12 +552,13 @@ const NewProduct = (props) => {
               </Col>
               <UncontrolledCollapse toggler="#togglerCampos">
                   <br/>
-                  {industry === '1' ?
+                  {industry === 'retail' ?
                     (<RetailProduct passData={handleChangeDataExtra}/>) : null
                   }
-                  { industry === '11' ?  
+                  { industry === 'indumentary' ?  
                     <IndumentaryProduct passData={handleChangeDataExtra}/> : null
                   }
+                  <Col>
                   <Row form>
                       <Col md={4}>
                       <FormGroup>
@@ -526,6 +617,7 @@ const NewProduct = (props) => {
                           <Input
                           type="input"
                           name="product_shipping"
+                          onChange={handleSetDataInput}
                           />
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_shipping?.message}
@@ -538,6 +630,7 @@ const NewProduct = (props) => {
                           <Input
                           type="input"
                           name="product_warranty"
+                          onChange={handleSetDataInput}
                           />
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_warranty?.message}
@@ -550,6 +643,7 @@ const NewProduct = (props) => {
                           <Input
                           type="input"
                           name="product_barcode"
+                          onChange={handleSetDataInput}
                           />
                           <span className="text-danger span d-block mb-2">
                           {errors?.product_barcode?.message}
@@ -557,7 +651,9 @@ const NewProduct = (props) => {
                       </FormGroup>
                       </Col>
                   </Row> 
+                  </Col>
                 </UncontrolledCollapse>
+               
 
               {/* Caracteristicas de Stock */}
               <hr style={{ color: "gray", border: "1px solid" }} />
@@ -825,12 +921,7 @@ const NewProduct = (props) => {
                       type="number"
                       name="precioLista"
                       step="0.01"
-                      innerRef={register({
-                        required: {
-                          value: true,
-                          message: "Precio de Lista es requerido",
-                        },
-                      })}
+                      disabled
                     />
                     <span className="text-danger span d-block mb-2">
                       {errors?.precioLista?.message}
@@ -843,6 +934,7 @@ const NewProduct = (props) => {
                       marginTop: 32,
                       backgroundColor: "rgb(247, 147, 1)",
                     }}
+                    disabled
                   >
                     Agregar Lista al Producto
                   </Button>{" "}
@@ -851,6 +943,7 @@ const NewProduct = (props) => {
                       marginTop: 32,
                       backgroundColor: "rgb(247, 147, 1)",
                     }}
+                    disabled
                   >
                     Otras Bonificaciones
                   </Button>{" "}

@@ -26,6 +26,8 @@ import { Provider } from "react-redux";
 import { propTypes } from "react-bootstrap/esm/Image";
 //import Company Context
 import {CompanyProvider} from './store/CompanyContext';
+import {ProductProvider} from './store/ProductsContext';
+import {ProvidersProvider} from './store/ProvidersContext'
 import store from "./Redux/store";
 
 const App = (props) => {
@@ -136,8 +138,10 @@ const App = (props) => {
             <Route path="/registercompany/:id" render={props =><RegisterCompanyContainer {...props} />} />
             <Route path="/editcompany/:id" component={EditCompanyContainer} />
         </CompanyProvider>
+        <ProvidersProvider>
         {/*Routes of Catlog*/}
-  <Route path="/catalog/productview/:id" render={props => <ProductView {...props}/>}/>
+      
+        <Route path="/catalog/productview/:id" render={props => <ProductView {...props}/>}/>
   
         <Route path="/catalog/searchproducts">
           <SearchProducts />
@@ -148,6 +152,7 @@ const App = (props) => {
         <Route path="/catalog/editproduct">
           <EditProduct />
         </Route>
+        </ProvidersProvider>
         <Route path="/test" component={FormTest} />
       </BrowserRouter>
     </IntlProvider>
