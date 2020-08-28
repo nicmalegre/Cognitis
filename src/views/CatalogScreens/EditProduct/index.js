@@ -69,7 +69,7 @@ const EditProduct = (props) => {
 
   //Load Providers Function
   const cargarProv = () => {
-    axios.get(`${PRODUCTS_URL}/providers/allProviders`).
+    axios.get(`${PRODUCTS_URL}/allProviders`).
     then(res => {
       setProv(
         res.data
@@ -89,7 +89,7 @@ const EditProduct = (props) => {
   }
   //Load Providers of the actual product
   const cargarProvProd = (dataProd) => {
-    axios.post(`${PRODUCTS_URL}/providers/getProvider`,dataProd).
+    axios.post(`${PRODUCTS_URL}/getProvider`,dataProd).
     then(res=>{
       setProvActual(
         res.data

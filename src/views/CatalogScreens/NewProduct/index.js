@@ -135,7 +135,7 @@ const NewProduct = (props) => {
   };*/
 
   const cargar = () => {
-    axios.get(`${PRODUCTS_URL}/providers/allProviders`).then(res => {
+    axios.get(`${PRODUCTS_URL}/allProviders`).then(res => {
       console.log(res.data)
       
       setProviders(
