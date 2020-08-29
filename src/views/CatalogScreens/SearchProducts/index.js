@@ -36,7 +36,9 @@ const [datosPeticion, setDatosPeticion] = useState ({
   product_type: null
 })
 
+let [categories, setCategories] = useState([])
 
+let [providers, setProviders] = useState([])
 
 
 //Funcion que controla el input del codigo de producto
@@ -44,7 +46,8 @@ const setCode = (event) => {
 
   setDatosPeticion({
     ...datosPeticion,
-    product_id: parseInt(event.target.value)
+    product_id: (event.target.value === "") ? null : parseInt(event.target.value) ,
+    
   })
   
 }
@@ -53,6 +56,7 @@ const setCode = (event) => {
 const setName = (event) => {
   setDatosPeticion({
     ...datosPeticion,
+    
     product_name: (event.target.value === "") ? null : event.target.value
   })
 }
@@ -61,7 +65,8 @@ const setName = (event) => {
 const setMark = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    product_brand: event.target.value 
+    
+    product_brand: (event.target.value === "null") ? null : event.target.value
   })
 }
 
@@ -69,15 +74,17 @@ const setMark = (event) => {
 const setProvider = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    product_providers: event.target.value 
+    
+    product_providers: (event.target.value === "null") ? null : event.target.value
   })
 }
 
 //Funcion que controla el filtro del tipo de producto
 const setCategory = (event) => {
+  
   setDatosPeticion({
     ...datosPeticion,
-    category: event.target.value 
+    category: (event.target.value === "null") ? null : event.target.value 
   })
 }
 
@@ -85,7 +92,8 @@ const setCategory = (event) => {
 const setType = (event) => {
   setDatosPeticion({
     ...datosPeticion,
-    product_type: event.target.value 
+    
+    product_type: (event.target.value === "null") ? null : event.target.value 
   })
 }
 
@@ -93,33 +101,56 @@ const setType = (event) => {
 //Funcion que se ejecuta al solicitar una busqueda.
 const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de la funcion
   
+  if ((datosPeticion.category === null) && (datosPeticion.product_name === null) && (datosPeticion.product_id === null) && (datosPeticion.product_brand === null) && (datosPeticion.product_type === null) && (datosPeticion.product_providers === null)) { console.log('Es todo nulo')}
+  else {
   console.log(datosPeticion)
-  
-  axios.post('https://cognitis-360.herokuapp.com/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
+  axios.post('http://localhost:4000/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
   .then( res => { 
-    console.log(res);
     setResults(
       resultSearch = res.data
     )
 
   }).catch(err => console.log(err)); //mostrar error
-
+  }
 }
 
 const getCategories = ()=>{
-  axios.get('https://cognitis-360.herokuapp.com/api/categories')
-  .then(res => {console.log(res)})
+  axios.get('http://localhost:4000/api/categories')
+  .then(res => {
+    setCategories(
+      categories = res.data
+    )
+    
+    })
   .catch(err => console.log(err))
 }
 
-getCategories()
+const getProviders = ()=>{
+  axios.get('http://localhost:4000/api/products/allproviders')
+  .then(res => {
+    console.log(res.data)
+    setProviders(
+      providers = res.data
+    )
+    })
+  .catch(err => console.log(err))
+}
+
+useEffect(() => {
+
+  getCategories()
+
+  getProviders()
+
+}, []);
+
 
 
   return (
     <CatalogLayout>
       <Container fluid>
         <Row>
-          <Col md={9}>
+          <Col md={8}>
             <Row className="pt-3 pl-3">
               <h2>Buscar Productos</h2>
             </Row>
@@ -147,21 +178,28 @@ getCategories()
               </Card>
             </Row>
           </Col>
-          <Col md={3}>
+          <Col md={4}>
             <Card style={{ width: "100%" }} className="mt-3">
               <Card.Header>Filters</Card.Header>
               <Form className="p-3">
                 <Form.Control as="select" onChange={setMark} className="mb-1">
-                  <option>Marca</option>
+                  <option key="brand0" value="null">Marca</option>
                 </Form.Control>
                 <Form.Control as="select" onChange={setProvider} className="mb-1">
-                  <option>Proovedor</option>
+                  <option key="noneprov" value="null">Proveedores</option>
+                    {providers.map( (prov) => (
+                      <option key={prov.provider_id} value={prov.provider_id}>{prov.provider_name}</option>
+                    ))} 
+                    
                 </Form.Control>
-                <Form.Control as="select" onChange={setCategory} className="mb-1">
-                  <option>Categoría</option>
+                <Form.Control  as="select" onChange={setCategory} className="mb-1">
+                  <option key="nonecat" value="null">Categorías</option>                 
+                  {categories.map( (cat) => (
+                    <option key={cat.category_id} value={cat.category_id}>{cat.category_name}</option>
+                  ))}                    
                 </Form.Control>
                 <Form.Control as="select" onChange={setType} className="mb-1">
-                  <option>Tipo de Producto</option>
+                  <option key="tipo0">Tipo de Producto</option>
                 </Form.Control>
               </Form>
             </Card>
@@ -197,7 +235,7 @@ getCategories()
 
 
                         <td>
-                        <Link to="/catalog/editproduct" >
+                        <Link to={`/catalog/editproduct/${product.product_id}`}>
                         <Button id="button-edit" size="sm"  >
                           <i className="mr-1">< MdModeEdit/></i>
                           <span className="align-middle">Edit</span>

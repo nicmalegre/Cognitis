@@ -11,6 +11,8 @@ import {
   Card,
   Form,
   Button,
+  Alert,
+  Spinner
 } from "reactstrap"; //importar elementos
 import "./index.css"; //importar css
 import { useForm } from "react-hook-form";
@@ -24,6 +26,9 @@ const Formsuc = (props) => {
   //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
 
+  const [creating, setCreating] = useState(false);
+  const [cuitAlreadyUsed, setCuitAlreadyUsed] = useState(false);
+
   //preparing data for send
   const preparedData = (data) => {
     data["company_id"] = props.match.params.id;
@@ -34,17 +39,22 @@ const Formsuc = (props) => {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     preparedData(data);
+    setCreating(true)
+
     try {
-      const res = await axios.post(
+      axios.post(
         "http://localhost:3000/api/branchofficehouse/newbranchoffice",
         data
-      );
-      if (res.status == 200) {
-        console.log(res);
-        props.history.goBack();
-      } else {
-        console.log("error" + res);
-      }
+      )
+      .then(res => {
+        console.log(res.data);
+        if(res.data.cuit_already_used){
+          setCuitAlreadyUsed(true)
+          setCreating(false)
+        }else{
+          props.history.goBack();
+        }
+      })
     } catch (e) {
       console.log(e);
     }
@@ -456,6 +466,13 @@ const Formsuc = (props) => {
                     </span>
                   </FormGroup>
                 </Col>
+                <Col>
+                  {cuitAlreadyUsed && (
+                    <Alert color="danger">
+                      El cuit ingresado ya está siendo usado por otra sucursal
+                    </Alert>
+                  )}
+                </Col>
               </Row>
               <br />
               <Row
@@ -465,7 +482,11 @@ const Formsuc = (props) => {
                 <Col md={2}>
                   {/*<Link to="/NumberCompanies">*/}
                   <Button color="primary" type="submit" active>
-                    Continuar
+                    {creating ? (
+                      <Spinner color="ligth" size="sm" />
+                    ) : (
+                      <span>Guardar</span>
+                    )}
                   </Button>
                   {/*</Link>*/}
                 </Col>

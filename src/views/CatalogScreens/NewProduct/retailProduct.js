@@ -51,8 +51,9 @@ const RetailProduct = (props)=> {
             <Label for="">Segmento</Label>
             <Input
             type="select"
-            name="product_segment"
-            value={"no esta en la base"}
+            name="product_seed"
+            value={dataRetail.product_seed}
+            onChange={handleChange}
             >
                 <option value={"Segmento Uno"}>Segmento Uno</option>
                 <option value={"Segmento Dos"}>Segmento Dos</option>
@@ -138,9 +139,9 @@ const RetailProduct = (props)=> {
             <Col sm={12}>
                   <Input
                     type="textarea"
-                    name="datos tecnicos"
+                    name="product_technical_data"
                     placeholder="Ingrese datos tecnicos"
-                    
+                    onChange={handleChange}
                   />
             </Col>
         </FormGroup>

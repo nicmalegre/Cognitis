@@ -11,6 +11,8 @@ import {
   Card,
   Form,
   Button,
+  Spinner,
+  Alert,
 } from "reactstrap"; //importar elementos
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -50,16 +52,19 @@ const Formulario = (props) => {
   const onSubmit = async (data, e) => {
     e.preventDefault();
     preparedData(data);
+    setCreating(true);
+
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/company/newcompany",
-        data
-      );
-      if (res.status == 200) {
-        props.history.goBack();
-      } else {
-        console.log("error" + res);
-      }
+      axios
+        .post("http://localhost:3000/api/company/newcompany", data)
+        .then((res) => {
+          if (res.data.cuit_already_used) {
+            setCuitAlreadyUsed(true);
+            setCreating(false);
+          } else {
+            props.history.goBack();
+          }
+        });
     } catch (e) {
       console.log(e);
     }
@@ -89,6 +94,9 @@ const Formulario = (props) => {
     razonsocial: "",
     cuil: "",
   });
+
+  const [creating, setCreating] = useState(false);
+  const [cuitAlreadyUsed, setCuitAlreadyUsed] = useState(false);
 
   const inputChange = async (event) => {
     let value = "";
@@ -545,6 +553,13 @@ const Formulario = (props) => {
                     </span>
                   </FormGroup>
                 </Col>
+                <Col>
+                  {cuitAlreadyUsed && (
+                    <Alert color="danger">
+                      El cuit ingresado ya está siendo usado por otra companía
+                    </Alert>
+                  )}
+                </Col>
               </Row>
               <br />
               <Row
@@ -554,7 +569,11 @@ const Formulario = (props) => {
                 <Col md={2}>
                   {/*<Link to="/NumberCompanies">*/}
                   <Button color="primary" type="submit" active>
-                    Continuar
+                    {creating ? (
+                      <Spinner color="ligth" size="sm" />
+                    ) : (
+                      <span>Guardar</span>
+                    )}
                   </Button>
                   {/*</Link>*/}
                 </Col>

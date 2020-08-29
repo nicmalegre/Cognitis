@@ -52,7 +52,7 @@ const RetailProduct = (props)=> {
         <Col md={12}>
             <FormGroup row>
                 <Label for="" sm={4}>Datos Tecnicos:</Label>
-                <Label for="" sm={8}>{props.productos.productoActual.product_data_tecnic}</Label>
+                <Label for="" sm={8}>{props.productos.productoActual.product_technical_data}</Label>
             </FormGroup>
         </Col>
         

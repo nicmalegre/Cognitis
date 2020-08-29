@@ -28,9 +28,9 @@ const Sidebar = () => {
             Control de Catálogo
           </MenuItem>
           <hr />
-          <Link to="/catalog/newproduct"><MenuItem className="ml-5 text-white">Nuevo Producto</MenuItem></Link>
-          <Link to="/catalog/searchproducts"><MenuItem className="ml-5 text-white">Buscar Producto</MenuItem></Link>
-          <Link to="#"><MenuItem className="ml-5 text-white">Alta Masiva</MenuItem></Link>
+          <Link id="newprod" to="catalog/newproduct"><MenuItem className="ml-5 text-white">Nuevo Producto</MenuItem></Link>
+          <Link id="buscarprod" to="/catalog/searchproducts"><MenuItem className="ml-5 text-white">Buscar Producto</MenuItem></Link>
+          <Link id="masiva" to="#"><MenuItem className="ml-5 text-white">Alta Masiva</MenuItem></Link>
           
           <br/><br/>
           <MenuItem className="font-weight-bold text-white">
