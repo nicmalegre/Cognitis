@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react"; //importacion de la libreria
 import { CompanyContext } from "../../../store/CompanyContext";
+import { BRANCHOFFICEHOUSE_URL } from '../../../urls/url'
 import { withRouter } from "react-router-dom";
 import {
   FormGroup,
@@ -39,7 +40,7 @@ const Formulario = (props) => {
     //console.log(data);
     try {
       const res = await axios.put(
-        "http://localhost:3000/api/branchofficehouse/update",
+        `${BRANCHOFFICEHOUSE_URL}/update`, 
         data
       );
       if (res.status == 200) {

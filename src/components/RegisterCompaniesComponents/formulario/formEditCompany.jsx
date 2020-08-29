@@ -1,5 +1,6 @@
 import React, { useState } from "react"; //importacion de la libreria
 import { withRouter } from "react-router-dom";
+import { COMPANY_URL } from '../../../urls/url'
 import {
   FormGroup,
   Input,
@@ -27,7 +28,7 @@ const Formulario = (props) => {
     const { company_id } = props;
 
     axios
-      .put(`http://localhost:3000/api/company/${company_id}`, data)
+      .put(`${COMPANY_URL}/${company_id}`, data)
       .then(() => {
         props.history.goBack();
       })

@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react"; //importacion de la libreria
 import { CompanyContext } from "../../../store/CompanyContext";
 import { withRouter } from "react-router-dom";
+import { BRANCHOFFICEHOUSE_URL } from '../../../urls/url'
+
 import {
   FormGroup,
   Input,
@@ -43,7 +45,7 @@ const Formsuc = (props) => {
 
     try {
       axios.post(
-        "http://localhost:3000/api/branchofficehouse/newbranchoffice",
+        `${BRANCHOFFICEHOUSE_URL}/newbranchoffice`,
         data
       )
       .then(res => {

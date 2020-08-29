@@ -10,7 +10,7 @@ export const CATEGORIES_URL = `${BASE_URL}/categories`;
 
 export const COMPANIES_URL = `${BASE_URL}/company`;
 
-export const BRANCHOFFIECHOUSE_URL = `${BASE_URL}/branchofficehouse`;
+export const BRANCHOFFICEHOUSE_URL = `${BASE_URL}/branchofficehouse`;
 
 export const HEAD_HOUSE_URL = `${BASE_URL}/head_house`;
 

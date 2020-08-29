@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { CompanyContext } from "../../../store/CompanyContext";
+import { HEAD_HOUSE_URL } from '../../../urls/url'
 //importacion de la libreria
 import { withRouter } from "react-router-dom";
 import {
@@ -35,7 +36,7 @@ const FormHeadCompany = (props) => {
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/api/head_house/registerheadhouse", data)
+    axios.post(`${HEAD_HOUSE_URL}/registerheadhouse`, data)
     .then((res) =>    
     //setDataCompany({...setDataCompany, head_house_id: res.data})
      props.history.push("/registercompany/"+ res.data)
