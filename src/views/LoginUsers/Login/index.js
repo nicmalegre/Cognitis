@@ -6,6 +6,7 @@ import imagenProductivity from "./imageProductivity.jpeg";
 import Navbar from '../Base/navbar';
 import axios from "axios";  
 import { Link } from 'react-router-dom';
+import {USERS_URL} from '../../../urls/url'
 
 import { FormattedMessage } from 'react-intl';
 
@@ -56,7 +57,7 @@ const LoginUsers = (props) => {
 
             //Set the passwordExpired field true in the database. So the user have to restart his password
             //axios.put(`http://localhost:3000/api/users/update/user/${props.user.email}`, {
-            axios.put(`https://cognitis-360.herokuapp.com/api/users/update/user/${props.user.email}`, {
+            axios.put(`${USERS_URL}/update/user/${props.user.email}`, {
                 user_password_expired:true,
             }).then(console.log(""))
             .catch(console.log(""))         
@@ -89,7 +90,7 @@ const LoginUsers = (props) => {
 
     const getData = async () => {       
         //await axios.post('http://localhost:3000/api/users/getuser', {
-        await axios.post('https://cognitis-360.herokuapp.com/api/users/getuser', {
+        await axios.post(`${USERS_URL}/getuser`, {
             user_mail: props.user.email
         })
         .then(async res =>{
