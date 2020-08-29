@@ -61,15 +61,16 @@ const ProductView = (props) => {
 
     })
 
-    console.log(props)
+   
     //Variable que indica la industria en este momento
-    const industry = 'retail'; //se va setear con una propiedad que se pase en props 
-    //const industry = props.product_industry_id //if = 1 then retail else indumentary
+    //const industry = 'retail'; //se va setear con una propiedad que se pase en props 
+    const industry = props.product_industry_id //if = 1 then retail else indumentary
 
     //Id del producto que se selecciono para ver 
     let id_product = parseInt(props.match.params.idProduct); //se va setear con una propiedad que se pase en props
 
-
+    let [categoryname , setCategoryName] = useState('')
+    let [providers, setProviders] = useState([])
 
     //Haremos una peticion a la API para traer el objeto producto a partir de la id que nos llega  
     useEffect(() => {
@@ -81,7 +82,8 @@ const ProductView = (props) => {
            
             props.dispatch(fetchProductoData(res.data));
             console.log(res.data)
-            setDataProduct(res.data); //le tenemos que pasar res para setear el objeto local
+            setDataProduct(res.data);
+             //le tenemos que pasar res para setear el objeto local
             }).catch(err => console.log(err)); //mostrar error
         
         
@@ -136,8 +138,8 @@ const ProductView = (props) => {
 
         
         })
-
-        
+        getCategories(product.category)
+        getProviders(product.product_id)        
 
       };
       
@@ -148,7 +150,44 @@ const ProductView = (props) => {
         <IndumentaryProduct prop={producto} />
       );
     
-      
+    //   const traerCategoria = (category_id) => {
+         
+    //     axios.post('http://localhost:4000/api/category/getcategory', category_id)
+    //     .then( res => (
+    //         setCategoryName(res.data) 
+            
+    //     )).catch(err => console.log(err)); //mostrar error
+    //   }
+    
+    let [categories, setCategories] = useState([])
+
+    const getCategories = (pos)=>{
+        axios.get('http://localhost:4000/api/categories')
+        .then(res => {
+          setCategories(
+            categories = res.data
+          )
+          
+          setCategoryName(
+              categoryname = categories[pos-1].category_name
+          )
+          
+          })
+        .catch(err => console.log(err))
+    }
+
+    const getProviders = (product_id)=>{
+        
+        axios.post('http://localhost:4000/api/products/getprovider', {product_id})
+        .then(res => {
+            
+          setProviders(
+              providers = res.data
+          )
+          console.log(res.data)
+          
+        }).catch(err => console.log(err))
+    }
 
 
 
@@ -219,7 +258,7 @@ const ProductView = (props) => {
 
                             <FormGroup row>
                                 <Label for="" sm={4}>Categoría del Producto:</Label>
-                                <Label for="" sm={8}>{producto.product_category}</Label>
+                                <Label for="" sm={8}>{categoryname}</Label>
                             </FormGroup>
 
                             <br/>
@@ -228,17 +267,19 @@ const ProductView = (props) => {
                                 <Col md={12}>
                                     <FormGroup row>
                                         <Label for="" sm={3}>Proveedores de Producto:</Label>
-                                        <Label for="" sm={6}>Nombre Proveedor</Label>
                                         <Label for="" sm={3}>Codigo Proveedor</Label>
+                                        <Label for="" sm={3}>Nombre Proveedor</Label>
+                                        <Label for="" sm={3}>Cuit Proveedor</Label>
                                     </FormGroup>
-                                </Col>
-                                <Col md={12}>
-                                    <FormGroup row>
-                                        <Label for="" sm={3}></Label>
-                                        <Label for="" sm={6}>{producto.product_provider_name}</Label>
-                                        <Label for="" sm={3}>{producto.product_provider_code}</Label>
-                                    </FormGroup>
-                                </Col>                           
+                                    {providers.map( (prov) => (
+                                         <FormGroup row>
+                                         <Label for="" sm={3}></Label>
+                                         <Label for="" sm={3}>{prov.provider_id}</Label>
+                                         <Label for="" sm={3}>{prov.provider_name}</Label>
+                                         <Label for="" sm={3}>{prov.provider_cuit}</Label>
+                                        </FormGroup>
+                                    ))}
+                                </Col>                        
                             </Row><br/>
                             
                             <FormGroup row>
