@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react"; //importacion de la libreria
+import React, { useState, useContext } from "react"; //importacion de la libreria
 import { CompanyContext } from "../../../store/CompanyContext";
 import { withRouter } from "react-router-dom";
 import {
@@ -21,54 +21,50 @@ import "./index.css";
 const Formulario = (props) => {
   //clase 'Nombre' extends React.component
   const { register, trigger, handleSubmit, errors } = useForm();
-  
-  //DATA FROM CONTEXT 
+
+  //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
-  
+
   //DATA FOR SUBMIT
-  const [data, setData] = useState({head_house_id: props.match.params.id})
-  
+  const [data, setData] = useState({ head_house_id: props.match.params.id });
+
   // const changeTel = (data) => {
   //   data.company_tel = data.codPais + data.codArea + data.company_tel;
   // };
 
   const changeIndustry = (data) => {
-    if (data.company_house_industry_id === "Retail"){
+    if (data.company_house_industry_id === "Retail") {
       data.company_house_industry_id = "1";
-    }
-    else{
+    } else {
       data.company_house_industry_id = "11";
     }
-  }
-
+  };
 
   //preparing data for send
-  const preparedData=(data)=>{
+  const preparedData = (data) => {
     //changeTel(data);
     changeIndustry(data);
-    data["head_house_id"] = props.match.params.id
-  }
+    data["head_house_id"] = props.match.params.id;
+  };
 
-
-  const onSubmit = async(data, e) => {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
     preparedData(data);
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/company/newcompany", data
-      )
-      if(res.status == 200){
-        props.history.goBack()
-        
-      }else{
-        console.log("error"+ res);
+        "http://localhost:3000/api/company/newcompany",
+        data
+      );
+      if (res.status == 200) {
+        props.history.goBack();
+      } else {
+        console.log("error" + res);
       }
-    } 
-     catch (e) {
+    } catch (e) {
       console.log(e);
     }
-  }; 
-  
+  };
+
   // const of countries
   const countries = [
     "Argentina",
@@ -304,17 +300,13 @@ const Formulario = (props) => {
                               value: true,
                               message: "Codigo de Pais es requerido",
                             },
-                            maxLength: {
-                              value: 5,
-                              message: "No más de 5 carácteres!",
-                            },
                             minLength: {
                               value: 2,
                               message: "No menos de 2 carácteres!",
                             },
                             pattern: {
-                              value: /^[+]+[0-9]{1,5}/,
-                              message: "invalid country_code",
+                              value: /^[+][0-9]{1,5}$/i,
+                              message: "codigo de pais invalido",
                             },
                           })}
                         />
@@ -387,18 +379,32 @@ const Formulario = (props) => {
                   <FormGroup>
                     <Label for="nroFax">Fax</Label>
                     <Input
-                      type="number"
+                      type="text"
                       name="company_fax"
-                      id="nroFax"
                       valid={input.company_fax}
                       onChange={inputChange}
-                      placeholder="Ingrese el nro de fax de la compañia"
+                      placeholder="Ingrese el nro de fax Ejemplo +54XXXXXXXXXX"
                       innerRef={register({
                         required: {
                           value: false,
                         },
+                        maxLength: {
+                          value: 20,
+                          message: "No más de 20 numeros!",
+                        },
+                        minLength: {
+                          value: 6,
+                          message: "No menos de 6 numeros!",
+                        },
+                        pattern: {
+                          value: /^[+][0-9]{6,20}$/,
+                          message: "Nro de fax invalido",
+                        },
                       })}
                     />
+                    <span className="text-danger span d-block mb-2">
+                      {errors?.company_fax?.message}
+                    </span>
                   </FormGroup>
                 </Col>
               </Row>
@@ -482,12 +488,15 @@ const Formulario = (props) => {
                       name="bank_company_cbu"
                       valid={input.bank_company_cbu}
                       onChange={inputChange}
-                      //maxLength="2"
                       placeholder="Ingrese el nro de CBU"
                       innerRef={register({
                         required: {
                           value: true,
                           message: "Numero de CBU es requerido",
+                        },
+                        minLength: {
+                          value: 22,
+                          message: "No menos de 22 numeros!",
                         },
                         maxLength: {
                           value: 22,
@@ -510,7 +519,7 @@ const Formulario = (props) => {
                     <Input
                       type="text"
                       name="bank_company_alias"
-                      id="alias"
+                      maxLength="20"
                       valid={input.bank_company_alias}
                       onChange={inputChange}
                       placeholder="Ingrese su alias"
@@ -518,18 +527,18 @@ const Formulario = (props) => {
                         required: {
                           value: false,
                         },
-                        maxLength: {
-                          value: 20,
-                          message: "No más de 20 caracteres!",
-                        },
+                        // maxLength: {
+                        //   value: 20,
+                        //   message: "No más de 20 caracteres!",
+                        // },
                         minLength: {
                           value: 6,
                           message: "No menos de 6 caracteres!",
                         },
-                        pattern:{
-                          value: /^[A-Za-z-?.?]{6,20}/i,
-                          message:""
-                        }
+                        pattern: {
+                          value: /^[A-Za-z0-9.-]{6,20}$/i,
+                          message: "alias invalido",
+                        },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
