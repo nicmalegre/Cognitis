@@ -556,7 +556,7 @@ const Formulario = (props) => {
                       type="text"
                       name="bank_company_alias"
                       maxLength="20"
-                      valid={input.alias}
+                      valid={input.bank_company_alias}
                       onChange={inputChange}
                       placeholder="Ingrese su alias"
                       innerRef={register({
