@@ -162,12 +162,19 @@ const EditProduct = (props) => {
       nombreIndustria: ind,
     }
     transformToNumber(aux);
+    if(data.product_in_ecommerce === false){
+      data.product_in_ecommerce = 0;
+    }else{
+      data.product_in_ecommerce = 1;
+    };
     axios
       .put(`${PRODUCTS_URL}/updateProduct/${props.match.params.idProd}`, aux)
       .then((res) => "producto editado con exito")
       .catch((err) => console.log(err));
     //console.log(data);
     console.log(aux)
+    props.history.push('/catalog/searchproducts');
+
     onDismiss();
   };
   //status to control the visibility of the alert

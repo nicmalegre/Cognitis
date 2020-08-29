@@ -48,6 +48,7 @@ const NewProduct = (props) => {
     product_unit: "U",
     product_accountant_type: "Bienes de Cambio",
     product_accountant_account: "Venta de Mercaderia",
+    product_maker: "Fabricante uno",
   })
   const [dataNoObligatory,setDataNoObligatory] = useState({
     product_warranty: '',
@@ -201,6 +202,7 @@ const NewProduct = (props) => {
       .catch((err) => console.log(err));
       onDismiss();
     console.log(data);
+    props.history.push('/catalog/searchproducts');
     e.preventDefault();
     
   };
@@ -599,13 +601,14 @@ const NewProduct = (props) => {
                           <Input
                           type="select"
                           name="product_maker"
+                          onChange={setearSelect}
                           >
                             <option  value={"Fabricante uno"}>Fabricante Uno</option>  
                             <option  value={"Fabricante dos"}>Fabricante Doso</option>  
                             <option  value={"Fabricante tres"}>Fabricante Tres</option>  
                           </Input>
                           <span className="text-danger span d-block mb-2">
-                          {errors?.fabricante?.message}
+                          {errors?.product_maker?.message}
                           </span>
                       </FormGroup>
                       </Col>
@@ -795,7 +798,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Costo Neto/Reposicion</Label>
                     <Input
                       type="number"
-                      name="costoNetoReposicion"
+                      name="product_cost_neto_repo"
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -805,7 +808,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.costoNetoReposicion?.message}
+                      {errors?.product_cost_neto_repo?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -877,7 +880,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Tasa Pais %</Label>
                     <Input
                       type="number"
-                      name="tasaPais"
+                      name="product_country_tax"
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -887,7 +890,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.tasaPais?.message}
+                      {errors?.product_country_tax?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -898,7 +901,7 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Costo actual con impuestos</Label>
                     <Input
                       type="number"
-                      name="costoActualConImp"
+                      name="product_cost_with_tax"
                       step="0.01"
                       innerRef={register({
                         required: {
@@ -908,7 +911,7 @@ const NewProduct = (props) => {
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.costoActualConImp?.message}
+                      {errors?.product_cost_with_tax?.message}
                     </span>
                   </FormGroup>
                 </Col>
@@ -919,12 +922,12 @@ const NewProduct = (props) => {
                     <Label for="exampleEmail">Precio de Lista</Label>
                     <Input
                       type="number"
-                      name="precioLista"
+                      name="product_list_price"
                       step="0.01"
                       disabled
                     />
                     <span className="text-danger span d-block mb-2">
-                      {errors?.precioLista?.message}
+                      {errors?.product_list_price?.message}
                     </span>
                   </FormGroup>
                 </Col>

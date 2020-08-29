@@ -236,7 +236,7 @@ useEffect(() => {
 
 
                         <td>
-                        <Link to="/catalog/editproduct" >
+                        <Link to={`/catalog/editproduct/${product.product_id}`}>
                         <Button id="button-edit" size="sm"  >
                           <i className="mr-1">< MdModeEdit/></i>
                           <span className="align-middle">Edit</span>
