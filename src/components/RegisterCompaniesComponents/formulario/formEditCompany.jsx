@@ -219,7 +219,6 @@ const Formulario = (props) => {
                     <Input
                       type="email"
                       name="company_email"
-                      id="email"
                       valid={input.company_email}
                       onChange={inputChange}
                       placeholder="Ingrese su email"
@@ -240,7 +239,9 @@ const Formulario = (props) => {
                 <Col md={6}>
                   <FormGroup>
                     <span className="text-danger font-weight-bold">*</span>{" "}
-                    <Label for="company_house_industry_id">Tipo de Industria</Label>
+                    <Label for="company_house_industry_id">
+                      Tipo de Industria
+                    </Label>
                     <Input
                       type="select"
                       name="company_house_industry_id"
@@ -303,7 +304,7 @@ const Formulario = (props) => {
                         <Input
                           type="text"
                           name="country_code"
-                          id="codPais"
+                          maxLength="5"
                           placeholder="+54"
                           valid={input.country_code}
                           onChange={inputChange}
@@ -312,13 +313,13 @@ const Formulario = (props) => {
                               value: true,
                               message: "Codigo de Pais es requerido",
                             },
-                            maxLength: {
-                              value: 5,
-                              message: "No más de 5 carácteres!",
-                            },
                             minLength: {
-                              value: 3,
-                              message: "No menos de 3 carácteres!",
+                              value: 2,
+                              message: "No menos de 2 carácteres!",
+                            },
+                            pattern: {
+                              value: /^[+][0-9]{1,5}$/i,
+                              message: "codigo de pais invalido",
                             },
                           })}
                           defaultValue={splited_tel[0]}
@@ -344,8 +345,8 @@ const Formulario = (props) => {
                               message: "Codigo de Area es requerido",
                             },
                             maxLength: {
-                              value: 6,
-                              message: "No más de 6 numeros!",
+                              value: 4,
+                              message: "No más de 4 numeros!",
                             },
                             minLength: {
                               value: 2,
@@ -398,17 +399,31 @@ const Formulario = (props) => {
                     <Input
                       type="text"
                       name="company_fax"
-                      id="nroFax"
-                      valid={input.fax}
+                      valid={input.company_fax}
                       onChange={inputChange}
-                      placeholder="Ingrese el nro de fax de la compañia"
+                      placeholder="Ingrese el nro de fax Ejemplo +54XXXXXXXXXX"
                       innerRef={register({
                         required: {
                           value: false,
                         },
+                        maxLength: {
+                          value: 20,
+                          message: "No más de 20 numeros!",
+                        },
+                        minLength: {
+                          value: 6,
+                          message: "No menos de 6 numeros!",
+                        },
+                        pattern: {
+                          value: /^[+][0-9]{6,20}$/,
+                          message: "Nro de fax invalido",
+                        },
                       })}
                       defaultValue={props.company.company_fax}
                     />
+                    <span className="text-danger span d-block mb-2">
+                      {errors?.company_fax?.message}
+                    </span>
                   </FormGroup>
                 </Col>
               </Row>
@@ -422,7 +437,7 @@ const Formulario = (props) => {
                     <Input
                       type="text"
                       name="bank_company_name"
-                      id="bank_company_name"
+                      maxLength="45"
                       valid={input.nameBank}
                       onChange={inputChange}
                       placeholder="Ingrese el nombre del banco"
@@ -432,12 +447,16 @@ const Formulario = (props) => {
                           message: "Nombre del banco es requerido",
                         },
                         maxLength: {
-                          value: 100,
-                          message: "No más de 100 caracteres!",
+                          value: 45,
+                          message: "No más de 45 caracteres!",
                         },
                         minLength: {
                           value: 3,
                           message: "No menos de 3 caracteres!",
+                        },
+                        pattern: {
+                          value: /^[A-Z]+$/i,
+                          message: "nombre del banco invalido",
                         },
                       })}
                       defaultValue={
@@ -463,22 +482,18 @@ const Formulario = (props) => {
                       }
                       type="text"
                       name="bank_company_account"
-                      id="cuentaBancaria"
+                      maxLength="12"
                       valid={input.bank_company_account}
                       onChange={inputChange}
-                      placeholder="Ingrese su nro de cuenta bancaria"
+                      placeholder="Ejemplo: XXX-XXXXXX/X"
                       innerRef={register({
                         required: {
                           value: true,
-                          message: "El número de cuenta bancaria es requerido",
+                          message: "Número de cuenta bancaria es requerido",
                         },
-                        maxLength: {
-                          value: 100,
-                          message: "No más de 100 caracteres!",
-                        },
-                        minLength: {
-                          value: 3,
-                          message: "No menos de 3 caracteres!",
+                        pattern: {
+                          value: /^\d{3}-\d{6}[/]\d{1}/i,
+                          message: "Numero de cuenta bancaria invalido",
                         },
                       })}
                     />
@@ -496,7 +511,6 @@ const Formulario = (props) => {
                     <Input
                       type="number"
                       name="bank_company_cbu"
-                      id="cbu"
                       valid={input.bank_company_cbu}
                       onChange={inputChange}
                       placeholder="Ingrese el nro de CBU"
@@ -512,6 +526,10 @@ const Formulario = (props) => {
                         minLength: {
                           value: 22,
                           message: "No menos de 22 numeros",
+                        },
+                        pattern: {
+                          value: /^\d{22}$/i,
+                          message: "Numero de cbu invalido",
                         },
                       })}
                       defaultValue={
@@ -529,7 +547,7 @@ const Formulario = (props) => {
                     <Input
                       type="text"
                       name="bank_company_alias"
-                      id="alias"
+                      maxLength="20"
                       valid={input.alias}
                       onChange={inputChange}
                       placeholder="Ingrese su alias"
@@ -537,13 +555,13 @@ const Formulario = (props) => {
                         required: {
                           value: false,
                         },
-                        maxLength: {
-                          value: 20,
-                          message: "No más de 20 caracteres!",
-                        },
                         minLength: {
                           value: 6,
                           message: "No menos de 6 caracteres!",
+                        },
+                        pattern: {
+                          value: /^[A-Za-z0-9.-]{6,20}$/i,
+                          message: "alias invalido",
                         },
                       })}
                       defaultValue={

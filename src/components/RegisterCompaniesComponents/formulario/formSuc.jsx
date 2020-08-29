@@ -24,8 +24,6 @@ const Formsuc = (props) => {
   //DATA FROM CONTEXT
   const [dataCompany, setDataCompany] = useContext(CompanyContext);
 
-
-
   //preparing data for send
   const preparedData = (data) => {
     data["company_id"] = props.match.params.id;
@@ -33,36 +31,24 @@ const Formsuc = (props) => {
     data["country"] = "argentina";
   };
 
-  const onSubmit = async(data, e) => {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
     preparedData(data);
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/branchofficehouse/newbranchoffice", data
-      )
-      if(res.status == 200){
+        "http://localhost:3000/api/branchofficehouse/newbranchoffice",
+        data
+      );
+      if (res.status == 200) {
         console.log(res);
-        props.history.goBack()
-      }else{
-        console.log("error"+ res);
+        props.history.goBack();
+      } else {
+        console.log("error" + res);
       }
-    } 
-     catch (e) {
+    } catch (e) {
       console.log(e);
     }
   };
-     
-    /*
-    axios
-      .post(
-        "localhost:3000/api/branchofficehouse/newbranchoffice",
-        data
-      )
-      .then((res) => props.history.goBack())
-      .catch((err) => console.log(err));
-    //props.history.push("/registersucursal/" + props.match.params.id);
-  };*/
-
   const [input, setInput] = useState({
     company: "",
     razonsocial: "",
@@ -173,7 +159,7 @@ const Formsuc = (props) => {
                         },
                         pattern: {
                           value: /^[0-9]{11}$/,
-                          message: "invalid cuil o cuit",
+                          message: "Cuil o cuit invalido",
                         },
                       })}
                     />
@@ -219,6 +205,7 @@ const Formsuc = (props) => {
                           type="text"
                           name="country_code"
                           placeholder="+54"
+                          maxLength="5"
                           valid={input.country_code}
                           onChange={inputChange}
                           innerRef={register({
@@ -226,13 +213,13 @@ const Formsuc = (props) => {
                               value: true,
                               message: "Codigo de Pais es requerido",
                             },
-                            maxLength: {
-                              value: 5,
-                              message: "No más de 5 carácteres!",
-                            },
                             minLength: {
                               value: 2,
-                              message: "No menos de 3 carácteres!",
+                              message: "No menos de 2 carácteres!",
+                            },
+                            pattern: {
+                              value: /^[+][0-9]{1,5}$/i,
+                              message: "codigo de pais invalido",
                             },
                           })}
                         />
@@ -248,7 +235,6 @@ const Formsuc = (props) => {
                         <Input
                           type="number"
                           name="area_code"
-                          id="codArea"
                           valid={input.area_code}
                           onChange={inputChange}
                           innerRef={register({
@@ -257,8 +243,8 @@ const Formsuc = (props) => {
                               message: "Codigo de Area es requerido",
                             },
                             maxLength: {
-                              value: 6,
-                              message: "No más de 6 numeros!",
+                              value: 4,
+                              message: "No más de 4 numeros!",
                             },
                             minLength: {
                               value: 2,
@@ -306,18 +292,33 @@ const Formsuc = (props) => {
                   <FormGroup>
                     <Label for="nroFax">Fax</Label>
                     <Input
-                      type="number"
+                      type="text"
                       name="fax"
                       id="nroFax"
                       valid={input.fax}
                       onChange={inputChange}
-                      placeholder="Ingrese el nro de fax de la compañia"
+                      placeholder="Ingrese el nro de fax Ejemplo +54XXXXXXXXXX"
                       innerRef={register({
                         required: {
                           value: false,
                         },
+                        maxLength: {
+                          value: 20,
+                          message: "No más de 20 numeros!",
+                        },
+                        minLength: {
+                          value: 6,
+                          message: "No menos de 6 numeros!",
+                        },
+                        pattern: {
+                          value: /^[+][0-9]{6,20}$/,
+                          message: "Nro de fax invalido",
+                        },
                       })}
                     />
+                    <span className="text-danger span d-block mb-2">
+                      {errors?.fax?.message}
+                    </span>
                   </FormGroup>
                 </Col>
               </Row>
@@ -331,7 +332,7 @@ const Formsuc = (props) => {
                     <Input
                       type="text"
                       name="bank_name"
-                      id="nameBank"
+                      maxLength="45"
                       valid={input.bank_name}
                       onChange={inputChange}
                       placeholder="Ingrese el nombre del banco"
@@ -341,12 +342,16 @@ const Formsuc = (props) => {
                           message: "Nombre del banco es requerido",
                         },
                         maxLength: {
-                          value: 100,
-                          message: "No más de 100 caracteres!",
+                          value: 45,
+                          message: "No más de 45 caracteres!",
                         },
                         minLength: {
                           value: 3,
                           message: "No menos de 3 caracteres!",
+                        },
+                        pattern: {
+                          value: /^[A-Z]+$/i,
+                          message: "nombre del banco invalido",
                         },
                       })}
                     />
@@ -364,23 +369,19 @@ const Formsuc = (props) => {
                       Numero de Cuenta Bancaria
                     </Label>
                     <Input
-                      type="number"
                       name="bank_account"
                       valid={input.bank_account}
                       onChange={inputChange}
-                      placeholder="Ingrese su nro de cuenta bancaria"
+                      maxLength="12"
+                      placeholder="Ejemplo: XXX-XXXXXX/X"
                       innerRef={register({
                         required: {
                           value: true,
                           message: "Numero de cuenta bancaria es requerido",
                         },
-                        maxLength: {
-                          value: 15,
-                          message: "No más de 15 numeros!",
-                        },
-                        minLength: {
-                          value: 12,
-                          message: "No menos de 12 numeros!",
+                        pattern: {
+                          value: /^\d{3}-\d{6}[/]\d{1}/i,
+                          message: "Numero de cuenta bancaria invalido",
                         },
                       })}
                     />
@@ -415,6 +416,10 @@ const Formsuc = (props) => {
                           value: 22,
                           message: "No menos de 22 numeros",
                         },
+                        pattern: {
+                          value: /^\d{22}$/i,
+                          message: "Numero de cbu invalido",
+                        },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
@@ -428,7 +433,7 @@ const Formsuc = (props) => {
                     <Input
                       type="text"
                       name="bank_alias"
-                      id="alias"
+                      maxLength="20"
                       valid={input.bank_alias}
                       onChange={inputChange}
                       placeholder="Ingrese su alias"
@@ -436,13 +441,13 @@ const Formsuc = (props) => {
                         required: {
                           value: false,
                         },
-                        maxLength: {
-                          value: 20,
-                          message: "No más de 20 caracteres!",
-                        },
                         minLength: {
                           value: 6,
                           message: "No menos de 6 caracteres!",
+                        },
+                        pattern: {
+                          value: /^[A-Za-z0-9.-]{6,20}$/i,
+                          message: "alias invalido",
                         },
                       })}
                     />

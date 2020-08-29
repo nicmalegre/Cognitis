@@ -196,7 +196,7 @@ const Formulario = (props) => {
                         },
                         pattern: {
                           value: /^[0-9]{11}$/,
-                          message: "invalid cuil o cuit",
+                          message: "cuil o cuit invalido",
                         },
                       })}
                     />
@@ -420,7 +420,7 @@ const Formulario = (props) => {
                       name="bank_company_name"
                       valid={input.bank_company_name}
                       onChange={inputChange}
-                      maxLength="60"
+                      maxLength="45"
                       placeholder="Ingrese el nombre del banco"
                       innerRef={register({
                         required: {
@@ -428,8 +428,8 @@ const Formulario = (props) => {
                           message: "Nombre del banco es requerido",
                         },
                         maxLength: {
-                          value: 60,
-                          message: "No más de 60 caracteres!",
+                          value: 45,
+                          message: "No más de 45 caracteres!",
                         },
                         minLength: {
                           value: 3,
@@ -437,7 +437,6 @@ const Formulario = (props) => {
                         },
                         pattern: {
                           value: /^[A-Z]+$/i,
-                          //value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                           message: "nombre del banco invalido",
                         },
                       })}
@@ -504,7 +503,7 @@ const Formulario = (props) => {
                         },
                         pattern: {
                           value: /^\d{22}$/i,
-                          message: "Numero de cuenta bancaria invalido",
+                          message: "Numero de cbu invalido",
                         },
                       })}
                     />

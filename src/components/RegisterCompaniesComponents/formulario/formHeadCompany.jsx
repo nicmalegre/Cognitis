@@ -193,7 +193,7 @@ const FormHeadCompany = (props) => {
                     <Input
                       type="select"
                       name="head_country"
-                      id="pais"
+                      onChange={inputChange}
                       valid={input.head_country}
                       onChange={inputChange}
                       innerRef={register({
@@ -201,7 +201,7 @@ const FormHeadCompany = (props) => {
                           value: false,
                         },
                       })}
-                      onChange={inputChange}
+                      
                     >
                       {/* Function to insert the countries of the array like items in dropdown menu */}
                       {countries.map((country) => (
@@ -251,18 +251,19 @@ const FormHeadCompany = (props) => {
                           valid={input.country_code}
                           onChange={inputChange}
                           placeholder="+54"
+                          maxLength="5"
                           innerRef={register({
                             required: {
                               value: true,
                               message: "Codigo de Pais es requerido",
                             },
-                            maxLength: {
-                              value: 5,
-                              message: "No más de 5 carácteres!",
-                            },
                             minLength: {
                               value: 2,
                               message: "No menos de 3 carácteres!",
+                            },
+                            pattern: {
+                              value: /^[+][0-9]{1,5}$/i,
+                              message: "codigo de pais invalido",
                             },
                           })}
                         />
@@ -286,8 +287,8 @@ const FormHeadCompany = (props) => {
                               message: "Codigo de Area es requerido",
                             },
                             maxLength: {
-                              value: 6,
-                              message: "No más de 6 numeros!",
+                              value: 4,
+                              message: "No más de 4 numeros!",
                             },
                             minLength: {
                               value: 2,
@@ -336,18 +337,33 @@ const FormHeadCompany = (props) => {
                   <FormGroup>
                     <Label for="nroFax">Fax</Label>
                     <Input
-                      type="number"
+                      type="text"
                       name="head_fax"
                       id="nroFax"
                       valid={input.head_fax}
                       onChange={inputChange}
-                      placeholder="Ingrese el nro de fax de la compañia"
+                      placeholder="Ingrese el nro de fax Ejemplo +54XXXXXXXXXX"
                       innerRef={register({
                         required: {
                           value: false,
                         },
+                        maxLength: {
+                          value: 20,
+                          message: "No más de 20 numeros!",
+                        },
+                        minLength: {
+                          value: 6,
+                          message: "No menos de 6 numeros!",
+                        },
+                        pattern: {
+                          value: /^[+][0-9]{6,20}$/,
+                          message: "Nro de fax invalido",
+                        },
                       })}
                     />
+                      <span className="text-danger span d-block mb-2">
+                      {errors?.head_fax?.message}
+                    </span>
                   </FormGroup>
                 </Col>
               </Row>
@@ -361,7 +377,7 @@ const FormHeadCompany = (props) => {
                     <Input
                       type="text"
                       name="bank_head_house_name"
-                      id="nameBank"
+                      maxLength="45"
                       valid={input.bank_head_house_name}
                       onChange={inputChange}
                       placeholder="Ingrese el nombre del banco"
@@ -371,12 +387,16 @@ const FormHeadCompany = (props) => {
                           message: "Nombre del banco es requerido",
                         },
                         maxLength: {
-                          value: 100,
-                          message: "No más de 100 caracteres!",
+                          value: 45,
+                          message: "No más de 45 caracteres!",
                         },
                         minLength: {
                           value: 3,
                           message: "No menos de 3 caracteres!",
+                        },
+                        pattern: {
+                          value: /^[A-Z]+$/i,
+                          message: "nombre del banco invalido",
                         },
                       })}
                     />
@@ -396,6 +416,7 @@ const FormHeadCompany = (props) => {
                     <Input
                       type="number"
                       name="bank_head_house_account"
+                      maxLength="12"
                       valid={input.bank_head_house_account}
                       onChange={inputChange}
                       placeholder="Ingrese su nro de cuenta bancaria"
@@ -404,13 +425,9 @@ const FormHeadCompany = (props) => {
                           value: true,
                           message: "Numero de cuenta bancaria es requerido",
                         },
-                        maxLength: {
-                          value: 15,
-                          message: "No más de 15 numeros!",
-                        },
-                        minLength: {
-                          value: 12,
-                          message: "No menos de 12 numeros!",
+                        pattern: {
+                          value: /^\d{3}-\d{6}[/]\d{1}/i,
+                          message: "Numero de cuenta bancaria invalido",
                         },
                       })}
                     />
@@ -445,6 +462,10 @@ const FormHeadCompany = (props) => {
                           value: 22,
                           message: "No menos de 22 numeros",
                         },
+                        pattern: {
+                          value: /^\d{22}$/i,
+                          message: "Numero de cbu invalido",
+                        },
                       })}
                     />
                     <span className="text-danger span d-block mb-2">
@@ -460,18 +481,19 @@ const FormHeadCompany = (props) => {
                       name="bank_head_house_alias"
                       valid={input.bank_head_house_alias}
                       onChange={inputChange}
+                      maxLength="20"
                       placeholder="Ingrese su alias"
                       innerRef={register({
                         required: {
                           value: false,
                         },
-                        maxLength: {
-                          value: 20,
-                          message: "No más de 20 caracteres!",
-                        },
                         minLength: {
                           value: 6,
                           message: "No menos de 6 caracteres!",
+                        },
+                        pattern: {
+                          value: /^[A-Za-z0-9.-]{6,20}$/i,
+                          message: "alias invalido",
                         },
                       })}
                     />
