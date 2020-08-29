@@ -22,6 +22,7 @@ import Welcome from "../../../components/WizardComponents/base/welcome";
 import { FormattedMessage } from "react-intl";
 import { Redirect, withRouter } from "react-router-dom";
 import WizardLayout from "../../Layouts/WizardLayout/index";
+import {USERS_URL, BASE_URL} from '../../../urls/url'
 import axios from 'axios'
 
 const SelectCountry = (props) => {
@@ -53,7 +54,7 @@ const SelectCountry = (props) => {
     setSendingData(true)
 
     axios
-      .post("https://cognitis-360.herokuapp.com/api/users/saveuser", {
+      .post(`${USERS_URL}/saveuser`, {
         user_name: "test",
         user_mail: props.userInfo.email,
         user_password: props.userInfo.password,
