@@ -16,6 +16,7 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
 import CatalogLayout from "../../Layouts/CatalogLayout";
 import axios from "axios";
+import { PRODUCTS_URL, CATEGORIES_URL } from '../../../urls/url'
 import './index.css'
 
 
@@ -104,7 +105,8 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
   if ((datosPeticion.category === null) && (datosPeticion.product_name === null) && (datosPeticion.product_id === null) && (datosPeticion.product_brand === null) && (datosPeticion.product_type === null) && (datosPeticion.product_providers === null)) { console.log('Es todo nulo')}
   else {
   console.log(datosPeticion)
-  axios.post('http://localhost:4000/api/products/filters', datosPeticion ) //Aplicar los parametros que entran en getResult
+  //http://localhost:4000/api/products/filters
+  axios.post(`${PRODUCTS_URL}/filters`, datosPeticion ) //Aplicar los parametros que entran en getResult
   .then( res => { 
     setResults(
       resultSearch = res.data
@@ -115,7 +117,8 @@ const getResult = (datosPeticion) => { //Se pasan los filtros como parametro de 
 }
 
 const getCategories = ()=>{
-  axios.get('http://localhost:4000/api/categories')
+  //'http://localhost:4000/api/categories'
+  axios.get(`${CATEGORIES_URL}`)
   .then(res => {
     setCategories(
       categories = res.data
@@ -126,7 +129,8 @@ const getCategories = ()=>{
 }
 
 const getProviders = ()=>{
-  axios.get('http://localhost:4000/api/products/allproviders')
+  //http://localhost:4000/api/products
+  axios.get(`${PRODUCTS_URL}/allproviders`)
   .then(res => {
     console.log(res.data)
     setProviders(
