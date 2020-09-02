@@ -14,7 +14,10 @@ import {USERS_URL, VERIFICATIONCODE} from '../../../urls/url'
 const Registeruser = (props) => {
 
   const [verifyingEmail, setVerifyingEmail] = useState(false)
-  const [showErrorMessage, setShowErrorMessage] = useState(false)
+  const [showErrorMessage, setShowErrorMessage] = useState({
+    show: false,
+    message: ''
+  })
 
   const [mailEntered] = useState({
     adress:null,
@@ -28,25 +31,45 @@ const Registeruser = (props) => {
   /* verify if entered mail is already used for another user.
   if the email entered is not used yet call to sendData function */
   const verifyEmail = (email) => {
-
+    const regEx = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-z]+){1}(?:\.[a-z]+){0,1}$/
     setVerifyingEmail(true)
 
-    axios.post(`${USERS_URL}/emailverification`, {
-      user_mail: email
-    })
-    .then( async res => {
-      const isEmailAlreadyUsed =  await res.data.alreadyUsed
-
-      if(isEmailAlreadyUsed){
-        setShowErrorMessage(true)
-        setVerifyingEmail(false)
-      }else{
-        sendData(email)
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    }) 
+    //email is empty?
+    if(email === ''){
+      setVerifyingEmail(false)
+      setShowErrorMessage({
+        show: true,
+        message: 'Please enter a email'
+      })
+    //email is invalid?
+    }else if(!regEx.test(email)){
+      setVerifyingEmail(false)
+      setShowErrorMessage({
+        show: true,
+        message: 'Please enter a valid email'
+      })
+    }else {
+      axios.post(`${USERS_URL}/emailverification`, {
+        user_mail: email
+      })
+      .then( async res => {
+        const isEmailAlreadyUsed =  await res.data.alreadyUsed
+  
+        if(isEmailAlreadyUsed){
+          setShowErrorMessage({
+            show: true,
+            message: 'This email is already used for another user'
+          })
+          setVerifyingEmail(false)
+        }else{
+          sendData(email)
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      }) 
+    }
+    
   }
 
   /* SenData send a email to email address entered ànd return the verification cede and the expiration time */
@@ -111,7 +134,7 @@ const Registeruser = (props) => {
                           </Button>
                       </InputGroupAddon>
                     </InputGroup>
-                    { showErrorMessage && <span>Email already used for another user</span>}
+                      { showErrorMessage.show && <span> { showErrorMessage.message }</span>}
                   </Card>
                 </Col>
               </Row>
