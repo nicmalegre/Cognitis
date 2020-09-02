@@ -1,5 +1,5 @@
 import React, { useState} from 'react'; 
-import { FormGroup, Label, Col, Button, Input,Row, Card, Form} from 'reactstrap'; 
+import { FormGroup, Label, Col, Button, Input,Row, Card, Form, Container} from 'reactstrap'; 
 import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap'; 
 import "./index.css";
 import imagenProductivity from "./imageProductivity.jpeg";
@@ -120,77 +120,73 @@ const LoginUsers = (props) => {
         </Row>
         <Row className="text-center" style={{margin:0, padding:0}}>
             <Col lg="6"> 
-                    <Row className="justify-content-end">
-                        <Col lg="3"style={{marginLeft:10}}>
-                            <Row className="text-center">
-                            <Dropdown className="dropdown-lenguage" isOpen={dropdownOpen} toggle={toggle}>
-                                <DropdownToggle caret color="warning"><FormattedMessage id="app.btnLanguage"/></DropdownToggle>
-                                <DropdownMenu>
-                                    <DropdownItem onClick={() => props.changeLanguage('en')}><FormattedMessage id="app.englishLanguageOPtion"/></DropdownItem>
-                                    <DropdownItem onClick={() => props.changeLanguage('es')}><FormattedMessage id="app.spanishLanguageOPtion"/></DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
-                            </Row>
-                        </Col>
-                        <Col lg="6" >
-                                <Form style={{marginTop:15}}>
-                                    <FormGroup>
-                                        <Input type="email" name="email" id="inputEmail" placeholder="Email addres" required onChange={inputChange}/>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Input type="password" name="password" id="inputPassword" placeholder="Password" required onChange={inputChange}/>
-                                    </FormGroup>
-                                    <FormGroup check style={{paddingBottom:"5px"}}>
-                                        <Label check>
-                                            <Input type="checkbox" />{' '}
-                                            <FormattedMessage id="app.rememberMeMessage"/>
-                                        </Label>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        {(btnLogin) ?
-                                        (<Button color="primary" id="btn-Login" onClick={getData}><FormattedMessage id="app.btnLoginMessage"/></Button>):
-                                        (<Button color="primary" id="btn-Login" onClick={getData} disabled><FormattedMessage id="app.btnLoginMessage"/></Button>)
-                                        }
-                                        
-                                    </FormGroup>
-                                    <FormGroup className="text-center">
-                                        <Link><FormattedMessage id="app.forgotPasswordMessage"/></Link>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        
-                                    </FormGroup>
-                                    { (stateButton && incorrectCredential && (!maximiumAttemptsExceeded)) &&
-                                        <FormGroup className="text-left">
-                                            <Card id="card-error2">
-                                                <p>
-                                                    <b>Error: </b><FormattedMessage id="app.errorIncorrectCredentialMessage"/>
-                                                </p>
-                                            </Card>
-                                        </FormGroup>
-                                    }
-                                    { (stateButton && maximiumAttemptsExceeded) &&
-                                        <FormGroup>
-                                            <Label style={{color:"red"}}>
-                                                <FormattedMessage id="app.maxiumAttemptsMessage"/>
-                                            </Label>
-                                            <Card id="card-error2">
-                                                <p>
-                                                    <b><FormattedMessage id="app.securityParamountMessage"/></b><br/>
-                                                    <FormattedMessage id="app.maxiumAttemptsResetPasswordMessage"/>
-                                                </p>
-                                            </Card>
-                                        </FormGroup>
-                                    }
-                                    
-                                </Form>
-                        </Col>
-                    </Row>
+                <Row className="justify-content-end">
+                    <Col lg="3"style={{marginLeft:10}}>
+                        <Row className="text-center">
+                        <Dropdown className="dropdown-lenguage" isOpen={dropdownOpen} toggle={toggle}>
+                            <DropdownToggle caret color="warning"><FormattedMessage id="app.btnLanguage"/></DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem onClick={() => props.changeLanguage('en')}><FormattedMessage id="app.englishLanguageOPtion"/></DropdownItem>
+                                <DropdownItem onClick={() => props.changeLanguage('es')}><FormattedMessage id="app.spanishLanguageOPtion"/></DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        </Row>
+                    </Col>
+                    <Col lg="6" >
+                        <Form style={{marginTop:15}}>
+                            <FormGroup>
+                                <Input type="email" name="email" id="inputEmail" placeholder="Email addres" required onChange={inputChange}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Input type="password" name="password" id="inputPassword" placeholder="Password" required onChange={inputChange}/>
+                            </FormGroup>
+                            {/* <FormGroup check style={{marginBottom:10}}>
+                                <Input type="checkbox"/>
+                                <Label for="" check><FormattedMessage id="app.rememberMeMessage"/></Label>
+                            </FormGroup> */}
+                            <FormGroup>
+                                {(btnLogin) ?
+                                (<Button color="primary" id="btn-Login" onClick={getData}><FormattedMessage id="app.btnLoginMessage"/></Button>):
+                                (<Button color="primary" id="btn-Login" onClick={getData} disabled><FormattedMessage id="app.btnLoginMessage"/></Button>)
+                                }
+                                
+                            </FormGroup>
+                            <FormGroup className="text-center">
+                                <Link><FormattedMessage id="app.forgotPasswordMessage"/></Link>
+                            </FormGroup>
+                            
+                            { (stateButton && incorrectCredential && (!maximiumAttemptsExceeded)) &&
+                                <FormGroup className="text-left">
+                                    <Card id="card-error2">
+                                        <p>
+                                            <b>Error: </b><FormattedMessage id="app.errorIncorrectCredentialMessage"/>
+                                        </p>
+                                    </Card>
+                                </FormGroup>
+                            }
+                            { (stateButton && maximiumAttemptsExceeded) &&
+                                <FormGroup>
+                                    <Label style={{color:"red"}}>
+                                        <FormattedMessage id="app.maxiumAttemptsMessage"/>
+                                    </Label>
+                                    <Card id="card-error2">
+                                        <p>
+                                            <b><FormattedMessage id="app.securityParamountMessage"/></b><br/>
+                                            <FormattedMessage id="app.maxiumAttemptsResetPasswordMessage"/>
+                                        </p>
+                                    </Card>
+                                </FormGroup>
+                            }
+                            
+                        </Form>
+                    </Col>
+                </Row>
             </Col>
             <Col lg="6" className="d-none d-sm-block">
                 <img src={imagenProductivity} alt="Cognitis" id="img-productivity"/>
             </Col>
         </Row>
-        <div id="underBackground">
+        <div id="underBackground" className="d-none d-sm-block">
         </div>
     </div>
   );
