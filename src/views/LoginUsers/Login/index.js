@@ -113,12 +113,12 @@ const LoginUsers = (props) => {
     <div>
         <Navbar/>
 
-        <Row>
-            <Col lg="12" md="12" xs="12" id="col-naranja" style={{margin:0, padding:0}}>
+        <Row style={{margin:0, padding:0}}>
+            <Col lg="12" id="col-naranja">
                 <p></p>
             </Col>
         </Row>
-        <Row className="text-center">
+        <Row className="text-center" style={{margin:0, padding:0}}>
             <Col lg="6" md="6" xs="12"> 
                     <Row className="justify-content-end">
                         <Col lg="3" xs="4" style={{marginLeft:10}}>
