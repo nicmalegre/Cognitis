@@ -3,7 +3,22 @@
     min-height: 100%;   descomento*/
     background-color:rgba(0, 55, 100, 0.75);
     height: 815px;
+    width: 1vh;
    /* position: absolute;*/
 
 }
+
+#button-visible{
+    background-color: none;
+    font-size: 30px;
+    height: fit-content;
+}
+
+#button-invisible{
+    background-color: none;
+    font-size: 30px;
+    height: fit-content;
+
+}
+
 

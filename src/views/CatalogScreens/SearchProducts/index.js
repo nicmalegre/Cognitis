@@ -215,14 +215,14 @@ useEffect(() => {
               <Table bordered striped hover className="ml-3 mr-3">
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Dolarize</th>
-                    <th>Status</th>
-                    <th>Brand</th>
-                    <th>Category</th>
-                    <th>Type</th>
-                    <th>Actions</th>
+                    <th className="text-center">ID</th>
+                    <th className="text-center">Name</th>
+                    <th className="text-center">Dolarize</th>
+                    <th className="text-center">Status</th>
+                    <th className="text-center">Brand</th>
+                    <th className="text-center">Category</th>
+                    <th className="text-center">Type</th>
+                    <th className="text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -238,11 +238,12 @@ useEffect(() => {
                         <td>{product.product_type}</td>
 
 
-                        <td>
-                        <Link to={`/catalog/editproduct/${product.product_id}`}>
-                        <Button id="button-edit" size="sm"  >
-                          <i className="mr-1">< MdModeEdit/></i>
-                          <span className="align-middle">Edit</span>
+                        <td className="text-center">
+                         
+                         <Link to={`/catalog/editproduct/${product.product_id}`}>
+                        <Button id="button-edit " size="sm"  >
+                          <i>< MdModeEdit/></i>
+                          {/* <span className="align-middle">Edit</span> */}
                         </Button>{" "}
                         {"   "}
                         </Link>
@@ -250,18 +251,19 @@ useEffect(() => {
                           id="button-delete"
                           size="sm"                          
                         >
-                        <i className="mr-1"><AiTwotoneDelete /></i>
-                        <span className="align-middle">Delete</span>
+                        <i><AiTwotoneDelete /></i>
+                        {/* <span className="align-middle">Delete</span> */}
                         </Button>{" "}
 
                         {"   "}
                         <Link to={`/catalog/productview/${product.product_id}`}>
                           <Button id="button-view" size="sm"  >
-                            <i className="mr-1"><BsPlusCircle/></i>
-                            <span className="align-middle">More</span>
+                            <i><BsPlusCircle/></i>
+                            {/* <span className="align-middle">More</span> */}
                           </Button>
                           
                         </Link>
+                         
                         </td>
                       </tr> 
                       ))}                    

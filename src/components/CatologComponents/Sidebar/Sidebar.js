@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   ProSidebar,
   Menu,
@@ -6,18 +6,29 @@ import {
   SidebarContent
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
-import { FcViewDetails } from "react-icons/fc";
-import { FaBuffer } from "react-icons/fa";
+import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
+import { FaBuffer, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FiMoreVertical } from "react-icons/fi";
 import "../Sidebar/Sidebar.css";
 import {Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 const Sidebar = () => {
+ 
+    let [sidebarVisible, setVisibility] = useState(true)
+
+    const visibilityOn = () => {
+        setVisibility(true)
+    }
+    const visibilityOff = () => {
+        setVisibility(false)
+    }
+ 
+ 
   return (
+    (sidebarVisible) ? <>
+    
     <ProSidebar id="sidebar-container">
-      {/*<i className="ml-auto p-3">
-        <FiMenu />
-        </i>*/}
       <br />
       <SidebarContent id="bg">
         <Menu id="bg" iconShape="square">
@@ -46,6 +57,10 @@ const Sidebar = () => {
         </Menu>
       </SidebarContent>
     </ProSidebar>
+    {/* <Button id="button-visible" onClick={visibilityOff}/> */}
+    <i id="button-visible" onClick={visibilityOff}><AiFillLeftCircle id="icon"/></i>
+    </>
+    : <i id="button-invisible" onClick={visibilityOn}><AiFillRightCircle id="icon" /></i>
   );
 };
 
