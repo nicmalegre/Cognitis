@@ -11,7 +11,7 @@ const IndumentaryProduct = (props)=> {
         product_curve: '',
         product_color: 'Verde',
         product_season: '',
-        product_status: '',
+        //product_status: '',
       });
     const handleChange = (event) => {
         const {value,name} = event.target;

@@ -224,6 +224,8 @@ const NewProduct = (props) => {
   
 
   const setearSelect = (event) => {
+    console.log(event.target.name);
+    console.log(event.target.value);
     const {value,name} = event.target;
     setSelects(
       {
@@ -231,7 +233,7 @@ const NewProduct = (props) => {
         [name]: value,
       }
     )
-    console.log(`${value} ${name}`);
+    console.log(selects);
   }
 
   //Variable que indica la industria en este momento
@@ -257,10 +259,10 @@ const NewProduct = (props) => {
             <h3>Nuevo Producto</h3>
           </Col>
 
-          <Col lg="12" xs="12" style={{ marginTop: 25 }}>
+          <Col style={{ marginTop: 25 }}>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <FormGroup row>
-                <Label for="product_id" sm={3}>
+                <Label for="product_id" xs={12}>
                   Código de Producto
                 </Label>
                 <Col sm={9}>
@@ -275,7 +277,8 @@ const NewProduct = (props) => {
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="examplePassword" sm={3}>
+                <Label for="examplePassword"
+                xs={12}>
                   Nombre de Producto
                 </Label>
                 <Col sm={9}>
@@ -296,7 +299,7 @@ const NewProduct = (props) => {
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="" sm={3}>
+                <Label for="" xs={12}>
                   Descripción
                 </Label>
                 <Col sm={9}>
@@ -413,6 +416,7 @@ const NewProduct = (props) => {
                     <Input
                       type="select"
                       name="product_status"
+                      //value={selects.product_status}
                       onChange={setearSelect}
                       innerRef={register({
                         required: {

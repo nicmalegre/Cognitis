@@ -3,16 +3,16 @@ import {Row, Col, FormGroup, Label, Input} from 'reactstrap'
 import { useForm } from "react-hook-form";
 
 const RetailProduct = (props)=> {
-
-    const {  errors } = useForm();
+    const { register, handleSubmit, errors } = useForm();
+    
     const [dataRetail,setDataRetail] = useState({
         product_id: '',
-        product_line: '',
+        product_line: null,
         product_seed: '',
         product_service: 'Servicio Uno',
         product_serie: '"Serie Uno"',
         product_NTecnico:'',
-        product_status: '',
+        //product_status: '',
         product_technical_data: '',
         product_model: '',
       });
@@ -30,7 +30,6 @@ const RetailProduct = (props)=> {
 
   return (
     <>
-  
     <Row form>
         <Col md={4}>
         <FormGroup>
@@ -72,7 +71,6 @@ const RetailProduct = (props)=> {
             name="product_service"
             value={dataRetail.product_service}
             onChange={handleChange}
-
             >
                 <option value={"Servicio Uno"}>Servicio Uno</option>
                 <option value={"Servicio Dos"}>Servicio Dos</option>
@@ -92,7 +90,6 @@ const RetailProduct = (props)=> {
             name="product_serie"
             value={dataRetail.product_serie}
             onChange={handleChange}
-
             >
                 <option value={"Serie Uno"}>Serie Uno</option>
                 <option value={"Serie Dos"}>Serie Dos</option>
@@ -110,7 +107,6 @@ const RetailProduct = (props)=> {
             name="product_model"
             value={dataRetail.product_model}
             onChange={handleChange}
-
             />
             <span className="text-danger span d-block mb-2">
             {errors?.product_model?.message}
@@ -143,6 +139,9 @@ const RetailProduct = (props)=> {
                     placeholder="Ingrese datos tecnicos"
                     onChange={handleChange}
                   />
+                    <span className="text-danger span d-block mb-2">
+                        {errors?.product_NTecnico?.message}
+                    </span>
             </Col>
         </FormGroup>
         </Col>

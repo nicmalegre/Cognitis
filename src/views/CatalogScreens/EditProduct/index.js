@@ -46,6 +46,7 @@ const EditProduct = (props) => {
   const [provActual,setProvActual] = useState([]);
   const [ind,setInd] = useState();
   //const [dataExtra,setDataExtra] = useState({})
+  const [cambio,setCambio] = useState(false);
 
   //Load Categories Function
   const cargarCategorias = () => {
@@ -68,39 +69,24 @@ const EditProduct = (props) => {
   }
 
   //Load Providers Function
-  const cargarProv = () => {
-    axios.get(`${PRODUCTS_URL}/allProviders`).
-    then(res => {
-      setProv(
-        res.data
-      )
-      setProvidersContext({
-        providers: res.data.map(value=>{
-          return ({
-           ...value,
-           selected: false, 
-          })
-        })
-      });
-    }).
-    catch(error => {
-      console.log(error);
-    })
+  const cargarProv = async() => {
+    const {data} = await axios.get(`${PRODUCTS_URL}/allProviders`);
+    return data
   }
   //Load Providers of the actual product
-  const cargarProvProd = (dataProd) => {
-    axios.post(`${PRODUCTS_URL}/getProvider`,dataProd).
-    then(res=>{
-      setProvActual(
-        res.data
-      );
-    }).
-    catch(error=>{console.log(error)});
+  const cargarProvProd = async(dataProd) => {
+    const {data} = await axios.post(`${PRODUCTS_URL}/getProvider`,dataProd);
+    return data;
   }
   //Load Data of the Choosed Product
-  const traerDatosProductos = (id_product) => {
+  const traerDatosProductos = async(id_product) => {
     axios.get(`${PRODUCTS_URL}/productdata/${id_product}`)
     .then( async res => {
+      if(res.data.product_in_ecommerce === 0){
+        res.data.product_in_ecommerce = "false";
+      }else{
+        res.data.product_in_ecommerce = "true";
+      }
       await props.dispatch(fetchProductoData(res.data))
       setDataProduct(res.data);
       setInd(res.data.nombreIndustria);
@@ -111,14 +97,25 @@ const EditProduct = (props) => {
   //This function gets the data from the server
   useEffect(() => {   
     const id_product = props.match.params.idProd;
+    //Se usa esta funcion para poder setear todos los states necesarios
+    //con los resultados que trae la API
     const traerData = async() => {
       await traerDatosProductos(id_product);
-      await cargarProv();
+      let prov = await cargarProv();
       await cargarCategorias();
-      await cargarProvProd({product_id:id_product});
-      const aux = await proveedores.map(value => {
-        return value.provider_id
+      let provProd = await cargarProvProd({product_id:id_product});
+      const aux = [];
+      await prov.map(value => {
+        provProd.map(value2 => {
+          if(value.id === value2.id){
+            value = {...value,selected: true};
+          }else{
+            value = {...value,selected: false}
+          }
+        })
+        aux.push(value);
       })
+      setProvidersContext({providers:aux});
       console.log(aux)
       if(props.productos.productoActual.nombreIndustria === 'retail'){
         setDataExtra({
@@ -162,11 +159,12 @@ const EditProduct = (props) => {
       nombreIndustria: ind,
     }
     transformToNumber(aux);
-    if(data.product_in_ecommerce === false){
-      data.product_in_ecommerce = 0;
+    if(productselect.product_in_ecommerce === "false"){
+      aux.product_in_ecommerce = 0;
     }else{
-      data.product_in_ecommerce = 1;
+      aux.product_in_ecommerce = 1;
     };
+    console.log(data);
     axios
       .put(`${PRODUCTS_URL}/updateProduct/${props.match.params.idProd}`, aux)
       .then((res) => "producto editado con exito")
@@ -181,14 +179,32 @@ const EditProduct = (props) => {
   const [visible, setVisible] = useState(false);
 
   const onDismiss = () => setVisible(!visible);
-  
+  //Se usa esta funcion para poder guardar los datos que vamos insertando en los
+  //inputs y en los selects
   const handleChange = (e) => {
     const {value,name} = e.target;
-    let stateProd = productselect;
-    stateProd[name] = value;
     setDataProduct({
-      stateProd,
+      ...productselect,
+      [name]:value,
     });
+
+    console.log(productselect)
+  }
+  //Separo el manejo del valor del checkbox
+  const handleChangeEcommerce = (e) => {
+    const {value,name} = e.target;
+    if(value==="true"){
+      setDataProduct({
+        ...productselect,
+        [name]:"false"
+      });
+    }else{
+      setDataProduct({
+        ...productselect,
+        [name]:"true"
+      });
+    }
+    console.log(productselect);
   }
 
   return (
@@ -271,8 +287,16 @@ const EditProduct = (props) => {
                       handleChange
                     }
                     placeholder="Ingrese una descripcion"
-                    innerRef={register}
+                    innerRef={register({
+                      required: {
+                        value: true,
+                        message: "La Descripcion es requerida",
+                      },
+                    })}
                   />
+                  <span className="text-danger span d-block mb-2">
+                      {errors?.product_description?.message}
+                    </span>
                 </Col>
               </FormGroup>
               <Row form>
@@ -448,10 +472,9 @@ const EditProduct = (props) => {
                     type="checkbox"
                     id="exampleCustomRadio"
                     name="product_in_ecommerce"
+                    checked = {productselect.product_in_ecommerce === "true"}
                     value={productselect.product_in_ecommerce}
-                    onChange = {
-                      handleChange
-                    }
+                    onClick={handleChangeEcommerce}
                     innerRef={register}
                   />
                 </div>
