@@ -115,7 +115,7 @@ const NewProduct = (props) => {
     data.product_min_margin = parseInt(data.product_min_margin);
     data.product_is_dollar = parseInt(data.product_is_dollar);
     data.product_max_margin = parseInt(data.product_max_margin);
-    data.product_status = parseInt(data.product_status);
+    //data.product_status = parseInt(data.product_status);
     //data.products_industry_id = parseInt(data.products_industry_id);
     //transform to float
     data.costoNetoReposicion = parseFloat(data.costoNetoReposicion);
