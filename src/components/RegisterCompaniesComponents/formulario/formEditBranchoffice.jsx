@@ -394,7 +394,6 @@ const Formulario = (props) => {
                         props.branchoffice.bankbranch[0]
                           .bank_branch_office_account
                       }
-                      type="number"
                       name="bank_account"
                       valid={input.bank_account}
                       maxLength="12"

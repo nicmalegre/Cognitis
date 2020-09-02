@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"; //importacion de la libreria
 import { CompanyContext } from "../../../store/CompanyContext";
 import { withRouter } from "react-router-dom";
-import { COMPANY_URL } from '../../../urls/url'
+import { COMPANIES_URL } from '../../../urls/url'
 import {
   FormGroup,
   Input,
@@ -57,7 +57,7 @@ const Formulario = (props) => {
 
     try {
       axios
-        .post(`${COMPANY_URL}/newcompany`, data)
+        .post(`${COMPANIES_URL}/newcompany`, data)
         .then((res) => {
           if (res.data.cuit_already_used) {
             setCuitAlreadyUsed(true);

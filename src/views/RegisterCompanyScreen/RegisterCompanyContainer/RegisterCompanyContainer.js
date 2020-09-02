@@ -20,6 +20,7 @@ import { BsPlusCircle } from "react-icons/bs";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { MdModeEdit } from "react-icons/md";
 import LayoutSucursal from "../../Layouts/RegisterCompanyLayout/layoutsucursal";
+import { COMPANIES_URL } from "../../../urls/url";
 import "./index.css";
 
 const RegisterCompanyContainer = (props) => {
@@ -44,8 +45,9 @@ const RegisterCompanyContainer = (props) => {
   //
   const getCompanies = async () => {
     try {
+      //http://localhost:3000/api/company
       const res = await axios.get(
-        "http://localhost:3000/api/company/headhouse/" + props.match.params.id
+        `${COMPANIES_URL}/headhouse/` + props.match.params.id
       );
       setData(res.data.companies_house); //le tenemos que pasar res para setear el objeto local
     } catch (e) {
@@ -55,11 +57,11 @@ const RegisterCompanyContainer = (props) => {
   //peticion a la API para traer todas las compañias
   useEffect(() => {
     async function loadCompanies() {
-      const res = await getCompanies()
+      const res = await getCompanies();
       return res;
     }
     loadCompanies();
-  },[]);
+  }, []);
 
   const selectComp = (elemento) => {
     setCompSelect(elemento);
@@ -70,15 +72,20 @@ const RegisterCompanyContainer = (props) => {
     const dataDelete = {
       company_id: selectcompany.company_id,
     };
+    //http://localhost:3000/api/company
     axios
-      .post("http://localhost:3000/api/company/deletecompany/", dataDelete)
+      .post(`${COMPANIES_URL}/deletecompany/`, dataDelete)
       .then((res) => {
-        if (res.status == 200){
-          setData(data.filter((elemento) => elemento.company_id !== selectcompany.company_id))
-        }else{
-          console.log("error al eliminar la compania,"+ res.status);
+        if (res.status == 200) {
+          setData(
+            data.filter(
+              (elemento) => elemento.company_id !== selectcompany.company_id
+            )
+          );
+        } else {
+          console.log("error al eliminar la compania," + res.status);
         }
-        })
+      })
       .catch((err) => console.log(err)); //mostrar error
     //setData(data.filter((elemento) => elemento.id !== selectcompany.id))
     setModalEliminar(false);
@@ -107,7 +114,7 @@ const RegisterCompanyContainer = (props) => {
         </Row>
         <Card id="card" body style={{ marginTop: 50 }}>
           <CardHeader className="bg-dark">
-            <Row >
+            <Row>
               <h5 className="text-white ml-2">Manage Companies</h5>
               <Col className="row justify-content-end">
                 <Button

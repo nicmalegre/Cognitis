@@ -7,6 +7,7 @@ import Logo from '../../../components/WizardComponents/base/logo';
 import Welcome from '../../../components/WizardComponents/base/welcome';
 import { FormattedMessage } from 'react-intl';
 import WizardLayout from '../../Layouts/WizardLayout/index'
+import {USERS_URL, VERIFICATIONCODE} from '../../../urls/url'
 
 
 
@@ -30,7 +31,7 @@ const Registeruser = (props) => {
 
     setVerifyingEmail(true)
 
-    axios.post('https://cognitis-360.herokuapp.com/api/users/emailverification', {
+    axios.post(`${USERS_URL}/emailverification`, {
       user_mail: email
     })
     .then( async res => {
@@ -51,7 +52,7 @@ const Registeruser = (props) => {
   /* SenData send a email to email address entered ànd return the verification cede and the expiration time */
   const sendData = (email) => {
     
-    axios.post('https://cognitis-360.herokuapp.com/api/verificationcode', {
+    axios.post(`${VERIFICATIONCODE}`, {
       user_mail: email
     })
     .then(async  res => { 

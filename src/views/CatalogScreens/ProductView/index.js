@@ -6,7 +6,7 @@ import IndumentaryProduct from './indumentaryProduct'
 import RetailProduct from './retailProduct'
 import axios from "axios";
 import {connect} from 'react-redux';
-import {BASE_URL} from '../../../urls/url'
+import {BASE_URL, CATEGORIES_URL, PRODUCTS_URL} from '../../../urls/url'
 import {
     fetchProductoData
   } from '../../../Redux/Actions/ProductosActions';
@@ -162,7 +162,8 @@ const ProductView = (props) => {
     let [categories, setCategories] = useState([])
 
     const getCategories = (pos)=>{
-        axios.get('http://localhost:4000/api/categories')
+        //'http://localhost:4000/api/categories'
+        axios.get(`${CATEGORIES_URL}`)
         .then(res => {
           setCategories(
             categories = res.data
@@ -177,8 +178,8 @@ const ProductView = (props) => {
     }
 
     const getProviders = (product_id)=>{
-        
-        axios.post('http://localhost:4000/api/products/getprovider', {product_id})
+        //http://localhost:4000/api/products/getprovider
+        axios.post(`${PRODUCTS_URL}/getprovider`, {product_id})
         .then(res => {
             
           setProviders(

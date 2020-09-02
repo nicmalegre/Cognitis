@@ -415,12 +415,11 @@ const FormHeadCompany = (props) => {
                       Numero de Cuenta Bancaria
                     </Label>
                     <Input
-                      type="number"
                       name="bank_head_house_account"
                       maxLength="12"
                       valid={input.bank_head_house_account}
                       onChange={inputChange}
-                      placeholder="Ingrese su nro de cuenta bancaria"
+                      placeholder="Ejemplo: XXX-XXXXXX/X"
                       innerRef={register({
                         required: {
                           value: true,
