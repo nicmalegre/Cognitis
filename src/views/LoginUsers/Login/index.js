@@ -110,7 +110,7 @@ const LoginUsers = (props) => {
 
 
   return (  
-    <div>
+    <div> 
         <Navbar/>
 
         <Row style={{margin:0, padding:0}}>
@@ -119,9 +119,9 @@ const LoginUsers = (props) => {
             </Col>
         </Row>
         <Row className="text-center" style={{margin:0, padding:0}}>
-            <Col lg="6" md="6" xs="12"> 
+            <Col lg="6"> 
                     <Row className="justify-content-end">
-                        <Col lg="3" xs="4" style={{marginLeft:10}}>
+                        <Col lg="3"style={{marginLeft:10}}>
                             <Row className="text-center">
                             <Dropdown className="dropdown-lenguage" isOpen={dropdownOpen} toggle={toggle}>
                                 <DropdownToggle caret color="warning"><FormattedMessage id="app.btnLanguage"/></DropdownToggle>
@@ -186,7 +186,7 @@ const LoginUsers = (props) => {
                         </Col>
                     </Row>
             </Col>
-            <Col lg="6" md="6" xs="12" className="d-none d-sm-block">
+            <Col lg="6" className="d-none d-sm-block">
                 <img src={imagenProductivity} alt="Cognitis" id="img-productivity"/>
             </Col>
         </Row>

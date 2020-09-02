@@ -10,7 +10,7 @@ const Logo = () => {
         
         <div>
             <Navbar color="light" light expand="md" id="Navbar">
-                <NavbarBrand href="/">
+                <NavbarBrand>
                     <img src={imagen} id="img-Navbar" alt="logo" className="center-block"/>
                 </NavbarBrand>
                 <Collapse  navbar>
