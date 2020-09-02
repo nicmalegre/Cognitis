@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../../../components/CatologComponents/Navbar'
 import Sidebar from '../../../components/CatologComponents/Sidebar/Sidebar'
+import InvisibleSidebar from '../../../components/CatologComponents/InvisibleSidebar/InvisibleSidebar'
 
 const wrapperLayoutStyles = {
     width: '100vw',
@@ -23,6 +24,7 @@ const contentContainerStyles = {
 
 //components layout in charge of providing the basic structure of the catalog for example (Navbar, Sidebar, body)
 const CatalogLayout = (props) => {
+
     return(
         <div style={wrapperLayoutStyles}>
             <Navbar />
